@@ -80,7 +80,7 @@ int gpio_unexport(unsigned int gpio)
 /****************************************************************
  * gpio_set_dir
  ****************************************************************/
-int gpio_set_dir(unsigned int gpio, unsigned int out_flag)
+int gpio_set_dir(unsigned int gpio, char* dir)
 {
 	int fd, len;
 	char buf[MAX_BUF];
@@ -92,11 +92,15 @@ int gpio_set_dir(unsigned int gpio, unsigned int out_flag)
 		perror("gpio/direction");
 		return fd;
 	}
+
+	write(fd, dir, sizeof(dir)+1);
  
+/*
 	if (out_flag)
 		write(fd, "out", 4);
 	else
 		write(fd, "in", 3);
+*/
  
 	close(fd);
 	return 0;
