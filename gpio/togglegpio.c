@@ -1,5 +1,4 @@
-// Blink pin 3 on port B at 1 Hz
-// Just add an LED and see the light! ;)
+// Blink pin 7 at 1 Hz
 //
 //Created by Dingo_aus, 7 January 2009
 //email: dingo_aus [at] internode <dot> on /dot/ net
@@ -7,6 +6,7 @@
 //
 //Created in AVR32 Studio (version 2.0.2) running on Ubuntu 8.04
 // Modified by Mark A. Yoder, 21-July-2011
+// Modified by Mark A. Yoder 30-May-2013
 
 #include <string.h>
 #include <stdio.h>
@@ -27,19 +27,19 @@ int main(int argc, char** argv)
 
 	if (argc < 2) {
 		printf("Usage: %s <on/off time in us>\n\n", argv[0]);
-		printf("Toggle gpio 130 at the period given\n");
+		printf("Toggle gpio 7 at the period given\n");
 		exit(-1);
 	}
 	onOffTime = atoi(argv[1]);
 
 	printf("\n*********************************\n"
 		"*  Welcome to PIN Blink program  *\n"
-		"*  ....blinking gpio 130         *\n"
+		"*  ....blinking gpio 7           *\n"
 		"*  ....period of %d us.........*\n"
 		"**********************************\n", 2*onOffTime);
 
-	//Using sysfs we need to write the 3 digit gpio number to /sys/class/gpio/export
-	//This will create the folder /sys/class/gpio/gpio37
+	//Using sysfs we need to write the gpio number to /sys/class/gpio/export
+	//This will create the folder /sys/class/gpio/gpio7
 	if ((fp = fopen(SYSFS_GPIO_DIR "/export", "ab")) == NULL)
 		{
 			printf("Cannot open export file.\n");
@@ -47,8 +47,8 @@ int main(int argc, char** argv)
 		}
 	//Set pointer to begining of the file
 		rewind(fp);
-		//Write our value of "37" to the file
-		strcpy(set_value,"130");
+		//Write our value of "7" to the file
+		strcpy(set_value,"7");
 		fwrite(&set_value, sizeof(char), 3, fp);
 		fclose(fp);
 	
@@ -56,7 +56,7 @@ int main(int argc, char** argv)
 	
 	//SET DIRECTION
 	//Open the LED's sysfs file in binary for reading and writing, store file pointer in fp
-	if ((fp = fopen(SYSFS_GPIO_DIR "/gpio130/direction", "rb+")) == NULL)
+	if ((fp = fopen(SYSFS_GPIO_DIR "/gpio7/direction", "rb+")) == NULL)
 	{
 		printf("Cannot open direction file.\n");
 		exit(1);
@@ -69,7 +69,7 @@ int main(int argc, char** argv)
 	fclose(fp);
 	printf("...direction set to output\n");
 			
-	if ((fp = fopen(SYSFS_GPIO_DIR "/gpio130/value", "rb+")) == NULL)
+	if ((fp = fopen(SYSFS_GPIO_DIR "/gpio7/value", "rb+")) == NULL)
 	{
 		printf("Cannot open value file.\n");
 		exit(1);
