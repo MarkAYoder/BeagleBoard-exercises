@@ -12,10 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-#define SYSFS_GPIO_DIR "/sys/class/gpio"
-
-FILE *fp; 
+#include "gpio-utils.h"
 
 int main(int argc, char** argv)
 {
@@ -24,6 +21,8 @@ int main(int argc, char** argv)
 	//Integer to keep track of whether we want on or off
 	int toggle = 0;
 	int onOffTime;	// Time in micro sec to keep the signal on/off
+	int gpio = 60;
+	int gpio_fd;
 
 	if (argc < 2) {
 		printf("Usage: %s <on/off time in us>\n\n", argv[0]);
@@ -40,67 +39,26 @@ int main(int argc, char** argv)
 
 	//Using sysfs we need to write the gpio number to /sys/class/gpio/export
 	//This will create the folder /sys/class/gpio/gpio60
-	if ((fp = fopen(SYSFS_GPIO_DIR "/export", "ab")) == NULL)
-		{
-			printf("Cannot open export file.\n");
-			exit(1);
-		}
-	//Set pointer to begining of the file
-		rewind(fp);
-		//Write our value of "60" to the file
-		strcpy(set_value,"60");
-		fwrite(&set_value, sizeof(char), 3, fp);
-		fclose(fp);
-	
+	gpio_export(gpio);
+
 	printf("...export file accessed, new pin now accessible\n");
 	
 	//SET DIRECTION
-	//Open the LED's sysfs file in binary for reading and writing, store file pointer in fp
-	if ((fp = fopen(SYSFS_GPIO_DIR "/gpio60/direction", "rb+")) == NULL)
-	{
-		printf("Cannot open direction file.\n");
-		exit(1);
-	}
-	//Set pointer to begining of the file
-	rewind(fp);
-	//Write our value of "out" to the file
-	strcpy(set_value,"out");
-	fwrite(&set_value, sizeof(char), 3, fp);
-	fclose(fp);
+	gpio_set_dir(gpio, "out");
 	printf("...direction set to output\n");
 			
-	if ((fp = fopen(SYSFS_GPIO_DIR "/gpio60/value", "rb+")) == NULL)
-	{
-		printf("Cannot open value file.\n");
-		exit(1);
-	}
+	gpio_fd = gpio_fd_open(gpio);
+
 	//Run an infinite loop - will require Ctrl-C to exit this program
 	while(1)
 	{
 		toggle = !toggle;
-		if(toggle)
-		{
-			//Set pointer to begining of the file
-			rewind(fp);
-			//Write our value of "1" to the file 
-			strcpy(set_value,"1");
-			fwrite(&set_value, sizeof(char), 1, fp);
-			fflush(fp);
-//			printf("...value set to 1...\n");
-		}
-		else
-		{
-			//Set pointer to begining of the file
-			rewind(fp);
-			//Write our value of "0" to the file 
-			strcpy(set_value,"0");
-			fwrite(&set_value, sizeof(char), 1, fp);
-			fflush(fp);
-//			printf("...value set to 0...\n");
-		}
+		gpio_set_value(gpio, toggle);
+//		printf("...value set to %d...\n", toggle);
+
 		//Pause for a while
 		usleep(onOffTime);
 	}
-	fclose(fp);
+	gpio_fd_close(gpio_fd);
 	return 0;
 }

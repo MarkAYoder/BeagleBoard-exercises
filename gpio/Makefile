@@ -7,10 +7,14 @@ TOOLS_TARGETS	:= my2cset
 #
 # Programs
 #
-all:	gpio-int-test
+all:	gpio-int-test togglegpio
 
 gpio-int-test:  gpio-int-test.o gpio-utils.o
 	$(CC) $(LDFLAGS) -o $@ $^
+
+togglegpio:	togglegpio.o gpio-utils.o
+	$(CC) $(LDFLAGS) -o $@ $^
+
 
 #
 # Objects

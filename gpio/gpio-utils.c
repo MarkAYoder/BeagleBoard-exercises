@@ -94,14 +94,7 @@ int gpio_set_dir(unsigned int gpio, char* dir)
 	}
 
 	write(fd, dir, sizeof(dir)+1);
- 
-/*
-	if (out_flag)
-		write(fd, "out", 4);
-	else
-		write(fd, "in", 3);
-*/
- 
+
 	close(fd);
 	return 0;
 }
