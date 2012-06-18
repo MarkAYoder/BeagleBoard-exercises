@@ -88,13 +88,14 @@ By <i>Mark A. Yoder</i>
         iL++;
         if(iL >= samples) {
             iL = 0;
-//            globalDataLold = globalDataL;
-//            var i;
-//            for(i=0; i<samples; i++) {
-//            globalDataL[i] = [0, 0];
-//            }
+            var i;
+            for(i=0; i<samples; i++) {
+                globalDataLold[i] = globalDataL[i];
+                globalDataL[i] = [];
+            }
         }
-        plot.setData([ globalDataL, globalDataR]);
+        plot.setData([ globalDataLold, globalDataRold, 
+                       globalDataL, globalDataR ]);
         plot.draw();
     }
 
@@ -106,8 +107,14 @@ By <i>Mark A. Yoder</i>
         iR++;
         if(iR >= samples) {
             iR = 0;
+            var i;
+            for(i=0; i<samples; i++) {
+                globalDataRold[i] = globalDataR[i];
+                globalDataR[i] = [];
+            }
         }
-        plot.setData([ globalDataL, globalDataR]);
+        plot.setData([ globalDataLold, globalDataRold, 
+                       globalDataL, globalDataR ]);
         plot.draw();
     }
 
