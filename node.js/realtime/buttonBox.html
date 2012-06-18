@@ -43,8 +43,8 @@ By <i>Mark A. Yoder</i>
         Ts = 1/fs*1000,
         samples = 100,
         plot,
-        globalDataL = [], iL = 0, globalDataLold = [], 
-        globalDataR = [], iR = 0, globalDataRold = [];
+        globalDataL = [], iL = 0, 
+        globalDataR = [], iR = 0;
     globalDataL[samples] = 0;
     globalDataR[samples] = 0;
 
@@ -88,14 +88,9 @@ By <i>Mark A. Yoder</i>
         iL++;
         if(iL >= samples) {
             iL = 0;
-            var i;
-            for(i=0; i<samples; i++) {
-                globalDataLold[i] = globalDataL[i];
-                globalDataL[i] = [];
-            }
+            globalDataL = [];
         }
-        plot.setData([ globalDataLold, globalDataRold, 
-                       globalDataL, globalDataR ]);
+        plot.setData([ globalDataL, globalDataR ]);
         plot.draw();
     }
 
@@ -107,14 +102,9 @@ By <i>Mark A. Yoder</i>
         iR++;
         if(iR >= samples) {
             iR = 0;
-            var i;
-            for(i=0; i<samples; i++) {
-                globalDataRold[i] = globalDataR[i];
-                globalDataR[i] = [];
-            }
+            globalDataR = [];
         }
-        plot.setData([ globalDataLold, globalDataRold, 
-                       globalDataL, globalDataR ]);
+        plot.setData([ globalDataL, globalDataR ]);
         plot.draw();
     }
 
@@ -173,9 +163,9 @@ $(function () {
     plot = $.plot($("#placeholder"), 
         [ 
           { data:  initPlotData(), 
-            label: "Left Channel" },
+            label: "Analog In: " },
           { data:  initPlotData(),
-            label: "Right Channel" }
+            label: "gpio in: " }
         ],
             options);
 
