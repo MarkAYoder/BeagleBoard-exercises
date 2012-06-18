@@ -43,8 +43,8 @@ By <i>Mark A. Yoder</i>
         Ts = 1/fs*1000,
         samples = 100,
         plot,
-        globalDataL = [], iL = 0;
-        globalDataR = [];
+        globalDataL = [], iL = 0, globalDataLold = [], 
+        globalDataR = [], iR = 0, globalDataRold = [];
     globalDataL[samples] = 0;
     globalDataR[samples] = 0;
 
@@ -52,7 +52,8 @@ By <i>Mark A. Yoder</i>
       if(firstconnect) {
         socket = io.connect(null);
 
-        socket.on('message', function(data){ message(data); });
+        socket.on('message', function(data)
+            { status_update("Received: message");});
         socket.on('connect', function()
             { status_update("Connected to Server"); });
         socket.on('disconnect', function()
@@ -64,7 +65,8 @@ By <i>Mark A. Yoder</i>
         socket.on('reconnect_failed', function()
             { message("Reconnect Failed"); });
 
-        socket.on('ain', ain);
+        socket.on('ain',  ain);
+        socket.on('gpio', gpio);
 
         firstconnect = false;
       }
@@ -77,6 +79,7 @@ By <i>Mark A. Yoder</i>
       socket.disconnect();
     }
 
+    // When new data arrived, convert it and plot it.
     function ain(data) {
         data = atob(data)/4096 * 1.8;
         data = isNaN(data) ? 0 : data;
@@ -85,25 +88,27 @@ By <i>Mark A. Yoder</i>
         iL++;
         if(iL >= samples) {
             iL = 0;
+//            globalDataLold = globalDataL;
+//            var i;
+//            for(i=0; i<samples; i++) {
+//            globalDataL[i] = [0, 0];
+//            }
         }
-        plot.setData([ globalDataL ]);
+        plot.setData([ globalDataL, globalDataR]);
         plot.draw();
     }
 
-    // When new data arrived, convert it and plot it.
-    function message(data) {
-        var myData = window.atob(data);
-        // Pull out left and right channels
-        for(var i=0; i<samples; i++) {
-            globalDataL[i] = [i*Ts, myData.charCodeAt(2*i  )-128];
-            globalDataR[i] = [i*Ts, myData.charCodeAt(2*i+1)-128];
+    function gpio(data) {
+        data = atob(data);
+//        data = isNaN(data) ? 0 : data;
+        status_update("gpio: " + data);
+        globalDataR[iR] = [iR, data];
+        iR++;
+        if(iR >= samples) {
+            iR = 0;
         }
-        plot.setData([ globalDataL, globalDataR ]);
-        // since the axes don't change, we don't need to call plot.setupGrid()
+        plot.setData([ globalDataL, globalDataR]);
         plot.draw();
-
-      document.getElementById('message').innerHTML = "Server says: " +
-          globalDataL.length + " points: ";
     }
 
     function status_update(txt){
@@ -169,7 +174,8 @@ $(function () {
 
     // Request data every updateInterval ms
     function update() {
-        socket.emit("ain", "Send more data");
+        socket.emit("ain",  "Send more data");
+        socket.emit("gpio", "Send more data");
         setTimeout(update, updateInterval);
     }
     update();

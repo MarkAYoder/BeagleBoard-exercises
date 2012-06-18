@@ -85,6 +85,11 @@ io.sockets.on('connection', function (socket) {
 //        console.log('emitted ain ' + readAin(6));
     });
 
+    socket.on('gpio', function (message) {
+        socket.emit('gpio', readGpio(7));
+//        console.log('emitted gpio: ' + readGpio(7));
+    });
+
     socket.on('disconnect', function () {
         console.log("Connection " + socket.id + " terminated.");
         connectCount--;
@@ -110,24 +115,12 @@ io.sockets.on('connection', function (socket) {
 // Read analog input
 var ainPath = "/sys/devices/platform/omap/tsc/";
     function readAin(port) {
-/*
-        fs.readFile(ainPath + "ain" + port, function (err, data) {
-            if(err) {
-                console.log("readAin(%d): %s", port, err);
-                return;
-            }
-            console.log("readAin(%d): data = %d", port, data);
-            return(data);
-        });
-*/
         return(fs.readFileSync(ainPath + "ain" + port, 'base64'));
     }
 
-    // Request data every updateInterval ms
-//    function update() {
-//    var updateInterval = 1000;
-//        readAin(6);
-//        setTimeout(update, updateInterval);
-//    }
-//    update();
+// Read analog input
+var gpioPath = "/sys/class/gpio/";
+    function readGpio(port) {
+        return(fs.readFileSync(gpioPath + "gpio" + port + "/value", 'base64'));
+    }
 
