@@ -5,12 +5,9 @@
 var http = require('http'),
     url = require('url'),
     fs = require('fs'),
-    child_process = require('child_process'),
+    exec = require('child_process').exec,
     server,
-    connectCount = 0,	// Number of connections to server
-    globalData,		// all data from arecord is saved here and sent
-			// to the client when requested.
-    child;
+    connectCount = 0;	// Number of connections to server
 
 server = http.createServer(function (req, res) {
 // server code
@@ -91,11 +88,9 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('i2c', function (message) {
 //        console.log('Got i2c request');
-        var exec = require('child_process').exec,
-            child;
-        child = exec('i2cget -y 3 0x48',
+        exec('i2cget -y 3 0x48',
             function (error, stdout, stderr) {
-                console.log('i2cget: ' + stdout);
+//                console.log('i2cget: "' + stdout + '"');
                 if(error) { console.log('error: ' + error); }
                 if(stderr) {console.log('stderr: ' + stderr); }
                 socket.emit('i2c', stdout);

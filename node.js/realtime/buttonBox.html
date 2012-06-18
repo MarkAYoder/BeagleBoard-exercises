@@ -52,6 +52,7 @@ By <i>Mark A. Yoder</i>
         i2cNum  = "0x48";
     ainData[samples] = 0;
     gpioData[samples] = 0;
+    i2cData[samples] = 0;
 
     function connect() {
       if(firstconnect) {
@@ -114,7 +115,9 @@ By <i>Mark A. Yoder</i>
     }
 
     function i2c(data) {
-        data = atob(data)/10;
+        status_update("i2c: responded" + data);
+//        data = data.substring(data.length-1);
+        data = parseInt(data)/20;
         status_update("i2c: " + data);
         i2cData[ii2c] = [ii2c, data];
         ii2c++;
