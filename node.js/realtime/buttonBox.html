@@ -19,8 +19,8 @@
 <!--    <button id="send" onClick='send()'/>Send Message</button> -->
     Time between updates: <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> ms
     <button id="zoomout" onClick='plot.zoomOut()'>Zoom Out</button>
-    <div id="placeholder" style="width:350px;height:300px;"></div>
-<center>Time (ms)</center>
+    <div id="placeholder" style="width:650px;height:300px;"></div>
+<center>samples</center>
 <p>
 <b>Button Box demo from the <a href="http://elinux.org/index.php?title=Category:ECE497" target="_blank">32-bit Embedded Linux Class</a>.</b>
 Try pushing the button and turning the pot on the the breadboard.
@@ -41,7 +41,7 @@ By <i>Mark A. Yoder</i>
     var firstconnect = true,
         fs = 8000,
         Ts = 1/fs*1000,
-        samples = 800,
+        samples = 100,
         plot,
         globalDataL = [], iL = 0;
         globalDataR = [];
@@ -111,7 +111,7 @@ By <i>Mark A. Yoder</i>
     }
 
     function send(){
-      socket.send("Hello Server!");    
+      socket.emit("ain", "Hello Server!");    
     };
 
     connect();
@@ -125,7 +125,7 @@ $(function () {
         // zip the generated y values with the x values
         var result = [];
         for (var i = 0; i <= samples; i++)
-            result[i] = [i*Ts, 0];
+            result[i] = [i, 0];
         return result;
     }
 
@@ -169,7 +169,7 @@ $(function () {
 
     // Request data every updateInterval ms
     function update() {
-        socket.send("Send more data");
+        socket.emit("ain", "Send more data");
         setTimeout(update, updateInterval);
     }
     update();

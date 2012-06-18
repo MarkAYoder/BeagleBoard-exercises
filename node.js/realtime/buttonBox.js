@@ -77,7 +77,7 @@ io.sockets.on('connection', function (socket) {
     // define its event handlers
 
     // Send a packet of data every time a 'message' is received.
-    socket.on('message', function (message) {
+    socket.on('ain', function (message) {
 //        console.log("Received message: " + message + 
 //            " - from client " + socket.id);
 //        socket.emit('message', sendData() );
@@ -103,7 +103,6 @@ io.sockets.on('connection', function (socket) {
         return(globalData);
     }
 
- // initiate read from arecord
     connectCount++;
     console.log("connectCount = " + connectCount);
 });
@@ -125,10 +124,10 @@ var ainPath = "/sys/devices/platform/omap/tsc/";
     }
 
     // Request data every updateInterval ms
-    function update() {
-    var updateInterval = 1000;
+//    function update() {
+//    var updateInterval = 1000;
 //        readAin(6);
-        setTimeout(update, updateInterval);
-    }
-    update();
+//        setTimeout(update, updateInterval);
+//    }
+//    update();
 
