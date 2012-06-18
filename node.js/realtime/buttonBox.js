@@ -28,15 +28,11 @@ server = http.createServer(function (req, res) {
         fs.readFile(__dirname + path, function (err, data) {
             if (err) {return send404(res); }
 //            console.log("path2: " + path);
-// This seems to send the correct header if I leave this out.
-//            res.writeHead(200, {'Content-Type': path === 'json.js' ? 'text/javascript' : 'text/html'});
             res.write(data, 'utf8');
             res.end();
         });
         break;
 
-//    default:
-//        send404(res);
     }
 });
 
@@ -46,7 +42,7 @@ var send404 = function (res) {
     res.end();
 };
 
-server.listen(8080);
+server.listen(8081);
 
 // socket.io, I choose you
 var io = require('socket.io').listen(server);
@@ -84,14 +80,15 @@ io.sockets.on('connection', function (socket) {
     socket.on('message', function (message) {
 //        console.log("Received message: " + message + 
 //            " - from client " + socket.id);
-        socket.emit('message', sendData() );
+//        socket.emit('message', sendData() );
+        socket.emit('ain', readAin(6));
+//        console.log('emitted ain ' + readAin(6));
     });
 
     socket.on('disconnect', function () {
         console.log("Connection " + socket.id + " terminated.");
         connectCount--;
         if(connectCount === 0) {
-            child.kill('SIGHUP');
         }
         console.log("connectCount = " + connectCount);
     });
@@ -107,45 +104,6 @@ io.sockets.on('connection', function (socket) {
     }
 
  // initiate read from arecord
-    if(connectCount === 0) {
-    try {
-        console.log("process.platform: " + process.platform);
-        if(process.platform !== "darwin") {
-        child = child_process.spawn(
-           "/usr/bin/arecord",
-           [
-            "-Dplughw:1,0",
-            "-c2", "-r8000", "-fU8", "-traw", 
-            "--buffer-size=800", "--period-size=800", "-N"
-           ]
-        );
-        } else {
-        child = child_process.spawn(
-           "/Users/yoder/bin/sox-14.4.0/rec",
-           [
-            "-c2", "-r44100", "-tu8",  
-            "--buffer", "1600", "-q", "-"
-           ]
-        );
-
-        }
-//        console.log("arecord started");
-        child.stdout.setEncoding('base64');
-        child.stdout.on('data', function(data) {
-            // Save data read from arecord in globalData
-            globalData = data;
-            frameCount++;
-        });
-        child.stderr.on('data', function(data) {
-            console.log("arecord: " + data);
-        });
-        child.on('exit', function(code) {
-            console.log("arecord exited with: " + code);
-        });
-    } catch(err) {
-        console.log("arecord error: " + err);
-    }
-    }
     connectCount++;
     console.log("connectCount = " + connectCount);
 });
@@ -153,6 +111,7 @@ io.sockets.on('connection', function (socket) {
 // Read analog input
 var ainPath = "/sys/devices/platform/omap/tsc/";
     function readAin(port) {
+/*
         fs.readFile(ainPath + "ain" + port, function (err, data) {
             if(err) {
                 console.log("readAin(%d): %s", port, err);
@@ -161,12 +120,14 @@ var ainPath = "/sys/devices/platform/omap/tsc/";
             console.log("readAin(%d): data = %d", port, data);
             return(data);
         });
+*/
+        return(fs.readFileSync(ainPath + "ain" + port, 'base64'));
     }
 
     // Request data every updateInterval ms
     function update() {
     var updateInterval = 1000;
-        readAin(6);
+//        readAin(6);
         setTimeout(update, updateInterval);
     }
     update();

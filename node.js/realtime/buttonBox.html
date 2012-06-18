@@ -19,7 +19,7 @@
 <!--    <button id="send" onClick='send()'/>Send Message</button> -->
     Time between updates: <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> ms
     <button id="zoomout" onClick='plot.zoomOut()'>Zoom Out</button>
-    <div id="placeholder" style="width:650px;height:300px;"></div>
+    <div id="placeholder" style="width:350px;height:300px;"></div>
 <center>Time (ms)</center>
 <p>
 <b>Button Box demo from the <a href="http://elinux.org/index.php?title=Category:ECE497" target="_blank">32-bit Embedded Linux Class</a>.</b>
@@ -43,7 +43,7 @@ By <i>Mark A. Yoder</i>
         Ts = 1/fs*1000,
         samples = 800,
         plot,
-        globalDataL = [],
+        globalDataL = [], iL = 0;
         globalDataR = [];
     globalDataL[samples] = 0;
     globalDataR[samples] = 0;
@@ -64,6 +64,8 @@ By <i>Mark A. Yoder</i>
         socket.on('reconnect_failed', function()
             { message("Reconnect Failed"); });
 
+        socket.on('ain', ain);
+
         firstconnect = false;
       }
       else {
@@ -73,6 +75,19 @@ By <i>Mark A. Yoder</i>
 
     function disconnect() {
       socket.disconnect();
+    }
+
+    function ain(data) {
+        data = atob(data)/4096 * 1.8;
+        data = isNaN(data) ? 0 : data;
+        status_update("ain: " + data);
+        globalDataL[iL] = [iL, data];
+        iL++;
+        if(iL >= samples) {
+            iL = 0;
+        }
+        plot.setData([ globalDataL ]);
+        plot.draw();
     }
 
     // When new data arrived, convert it and plot it.
@@ -135,7 +150,7 @@ $(function () {
             points: { show: false},
             lines:  { show: true, lineWidth: 5},
         }, 
-        yaxis:	{ min: -128, max: 128, 
+        yaxis:	{ min: 0, max: 2, 
                   zoomRange: [10, 256], panRange: [-128, 128] },
         xaxis:	{ show: true, 
                   zoomRange: [10, 100], panRange: [0, 100] },
