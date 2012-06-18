@@ -22,6 +22,7 @@
     <div id="placeholder" style="width:650px;height:300px;"></div>
 <center>samples</center>
 <p>
+
 <b>Button Box demo from the <a href="http://elinux.org/index.php?title=Category:ECE497" target="_blank">32-bit Embedded Linux Class</a>.</b>
 Try pushing the button and turning the pot on the the breadboard.
 Try double-clicking to zoom and click and dragging to pan.
@@ -43,10 +44,13 @@ By <i>Mark A. Yoder</i>
         Ts = 1/fs*1000,
         samples = 100,
         plot,
-        globalDataL = [], iL = 0, 
-        globalDataR = [], iR = 0;
-    globalDataL[samples] = 0;
-    globalDataR[samples] = 0;
+        ainData = [],  iain = 0, 
+        gpioData = [], igpio = 0,
+        i2aData = [],  ii2c = 0,
+        gpioNum = 7,
+        ainNum  = 6;
+    ainData[samples] = 0;
+    gpioData[samples] = 0;
 
     function connect() {
       if(firstconnect) {
@@ -67,6 +71,7 @@ By <i>Mark A. Yoder</i>
 
         socket.on('ain',  ain);
         socket.on('gpio', gpio);
+        socket.on('i2c',  i2c);
 
         firstconnect = false;
       }
@@ -83,28 +88,40 @@ By <i>Mark A. Yoder</i>
     function ain(data) {
         data = atob(data)/4096 * 1.8;
         data = isNaN(data) ? 0 : data;
-        status_update("ain: " + data);
-        globalDataL[iL] = [iL, data];
-        iL++;
-        if(iL >= samples) {
-            iL = 0;
-            globalDataL = [];
+//        status_update("ain: " + data);
+        ainData[iain] = [iain, data];
+        iain++;
+        if(iain >= samples) {
+            iain = 0;
+            ainData = [];
         }
-        plot.setData([ globalDataL, globalDataR ]);
+        plot.setData([ ainData, gpioData ]);
         plot.draw();
     }
 
     function gpio(data) {
         data = atob(data);
-//        data = isNaN(data) ? 0 : data;
-        status_update("gpio: " + data);
-        globalDataR[iR] = [iR, data];
-        iR++;
-        if(iR >= samples) {
-            iR = 0;
-            globalDataR = [];
+//        status_update("gpio: " + data);
+        gpioData[igpio] = [igpio, data];
+        igpio++;
+        if(igpio >= samples) {
+            igpio = 0;
+            gpioData = [];
         }
-        plot.setData([ globalDataL, globalDataR ]);
+        plot.setData([ ainData, gpioData ]);
+        plot.draw();
+    }
+
+    function i2c(data) {
+        data = atob(data);
+        status_update("i2c: " + data);
+        i2cData[ii2c] = [ii2c, data];
+        ii2c++;
+        if(ii2c >= samples) {
+            ii2c = 0;
+            gpioData = [];
+        }
+        plot.setData([ ainData, gpioData ]);
         plot.draw();
     }
 
@@ -163,9 +180,9 @@ $(function () {
     plot = $.plot($("#placeholder"), 
         [ 
           { data:  initPlotData(), 
-            label: "Analog In: " },
+            label: "Analog In: " + ainNum },
           { data:  initPlotData(),
-            label: "gpio in: " }
+            label: "gpio in: "   + gpioNum }
         ],
             options);
 
