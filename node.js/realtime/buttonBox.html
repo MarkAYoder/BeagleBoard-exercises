@@ -46,9 +46,10 @@ By <i>Mark A. Yoder</i>
         plot,
         ainData = [],  iain = 0, 
         gpioData = [], igpio = 0,
-        i2aData = [],  ii2c = 0,
+        i2cData = [],  ii2c = 0,
         gpioNum = 7,
-        ainNum  = 6;
+        ainNum  = 6,
+        i2cNum  = "0x48";
     ainData[samples] = 0;
     gpioData[samples] = 0;
 
@@ -95,7 +96,7 @@ By <i>Mark A. Yoder</i>
             iain = 0;
             ainData = [];
         }
-        plot.setData([ ainData, gpioData ]);
+        plot.setData([ ainData, gpioData, i2cData ]);
         plot.draw();
     }
 
@@ -108,20 +109,20 @@ By <i>Mark A. Yoder</i>
             igpio = 0;
             gpioData = [];
         }
-        plot.setData([ ainData, gpioData ]);
+        plot.setData([ ainData, gpioData, i2cData ]);
         plot.draw();
     }
 
     function i2c(data) {
-        data = atob(data);
+        data = atob(data)/10;
         status_update("i2c: " + data);
         i2cData[ii2c] = [ii2c, data];
         ii2c++;
         if(ii2c >= samples) {
             ii2c = 0;
-            gpioData = [];
+            i2cData = [];
         }
-        plot.setData([ ainData, gpioData ]);
+        plot.setData([ ainData, gpioData, i2cData ]);
         plot.draw();
     }
 
@@ -182,7 +183,9 @@ $(function () {
           { data:  initPlotData(), 
             label: "Analog In: " + ainNum },
           { data:  initPlotData(),
-            label: "gpio in: "   + gpioNum }
+            label: "gpio in: "   + gpioNum },
+          { data:  initPlotData(),
+            label: "i2c: "    + i2cNum }
         ],
             options);
 
@@ -190,6 +193,7 @@ $(function () {
     function update() {
         socket.emit("ain",  "Send more data");
         socket.emit("gpio", "Send more data");
+        socket.emit("i2c",  "Send more data");
         setTimeout(update, updateInterval);
     }
     update();

@@ -80,7 +80,6 @@ io.sockets.on('connection', function (socket) {
     socket.on('ain', function (message) {
 //        console.log("Received message: " + message + 
 //            " - from client " + socket.id);
-//        socket.emit('message', sendData() );
         socket.emit('ain', readAin(6));
 //        console.log('emitted ain ' + readAin(6));
     });
@@ -90,6 +89,19 @@ io.sockets.on('connection', function (socket) {
 //        console.log('emitted gpio: ' + readGpio(7));
     });
 
+    socket.on('i2c', function (message) {
+//        console.log('Got i2c request');
+        var exec = require('child_process').exec,
+            child;
+        child = exec('i2cget -y 3 0x48',
+            function (error, stdout, stderr) {
+                console.log('i2cget: ' + stdout);
+                if(error) { console.log('error: ' + error); }
+                if(stderr) {console.log('stderr: ' + stderr); }
+                socket.emit('i2c', stdout);
+            });
+    });
+
     socket.on('disconnect', function () {
         console.log("Connection " + socket.id + " terminated.");
         connectCount--;
@@ -97,16 +109,6 @@ io.sockets.on('connection', function (socket) {
         }
         console.log("connectCount = " + connectCount);
     });
-
-    function sendData() {
-//        console.log("Sending data");
-        if(frameCount === lastFrame) {
-//            console.log("Already sent frame " + lastFrame);
-        } else {
-            lastFrame = frameCount;
-        }
-        return(globalData);
-    }
 
     connectCount++;
     console.log("connectCount = " + connectCount);
