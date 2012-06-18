@@ -114,7 +114,7 @@ io.sockets.on('connection', function (socket) {
         child = child_process.spawn(
            "/usr/bin/arecord",
            [
-            "-Dplughw:1,0",
+            "-Dplughw:0,0",
             "-c2", "-r8000", "-fU8", "-traw", 
             "--buffer-size=800", "--period-size=800", "-N"
            ]
@@ -149,25 +149,4 @@ io.sockets.on('connection', function (socket) {
     connectCount++;
     console.log("connectCount = " + connectCount);
 });
-
-// Read analog input
-var ainPath = "/sys/devices/platform/omap/tsc/";
-    function readAin(port) {
-        fs.readFile(ainPath + "ain" + port, function (err, data) {
-            if(err) {
-                console.log("readAin(%d): %s", port, err);
-                return;
-            }
-//            console.log("readAin(%d): data = %d", port, data);
-            return(data);
-        });
-    }
-
-    // Request data every updateInterval ms
-    function update() {
-    var updateInterval = 1000;
-        console.log("update: readAin(6) = %d", readAin(6));
-        setTimeout(update, updateInterval);
-    }
-    update();
 
