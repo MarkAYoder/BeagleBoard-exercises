@@ -3,6 +3,11 @@
 #
 # Read am analog input
 
+if [ $# -lt 1 ]; then
+    echo "Usage: $0 AIN#"
+    exit 0
+fi
+
 AIN=$1
 
 cleanup() { # echo a newline
