@@ -1,0 +1,21 @@
+2011-4-8	Mark A. Yoder <Mark.A.Yoder@Rose-Hulman.edu>
+  Converted to example to learn gdb.
+
+2009-12-17  Daniel Allred <d-allred@ti.com>
+  Replaced Makefile to build ARM EABI and DSPEasy versions.
+  Updated to build under DSPEasy system.
+
+2008-04-25  Nelson Castillo <nelson@emqbit.com>
+  Changed the way we gather timings from the system.
+
+2008-04-23  Nelson Castillo <nelson@emqbit.com>
+   Added a simple Makefile.
+   Contributed by Matteo Croce <matteo@openwrt.org>.
+
+2007-04-16  Nelson Castillo <nelson@emqbit.com>
+   Fixes for the FLOPSs calculation method in bench.c.
+   Patch contributed by Søren Andersen <san@rosetechnology.dk).
+
+2007-03-14  Nelson Castillo <nelson@emqbit.com>
+   First release.
+   Code by Nelson Castillo and Andrés Calderón.

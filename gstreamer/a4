@@ -1,0 +1,3 @@
+#! /bin/sh
+set -x
+gst-launch filesrc location=esc-media/davincieffect.aac ! aacparse ! ffdec_aac ! alsasink

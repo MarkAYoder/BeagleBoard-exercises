@@ -1,0 +1,4 @@
+#! /bin/sh
+set -x
+gst-client create "filesrc location=esc-media/2009-obama-congress-speech.avi ! avidemux name=demux demux.video_00 ! queue ! mpeg2dec ! ffmpegcolorspace ! ximagesink demux.audio_00 ! queue max-size-buffers=8000 max-size-time=0 max-size-bytes=0 ! mp3parse ! mad ! volume name=vol ! alsasink"
+

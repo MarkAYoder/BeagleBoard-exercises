@@ -1,0 +1,17 @@
+#! /bin/sh
+PATTERN=0
+
+if [ -n "$1" ] ; then
+   PATTERN=$1
+fi
+
+set -x
+
+./autogain
+
+gst-launch v4l2src ! 'video/x-raw-yuv,width=640,height=480,framerate=30/1' ! \
+tee name=t_vid ! queue ! xvimagesink sync=false t_vid. ! queue ! videorate ! \
+'video/x-raw-yuv,framerate=30/1' ! theoraenc ! queue ! oggmux ! \
+filesink location=test.ogg
+
+# From http://www.twm-kd.com/linux/webcam-and-linux-gstreamer-tutorial/

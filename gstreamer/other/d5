@@ -1,0 +1,4 @@
+#! /bin/sh
+set -x
+gst-launch filesrc location=esc-media/sprc720.flv ! flvdemux name=demux demux.audio ! queue  max-size-buffers=8000 max-size-time=0 max-size-bytes=0 ! mad ! alsasink demux.video ! queue ! ffdec_vp6f !  omapdmaifbsink
+

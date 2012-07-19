@@ -1,0 +1,28 @@
+#!/bin/bash
+# This sets up othe paths needed to work with the DSS.
+# may 12-Aug-2011
+#
+# /etc/init.d/gpe-dm stop
+# Here are the bootargs that are needed
+# set mmcargs 'setenv bootargs console=${console} vram=${vram} omapfb.mode=dvi:${dvimode} omapfb.debug=y omapdss.def_disp=${defaultdisplay} root=${mmcroot} rootfstype=${mmcrootfstype} ${optargs}'
+# setenv optargs omapfb.vram=0:10M,1:10M vram=20M 
+# omapfb.test=y
+# saveenv
+
+ovl0=/sys/devices/platform/omapdss/overlay0
+ovl1=/sys/devices/platform/omapdss/overlay1
+ovl2=/sys/devices/platform/omapdss/overlay2
+
+mgr0=/sys/devices/platform/omapdss/manager0
+mgr1=/sys/devices/platform/omapdss/manager1
+
+lcd=/sys/devices/platform/omapdss/display0
+tv=/sys/devices/platform/omapdss/display1
+
+fb0=/sys/class/graphics/fb0
+fb1=/sys/class/graphics/fb1
+fb2=/sys/class/graphics/fb2
+
+# Set the video mode to YUV (not need since the c-code does it)
+# http://groups.google.com/group/beagleboard/browse_thread/thread/9bc347f5f0853aa1/907f1ac3554b1a19?lnk=gst&q=fbset#907f1ac3554b1a19
+# /usr/sbin/fbset -fb /dev/fb1 -nonstd 8

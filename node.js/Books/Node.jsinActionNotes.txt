@@ -1,0 +1,13 @@
+Page 78 - the createServer() needs a .listen(3000, "127.0.0.1")
+
+Page 81 - Listing 4.2 needs the following added after line 1:
+  , url = require('url');
+
+Page 81 - Here is the line I used to delete item 1:
+$ curl -X DELETE http://localhost:3000/1
+
+Page 85 - examples uses static.js, but Listing 4.3 on page 83 is called readstream_static.js
+
+Page 92, bottom - 500mb.  Is tht 500M Bytes or Bits?
+
+Page 103 - Listing 5.1, break needs a ;

@@ -1,0 +1,9 @@
+#! /bin/sh
+set -x
+
+# Streaming over UDP
+
+# Simple loopback streaming (Beagle over network lo to Beagle)
+
+gst-launch udpsrc port=5555 caps="application/x-rtp" ! queue ! rtppcmudepay !  mulawdec  ! alsasink 
+

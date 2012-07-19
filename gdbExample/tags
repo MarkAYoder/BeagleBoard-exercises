@@ -1,0 +1,41 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+COMMON_H	common.h	17;"	d
+ITERATIONS	common.h	23;"	d
+MAXPOW2	common.h	21;"	d
+MINPOW2	common.h	19;"	d
+M_PI	common.h	26;"	d
+_CFFT_H_	cfft.h	17;"	d
+_DISTANCE_H_	distance.h	18;"	d
+abs2	cfft.h	30;"	d
+angle	cfft.h	32;"	d
+bndx	cfft.c	/^int *bndx;$/;"	v
+cadd	cfft.h	40;"	d
+cmult	cfft.h	34;"	d
+complex	cfft.h	/^} complex;$/;"	t	typeref:struct:__anon2
+csub	cfft.h	37;"	d
+desc	main_bench.c	/^  char *desc;$/;"	m	struct:__anon1	file:
+distance_c	distance.c	/^float distance_c(float *v1, float *v2, int N)$/;"	f
+dot_c	distance.c	/^float dot_c(float *v1, float *v2, int N)$/;"	f
+f	main_bench.c	/^  float (*f) (float*, float*, int);$/;"	m	struct:__anon1	file:
+fft_end	cfft.c	/^void fft_end ()$/;"	f
+fft_exec	cfft.c	/^void fft_exec (int N, complex * in)$/;"	f
+fft_init	cfft.c	/^void fft_init (int N)$/;"	f
+get_timestamp	main_bench.c	/^static timestamp_t get_timestamp ()$/;"	f	file:
+get_timestamp	main_cfft.c	/^static timestamp_t get_timestamp ()$/;"	f	file:
+i	cfft.h	/^    float i;$/;"	m	struct:__anon2
+main	main_bench.c	/^main(int argc, char *argv[])$/;"	f
+main	main_cfft.c	/^int main ()$/;"	f
+ndx	cfft.c	/^int *ndx;$/;"	v
+new_complex_vector	main_cfft.c	/^static complex *new_complex_vector(int size)$/;"	f	file:
+new_vector	main_bench.c	/^static float *new_vector(int N)$/;"	f	file:
+pi_2	cfft.h	28;"	d
+r	cfft.h	/^    float r;$/;"	m	struct:__anon2
+tableW	cfft.c	/^complex *tableW;$/;"	v
+test_case	main_bench.c	/^} test_case;$/;"	t	typeref:struct:__anon1	file:
+timestamp_t	main_bench.c	/^typedef unsigned long long timestamp_t;$/;"	t	file:
+timestamp_t	main_cfft.c	/^typedef unsigned long long timestamp_t;$/;"	t	file:

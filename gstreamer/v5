@@ -1,0 +1,15 @@
+#! /bin/sh
+PATTERN=0
+
+if [ -n "$1" ] ; then
+   PATTERN=$1
+fi
+
+set -x
+
+./autogain
+gst-launch v4l2src device=/dev/video0 ! \
+'video/x-raw-yuv,width=640,height=480,framerate=30/1' ! xvimagesink
+
+
+

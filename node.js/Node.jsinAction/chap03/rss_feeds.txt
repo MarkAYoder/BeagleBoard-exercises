@@ -1,0 +1,3 @@
+http://markayoder.blogspot.com//feeds/posts/default
+http://www.nytimes.com/services/xml/rss/nyt/AsiaPacific.xml
+http://feeds.nytimes.com/nyt/rss/Technology

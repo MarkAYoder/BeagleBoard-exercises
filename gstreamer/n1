@@ -1,0 +1,11 @@
+#! /bin/sh
+cat <<EOF
+
+On Host:
+
+ifconfig # determine host IP address
+cd /opt/share/esc-media-files
+/opt/share/esc-gst/live555MediaServer
+
+EOF
+

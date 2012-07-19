@@ -1,0 +1,20 @@
+#! /bin/sh
+BUFFER=1000
+
+if [ -n "$1" ] ; then
+   BUFFER=$1
+fi
+
+set -x
+
+# set capture source to aux in
+
+#alsamixer cset numid=18,iface=MIXER,name='Capture Source' 2   
+
+# Record to a file
+
+# gst-launch alsasrc device="plughw:1,0" num-buffers=$BUFFER ! \
+# audio/x-raw-int,rate=8000,channels=1,depth=16 ! alsasink
+
+gst-launch alsasrc device="hw:1,0" num-buffers=$BUFFER !  alsasink
+

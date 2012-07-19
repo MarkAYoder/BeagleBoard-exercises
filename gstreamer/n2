@@ -1,0 +1,10 @@
+#! /bin/sh
+HOST=10.0.0.3
+
+if [ -n "$1" ] ; then
+   HOST=$1
+fi
+
+set -x
+gst-launch rtspsrc location=rtsp://$HOST:8554/davincieffect.mp3 ! rtpmpadepay ! mad ! alsasink
+

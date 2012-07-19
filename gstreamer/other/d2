@@ -1,0 +1,10 @@
+#! /bin/sh
+BUFFER=70
+
+if [ -n "$1" ] ; then
+   BUFFER=$1
+fi
+
+set -x
+gst-launch -v filesrc location=esc-media/AlphaAnimal.m4a num-buffers=$BUFFER ! decodebin ! alsasink 2>&1 | sed -n -e  's/.*:\(.*\)[0-9]\..*/\1/gp' | uniq
+

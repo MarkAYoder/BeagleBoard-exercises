@@ -1,0 +1,31 @@
+#!/bin/bash
+# This resets the DSS to hide fb1 and fb2, the video framebuffers and
+# show fb0, the buffer where X11 does its drawing.
+# may 12-Aug-2011
+
+. setDSSpaths
+
+# Disable the overlays
+echo "0" > $ovl0/enabled
+echo "0" > $ovl1/enabled  # This will hide the video fb, don't turn it on again.
+echo "0" > $ovl2/enabled
+
+# Disconnect all the overlay before reconnecting them
+echo "" > $fb0/overlays
+echo "" > $fb1/overlays
+echo "" > $fb2/overlays
+
+echo "0" > $fb0/overlays
+echo "1" > $fb1/overlays
+echo "2" > $fb2/overlays
+
+# Point both overlays to the lcd manager
+echo "lcd" > $ovl0/manager
+echo "lcd" > $ovl1/manager
+
+echo "0" > $mgr0/alpha_blending_enabled
+echo "0" > $mgr0/alpha_blending_enabled
+
+echo "1" > $ovl0/enabled
+
+# Hint:  try dmesg | tail if you are getting errors.

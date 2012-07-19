@@ -1,0 +1,11 @@
+#! /bin/sh
+PATTERN=0
+
+if [ -n "$1" ] ; then
+   PATTERN=$1
+fi
+
+set -x
+
+gst-launch videotestsrc pattern=$PATTERN ! warptv ! ffmpegcolorspace ! ximagesink
+

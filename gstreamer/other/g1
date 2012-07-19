@@ -1,0 +1,5 @@
+#! /bin/sh
+killall gstd >/dev/null 2>&1
+set -x
+gstd &
+

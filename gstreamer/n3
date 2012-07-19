@@ -1,0 +1,11 @@
+#! /bin/sh
+HOST=localhost
+
+if [ -n "$1" ] ; then
+   HOST=$1
+fi
+
+set -x
+
+gst-launch audiotestsrc freq=1000 ! mulawenc ! rtppcmupay ! udpsink host=$HOST port=5555
+

@@ -1,0 +1,11 @@
+#! /bin/sh
+BUFFER=2000
+
+if [ -n "$1" ] ; then
+   BUFFER=$1
+fi
+
+set -x
+
+gst-launch -v filesrc num-buffers=$BUFFER location=esc-media/BigBuckBunny_640x360.m4v ! qtdemux name=demux demux.audio_00 ! queue  max-size-buffers=8000 max-size-time=0 max-size-bytes=0 ! faad ! alsasink demux.video_00 ! queue !  TIViddec2 ! ffmpegcolorspace ! omapdmaifbsink 
+

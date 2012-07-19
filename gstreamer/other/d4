@@ -1,0 +1,10 @@
+#! /bin/sh
+BUFFER=700
+
+if [ -n "$1" ] ; then
+   BUFFER=$1
+fi
+
+set -x
+gst-launch filesrc location=esc-media/2009-obama-congress-speech.avi num-buffers=$BUFFER ! avidemux name=demux demux.video_00 ! queue ! mpeg2dec ! xvimagesink demux.audio_00 ! queue max-size-buffers=8000 max-size-time=0 max-size-bytes=0 ! mp3parse ! mad ! alsasink
+

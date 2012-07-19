@@ -1,0 +1,26 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+CLKSEL_GPT10_MASK	dm3730-pwm.c	58;"	d	file:
+CLKSEL_GPT11_MASK	dm3730-pwm.c	59;"	d	file:
+CM_CLKSEL_CORE	dm3730-pwm.c	57;"	d	file:
+GPT_REG_TCLR	dm3730-pwm.c	62;"	d	file:
+GPT_REG_TCRR	dm3730-pwm.c	63;"	d	file:
+GPT_REG_TLDR	dm3730-pwm.c	64;"	d	file:
+GPT_REG_TMAR	dm3730-pwm.c	65;"	d	file:
+PWM_FREQUENCY_13MHZ	dm3730-pwm.h	46;"	d
+PWM_FREQUENCY_32KHZ	dm3730-pwm.h	48;"	d
+REG32_PTR	dm3730-pwm.c	69;"	d	file:
+check_pagesize	dm3730-pwm.c	/^check_pagesize(void)$/;"	f	file:
+gpt_instance_addrs	dm3730-pwm.c	/^static guint32 gpt_instance_addrs[] = {$/;"	v	file:
+main	dm3730-pwm-demo.c	/^main(int argc, char **argv)$/;"	f
+pwm_calc_resolution	dm3730-pwm.c	/^pwm_calc_resolution(int pwm_frequency, int clock_frequency)$/;"	f
+pwm_close_devmem	dm3730-pwm.c	/^pwm_close_devmem(int dev_fd)$/;"	f
+pwm_config_clock	dm3730-pwm.c	/^pwm_config_clock(int mem_fd, gboolean gptimer10_13mhz, gboolean gptimer11_13mhz)$/;"	f
+pwm_config_timer	dm3730-pwm.c	/^pwm_config_timer(guint8 *instance, guint32 resolution, float duty_cycle)$/;"	f
+pwm_mmap_instance	dm3730-pwm.c	/^pwm_mmap_instance(int mem_fd, int instance_number)$/;"	f
+pwm_munmap_instance	dm3730-pwm.c	/^pwm_munmap_instance(guint8 *instance)$/;"	f
+pwm_open_devmem	dm3730-pwm.c	/^pwm_open_devmem(void)$/;"	f

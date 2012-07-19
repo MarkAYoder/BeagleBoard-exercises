@@ -1,0 +1,41 @@
+#!/bin/bash
+# This sets the DSS to show fb1, a video framebuffer in transparent mode.
+# fb1 is behind fb0.  White is set to be transparent, so where ever fb0 is
+# white, you will see fb1.  fb0 is also set to 50% transparent, so you can 
+# see fb0 through the other parts.
+# may 12-Aug-2011
+
+. setDSSpaths
+
+video_size=640,480
+
+# Disable the overlays
+echo "0" > $ovl0/enabled
+echo "0" > $ovl1/enabled
+
+# Connect fb0 to ovl0
+echo "0" > $fb0/overlays
+echo "1" > $fb1/overlays
+echo $video_size > $fb1/virtual_size
+
+# Point both overlays to the lcd manager
+echo "lcd" > $ovl0/manager
+echo "lcd" > $ovl1/manager
+
+# echo $ovl0/output_size > $ovl1/output_size
+echo 0,0 > $ovl0/position
+echo $video_size > $ovl1/output_size
+echo 100,100 > $ovl1/position
+
+echo 128 > $ovl0/global_alpha
+echo   1 > $mgr0/alpha_blending_enabled
+
+# Turn on transparency, make white (65535) transparent
+echo   1 > $mgr0/trans_key_enabled
+echo 65535 > $mgr0/trans_key_value
+# echo 0     > $mgr0/trans_key_value
+# echo video-source > $mgr0/trans_key_type
+echo gfx-destination > $mgr0/trans_key_type
+
+echo "1" > $ovl0/enabled
+echo "1" > $ovl1/enabled

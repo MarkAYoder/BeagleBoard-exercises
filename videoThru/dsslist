@@ -1,0 +1,3 @@
+# Use this to cat the contents of all the files in a directory
+
+find . -maxdepth 1 -print -type f -exec cat {} \;

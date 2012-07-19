@@ -1,0 +1,8 @@
+#! /bin/sh
+set -x
+export DISPLAY=:0.0
+export PATH=$PATH:/home/root/esc-gst
+cd /home/root/esc-gst
+killall -9 pulseaudio
+set +x
+

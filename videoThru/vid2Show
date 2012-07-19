@@ -1,0 +1,39 @@
+#!/bin/bash
+# This sets the DSS to show fb1 on overlays 1 and 2.  You can move the two
+# overlays independently.
+# may 12-Aug-2011
+
+. setDSSpaths
+
+video_size=640,480
+
+# Disable the overlays
+echo "0" > $ovl0/enabled
+echo "0" > $ovl1/enabled
+echo "0" > $ovl2/enabled
+
+# Connect the overlays we want
+echo "0"   > $fb0/overlays
+echo ""    > $fb2/overlays	# Disconnect fb2 before connecting 2 to fb1
+echo "1,2" > $fb1/overlays
+
+echo $video_size > $fb1/virtual_size
+echo $video_size > $fb2/virtual_size
+
+echo $video_size > $ovl1/output_size
+echo $video_size > $ovl2/output_size
+
+echo 0,0 > $ovl1/position
+echo 640,240 > $ovl2/position
+
+echo 255 > $ovl0/global_alpha
+echo 0   > $mgr0/alpha_blending_enabled
+
+echo "1" > $ovl0/enabled
+echo "1" > $ovl1/enabled
+echo "1" > $ovl2/enabled
+
+# Turn on transparency, make white (65535) transparent
+echo   0 > $mgr0/trans_key_enabled
+echo 65535 > $mgr0/trans_key_value
+
