@@ -2,9 +2,11 @@
 # --Mark
 # 6-Jul-2012
 opkg update
+opkg install openssh-keygen
 cp .bashrc ~
 cd
 ln -s /var/lib/cloud9 .
+ln -s pinMux.html /var/lib/cloud9/bone101
 cd cloud9
 git pull
 cd
