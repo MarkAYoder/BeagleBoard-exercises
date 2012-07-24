@@ -17,9 +17,10 @@
     <button id="connect" onClick='connect()'/>Connect</button>
     <button id="disconnect" onClick='disconnect()'>Disconnect</button>
 <!--    <button id="send" onClick='send()'/>Send Message</button> -->
-    Time between updates: <input id="updateInterval" type="text" value="" style="text-align: right; width:5em"> ms
-    <button id="zoomout" onClick='plot.zoomOut()'>Zoom Out</button>
-    <div id="placeholder" style="width:650px;height:300px;"></div>
+    Update: <input id="updateTopInterval" type="text" value="" style="text-align: right; width:5em"> ms
+    Update: <input id="updateBotInterval" type="text" value="" style="text-align: right; width:5em"> ms
+    <button id="zoomout" onClick='plotTop.zoomOut()'>Zoom Out</button>
+    <div id="plotTop" style="width:650px;height:150px;"></div>
 <center>samples</center>
 <p>
 
@@ -43,7 +44,7 @@ By <i>Mark A. Yoder</i>
         fs = 8000,
         Ts = 1/fs*1000,
         samples = 100,
-        plot,
+        plotTop,
         ainData = [],  iain = 0, 
         gpioData = [], igpio = 0,
         i2cData = [],  ii2c = 0,
@@ -97,8 +98,8 @@ By <i>Mark A. Yoder</i>
             iain = 0;
             ainData = [];
         }
-        plot.setData([ ainData, gpioData, i2cData ]);
-        plot.draw();
+        plotTop.setData([ ainData, gpioData, i2cData ]);
+        plotTop.draw();
     }
 
     function gpio(data) {
@@ -110,8 +111,8 @@ By <i>Mark A. Yoder</i>
             igpio = 0;
             gpioData = [];
         }
-        plot.setData([ ainData, gpioData, i2cData ]);
-        plot.draw();
+        plotTop.setData([ ainData, gpioData, i2cData ]);
+        plotTop.draw();
     }
 
     function i2c(data) {
@@ -125,8 +126,8 @@ By <i>Mark A. Yoder</i>
             ii2c = 0;
             i2cData = [];
         }
-        plot.setData([ ainData, gpioData, i2cData ]);
-        plot.draw();
+        plotTop.setData([ ainData, gpioData, i2cData ]);
+        plotTop.draw();
     }
 
     function status_update(txt){
@@ -153,21 +154,34 @@ $(function () {
     }
 
     // setup control widget
-    var updateInterval = 100;
-    $("#updateInterval").val(updateInterval).change(function () {
+    var updateTopInterval = 100;
+    $("#updateTopInterval").val(updateTopInterval).change(function () {
         var v = $(this).val();
         if (v && !isNaN(+v)) {
-            updateInterval = +v;
-            if (updateInterval < 1)
-                updateInterval = 1;
-            if (updateInterval > 2000)
-                updateInterval = 2000;
-            $(this).val("" + updateInterval);
+            updateTopInterval = +v;
+            if (updateTopInterval < 1)
+                updateTopInterval = 1;
+            if (updateTopInterval > 2000)
+                updateTopInterval = 2000;
+            $(this).val("" + updateTopInterval);
+        }
+    });
+
+    var updateBotInterval = 200;
+    $("#updateBotInterval").val(updateBotInterval).change(function () {
+        var v = $(this).val();
+        if (v && !isNaN(+v)) {
+            updateBotInterval = +v;
+            if (updateBotInterval < 1)
+                updateBotInterval = 1;
+            if (updateBotInterval > 2000)
+                updateBotInterval = 2000;
+            $(this).val("" + updateBotInterval);
         }
     });
 
     // setup plot
-    var options = {
+    var optionsTop = {
         series: { 
             shadowSize: 0, // drawing is faster without shadows
             points: { show: false},
@@ -181,7 +195,7 @@ $(function () {
         zoom:	{ interactive: true, amount: 1.1 },
         pan:	{ interactive: true }
     };
-    plot = $.plot($("#placeholder"), 
+    plotTop = $.plot($("#plotTop"), 
         [ 
           { data:  initPlotData(), 
             label: "Analog In: " + ainNum },
@@ -190,16 +204,21 @@ $(function () {
           { data:  initPlotData(),
             label: "i2c: "    + i2cNum }
         ],
-            options);
+            optionsTop);
 
     // Request data every updateInterval ms
-    function update() {
+    function updateTop() {
         socket.emit("ain",  "Send more data");
+        setTimeout(updateTop, updateTopInterval);
+    }
+    updateTop();
+
+    function updateBot() {
         socket.emit("gpio", "Send more data");
         socket.emit("i2c",  "Send more data");
-        setTimeout(update, updateInterval);
+        setTimeout(updateBot, updateBotInterval);
     }
-    update();
+    updateBot();
 });
 </script>
 
