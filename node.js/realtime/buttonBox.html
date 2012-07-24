@@ -17,15 +17,23 @@
     <button id="connect" onClick='connect()'/>Connect</button>
     <button id="disconnect" onClick='disconnect()'>Disconnect</button>
 <!--    <button id="send" onClick='send()'/>Send Message</button> -->
-    Update: <input id="updateBotInterval" type="text" value="" style="text-align: right; width:5em"> ms
-    <button id="zoomout" onClick='plotTop.zoomOut()'>Zoom Out</button>
 <table>
+<tr>
     <td><div id="plotTop" style="width:550px;height:150px;"></div>
 <center>samples</center></td>
 <td>
     Update: <input id="updateTopInterval" type="text" value="" style="text-align: right; width:5em"> ms
     <button id="zoomout" onClick='plotTop.zoomOut()'>Zoom Out</button>
 </td>
+</tr>
+<tr>
+    <td><div id="plotBot" style="width:550px;height:150px;"></div>
+<center>samples</center></td>
+<td>
+    Update: <input id="updateBotInterval" type="text" value="" style="text-align: right; width:5em"> ms
+    <button id="zoomout" onClick='plotBot.zoomOut()'>Zoom Out</button>
+</td>
+</tr>
 </table>
 <p>
 
@@ -50,6 +58,7 @@ By <i>Mark A. Yoder</i>
         Ts = 1/fs*1000,
         samples = 100,
         plotTop,
+        plotBot,
         ainData = [],  iain = 0, 
         gpioData = [], igpio = 0,
         i2cData = [],  ii2c = 0,
@@ -103,7 +112,7 @@ By <i>Mark A. Yoder</i>
             iain = 0;
             ainData = [];
         }
-        plotTop.setData([ ainData, gpioData, i2cData ]);
+        plotTop.setData([ ainData, gpioData ]);
         plotTop.draw();
     }
 
@@ -116,14 +125,15 @@ By <i>Mark A. Yoder</i>
             igpio = 0;
             gpioData = [];
         }
-        plotTop.setData([ ainData, gpioData, i2cData ]);
-        plotTop.draw();
+        plotBot.setData([ gpioData, i2cData ]);
+        plotBot.draw();
     }
 
     function i2c(data) {
         status_update("i2c: responded" + data);
 //        data = data.substring(data.length-1);
-        data = parseInt(data)/20;
+        // Conver to F
+        data = parseInt(data) * 9/5 +32;
         status_update("i2c: " + data);
         i2cData[ii2c] = [ii2c, data];
         ii2c++;
@@ -131,8 +141,8 @@ By <i>Mark A. Yoder</i>
             ii2c = 0;
             i2cData = [];
         }
-        plotTop.setData([ ainData, gpioData, i2cData ]);
-        plotTop.draw();
+        plotBot.setData([ gpioData, i2cData ]);
+        plotBot.draw();
     }
 
     function status_update(txt){
@@ -205,11 +215,30 @@ $(function () {
           { data:  initPlotData(), 
             label: "Analog In: " + ainNum },
           { data:  initPlotData(),
-            label: "gpio in: "   + gpioNum },
+            label: "gpio in: "   + gpioNum }
+        ],
+            optionsTop);
+
+    var optionsBot = {
+        series: { 
+            shadowSize: 0, // drawing is faster without shadows
+            points: { show: false},
+            lines:  { show: true, lineWidth: 5},
+        }, 
+        yaxis:	{ min: 70, max: 80, 
+                  zoomRange: [10, 256], panRange: [-128, 128] },
+        xaxis:	{ show: true, 
+                  zoomRange: [10, 100], panRange: [0, 100] },
+        legend:	{ position: "sw" },
+        zoom:	{ interactive: true, amount: 1.1 },
+        pan:	{ interactive: true }
+    };
+    plotBot = $.plot($("#plotBot"), 
+        [ 
           { data:  initPlotData(),
             label: "i2c: "    + i2cNum }
         ],
-            optionsTop);
+            optionsBot);
 
     // Request data every updateInterval ms
     function updateTop() {
