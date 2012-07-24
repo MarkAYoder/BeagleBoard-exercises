@@ -17,11 +17,16 @@
     <button id="connect" onClick='connect()'/>Connect</button>
     <button id="disconnect" onClick='disconnect()'>Disconnect</button>
 <!--    <button id="send" onClick='send()'/>Send Message</button> -->
-    Update: <input id="updateTopInterval" type="text" value="" style="text-align: right; width:5em"> ms
     Update: <input id="updateBotInterval" type="text" value="" style="text-align: right; width:5em"> ms
     <button id="zoomout" onClick='plotTop.zoomOut()'>Zoom Out</button>
-    <div id="plotTop" style="width:650px;height:150px;"></div>
-<center>samples</center>
+<table>
+    <td><div id="plotTop" style="width:550px;height:150px;"></div>
+<center>samples</center></td>
+<td>
+    Update: <input id="updateTopInterval" type="text" value="" style="text-align: right; width:5em"> ms
+    <button id="zoomout" onClick='plotTop.zoomOut()'>Zoom Out</button>
+</td>
+</table>
 <p>
 
 <b>Button Box demo from the <a href="http://elinux.org/index.php?title=Category:ECE497" target="_blank">32-bit Embedded Linux Class</a>.</b>
