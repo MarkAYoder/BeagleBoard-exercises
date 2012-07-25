@@ -135,9 +135,9 @@ By <i>Mark A. Yoder</i>
     }
 
     function i2c(data) {
-//        status_update("i2c: responded" + data);
+//        status_update("i2c: " + data);
         // Convert to F
-        data = parseInt(data) * 9/5 +32;
+        data = parseInt(data) / 16 / 16 * 9/5 +32;
 //        status_update("i2c: " + data);
         i2cData[ii2c] = [ii2c, data];
         ii2c++;
