@@ -87,6 +87,17 @@ io.sockets.on('connection', function (socket) {
             });
     });
 
+    socket.on('led', function (ledNum) {
+        var ledPath = "/sys/class/leds/beaglebone::usr" + ledNum + "/brightness";
+//        console.log('LED: ' + ledPath);
+        fs.readFile(ledPath, 'utf8', function (err, data) {
+            if(err) throw err;
+            data = data.substring(0,1) === "1" ? "0" : "1";
+//            console.log("LED%d: %s", ledNum, data);
+            fs.writeFile(ledPath, data);
+        });
+    });
+
     socket.on('disconnect', function () {
         console.log("Connection " + socket.id + " terminated.");
         connectCount--;
