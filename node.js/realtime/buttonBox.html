@@ -125,23 +125,22 @@ By <i>Mark A. Yoder</i>
             igpio = 0;
             gpioData = [];
         }
-        plotBot.setData([ gpioData, i2cData ]);
-        plotBot.draw();
+        plotTop.setData([ ainData, gpioData ]);
+        plotTop.draw();
     }
 
     function i2c(data) {
-        status_update("i2c: responded" + data);
-//        data = data.substring(data.length-1);
-        // Conver to F
+//        status_update("i2c: responded" + data);
+        // Convert to F
         data = parseInt(data) * 9/5 +32;
-        status_update("i2c: " + data);
+//        status_update("i2c: " + data);
         i2cData[ii2c] = [ii2c, data];
         ii2c++;
         if(ii2c >= samples) {
             ii2c = 0;
             i2cData = [];
         }
-        plotBot.setData([ gpioData, i2cData ]);
+        plotBot.setData([ i2cData ]);
         plotBot.draw();
     }
 
@@ -155,9 +154,6 @@ By <i>Mark A. Yoder</i>
 
     connect();
 
-    </script>
-
-<script type="text/javascript">
 $(function () {
 
     function initPlotData() {
@@ -182,7 +178,7 @@ $(function () {
         }
     });
 
-    var updateBotInterval = 200;
+    var updateBotInterval = 100;
     $("#updateBotInterval").val(updateBotInterval).change(function () {
         var v = $(this).val();
         if (v && !isNaN(+v)) {
@@ -225,8 +221,8 @@ $(function () {
             points: { show: false},
             lines:  { show: true, lineWidth: 5},
         }, 
-        yaxis:	{ min: 70, max: 80, 
-                  zoomRange: [10, 256], panRange: [-128, 128] },
+        yaxis:	{ min: 70, max: 90, 
+                  zoomRange: [10, 256], panRange: [60, 100] },
         xaxis:	{ show: true, 
                   zoomRange: [10, 100], panRange: [0, 100] },
         legend:	{ position: "sw" },
@@ -243,12 +239,12 @@ $(function () {
     // Request data every updateInterval ms
     function updateTop() {
         socket.emit("ain",  "Send more data");
+        socket.emit("gpio", "Send more data");
         setTimeout(updateTop, updateTopInterval);
     }
     updateTop();
 
     function updateBot() {
-        socket.emit("gpio", "Send more data");
         socket.emit("i2c",  "Send more data");
         setTimeout(updateBot, updateBotInterval);
     }
