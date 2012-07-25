@@ -67,7 +67,7 @@ By <i>Mark A. Yoder</i>
         i2cData = [],  ii2c = 0,
         gpioNum = 7,
         ainNum  = 6,
-        i2cNum  = "0x49";
+        i2cNum  = "0x48";
     ainData[samples] = 0;
     gpioData[samples] = 0;
     i2cData[samples] = 0;
@@ -224,9 +224,9 @@ $(function () {
     plotTop = $.plot($("#plotTop"), 
         [ 
           { data:  initPlotData(), 
-            label: "Analog In: " + ainNum },
+            label: "Analog In" },
           { data:  initPlotData(),
-            label: "gpio in: "   + gpioNum }
+            label: "gpio in" }
         ],
             optionsTop);
 
@@ -235,6 +235,7 @@ $(function () {
             shadowSize: 0, // drawing is faster without shadows
             points: { show: false},
             lines:  { show: true, lineWidth: 5},
+            color: 2
         }, 
         yaxis:	{ min: 70, max: 90, 
                   zoomRange: [10, 256], panRange: [60, 100] },
@@ -247,7 +248,7 @@ $(function () {
     plotBot = $.plot($("#plotBot"), 
         [ 
           { data:  initPlotData(),
-            label: "i2c: "    + i2cNum }
+            label: "i2c"}
         ],
             optionsBot);
 

@@ -16,7 +16,7 @@ server = http.createServer(function (req, res) {
     switch (path) {
     case '/':
         res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write('<h1>Hello!</h1>Try<ul><li><a href="/realtimeDemo.html">Real-time Audio Demo</a></li><li><a href="/buttonBox.html">Button Box Demo</a></li></ul>');
+        res.write('<h1>Hello!</h1>Try<ul><li><a href="/buttonBox.html">Button Box Demo</a></li></ul>');
 
         res.end();
         break;
@@ -45,8 +45,6 @@ server.listen(8081);
 var io = require('socket.io').listen(server);
 io.set('log level', 2);
 
-var totalPoints = 800;
-
 // on a 'connection' event
 io.sockets.on('connection', function (socket) {
     var frameCount = 0;	// Counts the frames from arecord
@@ -57,17 +55,23 @@ io.sockets.on('connection', function (socket) {
     // now that we have our connected 'socket' object, we can 
     // define its event handlers
 
-    // Send a packet of data every time a 'message' is received.
+    // Send value every time a 'message' is received.
     socket.on('ain', function (ainNum) {
-//        console.log("Received message: " + ainNum + 
-//            " - from client " + socket.id);
-        socket.emit('ain', readAin(ainNum));
-//        console.log('emitted ain ' + readAin(ainNum));
+        var ainPath = "/sys/devices/platform/omap/tsc/ain" + ainNum;
+        fs.readFile(ainPath, 'base64', function(err, data) {
+            if(err) throw err;
+            socket.emit('ain', data);
+//            console.log('emitted ain: ' + data);
+        });
     });
 
     socket.on('gpio', function (gpioNum) {
-        socket.emit('gpio', readGpio(gpioNum));
-//        console.log('emitted gpio: ' + readGpio(gpioNum));
+        var gpioPath = "/sys/class/gpio/gpio" + gpioNum + "/value";
+        fs.readFile(gpioPath, 'base64', function(err, data) {
+            if (err) throw err;
+            socket.emit('gpio', data);
+//            console.log('emitted gpio: ' + data);
+        });
     });
 
     socket.on('i2c', function (i2cNum) {
@@ -92,16 +96,4 @@ io.sockets.on('connection', function (socket) {
     connectCount++;
     console.log("connectCount = " + connectCount);
 });
-
-// Read analog input
-var ainPath = "/sys/devices/platform/omap/tsc/";
-    function readAin(port) {
-        return(fs.readFileSync(ainPath + "ain" + port, 'base64'));
-    }
-
-// Read analog input
-var gpioPath = "/sys/class/gpio/";
-    function readGpio(port) {
-        return(fs.readFileSync(gpioPath + "gpio" + port + "/value", 'base64'));
-    }
 
