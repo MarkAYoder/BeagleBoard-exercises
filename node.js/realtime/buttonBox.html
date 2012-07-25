@@ -13,19 +13,21 @@
   </head>
   <body>
     <h1>Button Box Demo <a href="http://Rose-Hulman.edu" target="_blank">
-        <img src="RoseLogo96.png" width=200 align="right"></a></h1>
+        <img src="RoseLogo96.png" width=200 style="float:right"></a></h1>
     <button id="connect" onClick='connect()'/>Connect</button>
     <button id="disconnect" onClick='disconnect()'>Disconnect</button>
-    Analog In <input id="ainNum" type="text" value="" style="text-align: right; width:5em">
-    gpio In <input id="gpioNum" type="text" value="" style="text-align: right; width:5em">
-    i2c <input id="i2cNum" type="text" value="" style="text-align: right; width:5em">
+    <span style="position:relative; left:150px">
+    Analog: <input id="ainNum" type="text" value="" style="text-align: right; width:2em">
+    gpio: <input id="gpioNum" type="text" value="" style="text-align: right; width:2em">
+    i2c: <input id="i2cNum" type="text" value="" style="text-align: right; width:3em">
+    </span>
 <!--    <button id="send" onClick='send()'/>Send Message</button> -->
 <table>
 <tr>
     <td><div id="plotTop" style="width:550px;height:150px;"></div>
 <center>samples</center></td>
 <td>
-    Update: <input id="updateTopInterval" type="text" value="" style="text-align: right; width:5em"> ms
+    Update: <input id="updateTopInterval" type="text" value="" style="text-align: right; width:3em"> ms
     <button id="zoomout" onClick='plotTop.zoomOut()'>Zoom Out</button>
 </td>
 </tr>
@@ -33,7 +35,7 @@
     <td><div id="plotBot" style="width:550px;height:150px;"></div>
 <center>samples</center></td>
 <td>
-    Update: <input id="updateBotInterval" type="text" value="" style="text-align: right; width:5em"> ms
+    Update: <input id="updateBotInterval" type="text" value="" style="text-align: right; width:3em"> ms
     <button id="zoomout" onClick='plotBot.zoomOut()'>Zoom Out</button>
 </td>
 </tr>
