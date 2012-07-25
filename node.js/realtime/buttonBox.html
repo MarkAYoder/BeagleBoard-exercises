@@ -187,8 +187,8 @@ $(function () {
         var v = $(this).val();
         if (v && !isNaN(+v)) {
             updateTopInterval = +v;
-            if (updateTopInterval < 1)
-                updateTopInterval = 1;
+            if (updateTopInterval < 25)
+                updateTopInterval = 25;
             if (updateTopInterval > 2000)
                 updateTopInterval = 2000;
             $(this).val("" + updateTopInterval);
@@ -200,8 +200,8 @@ $(function () {
         var v = $(this).val();
         if (v && !isNaN(+v)) {
             updateBotInterval = +v;
-            if (updateBotInterval < 1)
-                updateBotInterval = 1;
+            if (updateBotInterval < 25)
+                updateBotInterval = 25;
             if (updateBotInterval > 2000)
                 updateBotInterval = 2000;
             $(this).val("" + updateBotInterval);
