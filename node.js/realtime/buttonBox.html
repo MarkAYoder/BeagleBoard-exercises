@@ -16,6 +16,9 @@
         <img src="RoseLogo96.png" width=200 align="right"></a></h1>
     <button id="connect" onClick='connect()'/>Connect</button>
     <button id="disconnect" onClick='disconnect()'>Disconnect</button>
+    Analog In <input id="ainNum" type="text" value="" style="text-align: right; width:5em">
+    gpio In <input id="gpioNum" type="text" value="" style="text-align: right; width:5em">
+    i2c <input id="i2cNum" type="text" value="" style="text-align: right; width:5em">
 <!--    <button id="send" onClick='send()'/>Send Message</button> -->
 <table>
 <tr>
@@ -64,7 +67,7 @@ By <i>Mark A. Yoder</i>
         i2cData = [],  ii2c = 0,
         gpioNum = 7,
         ainNum  = 6,
-        i2cNum  = "0x48";
+        i2cNum  = "0x49";
     ainData[samples] = 0;
     gpioData[samples] = 0;
     i2cData[samples] = 0;
@@ -165,6 +168,18 @@ $(function () {
     }
 
     // setup control widget
+    $("#ainNum").val(ainNum).change(function () {
+        ainNum = $(this).val();
+    });
+
+    $("#gpioNum").val(gpioNum).change(function () {
+        gpioNum = $(this).val();
+    });
+
+    $("#i2cNum").val(i2cNum).change(function () {
+        i2cNum = $(this).val();
+    });
+
     var updateTopInterval = 100;
     $("#updateTopInterval").val(updateTopInterval).change(function () {
         var v = $(this).val();
@@ -238,14 +253,14 @@ $(function () {
 
     // Request data every updateInterval ms
     function updateTop() {
-        socket.emit("ain",  "Send more data");
-        socket.emit("gpio", "Send more data");
+        socket.emit("ain",  ainNum);
+        socket.emit("gpio", gpioNum);
         setTimeout(updateTop, updateTopInterval);
     }
     updateTop();
 
     function updateBot() {
-        socket.emit("i2c",  "Send more data");
+        socket.emit("i2c",  i2cNum);
         setTimeout(updateBot, updateBotInterval);
     }
     updateBot();

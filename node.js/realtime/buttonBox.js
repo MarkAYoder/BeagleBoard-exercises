@@ -46,20 +46,6 @@ var io = require('socket.io').listen(server);
 io.set('log level', 2);
 
 var totalPoints = 800;
-    function getRandomData() {
-        var data = [0];
-        // do a random walk
-        for(var i=1; i<totalPoints; i++) {
-            var prev = data.length > 0 ? data[data.length - 1] : 50;
-            var y = prev + Math.round(Math.random() * 10 - 5);
-            if (y < -100)
-                y = -100;
-            if (y > 100)
-                y = 100;
-            data[i] = y;
-        }
-        return(data);
-    }
 
 // on a 'connection' event
 io.sockets.on('connection', function (socket) {
@@ -68,27 +54,25 @@ io.sockets.on('connection', function (socket) {
     console.log("Connection " + socket.id + " accepted.");
 //    console.log("socket: " + socket);
 
-//    socket.emit('message', 'This is a test');
-
     // now that we have our connected 'socket' object, we can 
     // define its event handlers
 
     // Send a packet of data every time a 'message' is received.
-    socket.on('ain', function (message) {
-//        console.log("Received message: " + message + 
+    socket.on('ain', function (ainNum) {
+//        console.log("Received message: " + ainNum + 
 //            " - from client " + socket.id);
-        socket.emit('ain', readAin(6));
-//        console.log('emitted ain ' + readAin(6));
+        socket.emit('ain', readAin(ainNum));
+//        console.log('emitted ain ' + readAin(ainNum));
     });
 
-    socket.on('gpio', function (message) {
-        socket.emit('gpio', readGpio(7));
-//        console.log('emitted gpio: ' + readGpio(7));
+    socket.on('gpio', function (gpioNum) {
+        socket.emit('gpio', readGpio(gpioNum));
+//        console.log('emitted gpio: ' + readGpio(gpioNum));
     });
 
-    socket.on('i2c', function (message) {
-//        console.log('Got i2c request');
-        exec('i2cget -y 3 0x48',
+    socket.on('i2c', function (i2cNum) {
+//        console.log('Got i2c request:' + i2cNum);
+        exec('i2cget -y 3 ' + i2cNum,
             function (error, stdout, stderr) {
 //                console.log('i2cget: "' + stdout + '"');
                 if(error) { console.log('error: ' + error); }
