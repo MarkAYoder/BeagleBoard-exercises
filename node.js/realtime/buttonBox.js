@@ -55,10 +55,23 @@ io.sockets.on('connection', function (socket) {
     // now that we have our connected 'socket' object, we can 
     // define its event handlers
 
+    // Make sure some needed files are there
+    // The path to the analog devices changed from A5 to A6.  Check both.
+    var ainPath = "/sys/devices/platform/omap/tsc/";
+//    if(!fs.existsSync(ainPath)) {
+//        ainPath = "/sys/devices/platform/tsc/";
+//        if(!fs.existsSync(ainPath)) {
+//            throw "Can't find " + ainPath;
+//        }
+//    }
+    // Make sure gpio 7 is available.
+    exec("echo 7 > /sys/class/gpio/export");
+    
+
     // Send value every time a 'message' is received.
     socket.on('ain', function (ainNum) {
-        var ainPath = "/sys/devices/platform/omap/tsc/ain" + ainNum;
-        fs.readFile(ainPath, 'base64', function(err, data) {
+//        var ainPath = "/sys/devices/platform/omap/tsc/ain" + ainNum;
+        fs.readFile(ainPath + "ain" + ainNum, 'base64', function(err, data) {
             if(err) throw err;
             socket.emit('ain', data);
 //            console.log('emitted ain: ' + data);
