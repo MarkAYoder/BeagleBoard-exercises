@@ -1,5 +1,4 @@
 # I2C tools for Linux
-# From http://www.lm-sensors.org/browser/i2c-tools/trunk/tools/Module.mk
 #
 # Copyright (C) 2007  Jean Delvare <khali@linux-fr.org>
 #
@@ -29,9 +28,6 @@ $(TOOLS_DIR)/i2cdump: $(TOOLS_DIR)/i2cdump.o $(TOOLS_DIR)/i2cbusses.o $(TOOLS_DI
 $(TOOLS_DIR)/i2cset: $(TOOLS_DIR)/i2cset.o $(TOOLS_DIR)/i2cbusses.o $(TOOLS_DIR)/util.o
 	$(CC) $(LDFLAGS) -o $@ $^
 
-$(TOOLS_DIR)/myi2cget: $(TOOLS_DIR)/myi2cget.o
-	$(CC) $(LDFLAGS) -o $@ $^
-
 $(TOOLS_DIR)/i2cget: $(TOOLS_DIR)/i2cget.o $(TOOLS_DIR)/i2cbusses.o $(TOOLS_DIR)/util.o
 	$(CC) $(LDFLAGS) -o $@ $^
 
@@ -49,9 +45,6 @@ $(TOOLS_DIR)/i2cset.o: $(TOOLS_DIR)/i2cset.c $(TOOLS_DIR)/i2cbusses.h $(TOOLS_DI
 	$(CC) $(CFLAGS) $(TOOLS_CFLAGS) -c $< -o $@
 
 $(TOOLS_DIR)/i2cget.o: $(TOOLS_DIR)/i2cget.c $(TOOLS_DIR)/i2cbusses.h $(TOOLS_DIR)/util.h $(INCLUDE_DIR)/linux/i2c-dev.h
-	$(CC) $(CFLAGS) $(TOOLS_CFLAGS) -c $< -o $@
-
-$(TOOLS_DIR)/myi2cget.o: $(TOOLS_DIR)/myi2cget.c
 	$(CC) $(CFLAGS) $(TOOLS_CFLAGS) -c $< -o $@
 
 $(TOOLS_DIR)/i2cbusses.o: $(TOOLS_DIR)/i2cbusses.c $(TOOLS_DIR)/i2cbusses.h $(INCLUDE_DIR)/linux/i2c-dev.h
@@ -92,4 +85,3 @@ clean: clean-tools
 install: install-tools
 
 uninstall: uninstall-tools
-
