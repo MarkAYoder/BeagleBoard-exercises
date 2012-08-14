@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
 	int pec = 0;
 	int flags = 0;
 	int force = 0, yes = 0, version = 0, readback = 1;
-	unsigned char block[I2C_SMBUS_BLOCK_MAX];
+	__u16 block[I2C_SMBUS_BLOCK_MAX];
 	int len;
 
 	i2cbus = lookup_i2c_bus("3");
@@ -165,25 +165,24 @@ int main(int argc, char *argv[])
 		res = i2c_smbus_write_byte(file, daddress);
 
 		int i;
-static char smile_bmp[]={0x3C, 0x42, 0x95, 0xA1, 0xA1, 0x95, 0x42, 0x3C};
-//unsigned char smile_bmp[]={0xfe, 0xa5, 0xef, 0x00, 0x12, 0x00, 0x00, 0x00};
-
+static __u16 smile_bmp[]={0xff3C, 0x42, 0x95, 0xA1, 0xA1, 0x95, 0x42, 0x3C};
 		for(i=0; i<8; i++) {
-			block[2*i]   =    smile_bmp[i] >>1 | 
-					((smile_bmp[i] & 0x01) << 7);
-			block[2*i+1] = 0xff;
+			block[i]   =    (smile_bmp[i]&0xfe) >>1 | 
+					(smile_bmp[i]&0x01) << 7;
+//			block[2*i+1] = 0xff;
 		}
-		res = i2c_smbus_write_i2c_block_data(file, daddress, 16, block);
+		res = i2c_smbus_write_i2c_block_data(file, daddress, 16, 
+			(__u8 *)block);
 		break;
 
 	case I2C_SMBUS_WORD_DATA:
 		res = i2c_smbus_write_word_data(file, daddress, value);
 		break;
 	case I2C_SMBUS_BLOCK_DATA:
-		res = i2c_smbus_write_block_data(file, daddress, len, block);
+		res = i2c_smbus_write_block_data(file, daddress, len, (const __u8 *)block);
 		break;
 	case I2C_SMBUS_I2C_BLOCK_DATA:
-		res = i2c_smbus_write_i2c_block_data(file, daddress, len, block);
+		res = i2c_smbus_write_i2c_block_data(file, daddress, len, (const __u8 *)block);
 		break;
 	default: /* I2C_SMBUS_BYTE_DATA */
 		res = i2c_smbus_write_byte_data(file, daddress, value);
