@@ -51,7 +51,7 @@ static void help(void)
 	exit(1);
 }
 
-static int check_funcs(int file, int size, int pec)
+static int check_funcs(int file, int size)
 {
 	unsigned long funcs;
 
@@ -98,23 +98,14 @@ static int check_funcs(int file, int size, int pec)
 		break;
 	}
 
-	if (pec
-	 && !(funcs & (I2C_FUNC_SMBUS_PEC | I2C_FUNC_I2C))) {
-		fprintf(stderr, "Warning: Adapter does "
-			"not seem to support PEC\n");
-	}
-
 	return 0;
 }
 
 int main(int argc, char *argv[])
 {
-	char *end;
-	const char *maskp = NULL;
 	int res, i2cbus, address, size, file;
-	int value, daddress, vmask = 0;
+	int value, daddress;
 	char filename[20];
-	int pec = 0;
 	int flags = 0;
 	int force = 0, yes = 0, version = 0, readback = 1;
 	__u16 block[I2C_SMBUS_BLOCK_MAX];
@@ -141,7 +132,7 @@ int main(int argc, char *argv[])
 	file = open_i2c_dev(i2cbus, filename, sizeof(filename), 0);
 	printf("file = %d\n", file);
 	if (file < 0
-	 || check_funcs(file, size, pec)
+	 || check_funcs(file, size)
 	 || set_slave_addr(file, address, force))
 		exit(1);
 
