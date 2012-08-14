@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
 		help();
 
 	address = parse_i2c_address("0x70");
-	printf("address = %d\n", address);
+	printf("address = 0x%2x\n", address);
 	if (address < 0)
 		help();
 
@@ -156,14 +156,24 @@ int main(int argc, char *argv[])
 		printf("writing: 0x%02x\n", daddress);
 		res = i2c_smbus_write_byte(file, daddress);
 
-		daddress = 0xef;
+		daddress = 0xe7;
 		printf("writing: 0x%02x\n", daddress);
 		res = i2c_smbus_write_byte(file, daddress);
 
 		daddress = 0x00;
 		printf("writing: 0x%02x\n", daddress);
 		res = i2c_smbus_write_byte(file, daddress);
+
+		int i;
+//static char smile_bmp[]={0x3C, 0x42, 0x95, 0xA1, 0xA1, 0x95, 0x42, 0x3C};
+static char smile_bmp[]={0xfe, 0xa5, 0xef, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+		for(i=0; i<16; i++) {
+			block[i] = smile_bmp[i%8];
+		}
+		res = i2c_smbus_write_i2c_block_data(file, daddress, 16, block);
 		break;
+
 	case I2C_SMBUS_WORD_DATA:
 		res = i2c_smbus_write_word_data(file, daddress, value);
 		break;
