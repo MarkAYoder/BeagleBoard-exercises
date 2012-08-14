@@ -169,8 +169,9 @@ static char smile_bmp[]={0x3C, 0x42, 0x95, 0xA1, 0xA1, 0x95, 0x42, 0x3C};
 //unsigned char smile_bmp[]={0xfe, 0xa5, 0xef, 0x00, 0x12, 0x00, 0x00, 0x00};
 
 		for(i=0; i<8; i++) {
-			block[2*i]   = smile_bmp[i] >>1;
-			block[2*i+1] = 0x00;
+			block[2*i]   =    smile_bmp[i] >>1 | 
+					((smile_bmp[i] & 0x01) << 7);
+			block[2*i+1] = 0xff;
 		}
 		res = i2c_smbus_write_i2c_block_data(file, daddress, 16, block);
 		break;
