@@ -31,7 +31,6 @@
 #include "i2c-dev.h"
 #include "i2cbusses.h"
 #include "util.h"
-//#include "../version.h"
 
 static void help(void) __attribute__ ((noreturn));
 
@@ -106,8 +105,7 @@ int main(int argc, char *argv[])
 	int res, i2cbus, address, size, file;
 	int value, daddress;
 	char filename[20];
-	int flags = 0;
-	int force = 0, yes = 0, version = 0, readback = 1;
+	int force = 0, readback = 1;
 	__u16 block[I2C_SMBUS_BLOCK_MAX];
 	int len;
 
