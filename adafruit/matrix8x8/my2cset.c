@@ -165,14 +165,53 @@ int main(int argc, char *argv[])
 		res = i2c_smbus_write_byte(file, daddress);
 
 		int i;
-static __u16 smile_bmp[]={0xff3C, 0x42, 0x95, 0xA1, 0xA1, 0x95, 0x42, 0x3C};
+static __u16 smile_bmp[]={0x3C, 0x42, 0x95, 0xA1, 0xA1, 0x95, 0x42, 0x3C};
+static __u16 frown_bmp[]={0x3C, 0x42, 0xA5, 0x91, 0x91, 0xA5, 0x42, 0x3C};
+static __u16 neutral_bmp[]={0x3C, 0x42, 0x95, 0x91, 0x91, 0x95, 0x42, 0x3C};
+
 		for(i=0; i<8; i++) {
 			block[i]   =    (smile_bmp[i]&0xfe) >>1 | 
 					(smile_bmp[i]&0x01) << 7;
-//			block[2*i+1] = 0xff;
 		}
 		res = i2c_smbus_write_i2c_block_data(file, daddress, 16, 
 			(__u8 *)block);
+
+		sleep(1);
+		daddress = 0x83;
+		printf("writing: 0x%02x\n", daddress);
+		res = i2c_smbus_write_byte(file, daddress);
+
+		for(i=0; i<8; i++) {
+			block[i]   =    (frown_bmp[i]&0xfe) >>1 | 
+					(frown_bmp[i]&0x01) << 7;
+		}
+		daddress = 0x00;
+		printf("writing: 0x%02x\n", daddress);
+		res = i2c_smbus_write_byte(file, daddress);
+
+		res = i2c_smbus_write_i2c_block_data(file, daddress, 16, 
+			(__u8 *)block);
+
+		sleep(1);
+		daddress = 0xe0;
+		printf("writing: 0x%02x\n", daddress);
+		res = i2c_smbus_write_byte(file, daddress);
+
+		for(i=0; i<8; i++) {
+			block[i]   =    (neutral_bmp[i]&0xfe) >>1 | 
+					(neutral_bmp[i]&0x01) << 7;
+		}
+		daddress = 0x00;
+		printf("writing: 0x%02x\n", daddress);
+		res = i2c_smbus_write_byte(file, daddress);
+
+		res = i2c_smbus_write_i2c_block_data(file, daddress, 16, 
+			(__u8 *)block);
+
+		daddress = 0x81;
+		printf("writing: 0x%02x\n", daddress);
+		res = i2c_smbus_write_byte(file, daddress);
+
 		break;
 
 	case I2C_SMBUS_WORD_DATA:
