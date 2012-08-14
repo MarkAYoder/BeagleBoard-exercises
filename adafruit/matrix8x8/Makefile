@@ -11,7 +11,7 @@ TOOLS_DIR	:= .
 
 TOOLS_CFLAGS	:= -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual \
 		   -Wcast-align -Wwrite-strings -Wnested-externs -Winline \
-		   -W -Wundef -Wmissing-prototypes -Iinclude
+		   -W -Wundef -Wmissing-prototypes 
 
 TOOLS_TARGETS	:= my2cset
 INCLUDE_DIR	:= .

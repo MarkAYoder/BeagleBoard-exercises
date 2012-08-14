@@ -38,7 +38,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include "i2cbusses.h"
-#include <linux/i2c-dev.h>
+#include "i2c-dev.h"
 
 enum adt { adt_dummy, adt_isa, adt_i2c, adt_smbus, adt_unknown };
 
