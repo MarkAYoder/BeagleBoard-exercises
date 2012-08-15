@@ -27,7 +27,7 @@ my2cset:  my2cset.o i2cbusses.o
 # Objects
 #
 
-matrix8x8.o: matrix8x8.c i2cbusses.h i2c-dev.h
+matrix8x8.o: matrix8x8.cpp i2cbusses.h i2c-dev.h
 	$(CC) $(CFLAGS) $(TOOLS_CFLAGS) -c $< -o $@
 
 i2cbusses.o: i2cbusses.c i2cbusses.h i2c-dev.h
