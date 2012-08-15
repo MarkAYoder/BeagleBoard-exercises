@@ -173,7 +173,7 @@ void Adafruit_8x8matrix::drawPixel(int16_t x, int16_t y, uint16_t color) {
   }
 }
 
-
+#ifdef HACK
 Adafruit_BicolorMatrix::Adafruit_BicolorMatrix(void) {
   constructor(8, 8);
 }
@@ -389,4 +389,14 @@ void Adafruit_7segment::printError(void) {
   for(uint8_t i = 0; i < SEVENSEG_DIGITS; ++i) {
     writeDigitRaw(i, (i == 2 ? 0x00 : 0x40));
   }
+}
+
+#endif // HACK
+
+// From http://zedcode.blogspot.com/2007/02/gcc-c-link-problems-on-small-embedded.html
+extern "C" void __cxa_pure_virtual(void)
+{
+// call to a pure virtual function happened ... wow, should never happen ... stop
+while(1)
+;
 }
