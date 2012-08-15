@@ -19,17 +19,21 @@ TOOLS_TARGETS	:= my2cset
 
 matrix8x8: matrix8x8.o i2cbusses.o util.o Adafruit_GFX.o Adafruit_LEDBackpack.o
 	$(CC) $(LDFLAGS) -o $@ $^
+
+my2cset:  my2cset.o i2cbusses.o
+	$(CC) $(LDFLAGS) -o $@ $^
+
 #
 # Objects
 #
 
-matrix8x8.o: matrix8x8.c i2cbusses.h util.h 2c-dev.h
+matrix8x8.o: matrix8x8.c i2cbusses.h i2c-dev.h
 	$(CC) $(CFLAGS) $(TOOLS_CFLAGS) -c $< -o $@
 
-i2cbusses.o: i2cbusses.c i2cbusses.h 2c-dev.h
+i2cbusses.o: i2cbusses.c i2cbusses.h i2c-dev.h
 	$(CC) $(CFLAGS) $(TOOLS_CFLAGS) -c $< -o $@
 
-util.o: util.c util.h
+my2cset.o: my2cset.c i2c-dev.h
 	$(CC) $(CFLAGS) $(TOOLS_CFLAGS) -c $< -o $@
 
 #
