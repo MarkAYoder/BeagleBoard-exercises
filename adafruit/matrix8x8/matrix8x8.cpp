@@ -24,22 +24,22 @@
 #include "Adafruit_LEDBackpack.h"
 #include "Adafruit_GFX.h"
 
+int main () {
 Adafruit_8x8matrix matrix = Adafruit_8x8matrix();
 
-void setup() {
+//void setup() {
 //  Serial.begin(9600);
 //  Serial.println("8x8 LED Matrix Test");
 printf("8x8 LED Matrix Test\n");
   
   matrix.begin(0x70);  // pass in the address
-}
+//}
 
 static uint8_t   smile_bmp[]={0x3C, 0x42, 0x95, 0xA1, 0xA1, 0x95, 0x42, 0x3C};
 static uint8_t   frown_bmp[]={0x3C, 0x42, 0xA5, 0x91, 0x91, 0xA5, 0x42, 0x3C};
 static uint8_t neutral_bmp[]={0x3C, 0x42, 0x95, 0x91, 0x91, 0x95, 0x42, 0x3C};
 
-
-void loop() {
+//void loop() {
   matrix.clear();
   matrix.drawBitmap(0, 0, smile_bmp, 8, 8, LED_ON);
   matrix.writeDisplay();

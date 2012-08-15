@@ -92,34 +92,3 @@ class Adafruit_BicolorMatrix : public Adafruit_LEDBackpack, public Adafruit_GFX 
 #define BIN 2
 #define BYTE 0
 
-class Adafruit_7segment : public Adafruit_LEDBackpack {
- public:
-  Adafruit_7segment(void);
-  size_t write(uint8_t c);
-
-  void print(char, int = BYTE);
-  void print(unsigned char, int = BYTE);
-  void print(int, int = DEC);
-  void print(unsigned int, int = DEC);
-  void print(long, int = DEC);
-  void print(unsigned long, int = DEC);
-  void print(double, int = 2);
-  void println(char, int = BYTE);
-  void println(unsigned char, int = BYTE);
-  void println(int, int = DEC);
-  void println(unsigned int, int = DEC);
-  void println(long, int = DEC);
-  void println(unsigned long, int = DEC);
-  void println(double, int = 2);
-  void println(void);
-  
-  void writeDigitRaw(uint8_t x, uint8_t bitmask);
-  void writeDigitNum(uint8_t x, uint8_t num, boolean dot = false);
-  void drawColon(boolean state);
-  void printNumber(long, uint8_t = 2);
-  void printFloat(double, uint8_t = 2, uint8_t = DEC);
-  void printError(void);
-
- private:
-  uint8_t position;
-};

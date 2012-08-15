@@ -13,7 +13,10 @@ TOOLS_CFLAGS	:= -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual \
 
 TOOLS_C++FLAGS	:= -Wshadow -Wpointer-arith -Wcast-qual \
 		   -Wcast-align -Wwrite-strings -Winline \
-		   -W -Wundef  
+		   -W -Wundef -fno-rtti
+# the -fno-rtti gets rid of the error:
+# Adafruit_LEDBackpack.o:(.rodata+0x128): undefined reference to `vtable for __cxxabiv1::__vmi_class_type_info'
+# http://zedcode.blogspot.com/2007/02/gcc-c-link-problems-on-small-embedded.html
 
 TOOLS_TARGETS	:= my2cset
 

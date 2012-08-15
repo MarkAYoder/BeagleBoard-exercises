@@ -52,6 +52,7 @@ size_t Print::print(const __FlashStringHelper *ifsh)
   return n;
 }
 
+#ifdef HACK
 size_t Print::print(const String &s)
 {
   size_t n = 0;
@@ -60,6 +61,7 @@ size_t Print::print(const String &s)
   }
   return n;
 }
+#endif
 
 size_t Print::print(const char str[])
 {
@@ -132,12 +134,14 @@ size_t Print::println(void)
   return n;
 }
 
+#ifdef HACK
 size_t Print::println(const String &s)
 {
   size_t n = print(s);
   n += println();
   return n;
 }
+#endif
 
 size_t Print::println(const char c[])
 {

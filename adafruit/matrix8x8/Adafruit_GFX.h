@@ -18,7 +18,7 @@ All text above must be included in any redistribution
 
 #if ARDUINO >= 100
 // #include "Arduino.h"
- #include "Print.h"
+#include "Print.h"
 #else
  #include "WProgram.h"
 #endif
