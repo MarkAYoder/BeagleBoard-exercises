@@ -17,7 +17,7 @@ All text above must be included in any redistribution
 #define _ADAFRUIT_GFX_H
 
 #if ARDUINO >= 100
- #include "Arduino.h"
+// #include "Arduino.h"
  #include "Print.h"
 #else
  #include "WProgram.h"

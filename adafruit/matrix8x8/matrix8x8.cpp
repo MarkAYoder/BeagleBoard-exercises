@@ -19,22 +19,24 @@
   BSD license, all text above must be included in any redistribution
  ****************************************************/
 
-#include <Wire.h>
+//#include <Wire.h>
+#include "hack.h"
 #include "Adafruit_LEDBackpack.h"
 #include "Adafruit_GFX.h"
 
 Adafruit_8x8matrix matrix = Adafruit_8x8matrix();
 
 void setup() {
-  Serial.begin(9600);
-  Serial.println("8x8 LED Matrix Test");
+//  Serial.begin(9600);
+//  Serial.println("8x8 LED Matrix Test");
+printf("8x8 LED Matrix Test\n");
   
   matrix.begin(0x70);  // pass in the address
 }
 
-static uint8_t __attribute__ ((progmem)) smile_bmp[]={0x3C, 0x42, 0x95, 0xA1, 0xA1, 0x95, 0x42, 0x3C};
-static uint8_t __attribute__ ((progmem)) frown_bmp[]={0x3C, 0x42, 0xA5, 0x91, 0x91, 0xA5, 0x42, 0x3C};
-static uint8_t __attribute__ ((progmem)) neutral_bmp[]={0x3C, 0x42, 0x95, 0x91, 0x91, 0x95, 0x42, 0x3C};
+static uint8_t   smile_bmp[]={0x3C, 0x42, 0x95, 0xA1, 0xA1, 0x95, 0x42, 0x3C};
+static uint8_t   frown_bmp[]={0x3C, 0x42, 0xA5, 0x91, 0x91, 0xA5, 0x42, 0x3C};
+static uint8_t neutral_bmp[]={0x3C, 0x42, 0x95, 0x91, 0x91, 0x95, 0x42, 0x3C};
 
 
 void loop() {

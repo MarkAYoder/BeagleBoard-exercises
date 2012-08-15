@@ -19,12 +19,12 @@
  ****************************************************/
 
 #if (ARDUINO >= 100)
- #include "Arduino.h"
+//#include "Arduino.h"
 #else
  #include "WProgram.h"
 #endif
 
-#include "Wire.h"
+//#include "Wire.h"
 #include "Adafruit_GFX.h"
 
 #define LED_ON 1
