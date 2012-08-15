@@ -63,6 +63,8 @@ class Adafruit_LEDBackpack {
   void init(uint8_t a);
  private:
   uint8_t i2c_addr;
+  int res, i2cbus, size, file;
+  char filename[20];
 };
 
 class Adafruit_8x8matrix : public Adafruit_LEDBackpack, public Adafruit_GFX {

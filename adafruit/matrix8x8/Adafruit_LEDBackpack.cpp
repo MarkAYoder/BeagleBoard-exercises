@@ -56,6 +56,7 @@ void Adafruit_LEDBackpack::setBrightness(uint8_t b) {
 	fprintf(stderr, "Error: Adafruit_LEDBackpack::setBrightness, Write failed\n");
 	close(i2c_addr);
 	exit(1);
+    }
 }
 
 void Adafruit_LEDBackpack::blinkRate(uint8_t b) {
@@ -71,6 +72,7 @@ void Adafruit_LEDBackpack::blinkRate(uint8_t b) {
 	fprintf(stderr, "Error: Adafruit_LEDBackpack::blinkRate, Write failed\n");
 	close(i2c_addr);
 	exit(1);
+    }
 }
 
 Adafruit_LEDBackpack::Adafruit_LEDBackpack(void) {
@@ -91,21 +93,20 @@ void Adafruit_LEDBackpack::begin(uint8_t _addr = 0x70) {
     i2c_addr = open_i2c_dev(i2cbus, filename, sizeof(filename), 0);
     printf("file = %d\n", file);
     if (file < 0
-     || check_funcs(file, size)
+//     || check_funcs(file, size)
      || set_slave_addr(i2c_addr, _addr, 0)) // 0 == don't force
     	exit(1);
 
 //  Wire.beginTransmission(i2c_addr);
 //  Wire.write(0x21);  // turn on oscillator
 //  Wire.endTransmission();
-    printf("writing: 0x%02x\n", HT16K33_BLINK_CMD | 
-		HT16K33_BLINK_DISPLAYON | (b << 1));
-    res = i2c_smbus_write_byte(i2c_addr, HT16K33_BLINK_CMD | 
-		HT16K33_BLINK_DISPLAYON | (b << 1));
+    printf("writing: 0x%02x\n", 0x21);
+    res = i2c_smbus_write_byte(i2c_addr, 0x21);
     if (res < 0) {
 	fprintf(stderr, "Error: Adafruit_LEDBackpack::blinkRate, Write failed\n");
 	close(i2c_addr);
 	exit(1);
+    }
 
   blinkRate(HT16K33_BLINK_OFF);
   

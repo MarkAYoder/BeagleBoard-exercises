@@ -24,3 +24,10 @@ typedef __u16	uint16_t;
 typedef __s16	int16_t;
 typedef char	boolean;
 //typedef short	size_t;
+
+extern "C" {
+int lookup_i2c_bus(const char *i2cbus_arg);
+int parse_i2c_address(const char *address_arg);
+int open_i2c_dev(int i2cbus, char *filename, size_t size, int quiet);
+int set_slave_addr(int file, int address, int force);
+}

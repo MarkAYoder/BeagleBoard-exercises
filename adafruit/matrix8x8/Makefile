@@ -11,13 +11,18 @@ TOOLS_CFLAGS	:= -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual \
 		   -Wcast-align -Wwrite-strings -Wnested-externs -Winline \
 		   -W -Wundef -Wmissing-prototypes 
 
+TOOLS_C++FLAGS	:= -Wshadow -Wpointer-arith -Wcast-qual \
+		   -Wcast-align -Wwrite-strings -Winline \
+		   -W -Wundef  
+
 TOOLS_TARGETS	:= my2cset
 
 #
 # Programs
 #
 
-matrix8x8: matrix8x8.o i2cbusses.o util.o Adafruit_GFX.o Adafruit_LEDBackpack.o
+matrix8x8: matrix8x8.o i2cbusses.o Adafruit_GFX.o Adafruit_LEDBackpack.o \
+		Print.o
 	$(CC) $(LDFLAGS) -o $@ $^
 
 my2cset:  my2cset.o i2cbusses.o
@@ -27,8 +32,8 @@ my2cset:  my2cset.o i2cbusses.o
 # Objects
 #
 
-matrix8x8.o: matrix8x8.cpp i2cbusses.h i2c-dev.h
-	$(CC) $(CFLAGS) $(TOOLS_CFLAGS) -c $< -o $@
+%.o: %.cpp
+	$(CC) $(CFLAGS) $(TOOLS_C++FLAGS) -c $< -o $@
 
 i2cbusses.o: i2cbusses.c i2cbusses.h i2c-dev.h
 	$(CC) $(CFLAGS) $(TOOLS_CFLAGS) -c $< -o $@
