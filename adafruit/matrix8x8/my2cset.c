@@ -30,7 +30,6 @@
 #include <unistd.h>
 #include "i2c-dev.h"
 #include "i2cbusses.h"
-#include "util.h"
 
 static void help(void) __attribute__ ((noreturn));
 
