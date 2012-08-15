@@ -19,6 +19,7 @@
  ****************************************************/
 
 //#include <Wire.h>
+#include "hack.h"
 #include "Adafruit_LEDBackpack.h"
 #include "Adafruit_GFX.h"
 
