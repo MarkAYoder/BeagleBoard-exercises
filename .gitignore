@@ -1,9 +1,11 @@
 DEBUG
 *.o
+*.out
 *_DEBUG.Beagle
 *_RELEASE.Beagle
 *.lib
 app_AUDIO
 audioThru_arm
 audioThru_dsp
-
+c6run_build
+esc-media
