@@ -27,7 +27,7 @@ int main(int argc, char** argv)
 
 	if (argc < 2) {
 		printf("Usage: %s <on/off time in us>\n\n", argv[0]);
-		printf("Waits for a change in the GPIO pin voltage level or input on stdin\n");
+		printf("Toggle gpio 130 at the period given\n");
 		exit(-1);
 	}
 	onOffTime = atoi(argv[1]);
