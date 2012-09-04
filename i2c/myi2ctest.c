@@ -1,6 +1,8 @@
 /*
     my2cset.c - First try at controlling Adafruit 8x8matrix.
     Mark A. Yoder, 14-Aug-2012.
+    Page numbers are from the HT16K33 manual
+    http://www.adafruit.com/datasheets/ht16K33v110.pdf
 
     i2cset.c - A user-space program to write an I2C register.
     Copyright (C) 2001-2003  Frodo Looijaard <frodol@dds.nl>, and
@@ -35,17 +37,7 @@ static void help(void) __attribute__ ((noreturn));
 
 static void help(void)
 {
-	fprintf(stderr,
-		"Usage: my2cset [-f] [-y] [-m MASK] I2CBUS CHIP-ADDRESS DATA-ADDRESS [VALUE] ... [MODE]\n"
-		"  I2CBUS is an integer or an I2C bus name\n"
-		"  ADDRESS is an integer (0x03 - 0x77)\n"
-		"  MODE is one of:\n"
-		"    c (byte, no value)\n"
-		"    b (byte data, default)\n"
-		"    w (word data)\n"
-		"    i (I2C block data)\n"
-		"    s (SMBus block data)\n"
-		"    Append p for SMBus PEC\n");
+	fprintf(stderr, "Usage: my2cset (hardwired to bus 3, address 0x70)\n");
 	exit(1);
 }
 
@@ -136,19 +128,19 @@ int main(int argc, char *argv[])
 
 	switch (size) {
 	case I2C_SMBUS_BYTE:
-		daddress = 0x21;
+		daddress = 0x21;	// Start oscillator (page 10)
 		printf("writing: 0x%02x\n", daddress);
 		res = i2c_smbus_write_byte(file, daddress);
 
-		daddress = 0x81;
+		daddress = 0x81;	// Display on, blinking off (page 11)
 		printf("writing: 0x%02x\n", daddress);
 		res = i2c_smbus_write_byte(file, daddress);
 
-		daddress = 0xe7;
+		daddress = 0xe7;	// Full brightness (page 15)
 		printf("writing: 0x%02x\n", daddress);
 		res = i2c_smbus_write_byte(file, daddress);
 
-		daddress = 0x00;
+		daddress = 0x00;	// Start writing to address 0 (page 13)
 		printf("writing: 0x%02x\n", daddress);
 		res = i2c_smbus_write_byte(file, daddress);
 
@@ -157,6 +149,10 @@ static __u16 smile_bmp[]={0x3C, 0x42, 0x95, 0xA1, 0xA1, 0x95, 0x42, 0x3C};
 static __u16 frown_bmp[]={0x3C, 0x42, 0xA5, 0x91, 0x91, 0xA5, 0x42, 0x3C};
 static __u16 neutral_bmp[]={0x3C, 0x42, 0x95, 0x91, 0x91, 0x95, 0x42, 0x3C};
 
+/*
+ * For some reason the display is rotated one column, so pre-unrotate the
+ * data.
+ */
 		for(i=0; i<8; i++) {
 			block[i]   =    (smile_bmp[i]&0xfe) >>1 | 
 					(smile_bmp[i]&0x01) << 7;
