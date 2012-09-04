@@ -160,11 +160,9 @@ static __u16 neutral_bmp[]={0x3C, 0x42, 0x95, 0x91, 0x91, 0x95, 0x42, 0x3C};
 		res = i2c_smbus_write_i2c_block_data(file, daddress, 16, 
 			(__u8 *)block);
 
-		sleep(1);
-		daddress = 0x83;
-		printf("writing: 0x%02x\n", daddress);
-		res = i2c_smbus_write_byte(file, daddress);
+		sleep(2);
 
+// Display a new picture
 		for(i=0; i<8; i++) {
 			block[i]   =    (frown_bmp[i]&0xfe) >>1 | 
 					(frown_bmp[i]&0x01) << 7;
@@ -177,10 +175,8 @@ static __u16 neutral_bmp[]={0x3C, 0x42, 0x95, 0x91, 0x91, 0x95, 0x42, 0x3C};
 			(__u8 *)block);
 
 		sleep(1);
-		daddress = 0xe0;
-		printf("writing: 0x%02x\n", daddress);
-		res = i2c_smbus_write_byte(file, daddress);
 
+// Display yet another picture
 		for(i=0; i<8; i++) {
 			block[i]   =    (neutral_bmp[i]&0xfe) >>1 | 
 					(neutral_bmp[i]&0x01) << 7;
@@ -192,9 +188,12 @@ static __u16 neutral_bmp[]={0x3C, 0x42, 0x95, 0x91, 0x91, 0x95, 0x42, 0x3C};
 		res = i2c_smbus_write_i2c_block_data(file, daddress, 16, 
 			(__u8 *)block);
 
-		daddress = 0x81;
-		printf("writing: 0x%02x\n", daddress);
-		res = i2c_smbus_write_byte(file, daddress);
+		for(daddress = 0xef; daddress >= 0xe0; daddress--) {
+		    printf("writing: 0x%02x\n", daddress);
+		    res = i2c_smbus_write_byte(file, daddress);
+
+		    usleep(500000);	// Sleep 0.5 seconds
+		}
 
 		break;
 
