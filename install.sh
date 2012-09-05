@@ -6,7 +6,8 @@ opkg install openssh-keygen
 cp .bashrc ~
 cd
 ln -s /var/lib/cloud9 .
-ln -s pinMux.html /var/lib/cloud9/bone101
+cd /var/lib/cloud9
+ln -s $PWD/pinMux.html /var/lib/cloud9/bone101
 cd cloud9
 git pull
 cd
