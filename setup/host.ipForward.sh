@@ -35,7 +35,10 @@ ssh-copy-id root@$beagleAddr
 ssh root@$beagleAddr "mv -n /etc/resolv.conf /etc/resolv.conf.orig"
 # Copy the resolv.conf file to the Beagle.  Now the Beagle will use the
 # same name servers as the host.
-scp /etc/resolv.conf root@$beagleAddr:/etc
+cp /etc/resolv.conf /tmp/resolv.conf
+echo nameserver 8.8.8.8 >> /tmp/resolv.conf
+echo nameserver 8.8.4.4 >> /tmp/resolv.conf
+scp /tmp/resolv.conf root@$beagleAddr:/etc
 # Tell the beagle to use the host as the gateway.
 ssh root@$beagleAddr "/sbin/route add default gw $hostAddr"
 
