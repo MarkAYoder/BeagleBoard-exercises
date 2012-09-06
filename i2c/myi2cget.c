@@ -27,7 +27,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <linux/i2c-dev-user.h>
+#include "i2c-dev.h"
 #include <fcntl.h>
 
 int main(int argc, char *argv[])
