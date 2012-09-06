@@ -1,8 +1,9 @@
 #!/usr/bash
-# Here are the extra things I install
+# Here are the extra things I install on the bone
 # --Mark
 # 6-Jul-2012
 cd ~
+echo yoder-bone > /etc/hostname
 opkg update
 opkg install openssh-keygen
 git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises
