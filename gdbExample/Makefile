@@ -50,9 +50,9 @@
 #   Name of the ARM GCC cross compiler
 #   ----------------------------------------------------------------------------
 ARM_TOOLCHAIN_PREFIX  ?= arm-angstrom-linux-gnueabi-
-ARM_TOOLCHAIN_PATH = /home/yoder/BeagleBoard/oe/build/tmp-angstrom_2008_1/sysroots/i686-linux/usr/armv7a
+ARM_TOOLCHAIN_PATH = /home/beagle/BeagleBoard/oe/build/tmp-angstrom_v2012_05-eglibc/sysroots/x86_64-linux/usr/bin/armv7a-angstrom-linux-gnueabi
 ifdef ARM_TOOLCHAIN_PATH
-ARM_CC := $(ARM_TOOLCHAIN_PATH)/bin/$(ARM_TOOLCHAIN_PREFIX)gcc
+ARM_CC := $(ARM_TOOLCHAIN_PATH)/$(ARM_TOOLCHAIN_PREFIX)gcc
 else
 ARM_CC := $(ARM_TOOLCHAIN_PREFIX)gcc
 endif
