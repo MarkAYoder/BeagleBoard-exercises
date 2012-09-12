@@ -35,7 +35,9 @@ ssh-copy-id root@$beagleAddr
 ssh root@$beagleAddr "mv -n /etc/resolv.conf /etc/resolv.conf.orig"
 # Copy the resolv.conf file to the Beagle.  Now the Beagle will use the
 # same name servers as the host.
-cat /etc/resolv.conf - << EOF > /tmp/resolv.conf
+cat - << EOF > /tmp/resolv.conf
+# This is installed by host.ipForward.sh on the host
+# Mark A. Yoder, 11-Sept-2012
 nameserver 137.112.18.59
 nameserver 137.112.5.28
 nameserver 137.112.4.196
