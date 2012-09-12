@@ -4,6 +4,11 @@
 # 6-Jul-2012
 cd ~
 echo yoder-bone > /etc/hostname
+
+git config --global user.name "Mark A. Yoder"
+git config --global user.email Mark.A.Yoder@Rose-Hulman.edu
+git commit --amend --reset-author
+
 opkg update
 opkg install openssh-keygen
 git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises

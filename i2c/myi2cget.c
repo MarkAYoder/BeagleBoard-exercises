@@ -69,12 +69,13 @@ int main(int argc, char *argv[])
 			address, strerror(errno));
 		return -errno;
 	}
-
+/*
 	res = i2c_smbus_write_byte(file, daddress);
 	if (res < 0) {
 		fprintf(stderr, "Warning - write failed, filename=%s, daddress=%d\n",
 			filename, daddress);
 	}
+*/
 	res = i2c_smbus_read_byte_data(file, daddress);
 	close(file);
 
