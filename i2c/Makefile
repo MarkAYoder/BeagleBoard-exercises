@@ -16,9 +16,9 @@ TOOLS_TARGETS	:= my2cset
 #
 # Programs
 #
-all:	myi2ctest myi2cget
+all:	matrixLEDi2c myi2cget
 
-myi2ctest:  myi2ctest.o i2cbusses.o
+matrixLEDi2c:  matrixLEDi2c.o i2cbusses.o
 	$(CC) $(LDFLAGS) -o $@ $^
 
 myi2cget:   myi2cget.o
@@ -32,4 +32,4 @@ myi2cget:   myi2cget.o
 	$(CC) $(CFLAGS) $(TOOLS_CFLAGS) -c $< -o $@
 
 clean:
-	rm myi2ctest myi2ctest.o i2cbusses.o myi2cget myi2cget.o
+	rm matrixLEDi2c matrixLEDi2c.o i2cbusses.o myi2cget myi2cget.o
