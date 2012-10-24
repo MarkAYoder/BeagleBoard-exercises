@@ -22,6 +22,10 @@ ln -s $PWD/pinMux.html /var/lib/cloud9/bone101
 cd cloud9
 git pull
 cd
+
+mount /dev/mmcblk0p1 /media/mmc1/
+cd /media/mmc1/
+
 opkg install alsa-dev
 cd /usr/lib
 ln -s libasound.so.2.0.0 libasound.so  # I don't know why this link is mising
