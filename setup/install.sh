@@ -24,6 +24,11 @@ cd
 mount /dev/mmcblk0p1 /media/mmc1/
 cd /media/mmc1/
 
+# Turn off storage gadget, turn on network at boot time.
+cd /lib/systemd/system/basic.target.wants
+rm storage-gadget-init.service
+ln -s ../network-gadget-init.service .
+
 opkg install alsa-dev
 cd /usr/lib
 ln -s libasound.so.2.0.0 libasound.so  # I don't know why this link is mising
