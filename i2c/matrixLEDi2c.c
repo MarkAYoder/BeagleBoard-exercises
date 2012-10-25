@@ -33,6 +33,8 @@
 #include "i2c-dev.h"
 #include "i2cbusses.h"
 
+#define BICOLOR
+
 static void help(void) __attribute__ ((noreturn));
 
 static void help(void)
@@ -147,7 +149,7 @@ int main(int argc, char *argv[])
 		int i;
 static __u16 smile_bmp[]={0x3C, 0x42, 0x95, 0xA1, 0xA1, 0x95, 0x42, 0x3C};
 static __u16 frown_bmp[]={0x3C, 0x42, 0xA5, 0x91, 0x91, 0xA5, 0x42, 0x3C};
-static __u16 neutral_bmp[]={0x3C, 0x42, 0x95, 0x91, 0x91, 0x95, 0x42, 0x3C};
+static __u16 neutral_bmp[]={0x3c3C, 0x0042, 0x9595, 0x0091, 0x9191, 0x0095, 0x4242, 0x003C};
 
 /*
  * For some reason the display is rotated one column, so pre-unrotate the
@@ -160,7 +162,7 @@ static __u16 neutral_bmp[]={0x3C, 0x42, 0x95, 0x91, 0x91, 0x95, 0x42, 0x3C};
 		res = i2c_smbus_write_i2c_block_data(file, daddress, 16, 
 			(__u8 *)block);
 
-		sleep(2);
+		sleep(0);
 
 // Display a new picture
 		for(i=0; i<8; i++) {
@@ -174,12 +176,17 @@ static __u16 neutral_bmp[]={0x3C, 0x42, 0x95, 0x91, 0x91, 0x95, 0x42, 0x3C};
 		res = i2c_smbus_write_i2c_block_data(file, daddress, 16, 
 			(__u8 *)block);
 
-		sleep(1);
+		sleep(0);
 
 // Display yet another picture
 		for(i=0; i<8; i++) {
+#ifdef BICOLOR
+			block[i]   =    neutral_bmp[i];
+
+#else
 			block[i]   =    (neutral_bmp[i]&0xfe) >>1 | 
 					(neutral_bmp[i]&0x01) << 7;
+#endif
 		}
 		daddress = 0x00;
 		printf("writing: 0x%02x\n", daddress);
@@ -192,7 +199,7 @@ static __u16 neutral_bmp[]={0x3C, 0x42, 0x95, 0x91, 0x91, 0x95, 0x42, 0x3C};
 		    printf("writing: 0x%02x\n", daddress);
 		    res = i2c_smbus_write_byte(file, daddress);
 
-		    usleep(500000);	// Sleep 0.5 seconds
+		    usleep(100000);	// Sleep 0.5 seconds
 		}
 
 		break;
