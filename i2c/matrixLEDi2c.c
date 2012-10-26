@@ -1,9 +1,11 @@
 /*
     my2cset.c - First try at controlling Adafruit 8x8matrix.
     Mark A. Yoder, 14-Aug-2012.
+    Mark A. Yoder, 26-Oct-2012.  Cleaned up.
     Page numbers are from the HT16K33 manual
     http://www.adafruit.com/datasheets/ht16K33v110.pdf
-
+*/
+/*
     i2cset.c - A user-space program to write an I2C register.
     Copyright (C) 2001-2003  Frodo Looijaard <frodol@dds.nl>, and
                              Mark D. Studebaker <mdsxyz123@yahoo.com>
@@ -33,7 +35,10 @@
 #include "i2c-dev.h"
 #include "i2cbusses.h"
 
-#define BICOLOR
+#define BICOLOR		// undef if using a single color display
+
+// The upper btye is RED, the lower is GREEN.
+// The single color display responds only to the lower byte
 static __u16 smile_bmp[]=
 	{0x3C, 0x42, 0x95, 0xA1, 0xA1, 0x95, 0x42, 0x3C};
 static __u16 frown_bmp[]=
@@ -74,30 +79,27 @@ static int write_block(int file, __u16 *data) {
 	return res;
 #else
 /*
- * For some reason the display is rotated one column, so pre-unrotate the
- * data.
+ * For some reason the single color display is rotated one column, 
+ * so pre-unrotate the data.
  */
 	int i;
 	__u16 block[I2C_SMBUS_BLOCK_MAX];
-	printf("rotating\n");
+//	printf("rotating\n");
 	for(i=0; i<8; i++) {
 		block[i] = (data[i]&0xfe) >> 1 | 
 			   (data[i]&0x01) << 7;
+	}
 	res = i2c_smbus_write_i2c_block_data(file, 0x00, 16, 
 		(__u8 *)block);
 	return res;
-	}
 #endif
 }
 
 int main(int argc, char *argv[])
 {
 	int res, i2cbus, address, file;
-	int value, daddress;
 	char filename[20];
-	int force = 0, readback = 1;
-	__u16 block[I2C_SMBUS_BLOCK_MAX];
-	int len;
+	int force = 0;
 
 	i2cbus = lookup_i2c_bus("3");
 	printf("i2cbus = %d\n", i2cbus);
@@ -109,14 +111,8 @@ int main(int argc, char *argv[])
 	if (address < 0)
 		help();
 
-	daddress = 0x21;
-	if (daddress < 0 || daddress > 0xff) {
-		fprintf(stderr, "Error: Data address invalid!\n");
-		help();
-	}
-
 	file = open_i2c_dev(i2cbus, filename, sizeof(filename), 0);
-	printf("file = %d\n", file);
+//	printf("file = %d\n", file);
 	if (file < 0
 	 || check_funcs(file)
 	 || set_slave_addr(file, address, force))
@@ -127,21 +123,19 @@ int main(int argc, char *argv[])
 	i2c_smbus_write_byte(file, 0x81); // Disp on, blink off (p11)
 	i2c_smbus_write_byte(file, 0xe7); // Full brightness (page 15)
 
-		int i;
-
 //	Display a series of pictures
-	write_block(file, smile_bmp);
-	sleep(1);
 	write_block(file, frown_bmp);
 	sleep(1);
 	write_block(file, neutral_bmp);
+	sleep(1);
+	write_block(file, smile_bmp);
 
 
 // Fad the display
+	int daddress;
 	for(daddress = 0xef; daddress >= 0xe0; daddress--) {
 //	    printf("writing: 0x%02x\n", daddress);
 	    res = i2c_smbus_write_byte(file, daddress);
-
 	    usleep(100000);	// Sleep 0.1 seconds
 	}
 
