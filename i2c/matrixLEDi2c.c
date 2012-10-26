@@ -34,12 +34,18 @@
 #include "i2cbusses.h"
 
 #define BICOLOR
+static __u16 smile_bmp[]=
+	{0x3C, 0x42, 0x95, 0xA1, 0xA1, 0x95, 0x42, 0x3C};
+static __u16 frown_bmp[]=
+	{0x3C00, 0x4200, 0xA500, 0x9100, 0x9100, 0xA500, 0x4200, 0x3C00};
+static __u16 neutral_bmp[]=
+	{0x3c3C, 0x4242, 0x9595, 0x9191, 0x9191, 0x9595, 0x4242, 0x3c3C};
 
 static void help(void) __attribute__ ((noreturn));
 
 static void help(void)
 {
-	fprintf(stderr, "Usage: my2cset (hardwired to bus 3, address 0x70)\n");
+	fprintf(stderr, "Usage: matrixLEDi2c (hardwired to bus 3, address 0x70)\n");
 	exit(1);
 }
 
@@ -59,6 +65,31 @@ static int check_funcs(int file, int size)
 		return -1;
 	}
 	return 0;
+}
+
+// Writes block of data to the display
+static int write_block(int file, __u16 *data) {
+	int res;
+#ifdef BICOLOR
+	res = i2c_smbus_write_i2c_block_data(file, 0x00, 16, 
+		(__u8 *)data);
+	return res;
+#else
+/*
+ * For some reason the display is rotated one column, so pre-unrotate the
+ * data.
+ */
+	int i;
+	__u16 block[I2C_SMBUS_BLOCK_MAX];
+	printf("rotating\n");
+	for(i=0; i<8; i++) {
+		block[i] = (data[i]&0xfe) >> 1 | 
+			   (data[i]&0x01) << 7;
+	res = i2c_smbus_write_i2c_block_data(file, 0x00, 16, 
+		(__u8 *)block);
+	return res;
+	}
+#endif
 }
 
 int main(int argc, char *argv[])
@@ -95,35 +126,18 @@ int main(int argc, char *argv[])
 	 || set_slave_addr(file, address, force))
 		exit(1);
 
-	// Start oscillator (page 10)
-	res = i2c_smbus_write_byte(file, 0x21);
-
-	// Display on, blinking off (page 11)
-	res = i2c_smbus_write_byte(file, 0x81);
-
-	// Full brightness (page 15)
-	res = i2c_smbus_write_byte(file, 0xe7);
-
+	// Check the return value on these if there is trouble
+	i2c_smbus_write_byte(file, 0x21); // Start oscillator (p10)
+	i2c_smbus_write_byte(file, 0x81); // Disp on, blink off (p11)
+	i2c_smbus_write_byte(file, 0xe7); // Full brightness (page 15)
 
 		int i;
-static __u16 smile_bmp[]={0x3C, 0x42, 0x95, 0xA1, 0xA1, 0x95, 0x42, 0x3C};
-static __u16 frown_bmp[]={0x3C00, 0x4200, 0xA500, 0x9100, 0x9100, 0xA500, 0x4200, 0x3C00};
-static __u16 neutral_bmp[]={0x3c3C, 0x4242, 0x9595, 0x9191, 0x9191, 0x9595, 0x4242, 0x3c3C};
 
-/*
- * For some reason the display is rotated one column, so pre-unrotate the
- * data.
- */
-	// Start writing to address 0 (page 13)
-//	res = i2c_smbus_write_byte(file, 0x00);
-	for(i=0; i<8; i++) {
-		block[i]   =    (smile_bmp[i]&0xfe) >>1 | 
-				(smile_bmp[i]&0x01) << 7;
-	}
-	res = i2c_smbus_write_i2c_block_data(file, 0x00, 16, 
-		(__u8 *)block);
-
-	sleep(2);
+	write_block(file, smile_bmp);
+	sleep(1);
+	write_block(file, frown_bmp);
+	sleep(1);
+	write_block(file, neutral_bmp);
 
 // Display a new picture
 	for(i=0; i<8; i++) {
