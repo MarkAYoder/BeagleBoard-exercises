@@ -43,14 +43,12 @@ static __u16 neutral_bmp[]=
 
 static void help(void) __attribute__ ((noreturn));
 
-static void help(void)
-{
+static void help(void) {
 	fprintf(stderr, "Usage: matrixLEDi2c (hardwired to bus 3, address 0x70)\n");
 	exit(1);
 }
 
-static int check_funcs(int file, int size)
-{
+static int check_funcs(int file) {
 	unsigned long funcs;
 
 	/* check adapter functionality */
@@ -94,7 +92,7 @@ static int write_block(int file, __u16 *data) {
 
 int main(int argc, char *argv[])
 {
-	int res, i2cbus, address, size, file;
+	int res, i2cbus, address, file;
 	int value, daddress;
 	char filename[20];
 	int force = 0, readback = 1;
@@ -111,8 +109,6 @@ int main(int argc, char *argv[])
 	if (address < 0)
 		help();
 
-	size = I2C_SMBUS_BYTE;
-
 	daddress = 0x21;
 	if (daddress < 0 || daddress > 0xff) {
 		fprintf(stderr, "Error: Data address invalid!\n");
@@ -122,7 +118,7 @@ int main(int argc, char *argv[])
 	file = open_i2c_dev(i2cbus, filename, sizeof(filename), 0);
 	printf("file = %d\n", file);
 	if (file < 0
-	 || check_funcs(file, size)
+	 || check_funcs(file)
 	 || set_slave_addr(file, address, force))
 		exit(1);
 
@@ -133,51 +129,20 @@ int main(int argc, char *argv[])
 
 		int i;
 
+//	Display a series of pictures
 	write_block(file, smile_bmp);
 	sleep(1);
 	write_block(file, frown_bmp);
 	sleep(1);
 	write_block(file, neutral_bmp);
 
-// Display a new picture
-	for(i=0; i<8; i++) {
-#ifdef BICOLOR
-		block[i] = frown_bmp[i];
 
-#else
-		block[i]   =    (frown_bmp[i]&0xfe) >>1 | 
-				(frown_bmp[i]&0x01) << 7;
-#endif
-	}
-	daddress = 0x00;
-	printf("writing: 0x%02x\n", daddress);
-//	res = i2c_smbus_write_byte(file, daddress);
-
-	res = i2c_smbus_write_i2c_block_data(file, daddress, 16, 
-		(__u8 *)block);
-
-	sleep(1);
-
-// Display yet another picture
-	for(i=0; i<8; i++) {
-#ifdef BICOLOR
-		block[i] = neutral_bmp[i];
-
-#else
-		block[i]   =    (neutral_bmp[i]&0xfe) >>1 | 
-				(neutral_bmp[i]&0x01) << 7;
-#endif
-	}
-//	res = i2c_smbus_write_byte(file, 0x00);
-
-	res = i2c_smbus_write_i2c_block_data(file, daddress, 16, 
-		(__u8 *)block);
-
+// Fad the display
 	for(daddress = 0xef; daddress >= 0xe0; daddress--) {
 //	    printf("writing: 0x%02x\n", daddress);
 	    res = i2c_smbus_write_byte(file, daddress);
 
-	    usleep(100000);	// Sleep 0.5 seconds
+	    usleep(100000);	// Sleep 0.1 seconds
 	}
 
 	if (res < 0) {
@@ -185,29 +150,5 @@ int main(int argc, char *argv[])
 		close(file);
 		exit(1);
 	}
-
-	if (!readback) { /* We're done */
-		close(file);
-		exit(0);
-	}
-
-/*
-	res = i2c_smbus_read_byte(file);
-	value = daddress;
-	close(file);
-
-	if (res < 0) {
-		printf("Warning - readback failed\n");
-	} else
-	if (res != value) {
-		printf("Warning - data mismatch - wrote "
-		       "0x%0*x, read back 0x%0*x\n",
-		       size == I2C_SMBUS_WORD_DATA ? 4 : 2, value,
-		       size == I2C_SMBUS_WORD_DATA ? 4 : 2, res);
-	} else {
-		printf("Value 0x%0*x written, readback matched\n",
-		       size == I2C_SMBUS_WORD_DATA ? 4 : 2, value);
-	}
-*/
 	exit(0);
 }
