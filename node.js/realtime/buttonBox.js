@@ -9,6 +9,27 @@ var http = require('http'),
     server,
     connectCount = 0;	// Number of connections to server
 
+    var pwmPath = "/sys/class/pwm/ehrpwm.2:1";
+
+// Initialize various IO things.
+function initIO() {
+    // Make sure gpio 7 is available.
+    var gpio = 7;
+    fs.writeFile("/sys/class/gpio/export", gpio);
+
+    // Initialize pwm
+    // Clear up any unmanaged usage
+    fs.writeFileSync(pwmPath+'/request', '0');
+    // Allocate and configure the PWM
+    fs.writeFileSync(pwmPath+'/request', '1');
+    fs.writeFileSync(pwmPath+'/period_freq', 1000);
+    fs.writeFileSync(pwmPath+'/duty_percent', '0');
+    fs.writeFileSync(pwmPath+'/polarity', '0');
+    fs.writeFileSync(pwmPath+'/run', '1');
+}
+
+initIO();
+
 server = http.createServer(function (req, res) {
 // server code
     var path = url.parse(req.url).pathname;
@@ -63,10 +84,7 @@ io.sockets.on('connection', function (socket) {
 //        if(!fs.existsSync(ainPath)) {
 //            throw "Can't find " + ainPath;
 //        }
-//    }
-    // Make sure gpio 7 is available.
-    exec("echo 7 > /sys/class/gpio/export");
-    
+//    }    
 
     // Send value every time a 'message' is received.
     socket.on('ain', function (ainNum) {
@@ -112,9 +130,8 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('slider', function(slideNum, value) {
-        var pwmPath = "/sys/class/pwm/ehrpwm.2:1/duty_percent";
 //	console.log('slider' + slideNum + " = " + value);
-        fs.writeFile(pwmPath, value);
+        fs.writeFile(pwmPath + "/duty_percent", value);
 
     });
 
