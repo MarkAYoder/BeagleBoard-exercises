@@ -111,6 +111,13 @@ io.sockets.on('connection', function (socket) {
         });
     });
 
+    socket.on('slider', function(slideNum, value) {
+        var pwmPath = "/sys/class/pwm/ehrpwm.2:1";
+	console.log('slider' + slideNum + " = " + value);
+        fs.writeFile(pwmPath, value);
+
+    });
+
     socket.on('disconnect', function () {
         console.log("Connection " + socket.id + " terminated.");
         connectCount--;

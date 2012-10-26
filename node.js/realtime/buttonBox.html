@@ -6,8 +6,10 @@
     <script src="/json.js"></script> <!-- for ie -->
     <script src="/socket.io/socket.io.js"></script>
 
-    <link href="layout.css" rel="stylesheet" type="text/css">
+    <link href="layout.css" rel="stylesheet" type="text/css"/>
+    <link href="jquery-ui.css" rel="stylesheet" type="text/css"/>
     <script src="jquery.js"></script>
+    <script src="jquery-ui.min.js"></script>
     <script src="jquery.flot.js"></script>
     <script src="jquery.flot.navigate.js"></script>
   </head>
@@ -40,10 +42,13 @@
 </td>
 </tr>
 </table>
+<div>
 <button id="led0" onClick='led(0)'/>LED 0</button>
 <button id="led1" onClick='led(1)'/>LED 1</button>
 <button id="led2" onClick='led(2)'/>LED 2</button>
 <button id="led3" onClick='led(3)'/>LED 3</button>
+</div>
+<div id="slider1">LED Brightness</div>
 <p>
 
 <b>Button Box demo from the <a href="http://elinux.org/index.php?title=Category:ECE497" target="_blank">32-bit Embedded Linux Class</a>.</b>
@@ -188,6 +193,10 @@ $(function () {
 
     $("#i2cNum").val(i2cNum).change(function () {
         i2cNum = $(this).val();
+    });
+
+    $("#slider1").slider().bind("slide", function(event, ui) {
+	socket.emit("slider",  1, ui.value);
     });
 
     var updateTopInterval = 100;

@@ -4,3 +4,11 @@ body {
   margin: 25px;
   max-width: 650px;
 }
+
+#slider1 { margin: 10px; width: 275px; 
+	text-align:center; 
+	position:relative;
+	right: -250px;
+	top:   -30px;
+}
+
