@@ -112,8 +112,8 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('slider', function(slideNum, value) {
-        var pwmPath = "/sys/class/pwm/ehrpwm.2:1";
-	console.log('slider' + slideNum + " = " + value);
+        var pwmPath = "/sys/class/pwm/ehrpwm.2:1/duty_percent";
+//	console.log('slider' + slideNum + " = " + value);
         fs.writeFile(pwmPath, value);
 
     });
