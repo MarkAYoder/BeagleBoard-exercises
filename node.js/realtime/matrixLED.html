@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Matrix LED Demo</title>
+
+    <script src="/json.js"></script> <!-- for ie -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <link href="matrixLED.css" rel="stylesheet" type="text/css"/>
+    <script src="jquery.js"></script>
+  </head>
+  <body>
+        <img src="RoseLogo96.png" width=200 style="float:right"></a></h1>
+    <button id="connect" onClick='connect()'/>Connect</button>
+    <button id="disconnect" onClick='disconnect()'>Disconnect</button>
+    <span style="position:relative; left:150px">
+    Analog: <input id="ainNum" type="text" value="" style="text-align: right; width:2em">
+    gpio: <input id="gpioNum" type="text" value="" style="text-align: right; width:2em">
+    i2c: <input id="i2cNum" type="text" value="" style="text-align: right; width:3em">
+    </span>
+<p/>
+<p/>
+<table id="matrixLED">
+</table>
+
+<b>Matrix LED demo from the <a href="http://elinux.org/index.php?title=Category:ECE497" target="_blank">32-bit Embedded Linux Class</a>.</b>
+</p>
+    <a href="http://beagleboard.org" target="_blank">
+        <img src="beagle-hd-logo.gif" width=200 align="right"></a>
+    <div><p id="status">Waiting for input</p></div>
+    <a href="http://www.ti.com/sitara" target="_blank">
+        <img src="hdr_ti_logo.gif" width=200 align="right"></a>
+    <div><p id="message">message</p></div> 
+By <i>Mark A. Yoder</i>
+<br/>
+<p/>
+<div id="setup">
+<b>Setup</b>:
+<ol>
+<li><i>Analog In</i>: Attach the wiper of a 10k&Omega; potentiometer to AIN6 (P9_36).  Attach the other ends to VDD_ACD (P9_32) and GNDA_ADC (P9_34).
+</li>
+<li><i>gpio</i>: Attach a switch between gpio0_7 (P9_42) and GND (P9_1).
+</li>
+<li><i>i2c</i>: Attach a TMP101 temperature sensor. Pin 1 (SCL) goes to P9_19 (i2c2_scl), Pin 2 (GND) to P9_2 (DGND), Pin 3 (ALERT) no connection, Pin 4 ((SDA) to P9_20 (i2c2_sda), Pin 5 (ADD0) to Pin P9_2 (GND) so address will be 0x48, Pin 6 (V+) to P9_3 (VDD_3V3).
+</li>
+<li><i>LED Brightnes</i>: Attach an LED in series with a 220&Omega; resistor between P9_1 (DGND) and P9_14 (ehrpwm1A).
+</li>
+</ol>
+</div>
+<script>
+<!--	connect(); -->
+</script>
+<!-- This is down here because the page has to be created before it can
+be modified -->
+<script src="matrixLEDClient.js"></script>
+</body>
+</html>
