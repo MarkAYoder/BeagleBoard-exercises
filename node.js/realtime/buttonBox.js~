@@ -9,8 +9,7 @@ var http = require('http'),
     server,
     connectCount = 0;	// Number of connections to server
 
-    var pwmPath    = "/sys/class/pwm/ehrpwm.1:0";
-    var pinMuxPath = "/sys/kernel/debug/omap_mux";
+    var pwmPath = "/sys/class/pwm/ehrpwm.2:1";
 
 // Initialize various IO things.
 function initIO() {
@@ -27,10 +26,6 @@ function initIO() {
     fs.writeFileSync(pwmPath+'/duty_percent', '0');
     fs.writeFileSync(pwmPath+'/polarity', '0');
     fs.writeFileSync(pwmPath+'/run', '1');
-    // Set pin Mux
-//	Don't know why the wiretFileSync doesn't work
-//    fs.writeFileSync(pinMuxPath+'/gpmc_a2', '0x0e'); // pwm, no pull up
-    exec("echo 0x0e > " + pinMuxPath + "/gpmc_a2");
 }
 
 initIO();

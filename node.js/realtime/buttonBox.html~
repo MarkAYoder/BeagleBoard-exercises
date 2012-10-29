@@ -42,7 +42,7 @@
 </td>
 </tr>
 </table>
-<div id="leds">
+<div>
 <button id="led0" onClick='led(0)'/>LED 0</button>
 <button id="led1" onClick='led(1)'/>LED 1</button>
 <button id="led2" onClick='led(2)'/>LED 2</button>
