@@ -47,11 +47,13 @@ By <i>Mark A. Yoder</i>
 </li>
 </ol>
 </div>
-<script>
-<!--	connect(); -->
-</script>
+
 <!-- This is down here because the page has to be created before it can
 be modified -->
 <script src="matrixLEDClient.js"></script>
+<script>
+connect();
+//socket.emit('i2c', 0x70);
+</script>
 </body>
 </html>

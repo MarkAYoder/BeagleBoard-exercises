@@ -20,11 +20,16 @@ var matrix;
 for(var j=0; j<8; j++) {
 	matrix += '<tr>';
 	for(var i=0; i<8; i++) {
-	    matrix += '<td><div class="LED">'+i+','+j+'</div></td>';
+	    matrix += '<td><div class="LED" onclick="LEDclick('+i+','+j+')">'+i+','+j+'</div></td>';
 	    }
 	matrix += '</tr>';
 }
 $('#matrixLED').append(matrix);
+
+function LEDclick(i, j) {
+//	alert(i+","+j+" clicked");
+	socket.emit('i2c', '0x70');
+}
 
     function connect() {
       if(firstconnect) {
@@ -43,8 +48,6 @@ $('#matrixLED').append(matrix);
         socket.on('reconnect_failed', function()
             { message("Reconnect Failed"); });
 
-        socket.on('ain',  ain);
-        socket.on('gpio', gpio);
         socket.on('i2c',  i2c);
 
         firstconnect = false;
@@ -63,35 +66,9 @@ $('#matrixLED').append(matrix);
     }
 
     // When new data arrived, convert it and plot it.
-    function ain(data) {
-        data = atob(data)/4096 * 1.8;
-        data = isNaN(data) ? 0 : data;
-//        status_update("ain: " + data);
-        ainData[iain] = [iain, data];
-        iain++;
-        if(iain >= samples) {
-            iain = 0;
-            ainData = [];
-        }
-        plotTop.setData([ ainData, gpioData ]);
-        plotTop.draw();
-    }
-
-    function gpio(data) {
-        data = atob(data);
-//        status_update("gpio: " + data);
-        gpioData[igpio] = [igpio, data];
-        igpio++;
-        if(igpio >= samples) {
-            igpio = 0;
-            gpioData = [];
-        }
-        plotTop.setData([ ainData, gpioData ]);
-        plotTop.draw();
-    }
 
     function i2c(data) {
-//        status_update("i2c: " + data);
+        status_update("i2c: " + data);
         // Convert to F
         data = parseInt(data) / 16 / 16 * 9/5 +32;
 //        status_update("i2c: " + data);

@@ -92,26 +92,8 @@ io.sockets.on('connection', function (socket) {
 //    }    
 
     // Send value every time a 'message' is received.
-    socket.on('ain', function (ainNum) {
-//        var ainPath = "/sys/devices/platform/omap/tsc/ain" + ainNum;
-        fs.readFile(ainPath + "ain" + ainNum, 'base64', function(err, data) {
-            if(err) throw err;
-            socket.emit('ain', data);
-//            console.log('emitted ain: ' + data);
-        });
-    });
-
-    socket.on('gpio', function (gpioNum) {
-        var gpioPath = "/sys/class/gpio/gpio" + gpioNum + "/value";
-        fs.readFile(gpioPath, 'base64', function(err, data) {
-            if (err) throw err;
-            socket.emit('gpio', data);
-//            console.log('emitted gpio: ' + data);
-        });
-    });
-
     socket.on('i2c', function (i2cNum) {
-//        console.log('Got i2c request:' + i2cNum);
+        console.log('Got i2c request:' + i2cNum);
         exec('i2cdump -y -r 0x00-0x0f 3 ' + i2cNum,
             function (error, stdout, stderr) {
 //		The LED has 8 16-bit values
@@ -121,23 +103,6 @@ io.sockets.on('connection', function (socket) {
                 if(stderr) {console.log('stderr: ' + stderr); }
                 socket.emit('i2c', stdout);
             });
-    });
-
-    socket.on('led', function (ledNum) {
-        var ledPath = "/sys/class/leds/beaglebone::usr" + ledNum + "/brightness";
-//        console.log('LED: ' + ledPath);
-        fs.readFile(ledPath, 'utf8', function (err, data) {
-            if(err) throw err;
-            data = data.substring(0,1) === "1" ? "0" : "1";
-//            console.log("LED%d: %s", ledNum, data);
-            fs.writeFile(ledPath, data);
-        });
-    });
-
-    socket.on('slider', function(slideNum, value) {
-//	console.log('slider' + slideNum + " = " + value);
-        fs.writeFile(pwmPath + "/duty_percent", value);
-
     });
 
     socket.on('disconnect', function () {
