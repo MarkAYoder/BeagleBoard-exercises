@@ -97,8 +97,7 @@ io.sockets.on('connection', function (socket) {
         exec('i2cdump -y -r 0x00-0x0f 3 ' + i2cNum + ' b',
             function (error, stdout, stderr) {
 //		The LED has 8 16-bit values
-//                stdout = '0x' + stdout.substring(4,6) + stdout.substring(2,4);
-               console.log('i2cget: "' + stdout + '"');
+//                console.log('i2cget: "' + stdout + '"');
 		var lines = stdout.split("00: ");
 		lines = lines[1].substr(0,47);
 		console.log("lines = %s", lines);

@@ -10,7 +10,7 @@
         i2cData = [],  ii2c = 0,
         gpioNum = 7,
         ainNum  = 6,
-        i2cNum  = "0x48";
+        i2cNum  = "0x70";
     ainData[samples] = 0;
     gpioData[samples] = 0;
     i2cData[samples] = 0;
@@ -20,7 +20,7 @@ var matrix;
 for(var j=0; j<8; j++) {
 	matrix += '<tr>';
 	for(var i=0; i<8; i++) {
-	    matrix += '<td><div class="LED off" id="id'+i+'_'+j+'" onclick="LEDclick('+i+','+j+')">'+i+','+j+'</div></td>';
+	    matrix += '<td><div class="LED" id="id'+i+'_'+j+'" onclick="LEDclick('+i+','+j+')">'+i+','+j+'</div></td>';
 	    }
 	matrix += '</tr>';
 }
@@ -28,9 +28,8 @@ $('#matrixLED').append(matrix);
 
 function LEDclick(i, j) {
 //	alert(i+","+j+" clicked");
-	socket.emit('i2c', '0x70');
-	$('#id'+i+'_'+j).addClass('on').removeClass('off');
-//	$('.LED').addClass('on').removeClass('off');
+	socket.emit('i2c', i2cNum);
+	$('#id'+i+'_'+j).addClass('on');
 }
 
     function connect() {
@@ -57,45 +56,51 @@ function LEDclick(i, j) {
       else {
         socket.socket.reconnect();
       }
+    socket.emit("i2c", i2cNum);
     }
 
     function disconnect() {
       socket.disconnect();
     }
 
-    function led(ledNum) {
-        socket.emit('led', ledNum);
-    }
-
     // When new data arrived, convert it and plot it.
-
     function i2c(data) {
-        status_update("i2c: " + data);
+	var i,j;
+	var disp = [];
+//        status_update("i2c: " + data);
 	data = data.split(" ");
-	for(var i=1; i<data.length; i+=2) {
-		data[i] = parseInt(data[i], 16);
+//        status_update("data: " + data);
+	// Lower 8 bit are the Green color.  Ignore the red
+	// Convert from hex
+	for(i=0; i<data.length; i+=2) {
+	    disp[i/2] = parseInt(data[i], 16);
+	}
+//        status_update("disp: " + disp);
+	// i cycles through each column
+	for(i=0; i<disp.length; i++) {
+	    // j cycles through each bit
+	    for(j=0; j<8; j++) {
+		if(((disp[i]>>j)&0x1) === 1) {
+		    $('#id'+i+'_'+j).addClass('on');
+		} else {
+		    $('#id'+i+'_'+j).removeClass('on');
+		}
+	    }
 	}
     }
 
     function status_update(txt){
-      document.getElementById('status').innerHTML = txt;
+//        document.getElementById('status').innerHTML = txt;
+	$('#status').html(txt);
     }
 
     function send(){
       socket.emit("ain", "Hello Server!");    
     };
 
-//    connect();
+connect();
 
 $(function () {
-
-    function initPlotData() {
-        // zip the generated y values with the x values
-        var result = [];
-        for (var i = 0; i <= samples; i++)
-            result[i] = [i, 0];
-        return result;
-    }
 
     // setup control widget
     $("#ainNum").val(ainNum).change(function () {
@@ -114,89 +119,27 @@ $(function () {
 	socket.emit("slider",  1, ui.value);
     });
 
-    var updateTopInterval = 100;
-    $("#updateTopInterval").val(updateTopInterval).change(function () {
+
+    var updateInterval = 100;
+    $("#updateInterval").val(updateInterval).change(function () {
         var v = $(this).val();
         if (v && !isNaN(+v)) {
-            updateTopInterval = +v;
-            if (updateTopInterval < 25)
-                updateTopInterval = 25;
-            if (updateTopInterval > 2000)
-                updateTopInterval = 2000;
-            $(this).val("" + updateTopInterval);
+            updateInterval = +v;
+            if (updateInterval < 25)
+                updateInterval = 25;
+            if (updateInterval > 2000)
+                updateInterval = 2000;
+            $(this).val("" + updateInterval);
         }
     });
-
-    var updateBotInterval = 100;
-    $("#updateBotInterval").val(updateBotInterval).change(function () {
-        var v = $(this).val();
-        if (v && !isNaN(+v)) {
-            updateBotInterval = +v;
-            if (updateBotInterval < 25)
-                updateBotInterval = 25;
-            if (updateBotInterval > 2000)
-                updateBotInterval = 2000;
-            $(this).val("" + updateBotInterval);
-        }
-    });
-
-    // setup plot
-    var optionsTop = {
-        series: { 
-            shadowSize: 0, // drawing is faster without shadows
-            points: { show: false},
-            lines:  { show: true, lineWidth: 5},
-        }, 
-        yaxis:	{ min: 0, max: 2, 
-                  zoomRange: [10, 256], panRange: [-128, 128] },
-        xaxis:	{ show: true, 
-                  zoomRange: [10, 100], panRange: [0, 100] },
-        legend:	{ position: "sw" },
-        zoom:	{ interactive: true, amount: 1.1 },
-        pan:	{ interactive: true }
-    };
-    plotTop = $.plot($("#plotTop"), 
-        [ 
-          { data:  initPlotData(), 
-            label: "Analog In" },
-          { data:  initPlotData(),
-            label: "gpio in" }
-        ],
-            optionsTop);
-
-    var optionsBot = {
-        series: { 
-            shadowSize: 0, // drawing is faster without shadows
-            points: { show: false},
-            lines:  { show: true, lineWidth: 5},
-            color: 2
-        }, 
-        yaxis:	{ min: 70, max: 90, 
-                  zoomRange: [10, 256], panRange: [60, 100] },
-        xaxis:	{ show: true, 
-                  zoomRange: [10, 100], panRange: [0, 100] },
-        legend:	{ position: "sw" },
-        zoom:	{ interactive: true, amount: 1.1 },
-        pan:	{ interactive: true }
-    };
-    plotBot = $.plot($("#plotBot"), 
-        [ 
-          { data:  initPlotData(),
-            label: "i2c"}
-        ],
-            optionsBot);
 
     // Request data every updateInterval ms
-    function updateTop() {
-        socket.emit("ain",  ainNum);
-        socket.emit("gpio", gpioNum);
-        setTimeout(updateTop, updateTopInterval);
-    }
-    updateTop();
 
-    function updateBot() {
+    function update() {
         socket.emit("i2c",  i2cNum);
-        setTimeout(updateBot, updateBotInterval);
+	if(updateInterval !== 0) {
+            setTimeout(updateBot, updateInterval);
+	}
     }
-    updateBot();
+    update();
 });
