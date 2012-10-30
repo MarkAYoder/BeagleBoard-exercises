@@ -10,7 +10,8 @@
         i2cData = [],  ii2c = 0,
         gpioNum = 7,
         ainNum  = 6,
-        i2cNum  = "0x70";
+        i2cNum  = "0x70",
+	disp = [];
     ainData[samples] = 0;
     gpioData[samples] = 0;
     i2cData[samples] = 0;
@@ -28,8 +29,14 @@ $('#matrixLED').append(matrix);
 
 function LEDclick(i, j) {
 //	alert(i+","+j+" clicked");
-	socket.emit('i2c', i2cNum);
-	$('#id'+i+'_'+j).addClass('on');
+    disp[i] ^= 0x1<<j;
+    socket.emit('i2cset', {i2cNum: i2cNum, i: i, disp: '0x'+disp[i].toString(16)});
+//	socket.emit('i2c', i2cNum);
+    if(disp[i]>>j&0x1 === 1) {
+        $('#id'+i+'_'+j).addClass('on');
+    } else {
+        $('#id'+i+'_'+j).removeClass('on');
+    }
 }
 
     function connect() {
@@ -50,13 +57,13 @@ function LEDclick(i, j) {
             { message("Reconnect Failed"); });
 
         socket.on('i2c',  i2c);
+        socket.emit("i2c", i2cNum);
 
         firstconnect = false;
       }
       else {
         socket.socket.reconnect();
       }
-    socket.emit("i2c", i2cNum);
     }
 
     function disconnect() {
@@ -66,7 +73,7 @@ function LEDclick(i, j) {
     // When new data arrived, convert it and plot it.
     function i2c(data) {
 	var i,j;
-	var disp = [];
+	disp = [];
 //        status_update("i2c: " + data);
 	data = data.split(" ");
 //        status_update("data: " + data);
@@ -90,7 +97,6 @@ function LEDclick(i, j) {
     }
 
     function status_update(txt){
-//        document.getElementById('status').innerHTML = txt;
 	$('#status').html(txt);
     }
 
@@ -115,20 +121,17 @@ $(function () {
         i2cNum = $(this).val();
     });
 
-    $("#slider1").slider().bind("slide", function(event, ui) {
-	socket.emit("slider",  1, ui.value);
-    });
-
-
-    var updateInterval = 100;
+    var updateInterval = 0;
     $("#updateInterval").val(updateInterval).change(function () {
         var v = $(this).val();
         if (v && !isNaN(+v)) {
             updateInterval = +v;
-            if (updateInterval < 25)
-                updateInterval = 25;
-            if (updateInterval > 2000)
-                updateInterval = 2000;
+	    if (updateInterval !== 0) {
+		    if (updateInterval < 25)
+		        updateInterval = 25;
+		    if (updateInterval > 2000)
+		        updateInterval = 2000;
+	    }
             $(this).val("" + updateInterval);
         }
     });
@@ -138,7 +141,7 @@ $(function () {
     function update() {
         socket.emit("i2c",  i2cNum);
 	if(updateInterval !== 0) {
-            setTimeout(updateBot, updateInterval);
+            setTimeout(update, updateInterval);
 	}
     }
     update();

@@ -107,6 +107,12 @@ io.sockets.on('connection', function (socket) {
             });
     });
 
+    socket.on('i2cset', function(params) {
+	console.log(params);
+	exec('i2cset -y 3 ' + params.i2cNum + ' ' + 2*params.i + ' ' +
+		params.disp); 
+    });
+
     socket.on('disconnect', function () {
         console.log("Connection " + socket.id + " terminated.");
         connectCount--;
