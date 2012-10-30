@@ -93,15 +93,18 @@ io.sockets.on('connection', function (socket) {
 
     // Send value every time a 'message' is received.
     socket.on('i2c', function (i2cNum) {
-        console.log('Got i2c request:' + i2cNum);
-        exec('i2cdump -y -r 0x00-0x0f 3 ' + i2cNum,
+//        console.log('Got i2c request:' + i2cNum);
+        exec('i2cdump -y -r 0x00-0x0f 3 ' + i2cNum + ' b',
             function (error, stdout, stderr) {
 //		The LED has 8 16-bit values
 //                stdout = '0x' + stdout.substring(4,6) + stdout.substring(2,4);
                console.log('i2cget: "' + stdout + '"');
+		var lines = stdout.split("00: ");
+		lines = lines[1].substr(0,47);
+		console.log("lines = %s", lines);
                 if(error) { console.log('error: ' + error); }
                 if(stderr) {console.log('stderr: ' + stderr); }
-                socket.emit('i2c', stdout);
+                socket.emit('i2c', lines);
             });
     });
 
