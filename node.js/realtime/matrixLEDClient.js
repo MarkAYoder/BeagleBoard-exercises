@@ -21,7 +21,9 @@ var matrix;
 for(var j=0; j<8; j++) {
 	matrix += '<tr>';
 	for(var i=0; i<8; i++) {
-	    matrix += '<td><div class="LED" id="id'+i+'_'+j+'" onclick="LEDclick('+i+','+j+')">'+i+','+j+'</div></td>';
+	    matrix += '<td><div class="LED" id="id'+i+'_'+j+
+		'" onclick="LEDclick('+i+','+j+')">'+
+		i+','+j+'</div></td>';
 	    }
 	matrix += '</tr>';
 }
@@ -32,6 +34,7 @@ function LEDclick(i, j) {
     disp[i] ^= 0x1<<j;
     socket.emit('i2cset', {i2cNum: i2cNum, i: i, disp: '0x'+disp[i].toString(16)});
 //	socket.emit('i2c', i2cNum);
+    // Toggle bit on display
     if(disp[i]>>j&0x1 === 1) {
         $('#id'+i+'_'+j).addClass('on');
     } else {
@@ -57,6 +60,7 @@ function LEDclick(i, j) {
             { message("Reconnect Failed"); });
 
         socket.on('i2c',  i2c);
+	// Read display for initial image.  Store in disp[]
         socket.emit("i2c", i2cNum);
 
         firstconnect = false;
@@ -100,8 +104,8 @@ function LEDclick(i, j) {
 	$('#status').html(txt);
     }
 
-    function send(){
-      socket.emit("ain", "Hello Server!");    
+    function updateFromLED(){
+      socket.emit("i2c", i2cNum);    
     };
 
 connect();

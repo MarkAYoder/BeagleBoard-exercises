@@ -11,35 +11,39 @@
   </head>
   <body>
   <b>Matrix LED Demo</b>
-        <img src="RoseLogo96.png" width=200 style="float:right"></a>
+        <img src="RoseLogo96.png" id="RoseLogo"></a>
 <p/>
     <button id="connect" onClick='connect()'/>Connect</button>
     <button id="disconnect" onClick='disconnect()'>Disconnect</button>
-    <span style="position:relative; left:150px">
-    Analog: <input id="ainNum" type="text" value="" style="text-align: right; width:2em">
-    gpio: <input id="gpioNum" type="text" value="" style="text-align: right; width:2em">
+    <span id="addresses">
     i2c: <input id="i2cNum" type="text" value="" style="text-align: right; width:3em">
     </span>
 <p/>
 <p/>
-<div id="update">Update: <input id="updateInterval" type="text" value="" style="text-align: right; width:3em"> ms</div>
+<div id="update">
+Update: <input id="updateInterval" type="text" value="" style="text-align: right; width:3em"> ms
+<br/>
+<button id="update" onClick='updateFromLED()'/>Update Display from LED</button>
+</div>
 <table id="matrixLED">
 </table>
 
 <b>Matrix LED demo from the <a href="http://elinux.org/index.php?title=Category:ECE497" target="_blank">32-bit Embedded Linux Class</a>.</b>
 </p>
+    <div id="bottom"><p id="status">Waiting for input</p></div>
+
     <a href="http://beagleboard.org" target="_blank">
-        <img src="beagle-hd-logo.gif" width=200 align="right"></a>
-    <div><p id="status">Waiting for input</p></div>
+        <img src="beagle-hd-logo.gif" id="RoseLogo"></a>
     <a href="http://www.ti.com/sitara" target="_blank">
-        <img src="hdr_ti_logo.gif" width=200 align="right"></a>
-    <div><p id="message">message</p></div> 
-By <i>Mark A. Yoder</i>
+        <img src="hdr_ti_logo.gif" id="RoseLogo"></a>
+<div id="signature">By <i>Mark A. Yoder</i></div>
 <br/>
 <p/>
 <div id="setup">
 <b>Setup</b>:
-
+Connect an 
+<a href="http://www.adafruit.com/products/902" target="_blank">
+Adafruit bicolor LED matrix</a> to the i2c bus. The default address is 0x70.
 </div>
 
 <!-- This is down here because the page has to be created before it can
