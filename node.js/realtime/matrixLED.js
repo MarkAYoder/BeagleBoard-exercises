@@ -9,32 +9,6 @@ var http = require('http'),
     server,
     connectCount = 0;	// Number of connections to server
 
-    var pwmPath    = "/sys/class/pwm/ehrpwm.1:0";
-    var pinMuxPath = "/sys/kernel/debug/omap_mux";
-
-// Initialize various IO things.
-function initIO() {
-    // Make sure gpio 7 is available.
-    var gpio = 7;
-    fs.writeFile("/sys/class/gpio/export", gpio);
-
-    // Initialize pwm
-    // Clear up any unmanaged usage
-    fs.writeFileSync(pwmPath+'/request', '0');
-    // Allocate and configure the PWM
-    fs.writeFileSync(pwmPath+'/request', '1');
-    fs.writeFileSync(pwmPath+'/period_freq', 1000);
-    fs.writeFileSync(pwmPath+'/duty_percent', '0');
-    fs.writeFileSync(pwmPath+'/polarity', '0');
-    fs.writeFileSync(pwmPath+'/run', '1');
-    // Set pin Mux
-//	Don't know why the wiretFileSync doesn't work
-//    fs.writeFileSync(pinMuxPath+'/gpmc_a2', '0x0e'); // pwm, no pull up
-    exec("echo 0x0e > " + pinMuxPath + "/gpmc_a2");
-}
-
-initIO();
-
 server = http.createServer(function (req, res) {
 // server code
     var path = url.parse(req.url).pathname;
@@ -73,25 +47,13 @@ io.set('log level', 2);
 
 // on a 'connection' event
 io.sockets.on('connection', function (socket) {
-    var frameCount = 0;	// Counts the frames from arecord
-    var lastFrame = 0;	// Last frame sent to browser
     console.log("Connection " + socket.id + " accepted.");
 //    console.log("socket: " + socket);
 
-    // now that we have our connected 'socket' object, we can 
+    // Now that we have our connected 'socket' object, we can 
     // define its event handlers
 
-    // Make sure some needed files are there
-    // The path to the analog devices changed from A5 to A6.  Check both.
-    var ainPath = "/sys/devices/platform/omap/tsc/";
-//    if(!fs.existsSync(ainPath)) {
-//        ainPath = "/sys/devices/platform/tsc/";
-//        if(!fs.existsSync(ainPath)) {
-//            throw "Can't find " + ainPath;
-//        }
-//    }    
-
-    // Send value every time a 'message' is received.
+    // Send whole display every time a 'i2c' is received.
     socket.on('i2c', function (i2cNum) {
 //        console.log('Got i2c request:' + i2cNum);
         exec('i2cdump -y -r 0x00-0x0f 3 ' + i2cNum + ' b',
@@ -101,15 +63,17 @@ io.sockets.on('connection', function (socket) {
 		var lines = stdout.split("00: ");
 		// Get the last line of the output and send the string
 		lines = lines[1].substr(0,47);
-//		console.log("lines = %s", lines);
+		console.log("lines = %s", lines);
+                socket.emit('i2c', lines);
                 if(error) { console.log('error: ' + error); }
                 if(stderr) {console.log('stderr: ' + stderr); }
-                socket.emit('i2c', lines);
             });
     });
 
+    // Sets one column every time i2cset is received.
     socket.on('i2cset', function(params) {
 //	console.log(params);
+	// Double i since display has 2 bytes per LED
 	exec('i2cset -y 3 ' + params.i2cNum + ' ' + 2*params.i + ' ' +
 		params.disp); 
     });

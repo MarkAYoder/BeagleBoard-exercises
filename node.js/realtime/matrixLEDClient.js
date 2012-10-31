@@ -63,7 +63,7 @@ function LEDclick(i, j) {
       socket.disconnect();
     }
 
-    // When new data arrived, convert it and display it.
+    // When new data arrives, convert it and display it.
     // data is a string of 16 values, each a pair of hex digits.
     function i2c(data) {
 	var i,j;
@@ -107,29 +107,4 @@ $(function () {
     $("#i2cNum").val(i2cNum).change(function () {
         i2cNum = $(this).val();
     });
-
-    var updateInterval = 0;
-    $("#updateInterval").val(updateInterval).change(function () {
-        var v = $(this).val();
-        if (v && !isNaN(+v)) {
-            updateInterval = +v;
-	    if (updateInterval !== 0) {
-		    if (updateInterval < 25)
-		        updateInterval = 25;
-		    if (updateInterval > 2000)
-		        updateInterval = 2000;
-	    }
-            $(this).val("" + updateInterval);
-        }
-    });
-
-    // Request data every updateInterval ms
-
-    function update() {
-        socket.emit("i2c",  i2cNum);
-	if(updateInterval !== 0) {
-            setTimeout(update, updateInterval);
-	}
-    }
-    update();
 });
