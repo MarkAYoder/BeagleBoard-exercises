@@ -1,22 +1,9 @@
     var socket;
     var firstconnect = true,
-        fs = 8000,
-        Ts = 1/fs*1000,
-        samples = 100,
-        plotTop,
-        plotBot,
-        ainData = [],  iain = 0, 
-        gpioData = [], igpio = 0,
-        i2cData = [],  ii2c = 0,
-        gpioNum = 7,
-        ainNum  = 6,
         i2cNum  = "0x70",
 	disp = [];
-    ainData[samples] = 0;
-    gpioData[samples] = 0;
-    i2cData[samples] = 0;
 
-// Create a matrix of LEDs
+// Create a matrix of LEDs inside the <table> tags.
 var matrix;
 for(var j=0; j<8; j++) {
 	matrix += '<tr>';
@@ -29,10 +16,12 @@ for(var j=0; j<8; j++) {
 }
 $('#matrixLED').append(matrix);
 
+// Send one column when LED is clicked.
 function LEDclick(i, j) {
 //	alert(i+","+j+" clicked");
     disp[i] ^= 0x1<<j;
-    socket.emit('i2cset', {i2cNum: i2cNum, i: i, disp: '0x'+disp[i].toString(16)});
+    socket.emit('i2cset', {i2cNum: i2cNum, i: i, 
+			     disp: '0x'+disp[i].toString(16)});
 //	socket.emit('i2c', i2cNum);
     // Toggle bit on display
     if(disp[i]>>j&0x1 === 1) {
@@ -74,15 +63,18 @@ function LEDclick(i, j) {
       socket.disconnect();
     }
 
-    // When new data arrived, convert it and plot it.
+    // When new data arrived, convert it and display it.
+    // data is a string of 16 values, each a pair of hex digits.
     function i2c(data) {
 	var i,j;
 	disp = [];
 //        status_update("i2c: " + data);
+	// Make data an array, each entry is a pair of digits
 	data = data.split(" ");
 //        status_update("data: " + data);
-	// Lower 8 bit are the Green color.  Ignore the red
-	// Convert from hex
+	// Every other pair of digits are Green. The others are red.
+	// Ignore the red.
+	// Convert from hex.
 	for(i=0; i<data.length; i+=2) {
 	    disp[i/2] = parseInt(data[i], 16);
 	}
@@ -111,16 +103,7 @@ function LEDclick(i, j) {
 connect();
 
 $(function () {
-
     // setup control widget
-    $("#ainNum").val(ainNum).change(function () {
-        ainNum = $(this).val();
-    });
-
-    $("#gpioNum").val(gpioNum).change(function () {
-        gpioNum = $(this).val();
-    });
-
     $("#i2cNum").val(i2cNum).change(function () {
         i2cNum = $(this).val();
     });

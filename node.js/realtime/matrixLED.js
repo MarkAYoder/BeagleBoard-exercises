@@ -99,8 +99,9 @@ io.sockets.on('connection', function (socket) {
 //		The LED has 8 16-bit values
 //                console.log('i2cget: "' + stdout + '"');
 		var lines = stdout.split("00: ");
+		// Get the last line of the output and send the string
 		lines = lines[1].substr(0,47);
-		console.log("lines = %s", lines);
+//		console.log("lines = %s", lines);
                 if(error) { console.log('error: ' + error); }
                 if(stderr) {console.log('stderr: ' + stderr); }
                 socket.emit('i2c', lines);
