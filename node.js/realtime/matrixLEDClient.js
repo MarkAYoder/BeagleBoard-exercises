@@ -5,7 +5,7 @@
 
 // Create a matrix of LEDs inside the <table> tags.
 var matrix;
-for(var j=0; j<8; j++) {
+for(var j=7; j>=0; j--) {
 	matrix += '<tr>';
 	for(var i=0; i<8; i++) {
 	    matrix += '<td><div class="LED" id="id'+i+'_'+j+
