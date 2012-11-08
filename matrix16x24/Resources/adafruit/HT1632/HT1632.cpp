@@ -419,7 +419,7 @@ void HT1632::clearScreen() {
   for (uint8_t i=0; i<(WIDTH*HEIGHT/8); i++) {
     ledmatrix[i] = 0;
   }
-  writeScreen();
+//  writeScreen();
 }
 
 int HT1632::writedata(uint16_t d, uint8_t bits) {
