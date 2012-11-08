@@ -20,16 +20,16 @@ void testMatrix2(HT1632LEDMatrix *matrix) {
   char message[] = "Beag\nleBo";
   matrix->setTextSize(1);
   matrix->setTextColor(1);
-  for(int j=0; j<12; j++) {
+  for(int j=matrix->height(); j>=0; j--) {
     matrix->clearScreen();
-    matrix->setCursor(j, 0);
+    matrix->setCursor(j, j);
     for(int i=0; message[i]; i++) {
       matrix->write(message[i]);
       }
     //matrix->write('A');
     //matrix->write('+');
     matrix->writeScreen();
-    usleep(200000);
+    usleep(20000);
   }
 
   // Blink!
@@ -77,7 +77,7 @@ void testMatrix1(HT1632LEDMatrix *matrix) {
   matrix->drawBitmap(0, 0, icon, matrix->width(), matrix->height(), 1);  
   matrix->writeScreen();
   usleep(2000000);
-
+/*
   // Blink!
   matrix->blink(true);
   usleep(2000000);
@@ -97,6 +97,7 @@ void testMatrix1(HT1632LEDMatrix *matrix) {
   matrix->blink(true);
   usleep(2000000);
   matrix->blink(false);
+*/
 }
 
 int main(void) {
@@ -109,14 +110,13 @@ int main(void) {
   
   printf("Test #1\n");
   testMatrix1(&matrix);
-  return 0;
-/*
+
   printf("Clear\n");
   matrix.clearScreen();
   
-  printf("Test2\n");
+  printf("Test #2\n");
   testMatrix2(&matrix);
-*/
+
   printf("Done!\n");
   return 0;
 }
