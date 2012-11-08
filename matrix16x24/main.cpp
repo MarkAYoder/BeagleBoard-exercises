@@ -20,13 +20,17 @@ void testMatrix2(HT1632LEDMatrix *matrix) {
   char message[] = "Beag\nleBo";
   matrix->setTextSize(1);
   matrix->setTextColor(1);
-  for(int i=0; message[i]; i++) {
-    matrix->write(message[i]);
-    }
-  //matrix->write('A');
-  //matrix->write('+');
-  matrix->writeScreen();
-  usleep(2000000);
+  for(int j=0; j<12; j++) {
+    matrix->clearScreen();
+    matrix->setCursor(j, 0);
+    for(int i=0; message[i]; i++) {
+      matrix->write(message[i]);
+      }
+    //matrix->write('A');
+    //matrix->write('+');
+    matrix->writeScreen();
+    usleep(200000);
+  }
 
   // Blink!
   matrix->blink(true);
@@ -51,10 +55,23 @@ void testMatrix2(HT1632LEDMatrix *matrix) {
 
 void testMatrix1(HT1632LEDMatrix *matrix) {
   // Draw a circle
-  matrix->drawCircle(8, 8, 8, 1);
-  matrix->fillCircle(8, 8, 4, 1);
-  matrix->writeScreen();
-  usleep(2000000);
+  for(int r=0; r<matrix->width()/2; r++) {
+    matrix->clearScreen();
+    matrix->setBrightness(2*r);
+    matrix->drawCircle(matrix->width()/2, matrix->height()/2, r, 1);
+    //matrix->fillCircle(8, 8, 4, 1);
+    matrix->writeScreen();
+    usleep(20000);
+  }
+
+  for(int r=matrix->width()/2; r>0; r--) {
+    matrix->clearScreen();
+    matrix->setBrightness(2*r);
+    matrix->drawCircle(matrix->width()/2, matrix->height()/2, r, 1);
+    //matrix->fillCircle(8, 8, 4, 1);
+    matrix->writeScreen();
+    usleep(20000);
+  }
 
   //Display icon
   matrix->drawBitmap(0, 0, icon, matrix->width(), matrix->height(), 1);  
@@ -86,20 +103,20 @@ int main(void) {
   printf("Starting...\n");
   HT1632LEDMatrix matrix = HT1632LEDMatrix(BANK, DATA, WR, CS);
   matrix.begin(HT1632_COMMON_16NMOS);
-/*  
+  
   printf("Clear\n");
   matrix.clearScreen();
   
   printf("Test #1\n");
   testMatrix1(&matrix);
   return 0;
-*/
+/*
   printf("Clear\n");
   matrix.clearScreen();
   
   printf("Test2\n");
   testMatrix2(&matrix);
-  
+*/
   printf("Done!\n");
   return 0;
 }
