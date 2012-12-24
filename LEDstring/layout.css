@@ -8,11 +8,20 @@ body {
 .slider { margin: 10px; width: 275px; 
 	text-align:center;
 	position:relative;
-	right: -250px;
-	top:   -30px;
 }
 
 #setup {
 	font-size: 10px;
 }
 
+#red {	background:	#ff0000;
+	border-color:	#ff0000;
+}
+
+#green { background: #00ff00;
+	border-color:	#00ff00;
+}
+
+#blue {	background: #0000ff;
+	border-color:	#000044;
+}
