@@ -9,9 +9,7 @@ var http = require('http'),
     server,
     connectCount = 0;	// Number of connections to server
 
-    var color = [0, 0, 0];
-
-    var rgbPath    = "/sys/firmware/lpd8806/device";
+    var pwmPath    = "/sys/class/pwm/ehrpwm.1:0";
     var pinMuxPath = "/sys/kernel/debug/omap_mux";
 
 // Initialize various IO things.
@@ -20,7 +18,7 @@ function initIO() {
     var gpio = 7;
     fs.writeFile("/sys/class/gpio/export", gpio);
 
-/*    // Initialize pwm
+    // Initialize pwm
     // Clear up any unmanaged usage
     fs.writeFileSync(pwmPath+'/request', '0');
     // Allocate and configure the PWM
@@ -33,7 +31,6 @@ function initIO() {
 //	Don't know why the wiretFileSync doesn't work
 //    fs.writeFileSync(pinMuxPath+'/gpmc_a2', '0x0e'); // pwm, no pull up
     exec("echo 0x0e > " + pinMuxPath + "/gpmc_a2");
-*/
 }
 
 initIO();
@@ -113,6 +110,19 @@ io.sockets.on('connection', function (socket) {
         });
     });
 
+    socket.on('i2c', function (i2cNum) {
+//        console.log('Got i2c request:' + i2cNum);
+        exec('i2cget -y 3 ' + i2cNum + ' 0 w',
+            function (error, stdout, stderr) {
+//		The TMP102 returns a 12 bit value with the digits swapped
+                stdout = '0x' + stdout.substring(4,6) + stdout.substring(2,4);
+//                console.log('i2cget: "' + stdout + '"');
+                if(error) { console.log('error: ' + error); }
+                if(stderr) {console.log('stderr: ' + stderr); }
+                socket.emit('i2c', stdout);
+            });
+    });
+
     socket.on('led', function (ledNum) {
         var ledPath = "/sys/class/leds/beaglebone::usr" + ledNum + "/brightness";
 //        console.log('LED: ' + ledPath);
@@ -125,14 +135,8 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('slider', function(slideNum, value) {
-	console.log('slider' + slideNum + " = " + value);
-	color[slideNum] = value;
-	console.log('color: ' + color);
-
-	for(var i=0; i<10; i++) {
-            fs.writeFile(rgbPath + "/grb", 
-		color[1]+' '+color[0]+' '+color[2]);
-	}
+//	console.log('slider' + slideNum + " = " + value);
+        fs.writeFile(pwmPath + "/duty_percent", value);
 
     });
 

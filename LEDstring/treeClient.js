@@ -128,15 +128,7 @@ $(function () {
     });
 
     $("#slider1").slider().bind("slide", function(event, ui) {
-	socket.emit("slider",  0, ui.value);
-    });
-
-    $("#slider2).slider().bind("slide", function(event, ui) {
 	socket.emit("slider",  1, ui.value);
-    });
-
-    $("#slider3").slider().bind("slide", function(event, ui) {
-	socket.emit("slider",  2, ui.value);
     });
 
     var updateTopInterval = 100;
