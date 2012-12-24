@@ -127,15 +127,15 @@ $(function () {
         i2cNum = $(this).val();
     });
 
-    $("#slider1").slider().bind("slide", function(event, ui) {
+    $("#red").slider().bind("slide", function(event, ui) {
 	socket.emit("slider",  0, ui.value);
     });
 
-    $("#slider2").slider().bind("slide", function(event, ui) {
+    $("#green").slider().bind("slide", function(event, ui) {
 	socket.emit("slider",  1, ui.value);
     });
 
-    $("#slider3").slider().bind("slide", function(event, ui) {
+    $("#blue").slider().bind("slide", function(event, ui) {
 	socket.emit("slider",  2, ui.value);
     });
 
