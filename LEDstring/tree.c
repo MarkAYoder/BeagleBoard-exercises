@@ -20,36 +20,41 @@ void clear() {
   }
 }
 
-void blank(int n) {
-  int i;
-  for(i=0; i<n; i++) {
-    fprintf(grb_fp, "0 0 0\n");
-//    printf("blanking %d ...\n", i);
-    usleep(DELAY);
-  }
+void rgb(int red, int green, int blue, int us) {
+    fprintf(grb_fp, "%d %d %d\n", green, red, blue);
+//    printf("sending %d %d %d for %d\n", red, green, blue, us);
+    usleep(us);
 }
 
 void pattern4() {
   int i;
-  for(i=0; i<STRAND_LEN; i+=4) {
-    fprintf(grb_fp, " %d   0   0\n", MAX);
-    fprintf(grb_fp, "  0  %d   0\n", MAX);
-    fprintf(grb_fp, "  0   0  %d\n", MAX);
-    fprintf(grb_fp, " %d  %d   0\n", MAX/2, MAX);
+  for(i=0; i<STRAND_LEN; i+=12) {
+    rgb(MAX,   0,   0, 0);
+    rgb(  0,   0,   0, 0);  
+    rgb(  0,   0,   0, 0);  
+    rgb(  0, MAX,   0, 0);  
+    rgb(  0,   0,   0, 0);  
+    rgb(  0,   0,   0, 0);  
+    rgb(  0,   0, MAX, 0);  
+    rgb(  0,   0,   0, 0);  
+    rgb(  0,   0,   0, 0);  
+    rgb(MAX, MAX/2, 0, 0);  
+    rgb(  0,   0,   0, 0);  
+    rgb(  0,   0,   0, 0);  
   }
   while(running) {
-    fprintf(grb_fp, " %d   0   0\n", MAX);
-    usleep(DELAY);
-    blank(BLANK);
-    fprintf(grb_fp, "  0  %d   0\n", MAX);
-    usleep(DELAY);
-    blank(BLANK);
-    fprintf(grb_fp, "  0   0  %d\n", MAX);
-    usleep(DELAY);
-    blank(BLANK);
-    fprintf(grb_fp, " %d  %d   0\n", MAX/2, MAX);
-    usleep(DELAY);
-    blank(BLANK);
+    rgb(MAX,   0,   0, DELAY);
+    rgb(  0,   0,   0, DELAY);  
+    rgb(  0,   0,   0, DELAY);  
+    rgb(  0, MAX,   0, DELAY);  
+    rgb(  0,   0,   0, DELAY);  
+    rgb(  0,   0,   0, DELAY);  
+    rgb(  0,   0, MAX, DELAY);  
+    rgb(  0,   0,   0, DELAY);  
+    rgb(  0,   0,   0, DELAY);  
+    rgb(MAX, MAX/2, 0, DELAY);  
+    rgb(  0,   0,   0, DELAY);  
+    rgb(  0,   0,   0, DELAY);  
   }
 }
 
