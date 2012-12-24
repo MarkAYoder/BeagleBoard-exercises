@@ -125,12 +125,19 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('slider', function(slideNum, value) {
-	console.log('slider' + slideNum + " = " + value);
+//	console.log('slider' + slideNum + " = " + value);
 	color[slideNum] = value;
-	console.log('color: ' + color);
+//	console.log('color: ' + color);
         fs.writeFile(rgbPath + "/grb", 
 	    color[1]+' '+color[0]+' '+color[2]);
 
+    });
+
+    socket.on('rgb', function(rgbString) {
+	console.log('rgb: ' + rgbString);
+        rgbString = rgbString.split(" ");
+        fs.writeFile(rgbPath + "/grb", 
+	  rgbString[1]+' '+rgbString[0]+' '+rgbString[2]);
     });
 
     socket.on('disconnect', function () {

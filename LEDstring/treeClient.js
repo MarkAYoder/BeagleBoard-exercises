@@ -84,7 +84,8 @@
 
     function send() {
       var txt = document.getElementById('program').value.split("\n");
-      status_update("Send: " + txt);  
+      status_update("Send: " + txt);
+      socket.emit('rgb', txt[0]);
     };
 
 //    connect();
