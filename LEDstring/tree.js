@@ -10,7 +10,7 @@ var http = require('http'),
     connectCount = 0;	// Number of connections to server
     var color = [0, 0, 0];	// Color of next LED
 
-    var pwmPath    = "/sys/class/pwm/ehrpwm.1:0";
+    var rgbPath    = "/sys/firmware/lpd8806/device";
     var pinMuxPath = "/sys/kernel/debug/omap_mux";
 
 // Initialize various IO things.
@@ -19,6 +19,7 @@ function initIO() {
     var gpio = 7;
     fs.writeFile("/sys/class/gpio/export", gpio);
 
+/*
     // Initialize pwm
     // Clear up any unmanaged usage
     fs.writeFileSync(pwmPath+'/request', '0');
@@ -32,6 +33,7 @@ function initIO() {
 //	Don't know why the wiretFileSync doesn't work
 //    fs.writeFileSync(pinMuxPath+'/gpmc_a2', '0x0e'); // pwm, no pull up
     exec("echo 0x0e > " + pinMuxPath + "/gpmc_a2");
+*/
 }
 
 initIO();
@@ -126,7 +128,8 @@ io.sockets.on('connection', function (socket) {
 	console.log('slider' + slideNum + " = " + value);
 	color[slideNum] = value;
 	console.log('color: ' + color);
-        fs.writeFile(pwmPath + "/duty_percent", value);
+        fs.writeFile(rgbPath + "/grb", 
+	    color[1]+' '+color[0]+' '+color[2]);
 
     });
 
