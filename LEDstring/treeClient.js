@@ -4,7 +4,6 @@
         Ts = 1/fs*1000,
         samples = 100,
         plotTop,
-        plotBot,
         ainData = [],  iain = 0, 
         gpioData = [], igpio = 0,
         i2cData = [],  ii2c = 0,
@@ -79,21 +78,6 @@
         plotTop.draw();
     }
 
-    function i2c(data) {
-//        status_update("i2c: " + data);
-        // Convert to F
-        data = parseInt(data) / 16 / 16 * 9/5 +32;
-//        status_update("i2c: " + data);
-        i2cData[ii2c] = [ii2c, data];
-        ii2c++;
-        if(ii2c >= samples) {
-            ii2c = 0;
-            i2cData = [];
-        }
-        plotBot.setData([ i2cData ]);
-        plotBot.draw();
-    }
-
     function status_update(txt){
       document.getElementById('status').innerHTML = txt;
     }
@@ -152,19 +136,6 @@ $(function () {
         }
     });
 
-    var updateBotInterval = 100;
-    $("#updateBotInterval").val(updateBotInterval).change(function () {
-        var v = $(this).val();
-        if (v && !isNaN(+v)) {
-            updateBotInterval = +v;
-            if (updateBotInterval < 25)
-                updateBotInterval = 25;
-            if (updateBotInterval > 2000)
-                updateBotInterval = 2000;
-            $(this).val("" + updateBotInterval);
-        }
-    });
-
     // setup plot
     var optionsTop = {
         series: { 
@@ -189,28 +160,6 @@ $(function () {
         ],
             optionsTop);
 
-    var optionsBot = {
-        series: { 
-            shadowSize: 0, // drawing is faster without shadows
-            points: { show: false},
-            lines:  { show: true, lineWidth: 5},
-            color: 2
-        }, 
-        yaxis:	{ min: 70, max: 90, 
-                  zoomRange: [10, 256], panRange: [60, 100] },
-        xaxis:	{ show: true, 
-                  zoomRange: [10, 100], panRange: [0, 100] },
-        legend:	{ position: "sw" },
-        zoom:	{ interactive: true, amount: 1.1 },
-        pan:	{ interactive: true }
-    };
-    plotBot = $.plot($("#plotBot"), 
-        [ 
-          { data:  initPlotData(),
-            label: "i2c"}
-        ],
-            optionsBot);
-
     // Request data every updateInterval ms
     function updateTop() {
         socket.emit("ain",  ainNum);
@@ -219,9 +168,4 @@ $(function () {
     }
     updateTop();
 
-    function updateBot() {
-        socket.emit("i2c",  i2cNum);
-        setTimeout(updateBot, updateBotInterval);
-    }
-    updateBot();
 });
