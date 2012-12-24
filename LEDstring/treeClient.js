@@ -82,8 +82,9 @@
       document.getElementById('status').innerHTML = txt;
     }
 
-    function send(){
-      socket.emit("ain", "Hello Server!");    
+    function send() {
+      var txt = document.getElementById('program').value.split("\n");
+      status_update("Send: " + txt);  
     };
 
 //    connect();

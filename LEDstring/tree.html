@@ -33,7 +33,16 @@
     Update: <input id="updateTopInterval" type="text" value="" style="text-align: right; width:3em"> ms
     <button id="zoomout" onClick='plotTop.zoomOut()'>Zoom Out</button>
 </td>
-
+<tr>
+<td>
+<textarea rows="10" cols="30" id="program">
+Red Green Blue Time(us)
+</textarea>
+</td>
+<td>
+<button id="sendProgram" onclick="send()">Send Program</button>
+</td>
+</tr>
 </table>
 <div class="slider" id="red">LED Brightness</div>
 <div class="slider" id="green">LED Brightness</div>
