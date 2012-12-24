@@ -1,7 +1,7 @@
 CC=gcc
 
-TARGETS=tree2 \
-tree2.o
+TARGETS=tree \
+tree.o
 
 all: $(TARGETS)
 
