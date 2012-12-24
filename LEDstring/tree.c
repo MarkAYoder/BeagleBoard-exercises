@@ -8,14 +8,13 @@
 #define STRAND_LEN 160 // Number of LEDs on strand
 #define MAX 10
 #define DELAY 1000000
-#define BLANK 2
 
 static FILE *grb_fp;
 int running=1;
 
 void clear() {
   int i;
-  for (i = 0; i < STRAND_LEN; i++) {
+  for (i=0; i<STRAND_LEN; i++) {
     fprintf(grb_fp, "0 0 0\n");
   }
 }
@@ -26,6 +25,7 @@ void rgb(int red, int green, int blue, int us) {
     usleep(us);
 }
 
+// pattern4 matches the static LEDs on the tree.
 void pattern4() {
   int i;
   for(i=0; i<STRAND_LEN; i+=12) {
@@ -58,24 +58,19 @@ void pattern4() {
   }
 }
 
+// Pattern 3 is a single LED running backward.
 void pattern3() {
   int i, j;
-  unsigned char data[3];
 
   for(j=0; j<STRAND_LEN; j++) {
-    
-  for(i=0; i<STRAND_LEN; i++) {
-    data[0] = 0;
-    data[1] = 0;
-    data[2] = 127;
-
-    if(i==j) {
-      fprintf(grb_fp, "%d %d %d\n", data[0], data[1], data[2]);
-    } else {
-      fprintf(grb_fp, "0 0 0\n");
+    for(i=0; i<STRAND_LEN; i++) {
+      if(i==j) {
+        rgb(0, 0, 127, 0);
+      } else {
+        rgb(0, 0, 0, 0);
+      }
     }
-  }
-  usleep(200000);
+  usleep(50000);
   }
 }
 
@@ -139,7 +134,7 @@ if (signal(SIGINT, signal_handler) == SIG_ERR) {
     return 1;
   }
   
-  pattern4();
+  pattern3();
 //  while (running) {
 //    clear();
 //    pattern4();
