@@ -74,18 +74,12 @@ void pattern3() {
   }
 }
 
+// Pattern 1 outputs a string of increaing brightness
 void pattern1() {
   int i;
-  unsigned char data[3];
-  srand(time(NULL));
 
   for (i = 0; i < STRAND_LEN; i++) {
-    data[0] = i%127;
-    data[1] = 0;
-    data[2] = 0;
-    
-    fprintf(grb_fp, "%d %d %d\n", data[0], data[1], data[2]);
-    usleep(20000);
+    rgb(0, i%127, 0, 20000);
   }
 }
 
@@ -134,13 +128,13 @@ if (signal(SIGINT, signal_handler) == SIG_ERR) {
     return 1;
   }
   
-  pattern3();
-//  while (running) {
-//    clear();
-//    pattern4();
-//    clear();
-//    pattern4();
-//  }
+  pattern4();
+/*
+  while (running) {
+    clear();
+    pattern2();
+  }
+*/
 
 //  fflush(stdout);
   fclose(grb_fp);
