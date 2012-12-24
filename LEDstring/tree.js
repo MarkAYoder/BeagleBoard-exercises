@@ -8,6 +8,7 @@ var http = require('http'),
     exec = require('child_process').exec,
     server,
     connectCount = 0;	// Number of connections to server
+    var color = [0, 0, 0];	// Color of next LED
 
     var pwmPath    = "/sys/class/pwm/ehrpwm.1:0";
     var pinMuxPath = "/sys/kernel/debug/omap_mux";
@@ -122,7 +123,9 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('slider', function(slideNum, value) {
-//	console.log('slider' + slideNum + " = " + value);
+	console.log('slider' + slideNum + " = " + value);
+	color[slideNum] = value;
+	console.log('color: ' + color);
         fs.writeFile(pwmPath + "/duty_percent", value);
 
     });
