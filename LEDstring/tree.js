@@ -135,15 +135,18 @@ io.sockets.on('connection', function (socket) {
 	    for(var i=0; i<count; i++) {
 	      console.log(data[i]);
 	    }
-            for(var i=0; i<count; i+=160) {
-	      LEDout = [];
-	      for(var j=0; j<160; j++) {
+	    LEDout = [];
+	    var on = 80;
+            for(var i=0; i<count; i++) {
+	      if(i == on) {
 		LEDout += "127 127 127 ";
+	      } else {
+		LEDout += "0 0 0 ";
 	      }
-	      LEDout += '\n';
-	      console.log("LEDout: " + LEDout);
-	      fs.writeFileSync(LEDpath + "/data", LEDout);
 	    }
+	    LEDout += '\n';
+	    console.log("LEDout: " + LEDout);
+	    fs.writeFileSync(LEDpath + "/data", LEDout);
         });
 
     });
