@@ -1,7 +1,5 @@
     var socket;
     var firstconnect = true,
-        fs = 8000,
-        Ts = 1/fs*1000,
         samples = 100,
         plotTop,
         ainData = [],  iain = 0, 
@@ -10,6 +8,7 @@
         gpioNum = 7,
         ainNum  = 6,
         i2cNum  = "0x48";
+    var LEDtest;
     ainData[samples] = 0;
     gpioData[samples] = 0;
     i2cData[samples] = 0;
@@ -34,6 +33,7 @@
         socket.on('ain',  ain);
         socket.on('gpio', gpio);
         socket.on('i2c',  i2c);
+	socket.on('led', LEDdata);
 
         firstconnect = false;
       }
@@ -78,7 +78,15 @@
         plotTop.draw();
     }
 
-    function status_update(txt){
+    function LEDdata(data) {
+//      data = atob(data);
+      LEDtest = data;
+      alert("LEDdata called: " + data);
+      document.getElementById('program').innerHTML = "Test";
+      document.getElementById('program').innerHTML = data;
+    }
+
+    function status_update(txt) {
       document.getElementById('status').innerHTML = txt;
     }
 
@@ -87,6 +95,10 @@
       status_update("Send: " + txt);
       socket.emit('rgb', txt[0]);
     };
+
+    function getData() {
+      socket.emit('getData', 160);
+    }
 
 //    connect();
 

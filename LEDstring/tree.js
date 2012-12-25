@@ -18,22 +18,6 @@ function initIO() {
     // Make sure gpio 7 is available.
     var gpio = 7;
     fs.writeFile("/sys/class/gpio/export", gpio);
-
-/*
-    // Initialize pwm
-    // Clear up any unmanaged usage
-    fs.writeFileSync(pwmPath+'/request', '0');
-    // Allocate and configure the PWM
-    fs.writeFileSync(pwmPath+'/request', '1');
-    fs.writeFileSync(pwmPath+'/period_freq', 1000);
-    fs.writeFileSync(pwmPath+'/duty_percent', '0');
-    fs.writeFileSync(pwmPath+'/polarity', '0');
-    fs.writeFileSync(pwmPath+'/run', '1');
-    // Set pin Mux
-//	Don't know why the wiretFileSync doesn't work
-//    fs.writeFileSync(pinMuxPath+'/gpmc_a2', '0x0e'); // pwm, no pull up
-    exec("echo 0x0e > " + pinMuxPath + "/gpmc_a2");
-*/
 }
 
 initIO();
@@ -96,7 +80,6 @@ io.sockets.on('connection', function (socket) {
 
     // Send value every time a 'message' is received.
     socket.on('ain', function (ainNum) {
-//        var ainPath = "/sys/devices/platform/omap/tsc/ain" + ainNum;
         fs.readFile(ainPath + "ain" + ainNum, 'base64', function(err, data) {
             if(err) throw err;
             socket.emit('ain', data);
@@ -138,6 +121,30 @@ io.sockets.on('connection', function (socket) {
         rgbString = rgbString.split(" ");
         fs.writeFile(rgbPath + "/grb", 
 	  rgbString[1]+' '+rgbString[0]+' '+rgbString[2]);
+    });
+
+    socket.on('getData', function(count) {
+      var LEDout = [];
+      console.log('getData: ' + count);
+      var LEDpath = '/sys/firmware/lpd8806/device';
+      fs.readFile(LEDpath + "/data", 'ascii', function(err, data) {
+	    data = data.split('\n');
+            if(err) throw err;
+            socket.emit('led', data);
+            console.log('emitted LEDdata: ');
+	    for(var i=0; i<count; i++) {
+	      console.log(data[i]);
+	    }
+            for(var i=0; i<count; i+=10) {
+	      LEDout = [];
+	      for(var j=0; j<10; j++) {
+		LEDout += "127 127 127 ";
+	      }
+	      console.log("LEDout: " + LEDout);
+	      fs.writeFileSync(LEDpath + "/data", LEDout);
+	    }
+        });
+
     });
 
     socket.on('disconnect', function () {
