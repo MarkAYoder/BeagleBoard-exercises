@@ -123,6 +123,9 @@ io.sockets.on('connection', function (socket) {
 	  rgbString[1]+' '+rgbString[0]+' '+rgbString[2]);
     });
 
+//	The 'data' interface isn't stable.
+//	This uses the 'data' interface to address all the LEDs at once.
+//	It appears very fast, but seems to hang everything.
     socket.on('getData', function(count) {
       var LEDout = [];
       console.log('getData: ' + count);
@@ -132,11 +135,9 @@ io.sockets.on('connection', function (socket) {
             if(err) throw err;
             socket.emit('led', data);
             console.log('emitted LEDdata: ');
-	    for(var i=0; i<count; i++) {
-	      console.log(data[i]);
-	    }
+	    for(var j=90; j>88; j--) {
 	    LEDout = [];
-	    var on = 80;
+	    var on = j;
             for(var i=0; i<count; i++) {
 	      if(i == on) {
 		LEDout += "127 127 127 ";
@@ -147,6 +148,7 @@ io.sockets.on('connection', function (socket) {
 	    LEDout += '\n';
 	    console.log("LEDout: " + LEDout);
 	    fs.writeFileSync(LEDpath + "/data", LEDout);
+	    }
         });
 
     });
