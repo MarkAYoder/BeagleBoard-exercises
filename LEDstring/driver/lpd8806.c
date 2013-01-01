@@ -153,7 +153,7 @@ static ssize_t lpd8806_store(struct lpd8806_obj *obj, struct lpd8806_attr *attr,
     
     // Strand is 7 bit GRB with 1 bit for latch
 //    printk("lpd8806_store, buf = \"%s\"\n", buf);
-    sscanf(buf, "%hhu %hhu %hhu", &g, &r, &b);
+    sscanf(buf, "%hhu %hhu %hhu", &r, &g, &b);
     obj->grb[0] = g | 0x80;
     obj->grb[1] = r | 0x80;
     obj->grb[2] = b | 0x80;
