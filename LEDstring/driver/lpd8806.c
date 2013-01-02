@@ -111,12 +111,12 @@ static void lpd8806_release(struct kobject *kobj) {
  */
 static ssize_t lpd8806_show(struct lpd8806_obj *obj, struct lpd8806_attr *attr, char *buf) {
   if (strcmp(attr->attr.name, "rgb") == 0) {
-    return sprintf(buf, "[%hhu %hhu %hhu]\n", obj->grb[0] & 0x7F, obj->grb[1] & 0x7F, obj->grb[2] & 0x7F);
+    return sprintf(buf, "[%hhu %hhu %hhu]\n", obj->grb[1] & 0x7F, obj->grb[0] & 0x7F, obj->grb[2] & 0x7F);
   } else if (strcmp(attr->attr.name, "data") == 0) {
     int i;
     int count;
     for (i = 0; i < STRAND_LEN * 3; i += 3) {
-      count = sprintf(buf, "%s%d [%hhu %hhu %hhu]\n", buf, i/3, obj->data[i] & 0x7F, obj->data[i+1] & 0x7F, obj->data[i+2] & 0x7F);  
+      count = sprintf(buf, "%s%d [%hhu %hhu %hhu]\n", buf, i/3, obj->data[i+1] & 0x7F, obj->data[i] & 0x7F, obj->data[i+2] & 0x7F);  
     }
     return count;
   } else {
