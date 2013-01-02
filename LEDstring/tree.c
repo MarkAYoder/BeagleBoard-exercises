@@ -19,9 +19,16 @@ void clear() {
   }
 }
 
+void display() {
+	    fprintf(grb_fp, "\n");
+}
+
 void rgb(int red, int green, int blue, int us) {
-    fprintf(grb_fp, "%d %d %d\n", green, red, blue);
-//    printf("sending %d %d %d for %d\n", red, green, blue, us);
+    fprintf(grb_fp, "%d %d %d", green, red, blue);
+//    printf("sending %d %d %d for %d", red, green, blue, us);
+    if(us) {
+      display();
+    }
     usleep(us);
 }
 
@@ -38,10 +45,14 @@ void pattern4() {
     rgb(  0,   0, MAX, 0);  
     rgb(  0,   0,   0, 0);  
     rgb(  0,   0,   0, 0);  
-    rgb(MAX, MAX/2, 0, 0);  
+    rgb(MAX, MAX/4, 0, 0);  
+    rgb(  0,   0,   0, 0);  
+    rgb(  0,   0,   0, 0);  
+    rgb(MAX, MAX,   0, 0);  
     rgb(  0,   0,   0, 0);  
     rgb(  0,   0,   0, 0);  
   }
+  display();
   while(running) {
     rgb(MAX,   0,   0, DELAY);
     rgb(  0,   0,   0, DELAY);  
@@ -52,7 +63,10 @@ void pattern4() {
     rgb(  0,   0, MAX, DELAY);  
     rgb(  0,   0,   0, DELAY);  
     rgb(  0,   0,   0, DELAY);  
-    rgb(MAX, MAX/2, 0, DELAY);  
+    rgb(MAX, MAX/4, 0, DELAY);  
+    rgb(  0,   0,   0, DELAY);  
+    rgb(  0,   0,   0, DELAY);  
+    rgb(MAX, MAX,   0, DELAY);  
     rgb(  0,   0,   0, DELAY);  
     rgb(  0,   0,   0, DELAY);  
   }
@@ -70,7 +84,8 @@ void pattern3() {
         rgb(0, 0, 0, 0);
       }
     }
-  usleep(50000);
+    display();
+//  usleep(100);
   }
 }
 
@@ -117,7 +132,7 @@ void signal_handler(int signo){
 }
 
 int main() { 
-  grb_fp = fopen("/sys/firmware/lpd8806/device/grb", "w");
+  grb_fp = fopen("/sys/firmware/lpd8806/device/rgb", "w");
   setbuf(grb_fp, NULL);
   if (grb_fp == NULL) {
     return 1;
@@ -128,13 +143,11 @@ if (signal(SIGINT, signal_handler) == SIG_ERR) {
     return 1;
   }
   
-  pattern4();
-/*
+  pattern3();
   while (running) {
-    clear();
-    pattern2();
+//    clear();
+    pattern3();
   }
-*/
 
 //  fflush(stdout);
   fclose(grb_fp);
