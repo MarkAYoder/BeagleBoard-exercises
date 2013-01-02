@@ -33,7 +33,6 @@
  */
 static struct spi_device *device;
 
-
 /*
  * This struct defines the attributes associated with out kobject.
  */
@@ -111,12 +110,14 @@ static void lpd8806_release(struct kobject *kobj) {
  */
 static ssize_t lpd8806_show(struct lpd8806_obj *obj, struct lpd8806_attr *attr, char *buf) {
   if (strcmp(attr->attr.name, "rgb") == 0) {
-    return sprintf(buf, "[%hhu %hhu %hhu]\n", obj->grb[1] & 0x7F, obj->grb[0] & 0x7F, obj->grb[2] & 0x7F);
+    return sprintf(buf, "[%hhu %hhu %hhu]\n",
+	obj->grb[1] & 0x7F, obj->grb[0] & 0x7F, obj->grb[2] & 0x7F);
   } else if (strcmp(attr->attr.name, "data") == 0) {
     int i;
     int count;
     for (i = 0; i < STRAND_LEN * 3; i += 3) {
-      count = sprintf(buf, "%s%d [%hhu %hhu %hhu]\n", buf, i/3, obj->data[i+1] & 0x7F, obj->data[i] & 0x7F, obj->data[i+2] & 0x7F);  
+      count = sprintf(buf, "%s%d [%hhu %hhu %hhu]\n", buf, i/3,
+	obj->data[i+1] & 0x7F, obj->data[i] & 0x7F, obj->data[i+2] & 0x7F);  
     }
     return count;
   } else {
@@ -226,8 +227,10 @@ static ssize_t lpd8806_store(struct lpd8806_obj *obj, struct lpd8806_attr *attr,
  * These structs link the attributes with their files and sysfs
  * functions.
  */
-static struct lpd8806_attr grb_attr = __ATTR(rgb, 0666, lpd8806_show, lpd8806_store);
-static struct lpd8806_attr data_attr = __ATTR(data, 0666, lpd8806_show, lpd8806_store);
+static struct lpd8806_attr grb_attr =
+			__ATTR(rgb, 0666, lpd8806_show, lpd8806_store);
+static struct lpd8806_attr data_attr =
+			__ATTR(data, 0666, lpd8806_show, lpd8806_store);
 
 /*
  * This struct stores all of the attributes for our kobject.
