@@ -76,23 +76,17 @@ void pattern1() {
 void pattern2() {
   int i, j;
   unsigned char g, r, b;
-  unsigned char data[STRAND_LEN * 3];
   srand(time(NULL));
   
-  for (i = 0; i < 20; i++) {
-    g = rand() % 0x7F;
-    r = rand() % 0x7F;
-    b = rand() % 0x7F;
-    for (j = 0; j < STRAND_LEN * 3; j += 3) {
-      data[j] = g;
-      data[j+1] = r;
-      data[j+2] = b;
-    }
-    for (j = 0; j < STRAND_LEN * 3; j += 3) {
-      fprintf(grb_fp, "%d %d %d %d\n", data[j], data[j+1], data[j+2], j/3);
-    }
-    usleep(200000);
+  g = rand() % 0x7F;
+  r = rand() % 0x7F;
+  b = rand() % 0x7F;
+ 
+  for (j = 0; j < STRAND_LEN * 3; j += 3) {
+    rgb(r, b, g, j/3, 0);
   }
+  display();
+  usleep(200000);
 }
 
 //signal handler that breaks program loop and cleans up
