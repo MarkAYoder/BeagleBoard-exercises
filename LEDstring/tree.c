@@ -67,8 +67,12 @@ void pattern3() {
   int i;
 
   for(i=0; i<STRAND_LEN-1; i++) {
-      rgb(0,  0, 0, i, 0);
-      rgb(0, 10, 0, i+1, 10000);
+      rgb(0,  0, 0,    i, 0);
+      rgb(0, i%127, 0, i+1, 10000);
+  }
+  for(i=STRAND_LEN-1; i>=0; i--) {
+    rgb(0,  0,  0,    i+1, 0);
+    rgb(0,  0, i%127, i  , 10000);
   }
 }
 
@@ -126,9 +130,9 @@ if (signal(SIGINT, signal_handler) == SIG_ERR) {
     return 1;
   }
   
+  clear();
   pattern3();
   while (running) {
-//    clear();
     pattern3();
   }
 
