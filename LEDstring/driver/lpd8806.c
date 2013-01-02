@@ -153,9 +153,9 @@ static ssize_t lpd8806_store(struct lpd8806_obj *obj, struct lpd8806_attr *attr,
     unsigned char g, r, b;
     
     // Strand is 7 bit GRB with 1 bit for latch
-    printk("lpd8806_store, buf = \"%s\"\n", buf);
+    // printk("lpd8806_store, buf = \"%s\"\n", buf);
     sscanf(buf, "%hhu %hhu %hhu %d", &r, &g, &b, &index);
-    printk("rgb=%hhu,%hhu,%hhu, index = %d\n", r, g, b, index);
+    // printk("rgb=%hhu,%hhu,%hhu, index = %d\n", r, g, b, index);
     obj->grb[0] = g | 0x80;
     obj->grb[1] = r | 0x80;
     obj->grb[2] = b | 0x80;
@@ -185,7 +185,7 @@ static ssize_t lpd8806_store(struct lpd8806_obj *obj, struct lpd8806_attr *attr,
 	break;
       }
     }
-    printk("display = %d\n", display);
+    // printk("display = %d\n", display);
     if(display) {
       update_strand(obj);
     }
