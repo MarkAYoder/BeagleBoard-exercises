@@ -116,7 +116,7 @@ static ssize_t lpd8806_show(struct lpd8806_obj *obj, struct lpd8806_attr *attr, 
     int i;
     int count;
     for (i = 0; i < STRAND_LEN * 3; i += 3) {
-      count = sprintf(buf, "%s%d [%hhu %hhu %hhu]\n", buf, i, obj->data[i] & 0x7F, obj->data[i+1] & 0x7F, obj->data[i+2] & 0x7F);  
+      count = sprintf(buf, "%s%d [%hhu %hhu %hhu]\n", buf, i/3, obj->data[i] & 0x7F, obj->data[i+1] & 0x7F, obj->data[i+2] & 0x7F);  
     }
     return count;
   } else {
@@ -149,24 +149,31 @@ static void update_strand(struct lpd8806_obj *obj) {
 static ssize_t lpd8806_store(struct lpd8806_obj *obj, struct lpd8806_attr *attr, const char *buf, size_t count) {
   if (strcmp(attr->attr.name, "rgb") == 0) {
     int i;
+    int index = 0;	// Index of LED to change
     unsigned char g, r, b;
     
     // Strand is 7 bit GRB with 1 bit for latch
-//    printk("lpd8806_store, buf = \"%s\"\n", buf);
-    sscanf(buf, "%hhu %hhu %hhu", &r, &g, &b);
+    printk("lpd8806_store, buf = \"%s\"\n", buf);
+    sscanf(buf, "%hhu %hhu %hhu %d", &r, &g, &b, &index);
+    printk("rgb=%hhu,%hhu,%hhu, index = %d\n", r, g, b, index);
     obj->grb[0] = g | 0x80;
     obj->grb[1] = r | 0x80;
     obj->grb[2] = b | 0x80;
-    
+
+/*
     // Shift out data
     for (i = 3 * (STRAND_LEN - 1); i > 0; i -= 3) {
       obj->data[i] = obj->data[i-3];
       obj->data[i+1] = obj->data[i-2];
       obj->data[i+2] = obj->data[i-1];
     }
-    obj->data[0] = obj->grb[0];
-    obj->data[1] = obj->grb[1];
-    obj->data[2] = obj->grb[2];
+*/
+
+    if(index>=0 && index<STRAND_LEN) {
+      obj->data[3*index+0] = obj->grb[0];
+      obj->data[3*index+1] = obj->grb[1];
+      obj->data[3*index+2] = obj->grb[2];
+    }
 /*
 	If buf has a newline tell update to send the latch signal,
 	otherwise it won't
@@ -178,6 +185,7 @@ static ssize_t lpd8806_store(struct lpd8806_obj *obj, struct lpd8806_attr *attr,
 	break;
       }
     }
+    printk("display = %d\n", display);
     if(display) {
       update_strand(obj);
     }
@@ -266,7 +274,7 @@ static struct lpd8806_obj *create_lpd8806_obj(const char *name) {
   }
   
   for (i = 0; i < STRAND_LEN * 3; i++) {
-    obj->data[i] = 0;
+    obj->data[i] = 0x80;
   }
   
   retval = kobject_init_and_add(&obj->kobj, &lpd8806_ktype, NULL, "%s", name);
