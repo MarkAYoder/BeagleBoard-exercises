@@ -15,7 +15,7 @@ int running=1;
 void clear() {
   int i;
   for (i=0; i<STRAND_LEN; i++) {
-    fprintf(grb_fp, "0 0 0 %d\n", i);
+    fprintf(grb_fp, "0 0 0 %d", i);
   }
 }
 
@@ -33,15 +33,23 @@ void rgb(int red, int green, int blue, int index, int us) {
 }
 
 // pattern4 matches the static LEDs on the tree.
-void pattern4() {
+void pattern4(int skip) {
   int i;
-  for(i=0; i<STRAND_LEN; i+=15) {
-    rgb(MAX,   0,   0, i+ 00, 0);
-    rgb(  0, MAX,   0, i+ 03, 0);  
-    rgb(  0,   0, MAX, i+ 06, 0);  
-    rgb(MAX, MAX/4, 0, i+  9, 0);  
-    rgb(MAX, MAX,   0, i+ 12, 0);  
+  int period=5;
+  int phase;
+  for(phase=0; phase<skip*period; phase++) {
+    clear();
+    for(i=phase-skip*period; i<STRAND_LEN; i+=skip*period) {
+      rgb(MAX,   0,   0, i+0*skip, 0);
+      rgb(  0, MAX,   0, i+1*skip, 0);  
+      rgb(  0,   0, MAX, i+2*skip, 0);  
+      rgb(MAX, MAX/4, 0, i+3*skip, 0);  
+      rgb(MAX, MAX,   0, i+4*skip, 0); 
+    }
+    display();
+    usleep(DELAY);
   }
+/*
   display();
   while(running) {
     rgb(MAX,   0,   0, 0, DELAY);
@@ -60,6 +68,7 @@ void pattern4() {
     rgb(  0,   0,   0, 0, DELAY);  
     rgb(  0,   0,   0, 0, DELAY);  
   }
+*/
 }
 
 // Pattern 3 is a single LED running backward.
@@ -67,8 +76,8 @@ void pattern3() {
   int i;
 
   for(i=0; i<STRAND_LEN-1; i++) {
-      rgb(0,  0, 0,    i, 0);
-      rgb(0, i%127, 0, i+1, 10000);
+    rgb(0,  0,    0, i,   0);
+    rgb(0, i%127, 0, i+1, 10000);
   }
   for(i=STRAND_LEN-1; i>=0; i--) {
     rgb(0,  0,  0,    i+1, 0);
@@ -118,22 +127,38 @@ void signal_handler(int signo){
   }
 }
 
-int main() { 
+int main(int argc, char *argv[]) { 
   grb_fp = fopen("/sys/firmware/lpd8806/device/rgb", "w");
   setbuf(grb_fp, NULL);
   if (grb_fp == NULL) {
     return 1;
   }
-  
-if (signal(SIGINT, signal_handler) == SIG_ERR) {
+ 
+  if (signal(SIGINT, signal_handler) == SIG_ERR) {
     printf("Error with SIGINT handler\n");
     return 1;
   }
   
+  int pattern=3;
+  int arg=4;
+  if(argc > 1) {
+    pattern=atoi(argv[1]);
+  }
+  if(argc > 2) {
+    arg=atoi(argv[2]);
+  }
+  printf("Running pattern%d(%d)\n", pattern, arg);
+
   clear();
-  pattern3();
   while (running) {
-    pattern3();
+    switch(pattern) {
+      case 3:
+        pattern3(arg);
+	break;
+      case 4:
+	pattern4(arg);
+	break;
+    }
   }
 
 //  fflush(stdout);
