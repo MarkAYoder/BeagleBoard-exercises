@@ -49,47 +49,26 @@ void pattern4(int skip) {
     display();
     usleep(DELAY);
   }
-/*
-  display();
-  while(running) {
-    rgb(MAX,   0,   0, 0, DELAY);
-    rgb(  0,   0,   0, 0, DELAY);  
-    rgb(  0,   0,   0, 0, DELAY);  
-    rgb(  0, MAX,   0, 0, DELAY);  
-    rgb(  0,   0,   0, 0, DELAY);  
-    rgb(  0,   0,   0, 0, DELAY);  
-    rgb(  0,   0, MAX, 0, DELAY);  
-    rgb(  0,   0,   0, 0, DELAY);  
-    rgb(  0,   0,   0, 0, DELAY);  
-    rgb(MAX, MAX/4, 0, 0, DELAY);  
-    rgb(  0,   0,   0, 0, DELAY);  
-    rgb(  0,   0,   0, 0, DELAY);  
-    rgb(MAX, MAX,   0, 0, DELAY);  
-    rgb(  0,   0,   0, 0, DELAY);  
-    rgb(  0,   0,   0, 0, DELAY);  
-  }
-*/
 }
 
 // Pattern 3 is a single LED running backward.
-void pattern3() {
+void pattern3(int timeUp, int timeBack) {
   int i;
 
   for(i=0; i<STRAND_LEN-1; i++) {
     rgb(0,  0,    0, i,   0);
-    rgb(0, i%127, 0, i+1, 10000);
+    rgb(0, i%127, 0, i+1, timeUp);
   }
   for(i=STRAND_LEN-1; i>=0; i--) {
     rgb(0,  0,  0,    i+1, 0);
-    rgb(0,  0, i%127, i  , 10000);
+    rgb(0,  0, i%127, i  , timeBack);
   }
 }
 
 // Pattern 1 outputs a string of increaing brightness
 void pattern1() {
   int i;
-
-  for (i = 0; i < STRAND_LEN; i++) {
+  for (i=0; i<STRAND_LEN; i++) {
     rgb(0, i%127, 0, i, 20000);
   }
 }
@@ -110,7 +89,7 @@ void pattern2() {
       data[j+2] = b;
     }
     for (j = 0; j < STRAND_LEN * 3; j += 3) {
-      fprintf(grb_fp, "%d %d %d %d\n", data[j], data[j+1], data[j+2], i/3);
+      fprintf(grb_fp, "%d %d %d %d\n", data[j], data[j+1], data[j+2], j/3);
     }
     usleep(200000);
   }
@@ -141,19 +120,30 @@ int main(int argc, char *argv[]) {
   
   int pattern=3;
   int arg=4;
+  int arg2 = 10000;
   if(argc > 1) {
     pattern=atoi(argv[1]);
   }
   if(argc > 2) {
     arg=atoi(argv[2]);
+    arg2 = arg;
+  }
+  if(argc > 3) {
+    arg2=atoi(argv[3]);
   }
   printf("Running pattern%d(%d)\n", pattern, arg);
 
   clear();
   while (running) {
     switch(pattern) {
+      case 1:
+	pattern1();
+	break;
+      case 2:
+	pattern2();
+	break;
       case 3:
-        pattern3(arg);
+        pattern3(arg, arg2);
 	break;
       case 4:
 	pattern4(arg);
