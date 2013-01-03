@@ -24,12 +24,12 @@ void display() {
 }
 
 void rgb(int red, int green, int blue, int index, int us) {
-    fprintf(grb_fp, "%d %d %d %d", red, green, blue, index);
-    // printf("sending %d %d %d %d for %d\n", red, green, blue, index, us);
-    if(us) {
-      display();
-    }
-    usleep(us);
+  fprintf(grb_fp, "%d %d %d %d", red, green, blue, index);
+  if(us) {
+    display();
+    printf("sending %d %d %d %d for %d\n", red, green, blue, index, us);
+  }
+  usleep(us);
 }
 
 // pattern4 matches the static LEDs on the tree.
@@ -46,8 +46,8 @@ void pattern4(int skip) {
       rgb(MAX, MAX/4, 0, i+3*skip, 0);  
       rgb(MAX, MAX,   0, i+4*skip, 0); 
     }
-    display();
-    usleep(DELAY);
+  display();
+  usleep(DELAY);
   }
 }
 
@@ -63,9 +63,9 @@ void pattern5(int timeUp, int timeBack) {
     }
   }
   for(i=STRAND_LEN-1; i>=0; i--) {
-      for(j=1; j<=smooth; j++) {
-        rgb(0,  0, (smooth-j), i+1, 0);
-        rgb(0,  0,        (j), i  , timeBack/(smooth*1.5));
+    for(j=1; j<=smooth; j++) {
+      rgb(0,  0, (smooth-j), i+1, 0);
+      rgb(0,  0,        (j), i  , timeBack/(smooth*1.5));
     }
   }
 }
@@ -74,13 +74,33 @@ void pattern5(int timeUp, int timeBack) {
 void pattern3(int timeUp, int timeBack) {
   int i;
 
+  // Climbing up
   for(i=0; i<STRAND_LEN-1; i++) {
-    rgb(0,  0,    0, i,   0);
-    rgb(0, i%127, 0, i+1, timeUp);
+    rgb(   0, 0, 0, i,   0);
+    rgb(i%30, 0, 0, i+1, timeUp);
   }
+  // Sledding down
   for(i=STRAND_LEN-1; i>=0; i--) {
-    rgb(0,  0,  0,    i+1, 0);
-    rgb(0,  0, i%127, i  , timeBack);
+    rgb(0,  0,  0, i+1, 0);
+    rgb(0,  0, 15, i  , timeBack);
+  }
+}
+
+// Pattern 6 is a single LED falling and bouncing
+void pattern6(int timeUp, int timeBack) {
+  int i, top;
+
+  for(top=STRAND_LEN; top>0; top-=10) {
+    // Falling down
+    for(i=top; i>=0; i--) {
+      rgb(0,  0, 0, i+1, 0);
+      rgb(0, 15, 0, i  , timeBack-((top-i)^2)/(top^2)*timeBack/2);
+    }
+    // Bouncing up
+    for(i=0; i<top-10; i++) {
+      rgb(0,  0, 0, i,   0);
+      rgb(0, 15, 0, i+1, timeUp);
+    }
   }
 }
 
@@ -163,6 +183,9 @@ int main(int argc, char *argv[]) {
 	break;
       case 5:
 	pattern5(arg, arg2);
+	break;
+      case 6:
+	pattern6(arg, arg2);
 	break;
     }
   }
