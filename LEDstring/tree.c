@@ -20,11 +20,11 @@ void clear() {
 }
 
 void display() {
-  fprintf(grb_fp, "\n");
+  fprintf(grb_fp, "0 0 0 -1\n");
 }
 
 void rgb(int red, int green, int blue, int index, int us) {
-    fprintf(grb_fp, "%d %d %d %d", green, red, blue, index);
+    fprintf(grb_fp, "%d %d %d %d", red, green, blue, index);
     // printf("sending %d %d %d %d for %d\n", red, green, blue, index, us);
     if(us) {
       display();
@@ -51,7 +51,26 @@ void pattern4(int skip) {
   }
 }
 
-// Pattern 3 is a single LED running backward.
+// Pattern 5 is a single LED running smoothly along.running smoothly along.
+void pattern5(int timeUp, int timeBack) {
+  int i, j;
+  int smooth=10;
+
+  for(i=0; i<STRAND_LEN-1; i++) {
+    for(j=1; j<=smooth; j++) {
+      rgb(0, (smooth-j), 0, i,   0);
+      rgb(0,        (j), 0, i+1, timeUp/(smooth*1.5));
+    }
+  }
+  for(i=STRAND_LEN-1; i>=0; i--) {
+      for(j=1; j<=smooth; j++) {
+        rgb(0,  0, (smooth-j), i+1, 0);
+        rgb(0,  0,        (j), i  , timeBack/(smooth*1.5));
+    }
+  }
+}
+
+// Pattern 3 is a single LED running backward and forward.
 void pattern3(int timeUp, int timeBack) {
   int i;
 
@@ -141,6 +160,9 @@ int main(int argc, char *argv[]) {
 	break;
       case 4:
 	pattern4(arg);
+	break;
+      case 5:
+	pattern5(arg, arg2);
 	break;
     }
   }
