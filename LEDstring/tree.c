@@ -4,30 +4,32 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <signal.h>
+#include <math.h>
 
 #define STRAND_LEN 160 // Number of LEDs on strand
 #define MAX 10
 #define DELAY 1000000
 
-static FILE *grb_fp;
+static FILE *rgb_fp;
+static FILE *ain_fp;
 int running=1;
 
 void clear() {
   int i;
   for (i=0; i<STRAND_LEN; i++) {
-    fprintf(grb_fp, "0 0 0 %d", i);
+    fprintf(rgb_fp, "0 0 0 %d", i);
   }
 }
 
 void display() {
-  fprintf(grb_fp, "0 0 0 -1\n");
+  fprintf(rgb_fp, "0 0 0 -1\n");
 }
 
 void rgb(int red, int green, int blue, int index, int us) {
-  fprintf(grb_fp, "%d %d %d %d", red, green, blue, index);
+  fprintf(rgb_fp, "%d %d %d %d", red, green, blue, index);
   if(us) {
     display();
-    printf("sending %d %d %d %d for %d\n", red, green, blue, index, us);
+//    printf("sending %d %d %d %d for %d\n", red, green, blue, index, us);
   }
   usleep(us);
 }
@@ -94,14 +96,26 @@ void pattern6(int timeUp, int timeBack) {
     // Falling down
     for(i=top; i>=0; i--) {
       rgb(0,  0, 0, i+1, 0);
-      rgb(0, 15, 0, i  , timeBack-((top-i)^2)/(top^2)*timeBack/2);
+      rgb(0, 15, 0, i  , timeBack-(pow(top-i,2)/pow(top,2)*timeBack*19/20));
     }
     // Bouncing up
     for(i=0; i<top-10; i++) {
       rgb(0,  0, 0, i,   0);
-      rgb(0, 15, 0, i+1, timeUp);
+      rgb(0, 15, 0, i+1, timeUp-(pow(top-i,2)/pow(top,2)*timeUp*19/20));
     }
   }
+}
+
+// Pattern 7 reads the analog in and positions the LED.
+void pattern7(int timeUp, int timeBack) {
+  int value;
+  static int index = 0;
+  fseek(ain_fp, 0L,  SEEK_SET);
+  fscanf(ain_fp, "%d", &value);
+  rgb(0, 0, 0, index, 0);
+  index = (value-4072)*159/(1416-4072);
+//  printf("ain: %d, %d\n", value, index);
+  rgb(10, 10, 10, index, 10000);
 }
 
 // Pattern 1 outputs a string of increaing brightness
@@ -134,15 +148,16 @@ void signal_handler(int signo){
     printf("\n^C pressed, cleaning up and exiting..\n");
     running=0;
     // fflush(stdout);
-    // fclose(grb_fp);
+    // fclose(rgb_fp);
     // exit(0);
   }
 }
 
 int main(int argc, char *argv[]) { 
-  grb_fp = fopen("/sys/firmware/lpd8806/device/rgb", "w");
-  setbuf(grb_fp, NULL);
-  if (grb_fp == NULL) {
+  rgb_fp = fopen("/sys/firmware/lpd8806/device/rgb", "w");
+  ain_fp = fopen("/sys/devices/platform/omap/tsc/ain6", "r");
+  setbuf(rgb_fp, NULL);
+  if (rgb_fp == NULL || ain_fp == NULL) {
     return 1;
   }
  
@@ -187,9 +202,13 @@ int main(int argc, char *argv[]) {
       case 6:
 	pattern6(arg, arg2);
 	break;
+      case 7:
+	pattern7(arg, arg2);
+	break;
     }
   }
 
 //  fflush(stdout);
-  fclose(grb_fp);
+  fclose(rgb_fp);
+  fclose(ain_fp);
 }
