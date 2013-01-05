@@ -17,10 +17,12 @@
  ****************************************************************/
  
 #define POLL_TIMEOUT (3 * 1000) /* 3 seconds */
+#define STRAND_LEN 160 // Number of LEDs on strand
 
 /****************************************************************
  * Global variables
  ****************************************************************/
+static FILE *rgb_fp;
 int keepgoing = 1;	// Set to 0 when ctrl-c is pressed
 
 /* Global thread environment */
@@ -39,11 +41,32 @@ void signal_handler(int sig)
 	keepgoing = 0;
 }
 
-void fire(int env) {
+void display() {
+	  fprintf(rgb_fp, "0 0 0 -1\n");
+}
+
+void rgb(int red, int green, int blue, int index, int us) {
+	fprintf(rgb_fp, "%d %d %d %d", red, green, blue, index);
+	if(us) {
+	        display();
+//    		printf("sending %d %d %d %d for %d\n", red, green, blue, index, us);
+        }
+        usleep(us);
+}
+
+void *fire(void *env) {
 	int i;
-	for(i=0; i<3; i++) {
-		printf("Fire: %d, %d!\n", env, i);
-		usleep(500000);
+	int *tmp = env;
+	int count = *tmp;
+	for(i=0; i<STRAND_LEN; i++) {
+//		printf("Fire: %d, %d!\n", count, i);
+		rgb( 0,  0,  0, i,   0);
+		rgb(12, 12, 12, i+1, 50000);
+	}
+	for(i=STRAND_LEN-1; i>0; i--) {
+//		printf("Fire: %d, %d!\n", count, i);
+		rgb( 0,  0,  0, i+1,   0);
+		rgb( 0,  0, 12, i, 20000);
 	}
 }
 
@@ -55,9 +78,10 @@ int main(int argc, char **argv, char **envp)
 	struct pollfd fdset[2];
 	int nfds = 2;
 	int gpio_fd, timeout, rc;
-	char *buf[MAX_BUF];
+	char buf[MAX_BUF];
 	unsigned int gpio;
 	int len;
+	char lastValue='0';
 
 	if (argc < 2) {
 		printf("Usage: gpio-int <gpio-pin>\n\n");
@@ -67,6 +91,13 @@ int main(int argc, char **argv, char **envp)
 
 	// Set the signal callback for Ctrl-C
 	signal(SIGINT, signal_handler);
+
+	rgb_fp = fopen("/sys/firmware/lpd8806/device/rgb", "w");
+	setbuf(rgb_fp, NULL);	// Turn buffering off
+	if(rgb_fp == NULL) {
+		printf("Opening rgb failed\n");
+		exit(0);
+	}
 
 	gpio = atoi(argv[1]);
 
@@ -100,11 +131,14 @@ int main(int argc, char **argv, char **envp)
 		if (fdset[1].revents & POLLPRI) {
 			lseek(fdset[1].fd, 0, SEEK_SET);  // Read from the start of the file
 			len = read(fdset[1].fd, buf, MAX_BUF);
-			printf("\npoll() GPIO %d interrupt occurred, value=%c, len=%d\n",
-				 gpio, buf[0], len);
-			launch_pthread(&fireThread, TIMESLICE, 0,
-					&fire, &fire_env);
-			fire_env++;
+//			printf("\npoll() GPIO %d interrupt occurred, value=%c, len=%d\n",
+//				 gpio, buf[0], len);
+			if(buf[0] != lastValue) {
+				launch_pthread(&fireThread, TIMESLICE, 0,
+						&fire, &fire_env);
+				fire_env++;
+				lastValue = buf[0];
+			}
 		}
 
 		if (fdset[0].revents & POLLIN) {
