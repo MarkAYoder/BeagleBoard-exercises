@@ -108,14 +108,17 @@ void pattern6(int timeUp, int timeBack) {
 
 // Pattern 7 reads the analog in and positions the LED.
 void pattern7(int timeUp, int timeBack) {
-  int value;
+  int value, oldIndex;
   static int index = 0;
+  oldIndex = index;
   fseek(ain_fp, 0L,  SEEK_SET);
   fscanf(ain_fp, "%d", &value);
-  rgb(0, 0, 0, index, 0);
   index = (value-4072)*159/(1416-4072);
-//  printf("ain: %d, %d\n", value, index);
-  rgb(10, 10, 10, index, 10000);
+  if(index != oldIndex) {
+//    printf("ain: %d, %d, %d (old)\n", value, index, oldIndex);
+    rgb(0, 0, 0, oldIndex, 0);
+    rgb(10, 10, 10, index, 10000);
+  }
 }
 
 // Pattern 1 outputs a string of increaing brightness
