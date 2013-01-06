@@ -53,19 +53,36 @@ void rgb(int red, int green, int blue, int index, int us) {
         usleep(us);
 }
 
-void *fire(void *env) {
+void up() {
 	int i;
-	int *tmp = env;
-	int count = *tmp;
 	for(i=0; i<STRAND_LEN; i++) {
 //		printf("Fire: %d, %d!\n", count, i);
 		rgb( 0,  0,  0, i-1,   0);
 		rgb(12, 12, 12,   i, 50000);
 	}
+ }
+
+void down() {
+	int i;
 	for(i=STRAND_LEN-1; i>=-1; i--) {
 //		printf("Fire: %d, %d!\n", count, i);
 		rgb( 0,  0,  0, i  ,   0);
 		rgb( 0, 12,  0, i-1, 20000);
+	}
+}
+
+void *fire(void *env) {
+	int *tmp = env;
+	int dir = *tmp;	// Initial direction
+	switch(dir) {
+	    case 0:
+		down();
+		up();
+		break;
+	    case 1:
+		up();
+		down();
+	    break;
 	}
 	pthread_exit(NULL);
 }
@@ -82,6 +99,7 @@ int main(int argc, char **argv, char **envp)
 	unsigned int gpio;
 	int len;
 	char lastValue='0';
+	int dir=0;	// Passed to fire to give inital direction
 
 	if (argc < 2) {
 		printf("Usage: gpio-int <gpio-pin>\n\n");
@@ -100,6 +118,9 @@ int main(int argc, char **argv, char **envp)
 	}
 
 	gpio = atoi(argv[1]);
+	if(argc == 3) {
+		dir = atoi(argv[2]);
+	}
 
 	gpio_export(gpio);
 	gpio_set_dir(gpio, 0);
@@ -134,11 +155,9 @@ int main(int argc, char **argv, char **envp)
 //			printf("\npoll() GPIO %d interrupt occurred, value=%c, len=%d\n",
 //				 gpio, buf[0], len);
 			if(buf[0] != lastValue) {
-//				launch_pthread(&fireThread, TIMESLICE, 0,
-//						&fire, &fire_env);
+				fire_env = dir;
 				pthread_create(&fireThread, NULL,
 						&fire, &fire_env);
-				fire_env++;
 				lastValue = buf[0];
 			}
 		}
