@@ -132,13 +132,13 @@ int main(int argc, char **argv, char **envp)
 	while (keepgoing) {
 		memset((void*)fdset, 0, sizeof(fdset));
 
-		fdset[0].fd = STDIN_FILENO;
-		fdset[0].events = POLLIN;
-      
-		fdset[1].fd = gpio_fd;
-		fdset[1].events = POLLPRI;
+		fdset[0].fd = gpio_fd;
+		fdset[0].events = POLLPRI;
 
-		rc = poll(fdset, nfds, timeout);      
+		fdset[1].fd = STDIN_FILENO;
+		fdset[1].events = POLLIN;
+      
+		rc = poll(fdset, 1, timeout);      
 
 		if (rc < 0) {
 			printf("\npoll() failed!\n");
@@ -149,9 +149,9 @@ int main(int argc, char **argv, char **envp)
 			printf(".");
 		}
             
-		if (fdset[1].revents & POLLPRI) {
-			lseek(fdset[1].fd, 0, SEEK_SET);  // Read from the start of the file
-			len = read(fdset[1].fd, buf, MAX_BUF);
+		if (fdset[0].revents & POLLPRI) {
+			lseek(fdset[0].fd, 0, SEEK_SET);  // Read from the start of the file
+			len = read(fdset[0].fd, buf, MAX_BUF);
 //			printf("\npoll() GPIO %d interrupt occurred, value=%c, len=%d\n",
 //				 gpio, buf[0], len);
 			if(buf[0] != lastValue) {
@@ -162,8 +162,8 @@ int main(int argc, char **argv, char **envp)
 			}
 		}
 
-		if (fdset[0].revents & POLLIN) {
-			(void)read(fdset[0].fd, buf, 1);
+		if (fdset[1].revents & POLLIN) {
+			(void)read(fdset[1].fd, buf, 1);
 			printf("\npoll() stdin read 0x%2.2X\n", (unsigned int) buf[0]);
 		}
 
