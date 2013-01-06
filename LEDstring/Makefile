@@ -33,7 +33,7 @@ test: test.o
 tree:	tree.o
 	$(CC) $^ -o $@
 
-fire:	fire.o gpio.o thread.o
+fire:	fire.o gpio.o
 	$(CC) $^ -o $@ -lpthread
 
 %.o: %.c

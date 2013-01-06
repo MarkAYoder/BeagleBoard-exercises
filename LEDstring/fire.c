@@ -8,7 +8,6 @@
 #include <poll.h>
 #include <signal.h>	// Defines signal-handling functions (i.e. trap Ctrl-C)
 
-#include "thread.h"
 #include "fire.h"
 #include "gpio.h"
 
@@ -16,7 +15,7 @@
  * Constants
  ****************************************************************/
  
-#define POLL_TIMEOUT (3 * 1000) /* 3 seconds */
+#define POLL_TIMEOUT (60 * 1000) /* 60 seconds */
 #define STRAND_LEN 160 // Number of LEDs on strand
 
 /****************************************************************
@@ -60,14 +59,15 @@ void *fire(void *env) {
 	int count = *tmp;
 	for(i=0; i<STRAND_LEN; i++) {
 //		printf("Fire: %d, %d!\n", count, i);
-		rgb( 0,  0,  0, i,   0);
-		rgb(12, 12, 12, i+1, 50000);
+		rgb( 0,  0,  0, i-1,   0);
+		rgb(12, 12, 12,   i, 50000);
 	}
-	for(i=STRAND_LEN-1; i>0; i--) {
+	for(i=STRAND_LEN-1; i>=-1; i--) {
 //		printf("Fire: %d, %d!\n", count, i);
-		rgb( 0,  0,  0, i+1,   0);
-		rgb( 0,  0, 12, i, 20000);
+		rgb( 0,  0,  0, i  ,   0);
+		rgb( 0, 12,  0, i-1, 20000);
 	}
+	pthread_exit(NULL);
 }
 
 /****************************************************************
@@ -134,7 +134,9 @@ int main(int argc, char **argv, char **envp)
 //			printf("\npoll() GPIO %d interrupt occurred, value=%c, len=%d\n",
 //				 gpio, buf[0], len);
 			if(buf[0] != lastValue) {
-				launch_pthread(&fireThread, TIMESLICE, 0,
+//				launch_pthread(&fireThread, TIMESLICE, 0,
+//						&fire, &fire_env);
+				pthread_create(&fireThread, NULL,
 						&fire, &fire_env);
 				fire_env++;
 				lastValue = buf[0];
