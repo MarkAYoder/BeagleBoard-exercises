@@ -4,3 +4,6 @@ do
   ./tree 3 60000 20000 &
   sleep 1.25
 done
+
+./fire 48 0 &
+./fire  7 1 &
