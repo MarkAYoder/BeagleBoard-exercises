@@ -79,12 +79,12 @@ void pattern3(int timeUp, int timeBack) {
   // Climbing up
   for(i=0; i<STRAND_LEN-1; i++) {
     rgb(   0, 0, 0, i,   0);
-    rgb(i%30, 0, 0, i+1, timeUp);
+    rgb((i*20/STRAND_LEN)+1, 0, 0, i+1, timeUp);
   }
   // Sledding down
   for(i=STRAND_LEN-1; i>=0; i--) {
     rgb(0,  0,  0, i+1, 0);
-    rgb(0,  0, 15, i  , timeBack);
+    rgb(0,  0, (STRAND_LEN-i+4)*20/STRAND_LEN, i  , timeBack);
   }
 }
 
