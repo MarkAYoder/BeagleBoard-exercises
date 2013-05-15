@@ -111,9 +111,12 @@ io.sockets.on('connection', function (socket) {
 //	console.log('slider' + slideNum + " = " + value);
 	color[slideNum] = value;
 //	console.log('color: ' + color);
-        fs.writeFile(rgbPath + "/grb", 
-	    color[1]+' '+color[0]+' '+color[2]);
-
+	var i;
+	for(i=0; i<160; i++) {
+          fs.writeFileSync(rgbPath + "/rgb", 
+	    color[0]+' '+color[1]+' '+color[2]+' '+i);
+	  }
+	fs.writeFileSync(rgbPath + "/rgb", '\n');
     });
 
     socket.on('rgb', function(rgbString) {

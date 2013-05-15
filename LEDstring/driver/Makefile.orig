@@ -1,6 +1,7 @@
 CC=gcc
 
-TARGETS=fire
+TARGETS=test \
+test.o
 
 all: $(TARGETS)
 
@@ -29,12 +30,6 @@ clean:
 
 test: test.o
 	$(CC) $^ -o $@
-
-tree:	tree.o
-	$(CC) $^ -o $@
-
-fire:	fire.o gpio.o
-	$(CC) $^ -o $@ -lpthread
 
 %.o: %.c
 	$(CC) -c $< -o $@
