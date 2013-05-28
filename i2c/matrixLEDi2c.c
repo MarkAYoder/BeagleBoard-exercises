@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 	char filename[20];
 	int force = 0;
 
-	i2cbus = lookup_i2c_bus("3");
+	i2cbus = lookup_i2c_bus("1");
 	printf("i2cbus = %d\n", i2cbus);
 	if (i2cbus < 0)
 		help();

@@ -35,6 +35,16 @@ ln -s libasound.so.2.0.0 libasound.so  # I don't know why this link is mising
 
 opkg install i2c-tools-dev
 
+# Make date and time correct.
+# http://derekmolloy.ie/automatically-setting-the-beaglebone-black-time-using-ntp/
+opkg install ntp
+Edit /lib/systemd/system/dtpdate.service
+  ExecStart=/usr/bin/ntpd -q -g -x
+systemctl enable ntpdate.service  # Seems to interfere with the USB-ethernet
+systemctl enable ntpd.service
+rm /etc/localtime
+beagle$ ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
+
 # Here are some things I've had to do in the past, but don't now
 # opkg install gcc gcc-symlinks libgcc-s-dev -force-overwrite
 # This may do the gcc install too.
