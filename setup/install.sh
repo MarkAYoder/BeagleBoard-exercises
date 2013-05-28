@@ -9,10 +9,10 @@ echo yoder-bone > /etc/hostname
 
 opkg update
 opkg install openssh-keygen
-git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises
 git config --global user.name "Mark A. Yoder"
 git config --global user.email Mark.A.Yoder@Rose-Hulman.edu
-git commit --amend --reset-author
+git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises
+# git commit --amend --reset-author
 cp exercises/.bashrc .
 ln -s /var/lib/cloud9 .
 cd exercises/pinMux
