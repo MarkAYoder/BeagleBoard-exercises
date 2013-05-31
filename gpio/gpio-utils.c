@@ -180,14 +180,14 @@ int gpio_set_edge(unsigned int gpio, char *edge)
  * gpio_fd_open
  ****************************************************************/
 
-int gpio_fd_open(unsigned int gpio)
+int gpio_fd_open(unsigned int gpio, unsigned int dir)
 {
 	int fd, len;
 	char buf[MAX_BUF];
 
 	len = snprintf(buf, sizeof(buf), SYSFS_GPIO_DIR "/gpio%d/value", gpio);
  
-	fd = open(buf, O_RDONLY | O_NONBLOCK );
+	fd = open(buf, dir | O_NONBLOCK );
 	if (fd < 0) {
 		perror("gpio/fd_open");
 	}

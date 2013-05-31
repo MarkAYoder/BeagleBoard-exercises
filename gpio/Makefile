@@ -1,9 +1,6 @@
 TOOLS_CFLAGS	:= -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual \
 		   -Wcast-align -Wwrite-strings -Wnested-externs -Winline \
-		   -W -Wundef -Wmissing-prototypes 
-
-TOOLS_TARGETS	:= my2cset
-
+		   -W -Wundef -Wmissing-prototypes
 #
 # Programs
 #
@@ -13,6 +10,9 @@ gpio-int-test:  gpio-int-test.o gpio-utils.o
 	$(CC) $(LDFLAGS) -o $@ $^
 
 togglegpio:	togglegpio.o gpio-utils.o
+	$(CC) $(LDFLAGS) -o $@ $^
+
+gpioThru:	gpioThru.o gpio-utils.o
 	$(CC) $(LDFLAGS) -o $@ $^
 
 

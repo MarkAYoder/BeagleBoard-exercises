@@ -88,7 +88,7 @@ int main(int argc, char **argv, char **envp)
 	gpio_export(gpio);
 	gpio_set_dir(gpio, "in");
 	gpio_set_edge(gpio, "both");  // Can be rising, falling or both
-	gpio_fd = gpio_fd_open(gpio);
+	gpio_fd = gpio_fd_open(gpio, O_RDONLY);
 
 	timeout = POLL_TIMEOUT;
  
