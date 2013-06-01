@@ -12,7 +12,7 @@ then
 	ntpdate ntp.org
 fi
 
-alias syn='synergyc yoder-7.dhcp.rose-hulman.edu'
+alias syn='synergyc yoder-9.dhcp.rose-hulman.edu'
 alias d=pushd
 alias ls='ls -F'
 alias gedit="gedit $1 >& /dev/null"
