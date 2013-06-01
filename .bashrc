@@ -6,6 +6,12 @@
 [ -z "$PS1" ] && return
 
 # My Stuff
+# Correct the date, if it's in the wrong year
+if ((`date +%Y` < 2013))
+then
+	ntpdate ntp.org
+fi
+
 alias syn='synergyc yoder-7.dhcp.rose-hulman.edu'
 alias d=pushd
 alias ls='ls -F'
