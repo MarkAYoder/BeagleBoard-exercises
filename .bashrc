@@ -9,8 +9,11 @@
 alias syn='synergyc yoder-7.dhcp.rose-hulman.edu'
 alias d=pushd
 alias ls='ls -F'
+alias gedit="gedit $1 >& /dev/null"
 alias go=gnome-open
-alias cdlinux='d ~/BeagleBoard/oe/build/tmp-angstrom_2008_1/work/beagleboard-angstrom-linux-gnueabi/linux-omap-psp-2.6.32-r88+gitra6bad4464f985fdd3bed72e1b82dcbfc004d7869/git'
+
+export SLOTS=/sys/devices/bone_capemgr.*/slots
+export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pins
 export DVSDK="${HOME}/ti-dvsdk_omap3530-evm_4_00_00_22"
 export CDPATH=".:~:~/BeagleBoard"
 
