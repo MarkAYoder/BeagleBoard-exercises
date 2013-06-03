@@ -35,6 +35,7 @@ From https://www.ridgerun.com/developer/wiki/index.php/Gpio-int-test.c
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <string.h>
 
 /****************************************************************
  * gpio_export
@@ -80,7 +81,7 @@ int gpio_unexport(unsigned int gpio)
 /****************************************************************
  * gpio_set_dir
  ****************************************************************/
-int gpio_set_dir(unsigned int gpio, char* dir)
+int gpio_set_dir(unsigned int gpio, const char* dir)
 {
 	int fd, len;
 	char buf[MAX_BUF];
@@ -158,7 +159,7 @@ int gpio_get_value(unsigned int gpio, unsigned int *value)
  * gpio_set_edge
  ****************************************************************/
 
-int gpio_set_edge(unsigned int gpio, char *edge)
+int gpio_set_edge(unsigned int gpio, const char *edge)
 {
 	int fd, len;
 	char buf[MAX_BUF];

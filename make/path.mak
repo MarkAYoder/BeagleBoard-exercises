@@ -1,6 +1,6 @@
 ###########################################################
 #
-# ath.mak
+# path.mak
 #
 # Path for arm Linux (i.e. Angstrom)
 #
