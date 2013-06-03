@@ -1,6 +1,6 @@
 # *****************************************************************
 #
-# Starter makefile
+# Starter Makefile
 #
 # Contains rules for:
 #
@@ -24,7 +24,7 @@
 # [TAB] <CMD1>
 # [TAB] <CMD2>
 #
-# GCC options used in this makefile:
+# GCC options used in this Makefile:
 #
 # -c = "compile only"
 # -o = "output filename"
@@ -97,7 +97,7 @@
 
 
 # -------------------------------------
-# ----- basic debug for makefile ------
+# ----- basic debug for Makefile ------
 #
 # -----     example only         ------
 # -------------------------------------
