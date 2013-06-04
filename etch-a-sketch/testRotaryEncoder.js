@@ -1,12 +1,12 @@
 // Tests the rotary encoder function
 
 var b = require('bonescript');
-var pinA = 'P9_30',
-    pinB = 'P9_27';
+var pinA = 'P9_26',
+    pinB = 'P9_24';
     
-var x = require('./readRotaryEncoder.js');
+var rre = require('./readRotaryEncoder.js');
 
-x.readRotaryEncoder(pinA, pinB, CWcallback, CCWcallback);
+rre.readRotaryEncoder(pinA, pinB, CWcallback, CCWcallback);
 
 function CWcallback() {
     console.log('Turned CW');

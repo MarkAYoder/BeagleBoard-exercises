@@ -1,4 +1,4 @@
-// Simple etch-a-sketch framework.
+// Simple command line etch-a-sketch framework.
 
 var util = require('util');
 
