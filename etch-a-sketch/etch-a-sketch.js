@@ -10,10 +10,10 @@ var pinA1 = 'P9_30',
     
 var rre = require('./readRotaryEncoder.js');
 
-rre.readRotaryEncoder(pinA1, pinB1, upCallback,   downCallback);
-rre.readRotaryEncoder(pinA2, pinB2, leftCallback, rightCallback);
+rre.readRotaryEncoder(pinA1, pinB1, upCallback,    downCallback);
+rre.readRotaryEncoder(pinA2, pinB2, rightCallback, leftCallback);
 
-setTimeout(detach, 30000);
+// setTimeout(detach, 30000);
 
 function detach() {
  b.detachInterrupt(pinA1);

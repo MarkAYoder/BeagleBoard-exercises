@@ -6,9 +6,9 @@
 
 var b = require('bonescript');
 
-exports.readRotaryEncoder = function (pinA, pinB, CWcallback, CCWcallback) {
-	var CW  = false,
-		CCW = false;
+exports.readRotaryEncoder = function(pinA, pinB, CWcallback, CCWcallback) {
+	var sawA = false,
+		sawB = false;
 
 	b.pinMode(pinA, b.INPUT);
 	b.pinMode(pinB, b.INPUT);
@@ -18,31 +18,25 @@ exports.readRotaryEncoder = function (pinA, pinB, CWcallback, CCWcallback) {
 
 	function interruptCallbackA1(x) {
 		// console.log('A:', countA, x.value);
-		if (CW) {  // You got 2 A's before a B
-			return;
-		}
-		if (CCW) { // It was turned CCW and no A is responding
-			CCW = false;
-			return;
-		}
 		if (parseInt(x.value, 10) === 0) {
-			CW = true;  // A has been pulled low before B
-			CWcallback();
+			if (sawB) {
+                sawB = false;
+				CCWcallback();
+			} else {
+				sawA = true; // A has been pulled low before B
+			}
 		}
 	}
 
 	function interruptCallbackB1(x) {
 		// console.log('B:', countB, x.value);
-		if (CCW) {
-			return;
-		}
-		if (CW) {
-			CW = false;
-			return;
-		}
 		if (parseInt(x.value, 10) === 0) {
-			CCW = true;
-			CCWcallback();
+			if (sawA) {
+				sawA = false;
+				CWcallback();
+			} else {
+				sawB = true;
+			}
 		}
 	}
 };
