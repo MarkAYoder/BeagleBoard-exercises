@@ -3,7 +3,7 @@ CCPP=g++
 
 RES_DIR= Resources
 
-TARGETS=main \
+TARGETS=matrix16x26 \
 main.opp \
 $(RES_DIR)/MMAP/mmapgpio.opp \
 $(RES_DIR)/adafruit/HT1632/HT1632.opp \
@@ -15,7 +15,7 @@ clean:
 	clear
 	rm -f $(TARGETS)
 
-main: main.opp $(RES_DIR)/MMAP/mmapgpio.opp $(RES_DIR)/adafruit/HT1632/HT1632.opp $(RES_DIR)/adafruit/HT1632/glcdfont.o
+matrix16x26: main.opp $(RES_DIR)/MMAP/mmapgpio.opp $(RES_DIR)/adafruit/HT1632/HT1632.opp $(RES_DIR)/adafruit/HT1632/glcdfont.o
 	$(CCPP) $^ -o $@
 
 main.opp: $(RES_DIR)/adafruit/HT1632/HT1632.opp

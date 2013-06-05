@@ -52,6 +52,12 @@ void testMatrix2(HT1632LEDMatrix *matrix) {
   matrix->blink(true);
   usleep(2000000);
   matrix->blink(false);
+  
+  // Dim again
+  for (int8_t i = 15; i >= 0; i--) {
+    matrix->setBrightness(i);
+    usleep(100000);
+  }
 }
 
 void testMatrix1(HT1632LEDMatrix *matrix) {
