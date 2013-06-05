@@ -10,7 +10,7 @@
 #define STRAND_LEN 160 // Length of data memory
 
 //SPI 2.0 running at 10Mhz
-#define SPI_BUS_NUM 2
+#define SPI_BUS_NUM 1
 #define SPI_BUS_SPEED 10000000
 #define SPI_CS 0
 
