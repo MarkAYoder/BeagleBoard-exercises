@@ -11,8 +11,7 @@ $(RES_DIR)/adafruit/HT1632/glcdfont.o
 
 all: $(TARGETS)
 
-clean: 
-	clear
+clean:
 	rm -f $(TARGETS)
 
 matrix16x26: main.opp $(RES_DIR)/MMAP/mmapgpio.opp $(RES_DIR)/adafruit/HT1632/HT1632.opp $(RES_DIR)/adafruit/HT1632/glcdfont.o
