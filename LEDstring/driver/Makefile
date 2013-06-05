@@ -25,6 +25,11 @@ lpd8806:
 	./buildKernel.sh
 	scp ~/BeagleBoard/kernel/kernel/drivers/char/lpd8806.ko root@192.168.7.2:/lib/modules/3.2.25+/kernel/drivers/char
 
+dt:	# Set up device tree for SPI
+	dtc -O dtb -o BB-SPI1-01-00A0.dtbo -b 0 -@ BB-SPI1-01-00A0.dts
+	cp BB-SPI1-01-00A0.dtbo /lib/firmware/
+	echo BB-SPI1-01 > /sys/devices/bone_capemgr.*/slots
+
 clean: 
 	clear
 	rm -f $(TARGETS)
