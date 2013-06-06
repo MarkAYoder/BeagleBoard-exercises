@@ -16,7 +16,8 @@
  ****************************************************************/
  
 #define POLL_TIMEOUT (60 * 1000) /* 60 seconds */
-#define STRAND_LEN 160 // Number of LEDs on strand
+#define STRAND_LEN 160	// Number of LEDs on strand
+#define MAX 50		// Brightness
 
 /****************************************************************
  * Global variables
@@ -58,7 +59,7 @@ void up() {
 	for(i=0; i<STRAND_LEN; i++) {
 //		printf("Fire: %d, %d!\n", count, i);
 		rgb( 0,  0,  0, i-1,   0);
-		rgb(12, 12, 12,   i, 50000);
+		rgb(MAX, MAX, MAX,   i, 50000);
 	}
  }
 
@@ -67,7 +68,7 @@ void down() {
 	for(i=STRAND_LEN-1; i>=-1; i--) {
 //		printf("Fire: %d, %d!\n", count, i);
 		rgb( 0,  0,  0, i  ,   0);
-		rgb( 0, 12,  0, i-1, 20000);
+		rgb( 0, MAX,  0, i-1, 20000);
 	}
 }
 
@@ -99,10 +100,10 @@ int main(int argc, char **argv, char **envp)
 	unsigned int gpio;
 	int len;
 	char lastValue='0';
-	int dir=0;	// Passed to fire to give inital direction
+	int dir=1;	// Passed to fire to give inital direction
 
 	if (argc < 2) {
-		printf("Usage: gpio-int <gpio-pin>\n\n");
+		printf("Usage: fire <gpio-pin>\n\n");
 		printf("Waits for a change in the GPIO pin voltage level or input on stdin\n");
 		exit(-1);
 	}
@@ -124,7 +125,7 @@ int main(int argc, char **argv, char **envp)
 
 	gpio_export(gpio);
 	gpio_set_dir(gpio, 0);
-	gpio_set_edge(gpio, "both");  // Can be rising, falling or both
+	gpio_set_edge(gpio, "rising");  // Can be rising, falling or both
 	gpio_fd = gpio_fd_open(gpio);
 
 	timeout = POLL_TIMEOUT;
@@ -152,14 +153,14 @@ int main(int argc, char **argv, char **envp)
 		if (fdset[0].revents & POLLPRI) {
 			lseek(fdset[0].fd, 0, SEEK_SET);  // Read from the start of the file
 			len = read(fdset[0].fd, buf, MAX_BUF);
-//			printf("\npoll() GPIO %d interrupt occurred, value=%c, len=%d\n",
-//				 gpio, buf[0], len);
-			if(buf[0] != lastValue) {
+			printf("\npoll() GPIO %d interrupt occurred, value=%c, len=%d\n",
+				 gpio, buf[0], len);
+//			if(buf[0] != lastValue) {
 				fire_env = dir;
 				pthread_create(&fireThread, NULL,
 						&fire, &fire_env);
-				lastValue = buf[0];
-			}
+//				lastValue = buf[0];
+//			}
 		}
 
 		if (fdset[1].revents & POLLIN) {
