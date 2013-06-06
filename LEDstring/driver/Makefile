@@ -8,12 +8,11 @@ all: $(TARGETS)
 .PHONY: example lpd8806 clean
 
 kernel:
-	cp -f ./example.c ~/BeagleBoard/linux-dev/KERNEL/drivers/char
+#	cp -f ./example.c ~/BeagleBoard/linux-dev/KERNEL/drivers/char
 	cp -f ./lpd8806.c ~/BeagleBoard/linux-dev/KERNEL/drivers/char
 	./buildKernel.sh
-#	scp -P2001 ~/BeagleBoard/linux-dev/KERNEL/drivers/char/lpd8806.ko root@home:/lib/modules/3.2.25+/kernel/drivers/char
 #	scp ~/BeagleBoard/linux-dev/KERNEL/drivers/char/example.ko root@192.168.7.2:/lib/modules/3.2.25+/kernel/drivers/char
-#	scp ~/BeagleBoard/linux-dev/KERNEL/drivers/char/lpd8806.ko root@192.168.7.2:/lib/modules/3.2.25+/kernel/drivers/char
+	scp ~/BeagleBoard/linux-dev/KERNEL/drivers/char/lpd8806.ko root@yoder-white-bone.dhcp.rose-hulman.edu:.
 
 example:
 	cp -f ./example.c ~/BeagleBoard/linux-dev/KERNEL/drivers/char
