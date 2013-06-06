@@ -7,21 +7,20 @@ all: $(TARGETS)
 .PHONY: example lpd8806 clean
 
 kernel:
-	cp -f ./example.c ~/BeagleBoard/kernel/kernel/drivers/char
+#	cp -f ./example.c ~/BeagleBoard/kernel/kernel/drivers/char
 	cp -f ./lpd8806.c ~/BeagleBoard/kernel/kernel/drivers/char
 	./buildKernel.sh
-	scp ~/BeagleBoard/kernel/kernel/drivers/char/example.ko root@192.168.7.2:/lib/modules/3.2.25+/kernel/drivers/char
-	scp ~/BeagleBoard/kernel/kernel/drivers/char/lpd8806.ko root@192.168.7.2:/lib/modules/3.2.25+/kernel/drivers/char
+#	scp ~/BeagleBoard/kernel/kernel/drivers/char/example.ko root@yoder-white-bone:/.
+	scp ~/BeagleBoard/kernel/kernel/drivers/char/lpd8806.ko root@yoder-white-bone:/.
 
 example:
 	cp -f ./example.c ~/BeagleBoard/kernel/kernel/drivers/char
 	./buildKernel.sh
-	scp ~/BeagleBoard/kernel/kernel/drivers/char/example.ko root@192.168.7.2:/lib/modules/3.2.25+/kernel/drivers/char
-
+	scp ~/BeagleBoard/kernel/kernel/drivers/char/example.ko root@yoder-white-bone:/.
 lpd8806:
 	cp -f ./lpd8806.c ~/BeagleBoard/kernel/kernel/drivers/char
 	./buildKernel.sh
-	scp ~/BeagleBoard/kernel/kernel/drivers/char/lpd8806.ko root@192.168.7.2:/lib/modules/3.2.25+/kernel/drivers/char
+	scp ~/BeagleBoard/kernel/kernel/drivers/char/lpd8806.ko root@yoder-white-bone:/.
 
 clean: 
 	clear

@@ -1,6 +1,8 @@
 DEBUG
 *~
 *.o
+*.opp
+*.dtbo
 *.out
 *_DEBUG.Beagle
 *_RELEASE.Beagle
