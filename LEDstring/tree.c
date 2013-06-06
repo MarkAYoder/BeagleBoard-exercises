@@ -11,7 +11,7 @@
 #define DELAY 1000000
 
 static FILE *rgb_fp;
-static FILE *ain_fp;
+// static FILE *ain_fp;
 int running=1;
 
 void clear() {
@@ -91,7 +91,7 @@ void pattern3(int timeUp, int timeBack) {
 // Pattern 6 is a single LED falling and bouncing
 void pattern6(int timeUp, int timeBack) {
   int i, top;
-
+#ifdef HACK
   for(top=STRAND_LEN; top>0; top-=10) {
     // Falling down
     for(i=top; i>=0; i--) {
@@ -104,10 +104,12 @@ void pattern6(int timeUp, int timeBack) {
       rgb(0, 15, 0, i+1, timeUp-(pow(top-i,2)/pow(top,2)*timeUp*19/20));
     }
   }
+  #endif
 }
 
 // Pattern 7 reads the analog in and positions the LED.
 void pattern7(int timeUp, int timeBack) {
+#ifdef HACK
   int value, oldIndex;
   static int index = 0;
   oldIndex = index;
@@ -119,6 +121,7 @@ void pattern7(int timeUp, int timeBack) {
     rgb(0, 0, 0, oldIndex, 0);
     rgb(10, 10, 10, index, 10000);
   }
+#endif
 }
 
 // Pattern 1 outputs a string of increaing brightness
@@ -158,9 +161,11 @@ void signal_handler(int signo){
 
 int main(int argc, char *argv[]) { 
   rgb_fp = fopen("/sys/firmware/lpd8806/device/rgb", "w");
-  ain_fp = fopen("/sys/devices/platform/omap/tsc/ain6", "r");
+//  ain_fp = fopen("/sys/devices/platform/omap/tsc/ain6", "r");
   setbuf(rgb_fp, NULL);
-  if (rgb_fp == NULL || ain_fp == NULL) {
+//  if (rgb_fp == NULL || ain_fp == NULL) {
+  if (rgb_fp == NULL) {
+    printf("Failed to open device\n");
     return 1;
   }
  
@@ -213,5 +218,5 @@ int main(int argc, char *argv[]) {
 
 //  fflush(stdout);
   fclose(rgb_fp);
-  fclose(ain_fp);
+//  fclose(ain_fp);
 }
