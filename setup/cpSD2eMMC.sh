@@ -15,20 +15,20 @@ mount /dev/mmcblk1p2 $eMMC
 echo Copying firmware
 cd $eMMC/lib
 mv firmware firmware.orig
-cp /lib/firmware .
+cp -r /lib/firmware .
 
 echo Copying modules
-cp /lib/modules/$MODULES $eMMC/lib/modules
+cp -r /lib/modules/$MODULES $eMMC/lib/modules
 
 echo Copying uImage
 cd $eMMC/boot
 cp /boot/uImage-$MODULES $eMMC/boot
-cp uImage uImage.bak
+mv uImage uImage_back
 ln -s uImage-$MODULES uImage
 
 echo Cleaning up
 cd
 sync
-umount $eMMc
+# umount $eMMC
 
 
