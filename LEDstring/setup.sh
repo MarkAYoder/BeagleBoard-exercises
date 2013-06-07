@@ -7,6 +7,6 @@ echo BB-SPI0-01 > /sys/devices/bone_capemgr.*/slots
 
 # Insert module
 cd driver
-insmod lpd8806
+insmod lpd8806.ko
 
 
