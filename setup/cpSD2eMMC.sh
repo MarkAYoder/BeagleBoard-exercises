@@ -29,6 +29,6 @@ ln -s uImage-$MODULES uImage
 echo Cleaning up
 cd
 sync
-# umount $eMMC
+umount $eMMC
 
 
