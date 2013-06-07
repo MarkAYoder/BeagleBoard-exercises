@@ -124,7 +124,7 @@ void pattern7(int timeUp, int timeBack) {
 #endif
 }
 
-// Pattern 1 outputs a string of increaing brightness
+// Pattern 1 outputs a string of increasing brightness
 void pattern1() {
   int i;
   for (i=0; i<STRAND_LEN; i++) {
