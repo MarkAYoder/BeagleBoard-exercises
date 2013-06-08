@@ -22,10 +22,10 @@
 #Default configuration file
 CONFIG_FILE=~/.dropbox_uploader
 
-#If you are experiencing problems establishing SSL connection with the DropBox
+#If you are experiencing problems establishing SSL seconnection with the DropBox
 #server, try to uncomment this option.
 #Note: This option explicitly allows curl to perform "insecure" SSL connections and transfers.
-#CURL_ACCEPT_CERTIFICATES="-k"
+CURL_ACCEPT_CERTIFICATES="-k"
 
 #Default chunk size in Mb for the upload process
 #It is recommended to increase this value only if you have enough free space on your /tmp partition
@@ -767,7 +767,7 @@ else
     echo -ne " Please open this URL from your Browser, and access using your account:\n\n -> $APP_CREATE_URL\n"
     echo -ne "\n If you haven't already done, click \"Create an App\" and fill in the\n"
     echo -ne " form with the following data:\n\n"
-    echo -ne "  App name: MyUploader$RANDOM$RANDOM\n"
+    echo -ne "  App name: BeagleUploader$RANDOM\n"
     echo -ne "  App type: Core\n"
     echo -ne "  Permission type: App folder or Full Dropbox\n\n"
     echo -ne " Now, click on the \"Create\" button.\n\n"
@@ -795,7 +795,7 @@ else
             ACCESS_MSG="Full Dropbox"
         fi
 
-        echo -ne "\n > App key is $APPKEY, App secret is $APPSECRET and Access level is $ACCESS_MSG, it's ok? [y/n]"
+        echo -ne "\n > App key is $APPKEY, App secret is $APPSECRET and Access level is $ACCESS_MSG, it's ok? [y/n] "
         read answer
         if [ "$answer" == "y" ]; then
             break;
