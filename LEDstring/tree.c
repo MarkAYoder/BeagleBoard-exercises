@@ -124,6 +124,15 @@ void pattern7(int timeUp, int timeBack) {
 #endif
 }
 
+// Pattern 0 outputs all the same color
+void pattern0(int r, int g, int b) {
+  int i;
+  for (i=0; i<STRAND_LEN; i++) {
+    rgb(r, g, b, i, 0);
+  }
+  display();
+}
+
 // Pattern 1 outputs a string of increasing brightness
 void pattern1() {
   int i;
@@ -192,6 +201,9 @@ int main(int argc, char *argv[]) {
   clear();
   while (running) {
     switch(pattern) {
+      case 0:
+	pattern0(0, 0, 0);
+	break;
       case 1:
 	pattern1();
 	break;
