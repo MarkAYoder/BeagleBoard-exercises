@@ -97,15 +97,33 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('led', function (ledNum) {
-        var ledPath = "/sys/class/leds/beaglebone:green:usr" + ledNum + "/brightness";
+        var ledPath = "/sys/class/leds/beaglebone:green:usr";
+	var ledPathBright = ledPath + ledNum + "/brightness";
 //        console.log('LED: ' + ledPath);
-        fs.readFile(ledPath, 'utf8', function (err, data) {
+        fs.readFile(ledPathBright, 'utf8', function (err, data) {
             if(err) throw err;
             data = data.substring(0,1) === "1" ? "0" : "1";
 //            console.log("LED%d: %s", ledNum, data);
-            fs.writeFile(ledPath, data);
+            fs.writeFile(ledPathBright, data);
         });
     });
+    socket.on('trigger', function(trig) {
+//	console.log('trigger: ' + trig);
+	if(trig) {
+		trigger("heartbeat mmc0 cpu0 none");
+	} else {
+		trigger("none none none none");
+	}
+    });
+    function trigger(arg) {
+        var ledPath = "/sys/class/leds/beaglebone:green:usr";
+//	console.log("trigger: " + arg);
+	arg = arg.split(" ");
+	for(var i=0; i<4; i++) {
+//	    console.log(" trigger: ", arg[i]);
+	    fs.writeFile(ledPath + i + "/trigger", arg[i])
+	}
+    }
 
     socket.on('slider', function(slideNum, value) {
 //	console.log('slider' + slideNum + " = " + value);
