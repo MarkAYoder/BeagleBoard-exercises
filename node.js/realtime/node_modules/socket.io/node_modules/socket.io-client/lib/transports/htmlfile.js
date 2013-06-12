@@ -85,6 +85,8 @@
    */
 
   HTMLFile.prototype._ = function (data, doc) {
+    // unescape all forward slashes. see GH-1251
+    data = data.replace(/\\\//g, '/');
     this.onData(data);
     try {
       var script = doc.getElementsByTagName('script')[0];
@@ -134,11 +136,11 @@
    * @api public
    */
 
-  HTMLFile.check = function () {
+  HTMLFile.check = function (socket) {
     if (typeof window != "undefined" && 'ActiveXObject' in window){
       try {
         var a = new ActiveXObject('htmlfile');
-        return a && io.Transport.XHR.check();
+        return a && io.Transport.XHR.check(socket);
       } catch(e){}
     }
     return false;
