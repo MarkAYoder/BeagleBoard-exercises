@@ -10,7 +10,7 @@
         i2cData = [],  ii2c = 0,
         gpioNum = 7,
         ainNum  = 6,
-        i2cNum  = "0x48";
+        i2cNum  = "0x4a";
     ainData[samples] = 0;
     gpioData[samples] = 0;
     i2cData[samples] = 0;
@@ -49,6 +49,10 @@
 
     function led(ledNum) {
         socket.emit('led', ledNum);
+    }
+
+    function trigger(trig) {
+        socket.emit('trigger', trig);
     }
 
     // When new data arrived, convert it and plot it.

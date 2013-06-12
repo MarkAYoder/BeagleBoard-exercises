@@ -8,8 +8,8 @@ body {
 #slider1 { margin: 10px; width: 275px; 
 	text-align:center; 
 	position:relative;
-	right: -250px;
-	top:   -30px;
+	right: 0px;
+	top:   0px;
 }
 
 #setup {

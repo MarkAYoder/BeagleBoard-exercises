@@ -40,6 +40,7 @@ var send404 = function (res) {
 };
 
 server.listen(8081);
+console.log("Listening on 8081");
 
 // socket.io, I choose you
 var io = require('socket.io').listen(server);
@@ -56,7 +57,7 @@ io.sockets.on('connection', function (socket) {
     // Send whole display every time a 'i2c' is received.
     socket.on('i2c', function (i2cNum) {
 //        console.log('Got i2c request:' + i2cNum);
-        exec('i2cdump -y -r 0x00-0x0f 3 ' + i2cNum + ' b',
+        exec('i2cdump -y -r 0x00-0x0f 1 ' + i2cNum + ' b',
             function (error, stdout, stderr) {
 //		The LED has 8 16-bit values
 //                console.log('i2cget: "' + stdout + '"');
@@ -74,7 +75,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('i2cset', function(params) {
 //	console.log(params);
 	// Double i since display has 2 bytes per LED
-	exec('i2cset -y 3 ' + params.i2cNum + ' ' + 2*params.i + ' ' +
+	exec('i2cset -y 1 ' + params.i2cNum + ' ' + 2*params.i + ' ' +
 		params.disp); 
     });
 

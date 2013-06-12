@@ -11,6 +11,7 @@ var http = require('http'),
 
     var pwmPath    = "/sys/class/pwm/ehrpwm.1:0";
     var pinMuxPath = "/sys/kernel/debug/omap_mux";
+    var errCount = 0;	// Counts the AIN errors.
 
 // Initialize various IO things.
 function initIO() {
@@ -20,6 +21,7 @@ function initIO() {
 
     // Initialize pwm
     // Clear up any unmanaged usage
+/*
     fs.writeFileSync(pwmPath+'/request', '0');
     // Allocate and configure the PWM
     fs.writeFileSync(pwmPath+'/request', '1');
@@ -31,6 +33,7 @@ function initIO() {
 //	Don't know why the wiretFileSync doesn't work
 //    fs.writeFileSync(pinMuxPath+'/gpmc_a2', '0x0e'); // pwm, no pull up
     exec("echo 0x0e > " + pinMuxPath + "/gpmc_a2");
+*/
 }
 
 initIO();
@@ -66,6 +69,7 @@ var send404 = function (res) {
 };
 
 server.listen(8081);
+console.log("Listening on 8081");
 
 // socket.io, I choose you
 var io = require('socket.io').listen(server);
@@ -83,19 +87,17 @@ io.sockets.on('connection', function (socket) {
 
     // Make sure some needed files are there
     // The path to the analog devices changed from A5 to A6.  Check both.
-    var ainPath = "/sys/devices/platform/omap/tsc/";
-//    if(!fs.existsSync(ainPath)) {
-//        ainPath = "/sys/devices/platform/tsc/";
-//        if(!fs.existsSync(ainPath)) {
-//            throw "Can't find " + ainPath;
-//        }
-//    }    
+    var ainPath = "/sys/devices/ocp.2/helper.15/";
+    if(!fs.existsSync(ainPath)) {
+	// Use device tree to make path appear.
+        fs.writeFileSync("/sys/devices/bone_capemgr.9/slots", "cape-bone-iio");
+    }    
 
     // Send value every time a 'message' is received.
     socket.on('ain', function (ainNum) {
 //        var ainPath = "/sys/devices/platform/omap/tsc/ain" + ainNum;
-        fs.readFile(ainPath + "ain" + ainNum, 'base64', function(err, data) {
-            if(err) throw err;
+        fs.readFile(ainPath + "AIN" + ainNum, 'base64', function(err, data) {
+            if(err && errCount++<5) console.log("AIN read error"); //throw err;
             socket.emit('ain', data);
 //            console.log('emitted ain: ' + data);
         });
@@ -112,7 +114,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('i2c', function (i2cNum) {
 //        console.log('Got i2c request:' + i2cNum);
-        exec('i2cget -y 3 ' + i2cNum + ' 0 w',
+        exec('i2cget -y 1 ' + i2cNum + ' 0 w',
             function (error, stdout, stderr) {
 //		The TMP102 returns a 12 bit value with the digits swapped
                 stdout = '0x' + stdout.substring(4,6) + stdout.substring(2,4);
@@ -124,7 +126,7 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('led', function (ledNum) {
-        var ledPath = "/sys/class/leds/beaglebone::usr" + ledNum + "/brightness";
+        var ledPath = "/sys/class/leds/beaglebone:green:usr" + ledNum + "/brightness";
 //        console.log('LED: ' + ledPath);
         fs.readFile(ledPath, 'utf8', function (err, data) {
             if(err) throw err;
@@ -133,6 +135,24 @@ io.sockets.on('connection', function (socket) {
             fs.writeFile(ledPath, data);
         });
     });
+
+    socket.on('trigger', function(trig) {
+//	console.log('trigger: ' + trig);
+	if(trig) {
+		trigger("heartbeat mmc0 cpu0 none");
+	} else {
+		trigger("none none none none");
+	}
+    });
+    function trigger(arg) {
+        var ledPath = "/sys/class/leds/beaglebone:green:usr";
+//	console.log("trigger: " + arg);
+	arg = arg.split(" ");
+	for(var i=0; i<4; i++) {
+//	    console.log(" trigger: ", arg[i]);
+	    fs.writeFile(ledPath + i + "/trigger", arg[i])
+	}
+    }
 
     socket.on('slider', function(slideNum, value) {
 //	console.log('slider' + slideNum + " = " + value);
