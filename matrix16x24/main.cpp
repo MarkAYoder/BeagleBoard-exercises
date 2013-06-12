@@ -16,7 +16,7 @@ Multiple HT1632's can share data and write pins, but need unique CS pins.
 #define CS 16   //1_16	// 16
 
 void testMatrix2(HT1632LEDMatrix *matrix) {
-  //Display "A+"
+  //Display "BeagleBone"
   char message[] = "BeagleBone";
   matrix->setBrightness(16);
   matrix->setTextSize(1);
@@ -30,7 +30,7 @@ void testMatrix2(HT1632LEDMatrix *matrix) {
     //matrix->write('A');
     //matrix->write('+');
     matrix->writeScreen();
-    usleep(20000);
+//    usleep(20000);
   }
 
   // Blink!
@@ -68,7 +68,7 @@ void testMatrix1(HT1632LEDMatrix *matrix) {
     matrix->drawCircle(matrix->width()/2, matrix->height()/2, r, 1);
     //matrix->fillCircle(8, 8, 4, 1);
     matrix->writeScreen();
-    usleep(20000);
+//    usleep(20000);
   }
 
   for(int r=matrix->width()/2; r>0; r--) {
@@ -77,7 +77,7 @@ void testMatrix1(HT1632LEDMatrix *matrix) {
     matrix->drawCircle(matrix->width()/2, matrix->height()/2, r, 1);
     //matrix->fillCircle(8, 8, 4, 1);
     matrix->writeScreen();
-    usleep(20000);
+//    usleep(20000);
   }
 
   //Display icon
