@@ -131,7 +131,7 @@ int main(int argc, char *argv[])
 	write_block(file, smile_bmp);
 
 
-// Fad the display
+// Fade the display
 	int daddress;
 	for(daddress = 0xef; daddress >= 0xe0; daddress--) {
 //	    printf("writing: 0x%02x\n", daddress);
