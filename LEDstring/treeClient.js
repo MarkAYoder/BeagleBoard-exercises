@@ -39,6 +39,7 @@
       }
       else {
         socket.socket.reconnect();
+	status_update("Reconnecting");
       }
     }
 

@@ -73,12 +73,10 @@ io.sockets.on('connection', function (socket) {
     // Make sure some needed files are there
     // The path to the analog devices changed from A5 to A6.  Check both.
     var ainPath = "/sys/devices/ocp.2/helper.14/";
-//    if(!fs.existsSync(ainPath)) {
-//        ainPath = "/sys/devices/platform/tsc/";
-//        if(!fs.existsSync(ainPath)) {
-//            throw "Can't find " + ainPath;
-//        }
-//    }    
+    if(!fs.existsSync(ainPath)) {
+	// Use device tree to make path appear.
+        fs.writeFileSync("/sys/devices/bone_capemgr.9/slots", "cape-bone-iio");
+    }    
 
     // Send value every time a 'message' is received.
     socket.on('ain', function (ainNum) {
