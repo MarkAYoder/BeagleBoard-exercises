@@ -52,7 +52,7 @@
 
     // When new data arrived, convert it and plot it.
     function ain(data) {
-        data = atob(data)/4096 * 1.8;
+        data = atob(data)/4096 * 1.8 * 3;  //*3 is so it will appear full scale
         data = isNaN(data) ? 0 : data;
 //        status_update("ain: " + data);
         ainData[iain] = [iain, data];

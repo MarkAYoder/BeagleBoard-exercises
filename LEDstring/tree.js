@@ -12,6 +12,7 @@ var http = require('http'),
 
     var rgbPath    = "/sys/firmware/lpd8806/device";
     var pinMuxPath = "/sys/kernel/debug/omap_mux";
+    var errCount = 0;	// Counts the AIN errors.
 
 // Initialize various IO things.
 function initIO() {
@@ -53,6 +54,7 @@ var send404 = function (res) {
 };
 
 server.listen(8081);
+console.log("Listening on 8081");
 
 // socket.io, I choose you
 var io = require('socket.io').listen(server);
@@ -70,7 +72,7 @@ io.sockets.on('connection', function (socket) {
 
     // Make sure some needed files are there
     // The path to the analog devices changed from A5 to A6.  Check both.
-    var ainPath = "/sys/devices/platform/omap/tsc/";
+    var ainPath = "/sys/devices/ocp.2/helper.14/";
 //    if(!fs.existsSync(ainPath)) {
 //        ainPath = "/sys/devices/platform/tsc/";
 //        if(!fs.existsSync(ainPath)) {
@@ -80,8 +82,8 @@ io.sockets.on('connection', function (socket) {
 
     // Send value every time a 'message' is received.
     socket.on('ain', function (ainNum) {
-        fs.readFile(ainPath + "ain" + ainNum, 'base64', function(err, data) {
-            if(err) throw err;
+        fs.readFile(ainPath + "AIN" + ainNum, 'base64', function(err, data) {
+            if(err && errCount++<5) console.log("AIN read error"); //throw err;
             socket.emit('ain', data);
 //            console.log('emitted ain: ' + data);
         });
@@ -97,7 +99,7 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('led', function (ledNum) {
-        var ledPath = "/sys/class/leds/beaglebone::usr" + ledNum + "/brightness";
+        var ledPath = "/sys/class/leds/beaglebone:green:usr" + ledNum + "/brightness";
 //        console.log('LED: ' + ledPath);
         fs.readFile(ledPath, 'utf8', function (err, data) {
             if(err) throw err;
