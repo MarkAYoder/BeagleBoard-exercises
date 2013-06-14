@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Webcam Feed</title>
+
+    <script src="/json.js"></script> <!-- for ie -->
+    <script src="/socket.io/socket.io.js"></script>
+
+    <link href="layout.css" rel="stylesheet" type="text/css"/>
+    <link href="jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="jquery.js"></script>
+    <script src="jquery-ui.min.js"></script>
+    <script src="jquery.flot.js"></script>
+    <script src="jquery.flot.navigate.js"></script>
+    <script src="WebcamFeedClient.js"></script>
+  </head>
+
+  <body>
+
+    <h1>Beagle Board xM Webcam Feed</h1>
+
+    Use camera at:<br />
+    /dev/video<input id="camnum" type="text" value="" 
+style="text-align:left;width:3cm" /><br />
+    <button id="setcam" onClick='setcam()'>Set Cam</button><br />
+    <br />
+    <button id="setCamZero"  onClick='camZero()' >Camera 0</button>
+    <button id="setCamOne"   onClick='camOne()'  >Camera 1</button>
+    <button id="setCamTwo"   onClick='camTwo()'  >Camera 2</button>
+    <button id="setCamThree" onClick='camThree()'>Camera 3</button><br />
+
+    <p>
+
+        <a href="http://beagleboard.org" target="_blank">
+        <img src="beagle-hd-logo.gif" width=200 align="left"></a>
+        <a href="http://www.ti.com/sitara" target="_blank">
+        <img src="hdr_ti_logo.gif" width=200 align="right"></a><br />
+        <br />
+        <br />
+        <br />
+        <div><p id="status">Waiting for input</p></div>
+
+    <p/>
+
+    <script>
+        connect();
+
+        function setcam() {
+            //document.videoplayer.stop();
+            socket.emit('setcam', document.getElementById('camnum').value);
+        }
+
+        function camZero() {
+            socket.emit('setcam', '0');
+        }
+
+        function camOne() {
+            socket.emit('setcam','1');
+        }
+
+        function camTwo() {
+            socket.emit('setcam', '2');
+        }
+
+        function camThree() {
+            socket.emit('setcam', '3');
+        }
+
+    </script>
+
+    <br /><br /><br />
+
+    <embed
+         type="application/x-vlc-plugin"
+         name="videoplayer"
+         autoplay="yes" loop="no" hidden="no"
+         width="320" height="240"
+         target="tcp://yoder-black-bone.dhcp.rose-hulman.edu:8080" />
+    <br />
+    <br />
+    <br />
+    <p>Developed by Alex Drane and John Lobdell<br />
+        <a 
+href="http://elinux.org/ECE497:_Remote_Web_Cam_Viewer_Final_Project">Rose-Hulman 
+Institute of Technology - Embedded Linux Final Project</a>
+
+  </body>
+</html>
