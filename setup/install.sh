@@ -23,6 +23,7 @@ cd
 
 mount /dev/mmcblk0p1 /media/mmc1/
 cd /media/mmc1/
+# Add optargs=video=HDMI-A-1:640x480@60 to uEnv.txt to use the pico DLP
 
 # Turn off storage gadget, turn on network at boot time.
 cd /lib/systemd/system/basic.target.wants
