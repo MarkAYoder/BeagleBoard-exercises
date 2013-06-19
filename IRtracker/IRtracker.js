@@ -21,7 +21,7 @@ for(i=0; i<controller.length; i++) {
 // Put the motor into a know state
 updateState(controller, state, steps, rotateDelay);
 
-rotate(CCW, steps);
+rotate(CW, steps, function() {rotate( CCW, steps, 0);});
 
 function updateState() {
 	for (i = 0; i < controller.length; i++) {
@@ -29,8 +29,8 @@ function updateState() {
 	}
 }
 
-function rotate(direction, count) {
-	console.log("CWrotate, count=%d", count);
+function rotate(direction, count, next) {
+	console.log("rotate(%d,%d,%s)", direction, count, next);
 	count--;
 	if (direction === 0) {
 		state = [state[1], state[2], state[3], state[0]];
@@ -41,8 +41,10 @@ function rotate(direction, count) {
 	updateState();
 	if (count > 0) {
 		setTimeout(function() {
-			rotate(direction, count);
+			rotate(direction, count, next);
 		}, rotateDelay);
+	} else {
+        if(next !== 0) next();
 	}
 }
 
