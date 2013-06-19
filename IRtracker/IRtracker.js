@@ -3,6 +3,7 @@
 // The motor is controlled via pins P9 11, 13, 15 and 17
 
 var b = require('bonescript');
+var flow = require('nimble');
 
 var controller = ["P9_11", "P9_13", "P9_15", "P9_16"];
 var state = [b.LOW, b.HIGH, b.HIGH, b.LOW];
@@ -21,7 +22,10 @@ for(i=0; i<controller.length; i++) {
 // Put the motor into a know state
 updateState(controller, state, steps, rotateDelay);
 
-rotate(CW, steps, function() {rotate( CCW, steps, 0);});
+flow.series([
+    function(callback) {rotate( CW, steps, callback);},
+    function(callback) {rotate(CCW, steps, callback);}
+]);
 
 function updateState() {
 	for (i = 0; i < controller.length; i++) {
