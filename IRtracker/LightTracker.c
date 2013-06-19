@@ -11,7 +11,7 @@
 * Global variables
 ****************************************************************/
 int keepgoing = 1;	// Set to 0 when ctrl-c is pressed
-unsigned int controller[4] = {30, 31, 48, 5};	//number of gpios to be used for driving the motor
+unsigned int controller[4] = {30, 31, 48, 51};	//number of gpios to be used for driving the motor
 
 /****************************************************************
 * signal_handler
@@ -60,7 +60,8 @@ int analogIn(char *ain)
 	char ainPath[MAX_BUF];
 	char ainVal[MAX_BUF];
 	
-	snprintf(ainPath, sizeof ainPath, "/sys/devices/platform/omap/tsc/%s", ain);
+//    snprintf(ainPath, sizeof ainPath, "/sys/devices/platform/omap/tsc/%s", ain);
+    snprintf(ainPath, sizeof ainPath, "/sys/devices/ocp.2/helper.15/%s", ain);
 
 	if((fp = fopen(ainPath, "r")) == NULL){
 	printf("Can't open this pin, %s\n", ain);
@@ -85,10 +86,12 @@ void initIO(){
 	int i;
 
 	//Set pin mux in gpio output mode for controllers
-	mode_gpio_out(gpio30);
+#ifdef SET_PIN_MUX
+mode_gpio_out(gpio30);
 	mode_gpio_out(gpio31);
 	mode_gpio_out(gpio48);
 	mode_gpio_out(gpio5);
+#endif
 
 	//Export gpios and set up output direction for controllers
 	for (i = 0; i < 4; i++){
@@ -104,8 +107,12 @@ void initIO(){
 void delay (unsigned int loops)
 {
 	int i, j;
+#ifdef HACK
 	for (i = 0; i < loops; i++)
 		for (j = 0; j < 50000; j++);
+#else
+    usleep(1000*loops);
+#endif
 }
 
 /****************************************************************
@@ -181,7 +188,7 @@ void ccRotate (int *pos){
 ****************************************************************/
 int main(int argc, char *argv[]){
 	
-	char PT1[] = "ain4", PT2[] = "ain6";
+	char PT1[] = "AIN2", PT2[] = "AIN5";
 	int PT1_val[20], PT2_val[20], PT_sum[20];
 	int min, minPos, pos, PT1_now, PT2_now, i;
 
@@ -200,7 +207,7 @@ int main(int argc, char *argv[]){
 	for(i = 0; i < 20; i++) {
 		PT1_val[i] = analogIn(PT1);
 		PT2_val[i] = analogIn(PT2);
-		printf("PT1:%d PT2:%d\n", PT1_val[i], PT2_val[i]);
+		printf("PT1:%4d PT2:%4d\n", PT1_val[i], PT2_val[i]);
 		cRotate(&pos);
 		delay(100);
 	}
@@ -241,7 +248,8 @@ int main(int argc, char *argv[]){
 		else if (PT1_now < PT2_now){
 			ccRotate(&pos);
 		}
-		printf("PT1:%d PT2:%d\n", PT1_now, PT2_now);
+		printf("PT1:%4d PT2:%4d\r", PT1_now, PT2_now);
+        delay(500);
 	}
 	return 0;
 }
