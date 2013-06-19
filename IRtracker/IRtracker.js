@@ -22,10 +22,14 @@ for(i=0; i<controller.length; i++) {
 // Put the motor into a know state
 updateState(controller, state, steps, rotateDelay);
 
+setInterval(readPT, 500);
+
+/*
 flow.series([
     function(callback) {rotate( CW, steps, callback);},
     function(callback) {rotate(CCW, steps, callback);}
 ]);
+*/
 
 function updateState() {
 	for (i = 0; i < controller.length; i++) {
@@ -54,11 +58,10 @@ function rotate(direction, count, next) {
 
 function readPT() {
 	var i;
+/*
 	for (i = 0; i < PT.length; i++) {
 		console.log("%s: %d", PT[i], b.analogRead(PT[i]));
 	}
+    */
+    console.log("diff: %" + (b.analogRead(PT[0]) - b.analogRead(PT[1])));
 }
-
-
-
-
