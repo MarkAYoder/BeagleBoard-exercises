@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <unistd.h> // For usleep()
 #include <signal.h> // Defines signal-handling functions (i.e. trap Ctrl-C)
 #include "gpio.h"
 
@@ -188,7 +189,7 @@ void ccRotate (int *pos){
 ****************************************************************/
 int main(int argc, char *argv[]){
 	
-	char PT1[] = "AIN2", PT2[] = "AIN5";
+	char PT1[] = "AIN4", PT2[] = "AIN6";
 	int PT1_val[20], PT2_val[20], PT_sum[20];
 	int min, minPos, pos, PT1_now, PT2_now, i;
 
@@ -233,7 +234,7 @@ int main(int argc, char *argv[]){
 	}
 
 	//Tracking mode. Find the strongest light and rotate to its direction
-	while(keepgoing){
+	while(keepgoing) {
 		//Read analog inputs
 		PT1_now = analogIn(PT1);
 		PT2_now = analogIn(PT2);
@@ -248,7 +249,7 @@ int main(int argc, char *argv[]){
 		else if (PT1_now < PT2_now){
 			ccRotate(&pos);
 		}
-		printf("PT1:%4d PT2:%4d\r", PT1_now, PT2_now);
+		printf("PT1:%4d PT2:%4d\n", PT1_now, PT2_now);
         delay(500);
 	}
 	return 0;
