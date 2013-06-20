@@ -6,6 +6,7 @@ var b = require('bonescript');
 var flow = require('nimble');
 
 var controller = ["P9_11", "P9_13", "P9_15", "P9_16"];
+var buttons    = ["P9_41", "P9_42"];
 var state = [b.LOW, b.HIGH, b.HIGH, b.LOW];
 var steps = 20;  // 20 steps is one turn
 var rotateDelay = 50;
@@ -19,11 +20,19 @@ var i;
 for(i=0; i<controller.length; i++) {
     b.pinMode(controller[i], b.OUTPUT);
 }
+// Initialize buttons as INPUTs.
+for(i=0; i<buttons.length; i++) {
+    b.pinMode(buttons[i], b.INPUT);
+}
 // Put the motor into a know state
 updateState(controller, state, steps, rotateDelay);
 
-readPT();
-setInterval(readPT, 500);
+readButtons();
+for(i=0; i<buttons.length; i++) {
+    b.attachInterrupt(buttons[i], true, b.RISING, readButtons);
+}
+//readPT();
+//setInterval(readPT, 500);
 
 /*
 flow.series([
@@ -57,6 +66,13 @@ function rotate(direction, count, next) {
 	}
 }
 
+function readButtons() {
+    var i;
+    console.log("readButtons");
+    for(i=0; i<buttons.length; i++) {
+        b.digitalRead(buttons[i], function(x) {printStatus(buttons[i], x);});
+    }
+}
 function readPT() {
 /*
 var i;
