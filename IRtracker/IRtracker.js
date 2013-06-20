@@ -28,9 +28,9 @@ for(i=0; i<buttons.length; i++) {
 updateState(controller, state, steps, rotateDelay);
 
 readButtons();
-for(i=0; i<buttons.length; i++) {
-    b.attachInterrupt(buttons[i], true, b.RISING, readButtons);
-}
+b.attachInterrupt(buttons[0], true, b.RISING, rotateCW);
+b.attachInterrupt(buttons[1], true, b.RISING, rotateCCW);
+
 //readPT();
 //setInterval(readPT, 500);
 
@@ -45,6 +45,13 @@ function updateState() {
 	for (i = 0; i < controller.length; i++) {
 		b.digitalWrite(controller[i], state[i]);
 	}
+}
+
+function rotateCW() {
+    rotate(CW, 1, 0);
+}
+function rotateCCW() {
+    rotate(CCW, 1, 0);
 }
 
 function rotate(direction, count, next) {
