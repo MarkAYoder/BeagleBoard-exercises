@@ -22,6 +22,7 @@ for(i=0; i<controller.length; i++) {
 // Put the motor into a know state
 updateState(controller, state, steps, rotateDelay);
 
+readPT();
 setInterval(readPT, 500);
 
 /*
@@ -57,11 +58,20 @@ function rotate(direction, count, next) {
 }
 
 function readPT() {
-	var i;
 /*
+var i;
 	for (i = 0; i < PT.length; i++) {
 		console.log("%s: %d", PT[i], b.analogRead(PT[i]));
 	}
     */
-    console.log("diff: %" + (b.analogRead(PT[0]) - b.analogRead(PT[1])));
+//    console.log("diff: %" + (b.analogRead(PT[0]) - b.analogRead(PT[1])));
+//    console.log("%s: %d, %s: %d",   PT[0], b.analogRead(PT[0]), 
+//                                    PT[1], b.analogRead(PT[1]));
+    b.analogRead(PT[0], function(x) {printStatus(PT[0], x);});
+    b.analogRead(PT[1], function(x) {printStatus(PT[1], x);});
 }
+
+function printStatus(pin, x) {
+    console.log(pin + ': x.value = ' + x.value + ', x.err = ' + x.err);
+}
+
