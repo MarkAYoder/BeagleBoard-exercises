@@ -1,19 +1,24 @@
     var socket;
     var firstconnect = true,
-    	samples = 100,
-    	plotTop, plotBot, ainData = [],
-    	iain = 0,
-    	gpioData = [],
-    	igpio = 0,
-    	i2cData = [],
-    	ii2c = 0,
-    	gpioNum = [7],
-    	ainNum = 6,
-    	i2cNum = "0x4a";
+        samples = 100,
+        gpioNum = [7, 20],
+        ainNum = 6,
+        i2cNum = "0x4a",
+        plotTop, plotBot, ainData = [],
+        iain = 0,
+        gpioData = [],
+        igpio    = [],
+        i2cData  = [],
+        ii2c = 0,
+        i;
     ainData[samples] = 0;
-    gpioData[samples] = 0;
+    for (i = 0; i < gpioNum.length; i++) {
+        gpioData[gpioNum[i]] = [0];         // Put an array in
+        gpioData[gpioNum[i]][samples] = 0;  // Preallocate sample elements
+        igpio[gpioNum[i]] = 0;
+    }
     i2cData[samples] = 0;
-
+    
     function connect() {
       if(firstconnect) {
         socket = io.connect(null);
@@ -72,14 +77,14 @@
     function gpio(data) {
 	var gpioNum = data[0];
         data = atob(data[1]);
-        status_update("gpio" + gpioNum + ": " + data);
-        gpioData[igpio] = [igpio, data];
-        igpio++;
-        if(igpio >= samples) {
-            igpio = 0;
-            gpioData = [];
+        gpioData[gpioNum][igpio[gpioNum]] = [igpio[gpioNum], data];
+        igpio[gpioNum]++;
+        status_update("gpio" + gpioNum + ": " + data + " igpio: " + igpio[gpioNum]);
+        if(igpio[gpioNum] >= samples) {
+            igpio[gpioNum] = 0;
+            gpioData[gpioNum] = [];
         }
-        plotBot.setData([ ainData, gpioData ]);
+        plotBot.setData([ gpioData[7], gpioData[20] ]);
         plotBot.draw();
     }
 
@@ -159,6 +164,7 @@ $(function () {
             shadowSize: 0, // drawing is faster without shadows
             points: { show: false},
             lines:  { show: true, lineWidth: 5},
+            color: 3
         }, 
         yaxis:	{ min: 0, max: 2, 
                   zoomRange: [10, 256], panRange: [-128, 128] },
@@ -181,8 +187,7 @@ $(function () {
         series: { 
             shadowSize: 0, // drawing is faster without shadows
             points: { show: false},
-            lines:  { show: true, lineWidth: 5},
-            color: 2
+            lines:  { show: true, lineWidth: 5}
         }, 
         yaxis:	{ min: 0, max: 2, 
                   zoomRange: [10, 256], panRange: [60, 100] },
@@ -195,7 +200,9 @@ $(function () {
     plotBot = $.plot($("#plotBot"), 
         [ 
           { data:  initPlotData(),
-            label: "gpio"}
+            label: "gpio7"},
+          { data:  initPlotData(),
+            label: "gpio20"}
         ],
             optionsBot);
 
