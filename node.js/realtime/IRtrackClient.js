@@ -2,18 +2,22 @@
     var firstconnect = true,
         samples = 100,
         gpioNum = [7, 20],
-        ainNum = [4, 6],
-        plotTop, plotBot, ainData = [],
-        gpioData = [],
-        igpio    = [],
-        ainData  = [],
-        iain = 0,
+        ainNum  = [4, 6],
+        plotTop, plotBot,
+        gpioData = [], igpio = [],
+        ainData  = [], iain  = [],
         i;
-    ainData[samples] = 0;
+
+    // Initialize gpioData and ainData to be an array of arrays
     for (i = 0; i < gpioNum.length; i++) {
         gpioData[gpioNum[i]] = [0];         // Put an array in
         gpioData[gpioNum[i]][samples] = 0;  // Preallocate sample elements
         igpio[gpioNum[i]] = 0;
+    }
+    for(i=0; i<ainNum.length; i++) {
+        ainData[i] = [0];
+        ainData[i][samples] = 0;
+        iain[i] = 0;
     }
     
     function connect() {
@@ -57,21 +61,23 @@
 
     // When new data arrives, convert it and plot it.
     function ain(data) {
-        data = atob(data)/4096 * 1.8;
+        var idx = ainNum.indexOf(data[0]); // Find position in ainNum array
+        var num = data[0];
+        data = atob(data[1])/4096 * 1.8;
         data = isNaN(data) ? 0 : data;
-//        status_update("ain: " + data);
-        ainData[iain] = [iain, data];
-        iain++;
-        if(iain >= samples) {
-            iain = 0;
-            ainData = [];
+        status_update("ain" + num + "(" + idx + "): " + data + ", iain: " + iain[idx]);
+        ainData[idx][iain[idx]] = [iain[idx], data];
+        iain[idx]++;
+        if(iain[idx] >= samples) {
+            iain[idx] = 0;
+            ainData[idx] = [];
         }
-        plotTop.setData([ ainData, gpioData ]);
+        plotTop.setData(ainData);
         plotTop.draw();
     }
 
     function gpio(data) {
-	var gpioNum = data[0];
+	    var gpioNum = data[0];
         data = atob(data[1]);
         gpioData[gpioNum][igpio[gpioNum]] = [igpio[gpioNum], data];
         igpio[gpioNum]++;
@@ -189,16 +195,19 @@ $(function () {
 
     // Request data every updateInterval ms
     function updateTop() {
-        socket.emit("ain",  ainNum);
+        var i;
+        for(i=0; i<ainNum.length; i++) {
+            socket.emit("ain", ainNum[i]);
+        }
         setTimeout(updateTop, updateTopInterval);
     }
     updateTop();
 
     function updateBot() {
-	var i;
-	for(i=0; i<gpioNum.length; i++) {
+        var i;
+        for (i = 0; i < gpioNum.length; i++) {
             socket.emit("gpio", gpioNum[i]);
-	}
+        }
         setTimeout(updateBot, updateBotInterval);
     }
     updateBot();

@@ -79,11 +79,10 @@ io.sockets.on('connection', function (socket) {
 
     // Send value every time a 'message' is received.
     socket.on('ain', function (ainNum) {
-//        var ainPath = "/sys/devices/platform/omap/tsc/ain" + ainNum;
         fs.readFile(ainPath + "AIN" + ainNum, 'base64', function(err, data) {
             if(err && errCount++<5) console.log("AIN read error"); //throw err;
-            socket.emit('ain', data);
-//            console.log('emitted ain: ' + data);
+            socket.emit('ain', [ainNum, data]);
+            console.log('emitted ain: ' + data + ', ' + ainNum);
         });
     });
 
