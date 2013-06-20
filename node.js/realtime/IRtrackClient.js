@@ -1,14 +1,15 @@
     var socket;
     var firstconnect = true,
-        samples = 100,
-        plotTop,
-        plotBot,
-        ainData = [],  iain = 0, 
-        gpioData = [], igpio = 0,
-        i2cData = [],  ii2c = 0,
-        gpioNum = 7,
-        ainNum  = 6,
-        i2cNum  = "0x4a";
+    	samples = 100,
+    	plotTop, plotBot, ainData = [],
+    	iain = 0,
+    	gpioData = [],
+    	igpio = 0,
+    	i2cData = [],
+    	ii2c = 0,
+    	gpioNum = [7],
+    	ainNum = 6,
+    	i2cNum = "0x4a";
     ainData[samples] = 0;
     gpioData[samples] = 0;
     i2cData[samples] = 0;
@@ -32,7 +33,7 @@
 
         socket.on('ain',  ain);
         socket.on('gpio', gpio);
-        socket.on('i2c',  i2c);
+//        socket.on('i2c',  i2c);
 
         firstconnect = false;
       }
@@ -69,8 +70,8 @@
     }
 
     function gpio(data) {
-	var gpioNum = data[1];
-        data = atob(data[0]);
+	var gpioNum = data[0];
+        data = atob(data[1]);
         status_update("gpio" + gpioNum + ": " + data);
         gpioData[igpio] = [igpio, data];
         igpio++;
@@ -78,8 +79,8 @@
             igpio = 0;
             gpioData = [];
         }
-        plotTop.setData([ ainData, gpioData ]);
-        plotTop.draw();
+        plotBot.setData([ ainData, gpioData ]);
+        plotBot.draw();
     }
 
     function i2c(data) {
@@ -183,7 +184,7 @@ $(function () {
             lines:  { show: true, lineWidth: 5},
             color: 2
         }, 
-        yaxis:	{ min: 70, max: 90, 
+        yaxis:	{ min: 0, max: 2, 
                   zoomRange: [10, 256], panRange: [60, 100] },
         xaxis:	{ show: true, 
                   zoomRange: [10, 100], panRange: [0, 100] },
@@ -200,16 +201,16 @@ $(function () {
 
     // Request data every updateInterval ms
     function updateTop() {
-	var i;
-	for(i=0; i<gpioNum.length; i++) {
-            socket.emit("gpio", gpioNum[i]);
-	}
+        socket.emit("i2c",  i2cNum);
         setTimeout(updateTop, updateTopInterval);
     }
     updateTop();
 
     function updateBot() {
-        socket.emit("i2c",  i2cNum);
+	var i;
+	for(i=0; i<gpioNum.length; i++) {
+            socket.emit("gpio", gpioNum[i]);
+	}
         setTimeout(updateBot, updateBotInterval);
     }
     updateBot();
