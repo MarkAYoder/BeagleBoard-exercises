@@ -4,6 +4,7 @@
         gpioNum = [7, 20],
         ainNum  = [4, 6],
         plotTop, plotBot,
+        topTimer, botTimer,
         gpioData = [], igpio = [],
         ainData  = [], iain  = [],
         i;
@@ -78,7 +79,7 @@
 
     function gpio(data) {
 	    var idx = gpioNum.indexOf(data[0]);
-        var num = data[0];
+//        var num = data[0];
         data = atob(data[1]);
         gpioData[idx][igpio[idx]] = [igpio[idx], data];
         igpio[idx]++;
@@ -125,12 +126,15 @@ $(function () {
         var v = $(this).val();
         if (v && !isNaN(+v)) {
             updateTopInterval = +v;
-            if (updateTopInterval < 25)
-                updateTopInterval = 25;
+            if (updateTopInterval < 10)
+                updateTopInterval = 10;
             if (updateTopInterval > 2000)
                 updateTopInterval = 2000;
             $(this).val("" + updateTopInterval);
         }
+        // Reset the timer
+        clearInterval(topTimer);
+        topTimer = setInterval(updateTop, updateTopInterval);
     });
 
     var updateBotInterval = 100;
@@ -138,12 +142,15 @@ $(function () {
         var v = $(this).val();
         if (v && !isNaN(+v)) {
             updateBotInterval = +v;
-            if (updateBotInterval < 25)
-                updateBotInterval = 25;
+            if (updateBotInterval < 10)
+                updateBotInterval = 10;
             if (updateBotInterval > 2000)
                 updateBotInterval = 2000;
             $(this).val("" + updateBotInterval);
         }
+        // Reset timer
+        clearInterval(botTimer);
+        botTimer = setInterval(updateBot, updateBotInterval);
     });
 
     // setup plot
@@ -191,16 +198,18 @@ $(function () {
         for(i=0; i<ainNum.length; i++) {
             socket.emit("ain", ainNum[i]);
         }
-        setTimeout(updateTop, updateTopInterval);
+//        setTimeout(updateTop, updateTopInterval);
     }
-    updateTop();
+//    updateTop();
+    topTimer = setInterval(updateTop, updateTopInterval);
 
     function updateBot() {
         var i;
         for (i = 0; i < gpioNum.length; i++) {
             socket.emit("gpio", gpioNum[i]);
         }
-        setTimeout(updateBot, updateBotInterval);
+//        setTimeout(updateBot, updateBotInterval);
     }
-    updateBot();
+//    updateBot();
+    botTimer = setInterval(updateBot, updateBotInterval);
 });
