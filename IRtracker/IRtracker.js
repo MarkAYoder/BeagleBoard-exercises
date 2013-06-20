@@ -3,17 +3,16 @@
 // The motor is controlled via pins P9 11, 13, 15 and 17
 
 var b = require('bonescript');
-var flow = require('nimble');
 
-var controller = ["P9_11", "P9_13", "P9_15", "P9_16"];
-var buttons    = ["P9_41", "P9_42"];
-var state = [b.LOW, b.HIGH, b.HIGH, b.LOW];
-var steps = 20;  // 20 steps is one turn
-var rotateDelay = 50;
+var controller = ["P9_11", "P9_13", "P9_15", "P9_16"];  // Motor is attachedhere
+var PT         = ["P9_33", "P9_35"];                    // Phototransistor inputs
+var buttons    = ["P9_41", "P9_42"];                    // Pushbuttons
+var state = [b.LOW, b.HIGH, b.HIGH, b.LOW]; // Pulse sequence for motor
+var steps = 20;                             // 20 steps is one turn
+var rotateDelay = 50;   // ms delay when turning motor
 var CW  = 0;
 var CCW = 1;
 
-var PT = ["P9_33", "P9_35"];
 var i;
 
 // Initialize motor control pins to be OUTPUTs
@@ -27,6 +26,7 @@ for(i=0; i<buttons.length; i++) {
 // Put the motor into a know state
 updateState(controller, state, steps, rotateDelay);
 
+// One button goes CW the other CCW
 readButtons();
 b.attachInterrupt(buttons[0], true, b.RISING, rotateCW);
 b.attachInterrupt(buttons[1], true, b.RISING, rotateCCW);
@@ -34,29 +34,25 @@ b.attachInterrupt(buttons[1], true, b.RISING, rotateCCW);
 //readPT();
 //setInterval(readPT, 500);
 
-/*
-flow.series([
-    function(callback) {rotate( CW, steps, callback);},
-    function(callback) {rotate(CCW, steps, callback);}
-]);
-*/
-
+// Write the current input state to the controller
 function updateState() {
 	for (i = 0; i < controller.length; i++) {
 		b.digitalWrite(controller[i], state[i]);
 	}
 }
 
+// These rotate just one step CW or CCW
 function rotateCW() {
-    rotate(CW, 1, 0);
+    rotate(CW, 1);
 }
 function rotateCCW() {
-    rotate(CCW, 1, 0);
+    rotate(CCW, 1);
 }
-
-function rotate(direction, count, next) {
-	console.log("rotate(%d,%d,%s)", direction, count, next);
+// This the the general rotate funtion
+function rotate(direction, count) {
+	console.log("rotate(%d,%d)", direction, count);
 	count--;
+    // Rotate the state acording to the direction of rotation
 	if (direction === 0) {
 		state = [state[1], state[2], state[3], state[0]];
 	}
@@ -64,21 +60,18 @@ function rotate(direction, count, next) {
 		state = [state[3], state[0], state[1], state[2]];
 	}
 	updateState();
+    // Schedule next rotation
 	if (count > 0) {
 		setTimeout(function() {
-			rotate(direction, count, next);
+			rotate(direction, count);
 		}, rotateDelay);
-	} else {
-        if(next !== 0) next();
 	}
 }
 
 function readButtons() {
-    var i;
     console.log("readButtons");
-    for(i=0; i<buttons.length; i++) {
-        b.digitalRead(buttons[i], function(x) {printStatus(buttons[i], x);});
-    }
+    b.digitalRead(buttons[0], function(x) {printStatus(buttons[0], x);});
+    b.digitalRead(buttons[1], function(x) {printStatus(buttons[1], x);});
 }
 function readPT() {
 /*
@@ -97,4 +90,3 @@ var i;
 function printStatus(pin, x) {
     console.log(pin + ': x.value = ' + x.value + ', x.err = ' + x.err);
 }
-
