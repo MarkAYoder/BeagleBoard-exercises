@@ -82,7 +82,7 @@ io.sockets.on('connection', function (socket) {
         fs.readFile(ainPath + "AIN" + ainNum, 'base64', function(err, data) {
             if(err && errCount++<5) console.log("AIN read error"); //throw err;
             socket.emit('ain', [ainNum, data]);
-            console.log('emitted ain: ' + data + ', ' + ainNum);
+//            console.log('emitted ain: ' + data + ', ' + ainNum);
         });
     });
 
@@ -92,7 +92,7 @@ io.sockets.on('connection', function (socket) {
         fs.readFile(gpioPath, 'base64', function(err, data) {
             if (err) throw err;
             socket.emit('gpio', [gpioNum, data]);
-//            console.log('emitted gpio: ' + data + ', ' + gpioNum);
+            console.log('emitted gpio: ' + data + ', ' + gpioNum);
         });
     });
 

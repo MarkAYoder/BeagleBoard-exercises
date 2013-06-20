@@ -10,9 +10,9 @@
 
     // Initialize gpioData and ainData to be an array of arrays
     for (i = 0; i < gpioNum.length; i++) {
-        gpioData[gpioNum[i]] = [0];         // Put an array in
-        gpioData[gpioNum[i]][samples] = 0;  // Preallocate sample elements
-        igpio[gpioNum[i]] = 0;
+        gpioData[i] = [0];         // Put an array in
+        gpioData[i][samples] = 0;  // Preallocate sample elements
+        igpio[i] = 0;
     }
     for(i=0; i<ainNum.length; i++) {
         ainData[i] = [0];
@@ -62,10 +62,10 @@
     // When new data arrives, convert it and plot it.
     function ain(data) {
         var idx = ainNum.indexOf(data[0]); // Find position in ainNum array
-        var num = data[0];
+//        var num = data[0];
         data = atob(data[1])/4096 * 1.8;
         data = isNaN(data) ? 0 : data;
-        status_update("ain" + num + "(" + idx + "): " + data + ", iain: " + iain[idx]);
+//        status_update("ain" + num + "(" + idx + "): " + data + ", iain: " + iain[idx]);
         ainData[idx][iain[idx]] = [iain[idx], data];
         iain[idx]++;
         if(iain[idx] >= samples) {
@@ -77,16 +77,17 @@
     }
 
     function gpio(data) {
-	    var gpioNum = data[0];
+	    var idx = gpioNum.indexOf(data[0]);
+        var num = data[0];
         data = atob(data[1]);
-        gpioData[gpioNum][igpio[gpioNum]] = [igpio[gpioNum], data];
-        igpio[gpioNum]++;
-//        status_update("gpio" + gpioNum + ": " + data + " igpio: " + igpio[gpioNum]);
-        if(igpio[gpioNum] >= samples) {
-            igpio[gpioNum] = 0;
-            gpioData[gpioNum] = [];
+        gpioData[idx][igpio[idx]] = [igpio[idx], data];
+        igpio[idx]++;
+        status_update("gpio" + num + "(" + idx + "): " + data + " igpio: " + igpio[idx]);
+        if(igpio[idx] >= samples) {
+            igpio[idx] = 0;
+            gpioData[idx] = [];
         }
-        plotBot.setData([ gpioData[7], gpioData[20] ]);
+        plotBot.setData(gpioData);
         plotBot.draw();
     }
 
