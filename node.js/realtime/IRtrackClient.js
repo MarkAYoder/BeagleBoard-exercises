@@ -129,10 +129,6 @@ $(function () {
         i2cNum = $(this).val();
     });
 
-    $("#slider1").slider().bind("slide", function(event, ui) {
-	socket.emit("slider",  1, ui.value);
-    });
-
     var updateTopInterval = 100;
     $("#updateTopInterval").val(updateTopInterval).change(function () {
         var v = $(this).val();

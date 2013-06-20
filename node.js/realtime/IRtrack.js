@@ -125,12 +125,6 @@ io.sockets.on('connection', function (socket) {
 	}
     }
 
-    socket.on('slider', function(slideNum, value) {
-//	console.log('slider' + slideNum + " = " + value);
-        fs.writeFile(pwmPath + "/duty_percent", value);
-
-    });
-
     socket.on('disconnect', function () {
         console.log("Connection " + socket.id + " terminated.");
         connectCount--;
