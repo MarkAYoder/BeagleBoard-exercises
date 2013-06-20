@@ -69,8 +69,9 @@
     }
 
     function gpio(data) {
-        data = atob(data);
-//        status_update("gpio: " + data);
+	var gpioNum = data[1];
+        data = atob(data[0]);
+        status_update("gpio" + gpioNum + ": " + data);
         gpioData[igpio] = [igpio, data];
         igpio++;
         if(igpio >= samples) {
@@ -122,11 +123,7 @@ $(function () {
     });
 
     $("#gpioNum").val(gpioNum).change(function () {
-        gpioNum = $(this).val();
-    });
-
-    $("#i2cNum").val(i2cNum).change(function () {
-        i2cNum = $(this).val();
+        gpioNum = $(this).val().split(",");
     });
 
     var updateTopInterval = 100;
@@ -166,16 +163,16 @@ $(function () {
                   zoomRange: [10, 256], panRange: [-128, 128] },
         xaxis:	{ show: true, 
                   zoomRange: [10, 100], panRange: [0, 100] },
-        legend:	{ position: "sw" },
+        legend:	{ position: "ne" },
         zoom:	{ interactive: true, amount: 1.1 },
         pan:	{ interactive: true }
     };
     plotTop = $.plot($("#plotTop"), 
         [ 
           { data:  initPlotData(), 
-            label: "Analog In" },
+            label: "Left Photo Detector" },
           { data:  initPlotData(),
-            label: "gpio in" }
+            label: "Right Photo Detector" }
         ],
             optionsTop);
 
@@ -190,21 +187,23 @@ $(function () {
                   zoomRange: [10, 256], panRange: [60, 100] },
         xaxis:	{ show: true, 
                   zoomRange: [10, 100], panRange: [0, 100] },
-        legend:	{ position: "sw" },
+        legend:	{ position: "ne" },
         zoom:	{ interactive: true, amount: 1.1 },
         pan:	{ interactive: true }
     };
     plotBot = $.plot($("#plotBot"), 
         [ 
           { data:  initPlotData(),
-            label: "i2c"}
+            label: "gpio"}
         ],
             optionsBot);
 
     // Request data every updateInterval ms
     function updateTop() {
-        socket.emit("ain",  ainNum);
-        socket.emit("gpio", gpioNum);
+	var i;
+	for(i=0; i<gpioNum.length; i++) {
+            socket.emit("gpio", gpioNum[i]);
+	}
         setTimeout(updateTop, updateTopInterval);
     }
     updateTop();

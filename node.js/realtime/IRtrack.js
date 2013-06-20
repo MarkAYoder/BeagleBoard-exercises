@@ -88,11 +88,12 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('gpio', function (gpioNum) {
+	console.log('gpio' + gpioNum);
         var gpioPath = "/sys/class/gpio/gpio" + gpioNum + "/value";
         fs.readFile(gpioPath, 'base64', function(err, data) {
             if (err) throw err;
-            socket.emit('gpio', data);
-//            console.log('emitted gpio: ' + data);
+            socket.emit('gpio', [data, gpioNum]);
+            console.log('emitted gpio: ' + data + ', ' + gpioNum);
         });
     });
 
