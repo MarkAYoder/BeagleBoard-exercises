@@ -92,7 +92,7 @@ io.sockets.on('connection', function (socket) {
         fs.readFile(gpioPath, 'base64', function(err, data) {
             if (err) throw err;
             socket.emit('gpio', [gpioNum, data]);
-            console.log('emitted gpio: ' + data + ', ' + gpioNum);
+//            console.log('emitted gpio: ' + data + ', ' + gpioNum);
         });
     });
 

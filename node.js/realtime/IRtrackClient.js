@@ -82,7 +82,7 @@
         data = atob(data[1]);
         gpioData[idx][igpio[idx]] = [igpio[idx], data];
         igpio[idx]++;
-        status_update("gpio" + num + "(" + idx + "): " + data + " igpio: " + igpio[idx]);
+//        status_update("gpio" + num + "(" + idx + "): " + data + " igpio: " + igpio[idx]);
         if(igpio[idx] >= samples) {
             igpio[idx] = 0;
             gpioData[idx] = [];
@@ -97,7 +97,7 @@
 
     function send(){
       socket.emit("ain", "Hello Server!");    
-    };
+    }
 
 //    connect();
 
@@ -151,23 +151,18 @@ $(function () {
         series: { 
             shadowSize: 0, // drawing is faster without shadows
             points: { show: false},
-            lines:  { show: true, lineWidth: 5},
-            color: 3
+            lines:  { show: true, lineWidth: 5}
         }, 
-        yaxis:	{ min: 0, max: 2, 
-                  zoomRange: [10, 256], panRange: [-128, 128] },
-        xaxis:	{ show: true, 
-                  zoomRange: [10, 100], panRange: [0, 100] },
-        legend:	{ position: "ne" },
-        zoom:	{ interactive: true, amount: 1.1 },
-        pan:	{ interactive: true }
+        yaxis:	{ min: 0, max: 2 },
+        xaxis:	{ show: true },
+        legend:	{ position: "ne" }
     };
     plotTop = $.plot($("#plotTop"), 
         [ 
           { data:  initPlotData(), 
-            label: "Left Photo Detector" },
+            label: "Left Photo Detector"},
           { data:  initPlotData(),
-            label: "Right Photo Detector" }
+            label: "Right Photo Detector"}
         ],
             optionsTop);
 
@@ -177,13 +172,9 @@ $(function () {
             points: { show: false},
             lines:  { show: true, lineWidth: 5}
         }, 
-        yaxis:	{ min: 0, max: 2, 
-                  zoomRange: [10, 256], panRange: [60, 100] },
-        xaxis:	{ show: true, 
-                  zoomRange: [10, 100], panRange: [0, 100] },
-        legend:	{ position: "ne" },
-        zoom:	{ interactive: true, amount: 1.1 },
-        pan:	{ interactive: true }
+        yaxis:	{ min: 0, max: 2 },
+        xaxis:	{ show: true },
+        legend:	{ position: "ne" }
     };
     plotBot = $.plot($("#plotBot"), 
         [ 
