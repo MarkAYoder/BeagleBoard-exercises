@@ -2,14 +2,12 @@
     var firstconnect = true,
         samples = 100,
         gpioNum = [7, 20],
-        ainNum = 6,
-        i2cNum = "0x4a",
+        ainNum = [4, 6],
         plotTop, plotBot, ainData = [],
-        iain = 0,
         gpioData = [],
         igpio    = [],
-        i2cData  = [],
-        ii2c = 0,
+        ainData  = [],
+        iain = 0,
         i;
     ainData[samples] = 0;
     for (i = 0; i < gpioNum.length; i++) {
@@ -17,7 +15,6 @@
         gpioData[gpioNum[i]][samples] = 0;  // Preallocate sample elements
         igpio[gpioNum[i]] = 0;
     }
-    i2cData[samples] = 0;
     
     function connect() {
       if(firstconnect) {
@@ -38,7 +35,6 @@
 
         socket.on('ain',  ain);
         socket.on('gpio', gpio);
-//        socket.on('i2c',  i2c);
 
         firstconnect = false;
       }
@@ -79,27 +75,12 @@
         data = atob(data[1]);
         gpioData[gpioNum][igpio[gpioNum]] = [igpio[gpioNum], data];
         igpio[gpioNum]++;
-        status_update("gpio" + gpioNum + ": " + data + " igpio: " + igpio[gpioNum]);
+//        status_update("gpio" + gpioNum + ": " + data + " igpio: " + igpio[gpioNum]);
         if(igpio[gpioNum] >= samples) {
             igpio[gpioNum] = 0;
             gpioData[gpioNum] = [];
         }
         plotBot.setData([ gpioData[7], gpioData[20] ]);
-        plotBot.draw();
-    }
-
-    function i2c(data) {
-//        status_update("i2c: " + data);
-        // Convert to F
-        data = parseInt(data) / 16 / 16 * 9/5 +32;
-//        status_update("i2c: " + data);
-        i2cData[ii2c] = [ii2c, data];
-        ii2c++;
-        if(ii2c >= samples) {
-            ii2c = 0;
-            i2cData = [];
-        }
-        plotBot.setData([ i2cData ]);
         plotBot.draw();
     }
 
@@ -208,7 +189,7 @@ $(function () {
 
     // Request data every updateInterval ms
     function updateTop() {
-        socket.emit("i2c",  i2cNum);
+        socket.emit("ain",  ainNum);
         setTimeout(updateTop, updateTopInterval);
     }
     updateTop();
