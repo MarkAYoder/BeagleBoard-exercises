@@ -11,12 +11,13 @@ var http = require('http'),
     connectCount = 0;	// Number of connections to server
 
     var errCount = 0;	// Counts the AIN errors.
+    var ainLast;        // Remembers last AIN value (hack)
 
 // Initialize various IO things.
 function initIO() {
     // Make sure gpios 7 and 20 are available.
-    fs.writeFile("/sys/class/gpio/export",  7);
-    fs.writeFile("/sys/class/gpio/export", 20);
+    b.pinMode('P9_42', b.INPUT);
+    b.pinMode('P9_41', b.INPUT);
 }
 
 initIO();
@@ -66,31 +67,26 @@ io.sockets.on('connection', function (socket) {
     // now that we have our connected 'socket' object, we can 
     // define its event handlers
 
-    // Make sure some needed files are there
-    // The path to the analog devices changed from A5 to A6.  Check both.
-/*
-var ainPath = "/sys/devices/ocp.2/helper.14/";
-    if(!fs.existsSync(ainPath)) {
-	// Use device tree to make path appear.
-        fs.writeFileSync("/sys/devices/bone_capemgr.9/slots", "cape-bone-iio");
-    }    
-*/
     // Send value every time a 'message' is received.
     socket.on('ain', function (ainNum) {
         b.analogRead(ainNum, function(x) {
-            if(x.err && errCount++<5) console.log("AIN read error"); //throw err;
+            if(x.err && errCount++<5) console.log("AIN read error");
+            if(x.value > 0.94) {
+                x.value = ainLast;   // Hack
+                console.log("ain Hack");
+            }
             socket.emit('ain', [ainNum, x.value]);
-            console.log('emitted ain: ' + x.value + ', ' + ainNum);
+            ainLast = x.value;
+//            console.log('emitted ain: ' + x.value + ', ' + ainNum);
         });
     });
 
     socket.on('gpio', function (gpioNum) {
-//	console.log('gpio' + gpioNum);
-        var gpioPath = "/sys/class/gpio/gpio" + gpioNum + "/value";
-        fs.readFile(gpioPath, 'base64', function(err, data) {
-            if (err) throw err;
-            socket.emit('gpio', [gpioNum, data]);
-//            console.log('emitted gpio: ' + data + ', ' + gpioNum);
+//    console.log('gpio' + gpioNum);
+        b.digitalRead(gpioNum, function(x) {
+            if (x.err) throw x.err;
+            socket.emit('gpio', [gpioNum, x.value]);
+//            console.log('emitted gpio: ' + x.value + ', ' + gpioNum);
         });
     });
 
@@ -105,29 +101,28 @@ var ainPath = "/sys/devices/ocp.2/helper.14/";
         });
     });
 
-    socket.on('trigger', function(trig) {
-//	console.log('trigger: ' + trig);
-	if(trig) {
-		trigger("heartbeat mmc0 cpu0 none");
-	} else {
-		trigger("none none none none");
-	}
-    });
     function trigger(arg) {
         var ledPath = "/sys/class/leds/beaglebone:green:usr";
-//	console.log("trigger: " + arg);
-	arg = arg.split(" ");
-	for(var i=0; i<4; i++) {
+//    console.log("trigger: " + arg);
+	    arg = arg.split(" ");
+	    for(var i=0; i<4; i++) {
 //	    console.log(" trigger: ", arg[i]);
-	    fs.writeFile(ledPath + i + "/trigger", arg[i])
-	}
+	        fs.writeFile(ledPath + i + "/trigger", arg[i]);
+	    }
     }
+    
+    socket.on('trigger', function(trig) {
+//	console.log('trigger: ' + trig);
+	    if(trig) {
+            trigger("heartbeat mmc0 cpu0 none");
+        } else {
+            trigger("none none none none");
+        }
+    });
 
     socket.on('disconnect', function () {
         console.log("Connection " + socket.id + " terminated.");
         connectCount--;
-        if(connectCount === 0) {
-        }
         console.log("connectCount = " + connectCount);
     });
 

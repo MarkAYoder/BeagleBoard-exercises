@@ -1,8 +1,8 @@
     var socket;
     var firstconnect = true,
         samples = 100,          // Number of values to plot
-        gpioNum = [7, 20],      // GPIO pins to plot
-        ainNum  = ["P9_33", "P9_35"],       // Analog ins to plot
+        gpioNum = ["P9_42", "P9_41"],   // GPIO pins to plot
+        ainNum  = ["P9_37", "P9_35"],   // Analog ins to plot
         plotTop, plotBot,
         topTimer, botTimer,     // The setInterval timers
         gpioData = [], igpio = [],  // The data to plot and the current index
@@ -69,11 +69,9 @@
     // When new data arrives, convert it and plot it.
     function ain(data) {
         var idx = ainNum.indexOf(data[0]); // Find position in ainNum array
+//        var num = data[0];
         data = data[1];
-        var num = data[0];
-//        data = atob(data[1])/4096 * 1.8;
-//        data = isNaN(data) ? 0 : data;
-        status_update("ain" + num + "(" + idx + "): " + data + ", iain: " + iain[idx]);
+//        status_update("ain" + num + "(" + idx + "): " + data + ", iain: " + iain[idx]);
         ainData[idx][iain[idx]] = [iain[idx], data];
         iain[idx]++;
         if(iain[idx] >= samples) {
@@ -87,7 +85,8 @@
     function gpio(data) {
 	    var idx = gpioNum.indexOf(data[0]);
 //        var num = data[0];
-        data = atob(data[1]);
+//        data = atob(data[1]);
+        data = data[1];
         gpioData[idx][igpio[idx]] = [igpio[idx], data];
         igpio[idx]++;
 //        status_update("gpio" + num + "(" + idx + "): " + data + " igpio: " + igpio[idx]);
@@ -120,6 +119,7 @@
     }
     botTimer = setInterval(updateBot, updateBotInterval);
 
+// Here's the jQuery
 $(function () {
 
     function initPlotData() {
@@ -132,7 +132,7 @@ $(function () {
 
     // setup control widget
     $("#ainNum").val(ainNum).change(function () {
-        ainNum = $(this).val();
+        ainNum = $(this).val().split(",");
     });
 
     $("#gpioNum").val(gpioNum).change(function () {
