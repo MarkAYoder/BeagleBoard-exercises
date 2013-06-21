@@ -2,7 +2,7 @@
     var firstconnect = true,
         samples = 100,          // Number of values to plot
         gpioNum = [7, 20],      // GPIO pins to plot
-        ainNum  = [4, 6],       // Analog ins to plot
+        ainNum  = ["P9_33", "P9_35"],       // Analog ins to plot
         plotTop, plotBot,
         topTimer, botTimer,     // The setInterval timers
         gpioData = [], igpio = [],  // The data to plot and the current index
@@ -69,10 +69,11 @@
     // When new data arrives, convert it and plot it.
     function ain(data) {
         var idx = ainNum.indexOf(data[0]); // Find position in ainNum array
-//        var num = data[0];
-        data = atob(data[1])/4096 * 1.8;
-        data = isNaN(data) ? 0 : data;
-//        status_update("ain" + num + "(" + idx + "): " + data + ", iain: " + iain[idx]);
+        data = data[1];
+        var num = data[0];
+//        data = atob(data[1])/4096 * 1.8;
+//        data = isNaN(data) ? 0 : data;
+        status_update("ain" + num + "(" + idx + "): " + data + ", iain: " + iain[idx]);
         ainData[idx][iain[idx]] = [iain[idx], data];
         iain[idx]++;
         if(iain[idx] >= samples) {

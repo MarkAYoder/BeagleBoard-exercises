@@ -5,6 +5,7 @@
 var http = require('http'),
     url = require('url'),
     fs = require('fs'),
+    b = require('bonescript'),
 //    exec = require('child_process').exec,
     server,
     connectCount = 0;	// Number of connections to server
@@ -40,7 +41,6 @@ server = http.createServer(function (req, res) {
             res.end();
         });
         break;
-
     }
 });
 
@@ -59,8 +59,7 @@ io.set('log level', 2);
 
 // on a 'connection' event
 io.sockets.on('connection', function (socket) {
-//    var frameCount = 0;	// Counts the frames from arecord
-//    var lastFrame = 0;	// Last frame sent to browser
+
     console.log("Connection " + socket.id + " accepted.");
 //    console.log("socket: " + socket);
 
@@ -69,18 +68,19 @@ io.sockets.on('connection', function (socket) {
 
     // Make sure some needed files are there
     // The path to the analog devices changed from A5 to A6.  Check both.
-    var ainPath = "/sys/devices/ocp.2/helper.14/";
+/*
+var ainPath = "/sys/devices/ocp.2/helper.14/";
     if(!fs.existsSync(ainPath)) {
 	// Use device tree to make path appear.
         fs.writeFileSync("/sys/devices/bone_capemgr.9/slots", "cape-bone-iio");
     }    
-
+*/
     // Send value every time a 'message' is received.
     socket.on('ain', function (ainNum) {
-        fs.readFile(ainPath + "AIN" + ainNum, 'base64', function(err, data) {
-            if(err && errCount++<5) console.log("AIN read error"); //throw err;
-            socket.emit('ain', [ainNum, data]);
-            console.log('emitted ain: ' + data + ', ' + ainNum);
+        b.analogRead(ainNum, function(x) {
+            if(x.err && errCount++<5) console.log("AIN read error"); //throw err;
+            socket.emit('ain', [ainNum, x.value]);
+            console.log('emitted ain: ' + x.value + ', ' + ainNum);
         });
     });
 
