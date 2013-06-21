@@ -8,6 +8,8 @@
         gpioData = [], igpio = [],
         ainData  = [], iain  = [],
         i;
+        var updateBotInterval = 100;
+        var updateTopInterval = 100;
 
     // Initialize gpioData and ainData to be an array of arrays
     for (i = 0; i < gpioNum.length; i++) {
@@ -26,17 +28,19 @@
         socket = io.connect(null);
 
         socket.on('message', function(data)
-            { status_update("Received: message");});
+            { status_update("Received: message " + data);});
         socket.on('connect', function()
             { status_update("Connected to Server"); });
         socket.on('disconnect', function()
-            { status_update("Disconnected from Server"); });
+            { status_update("Disconnected from Server");
+              clearInterval(botTimer);
+              clearInterval(topTimer);});
         socket.on('reconnect', function()
             { status_update("Reconnected to Server"); });
         socket.on('reconnecting', function( nextRetry )
             { status_update("Reconnecting in " + nextRetry/1000 + " s"); });
         socket.on('reconnect_failed', function()
-            { message("Reconnect Failed"); });
+            { status_update("Reconnect Failed"); });
 
         socket.on('ain',  ain);
         socket.on('gpio', gpio);
@@ -45,7 +49,9 @@
       }
       else {
         socket.socket.reconnect();
-      }
+        botTimer = setInterval(updateBot, updateBotInterval);
+        botTimer = setInterval(updateTop, updateTopInterval);
+        }
     }
 
     function disconnect() {
@@ -100,7 +106,22 @@
       socket.emit("ain", "Hello Server!");    
     }
 
-//    connect();
+    // Request data every updateInterval ms
+    function updateTop() {
+        var i;
+        for(i=0; i<ainNum.length; i++) {
+            socket.emit("ain", ainNum[i]);
+        }
+    }
+    topTimer = setInterval(updateTop, updateTopInterval);
+
+    function updateBot() {
+        var i;
+        for (i = 0; i < gpioNum.length; i++) {
+            socket.emit("gpio", gpioNum[i]);
+        }
+    }
+    botTimer = setInterval(updateBot, updateBotInterval);
 
 $(function () {
 
@@ -121,7 +142,6 @@ $(function () {
         gpioNum = $(this).val().split(",");
     });
 
-    var updateTopInterval = 100;
     $("#updateTopInterval").val(updateTopInterval).change(function () {
         var v = $(this).val();
         if (v && !isNaN(+v)) {
@@ -137,7 +157,6 @@ $(function () {
         topTimer = setInterval(updateTop, updateTopInterval);
     });
 
-    var updateBotInterval = 100;
     $("#updateBotInterval").val(updateBotInterval).change(function () {
         var v = $(this).val();
         if (v && !isNaN(+v)) {
@@ -191,25 +210,4 @@ $(function () {
             label: "gpio20"}
         ],
             optionsBot);
-
-    // Request data every updateInterval ms
-    function updateTop() {
-        var i;
-        for(i=0; i<ainNum.length; i++) {
-            socket.emit("ain", ainNum[i]);
-        }
-//        setTimeout(updateTop, updateTopInterval);
-    }
-//    updateTop();
-    topTimer = setInterval(updateTop, updateTopInterval);
-
-    function updateBot() {
-        var i;
-        for (i = 0; i < gpioNum.length; i++) {
-            socket.emit("gpio", gpioNum[i]);
-        }
-//        setTimeout(updateBot, updateBotInterval);
-    }
-//    updateBot();
-    botTimer = setInterval(updateBot, updateBotInterval);
 });
