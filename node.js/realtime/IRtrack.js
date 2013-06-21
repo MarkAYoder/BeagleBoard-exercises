@@ -5,12 +5,10 @@
 var http = require('http'),
     url = require('url'),
     fs = require('fs'),
-    exec = require('child_process').exec,
+//    exec = require('child_process').exec,
     server,
     connectCount = 0;	// Number of connections to server
 
-//    var pwmPath    = "/sys/class/pwm/ehrpwm.1:0";
-//    var pinMuxPath = "/sys/kernel/debug/omap_mux";
     var errCount = 0;	// Counts the AIN errors.
 
 // Initialize various IO things.
@@ -46,11 +44,11 @@ server = http.createServer(function (req, res) {
     }
 });
 
-var send404 = function (res) {
+function send404(res) {
     res.writeHead(404);
     res.write('404');
     res.end();
-};
+}
 
 server.listen(8082);
 console.log("Listening on 8082");
@@ -71,7 +69,7 @@ io.sockets.on('connection', function (socket) {
 
     // Make sure some needed files are there
     // The path to the analog devices changed from A5 to A6.  Check both.
-    var ainPath = "/sys/devices/ocp.2/helper.15/";
+    var ainPath = "/sys/devices/ocp.2/helper.14/";
     if(!fs.existsSync(ainPath)) {
 	// Use device tree to make path appear.
         fs.writeFileSync("/sys/devices/bone_capemgr.9/slots", "cape-bone-iio");
@@ -82,7 +80,7 @@ io.sockets.on('connection', function (socket) {
         fs.readFile(ainPath + "AIN" + ainNum, 'base64', function(err, data) {
             if(err && errCount++<5) console.log("AIN read error"); //throw err;
             socket.emit('ain', [ainNum, data]);
-//            console.log('emitted ain: ' + data + ', ' + ainNum);
+            console.log('emitted ain: ' + data + ', ' + ainNum);
         });
     });
 
