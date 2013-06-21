@@ -1,14 +1,14 @@
     var socket;
     var firstconnect = true,
-        samples = 100,
-        gpioNum = [7, 20],
-        ainNum  = [4, 6],
+        samples = 100,          // Number of values to plot
+        gpioNum = [7, 20],      // GPIO pins to plot
+        ainNum  = [4, 6],       // Analog ins to plot
         plotTop, plotBot,
-        topTimer, botTimer,
-        gpioData = [], igpio = [],
+        topTimer, botTimer,     // The setInterval timers
+        gpioData = [], igpio = [],  // The data to plot and the current index
         ainData  = [], iain  = [],
         i;
-        var updateBotInterval = 100;
+        var updateBotInterval = 100;    // Update interval in ms
         var updateTopInterval = 100;
 
     // Initialize gpioData and ainData to be an array of arrays
@@ -32,9 +32,7 @@
         socket.on('connect', function()
             { status_update("Connected to Server"); });
         socket.on('disconnect', function()
-            { status_update("Disconnected from Server");
-              clearInterval(botTimer);
-              clearInterval(topTimer);});
+            { status_update("Disconnected from Server"); });
         socket.on('reconnect', function()
             { status_update("Reconnected to Server"); });
         socket.on('reconnecting', function( nextRetry )
@@ -55,6 +53,8 @@
     }
 
     function disconnect() {
+      clearInterval(botTimer);
+      clearInterval(topTimer);
       socket.disconnect();
     }
 
@@ -100,10 +100,6 @@
 
     function status_update(txt){
       document.getElementById('status').innerHTML = txt;
-    }
-
-    function send(){
-      socket.emit("ain", "Hello Server!");    
     }
 
     // Request data every updateInterval ms
