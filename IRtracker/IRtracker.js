@@ -10,16 +10,16 @@ var buttons    = ["P9_41", "P9_42"];         // Pushbuttons
 var mState = [b.LOW, b.HIGH, b.HIGH, b.LOW]; // Pulse sequence for motor
 var off   = [b.LOW, b.LOW,  b.LOW,  b.LOW]; // Turn motor off
 var steps = 20;                             // 20 steps is one turn
-var rotateDelay = 200;   // ms delay when turning motor
+
 var CW  = 0;
 var CCW = 1;
 
 var state = {search: steps, rotate: 0, track: 0};   // Initialy search 360 degrees
-var searchTime = 100;       // Time between search steps
+var searchTime = 50;       // Time between search steps
 var searchMin = 2;           // Smallest value seen in search.  Start with 2mv
 var searchIdx;               // Index of smallest value
 var trackTime = 100;
-var trackThresh = 0.9;    // If above this the IR sourse has been lost
+var trackThresh = 1;    // If above this the IR sourse has been lost
 var turnThresh = 0.25;    // Difference needed to turn
 var rotateTime = 50;
 
@@ -87,7 +87,7 @@ function track() {
     console.log("track: " + state.track);
     state.track--;
     // Have you lost the IR source?
-    if(PT[0].value > trackThresh && PT[i].value > trackThresh && state.track<0) {
+    if(PT[0].value > trackThresh && PT[1].value > trackThresh && state.track<0) {
         // start searching again
         readPT();
         rotate(CW);
@@ -97,14 +97,17 @@ function track() {
         readPT();
         rotate(CCW);
         setTimeout(track, trackTime);
+        state.track = 10;
     } else if((PT[1].value-PT[0].value) > turnThresh) {
         readPT();
         rotate(CW);
         setTimeout(track, trackTime);
+        state.track = 10;
     } else {
         readPT();
         setTimeout(track, trackTime);
-//        updateState(off);
+        updateState(off);
+        state.track = 10;
     }
 }
 
