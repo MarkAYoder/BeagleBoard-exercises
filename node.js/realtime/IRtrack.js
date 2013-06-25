@@ -71,11 +71,13 @@ io.sockets.on('connection', function (socket) {
     socket.on('ain', function (ainNum) {
         b.analogRead(ainNum, function(x) {
             if(x.err && errCount++<5) console.log("AIN read error");
-            if(x.value > 0.94) {
-                x.value = ainLast;   // Hack
-                console.log("ain Hack");
-            }
-            socket.emit('ain', [ainNum, x.value]);
+//            if(x.value > 0.94) {
+//                x.value = ainLast;   // Hack
+//                console.log("ain Hack");
+//            }
+        if(typeof x.value !== 'number') console.log('x.value = ' + x.value);
+
+            socket.emit('ain', {pin:ainNum, value:x.value});
             ainLast = x.value;
 //            console.log('emitted ain: ' + x.value + ', ' + ainNum);
         });

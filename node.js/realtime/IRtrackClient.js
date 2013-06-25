@@ -44,17 +44,19 @@
         socket.on('gpio', gpio);
 
         firstconnect = false;
+        updateTop();
       }
       else {
         socket.socket.reconnect();
         botTimer = setInterval(updateBot, updateBotInterval);
-        botTimer = setInterval(updateTop, updateTopInterval);
+        //topTimer = setInterval(updateTop, updateTopInterval);
+        updateTop();
         }
     }
 
     function disconnect() {
       clearInterval(botTimer);
-      clearInterval(topTimer);
+      //clearInterval(topTimer);
       socket.disconnect();
     }
 
@@ -68,11 +70,11 @@
 
     // When new data arrives, convert it and plot it.
     function ain(data) {
-        var idx = ainNum.indexOf(data[0]); // Find position in ainNum array
+        var idx = ainNum.indexOf(data.pin); // Find position in ainNum array
 //        var num = data[0];
-        data = data[1];
+//        data = data.value;
 //        status_update("ain" + num + "(" + idx + "): " + data + ", iain: " + iain[idx]);
-        ainData[idx][iain[idx]] = [iain[idx], data];
+        ainData[idx][iain[idx]] = [iain[idx], data.value];
         iain[idx]++;
         if(iain[idx] >= samples) {
             iain[idx] = 0;
@@ -80,6 +82,7 @@
         }
         plotTop.setData(ainData);
         plotTop.draw();
+        setTimeout(function(){socket.emit("ain", data.pin);}, updateTopInterval);
     }
 
     function gpio(data) {
@@ -109,7 +112,7 @@
             socket.emit("ain", ainNum[i]);
         }
     }
-    topTimer = setInterval(updateTop, updateTopInterval);
+    //topTimer = setInterval(updateTop, updateTopInterval);
 
     function updateBot() {
         var i;
@@ -150,8 +153,8 @@ $(function () {
             $(this).val("" + updateTopInterval);
         }
         // Reset the timer
-        clearInterval(topTimer);
-        topTimer = setInterval(updateTop, updateTopInterval);
+        //clearInterval(topTimer);
+        //topTimer = setInterval(updateTop, updateTopInterval);
     });
 
     $("#updateBotInterval").val(updateBotInterval).change(function () {
