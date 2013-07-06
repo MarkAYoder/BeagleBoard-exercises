@@ -1,6 +1,6 @@
 // This is one of Keith's ece530 projects
 // Two IR detectors are mounted on a servo motor.
-// The motor is controlled via pins P9 11, 13, 15 and 17
+// The motor is controlled via pins P9 11, 13, 15 and 16
 
 var b = require('bonescript');
 
@@ -84,7 +84,7 @@ function rotateMe() {
 
 // Looks for brightest PT
 function track() {
-    console.log("track: " + state.track);
+//    console.log("track: " + state.track);
     state.track--;
     // Have you lost the IR source?
     if(PT[0].value > trackThresh && PT[1].value > trackThresh && state.track<0) {
@@ -113,8 +113,8 @@ function track() {
 
 // One button goes CW the other CCW
 //readButtons();
-//b.attachInterrupt(buttons[0], true, b.RISING, rotateCW);
-//b.attachInterrupt(buttons[1], true, b.RISING, rotateCCW);
+b.attachInterrupt(buttons[0], true, b.RISING, readButtons);
+b.attachInterrupt(buttons[1], true, b.RISING, readButtons);
 
 
 //setInterval(readPT, 500);
@@ -126,7 +126,7 @@ function updateState(mState) {
 	}
 }
 
-// This the the general rotate funtion
+// This is the general rotate c
 function rotate(direction) {
 //	console.log("rotate(%d,%d)", direction, count);
     // Rotate the state acording to the direction of rotation
