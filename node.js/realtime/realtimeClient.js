@@ -3,7 +3,7 @@
         fs = 8000,
         Ts = 1/fs*1000,
         samples = 800,
-        plot,
+        plotTop, plotBot,
         globalDataL = [],
         globalDataR = [];
     globalDataL[samples] = 0;
@@ -44,9 +44,11 @@
             globalDataL[i] = [i*Ts, myData.charCodeAt(2*i  )-128];
             globalDataR[i] = [i*Ts, myData.charCodeAt(2*i+1)-128];
         }
-        plot.setData([ globalDataL, globalDataR ]);
+        plotTop.setData([ globalDataL, globalDataR ]);
+        plotBot.setData([ globalDataL, globalDataR ]);
         // since the axes don't change, we don't need to call plot.setupGrid()
-        plot.draw();
+        plotTop.draw();
+        plotBot.draw();
 
       document.getElementById('message').innerHTML = "Server says: " +
           globalDataL.length + " points: ";
@@ -58,7 +60,7 @@
 
     function send(){
       socket.send("Hello Server!");    
-    };
+    }
 
 // jQuery
 $(function () {
@@ -90,7 +92,7 @@ $(function () {
         series: { 
             shadowSize: 0, // drawing is faster without shadows
             points: { show: false},
-            lines:  { show: true, lineWidth: 5},
+            lines:  { show: true, lineWidth: 5}
         }, 
         yaxis:    { min: -128, max: 128, 
                   zoomRange: [10, 256], panRange: [-128, 128] },
@@ -100,7 +102,15 @@ $(function () {
         zoom:	{ interactive: true, amount: 1.1 },
         pan:	{ interactive: true }
     };
-    plot = $.plot($("#plotTop"), 
+    plotTop = $.plot($("#plotTop"), 
+        [ 
+          { data:  initPlotData(), 
+            label: "Left Channel" },
+          { data:  initPlotData(),
+            label: "Right Channel" }
+        ],
+            options);
+    plotBot = $.plot($("#plotBot"), 
         [ 
           { data:  initPlotData(), 
             label: "Left Channel" },
