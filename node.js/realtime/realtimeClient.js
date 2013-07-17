@@ -45,7 +45,24 @@
             globalDataR[i] = [i*Ts, myData.charCodeAt(2*i+1)-128];
         }
         plotTop.setData([ globalDataL, globalDataR ]);
-        plotBot.setData([ globalDataL, globalDataR ]);
+        // Take the fft
+        var fftSize = 512;
+        var fftData = new Float32Array(fftSize);
+        var fft = new FFT(fftSize, 8000);
+        var fftOut = new Array(fftSize);
+        for(i=0; i<fftSize; i++) {
+            fftData[i] = myData.charCodeAt(2*i  )-128;
+        }
+        fft.forward(fftData);
+        var max =0;
+        for(i=0; i<fftSize; i++) {
+            fftOut[i] = [i, fft.spectrum[i]];
+            if(fft.spectrum[i] > max) {
+                max = fft.spectrum[i];
+            }
+        }
+        status_update("max: " + max);
+        plotBot.setData([ fftOut, fftOut ]);
         // since the axes don't change, we don't need to call plot.setupGrid()
         plotTop.draw();
         plotBot.draw();
@@ -88,7 +105,7 @@ $(function () {
     });
 
     // setup plot
-    var options = {
+    var optionsTop = {
         series: { 
             shadowSize: 0, // drawing is faster without shadows
             points: { show: false},
@@ -109,7 +126,17 @@ $(function () {
           { data:  initPlotData(),
             label: "Right Channel" }
         ],
-            options);
+            optionsTop );
+    var optionsBot = {
+        series: { 
+            shadowSize: 0, // drawing is faster without shadows
+            points: { show: false},
+            lines:  { show: true, lineWidth: 5}
+        }, 
+        yaxis:    { min: 0, max: 10}, 
+        xaxis:    { show: true}, 
+        legend:	{ position: "sw" }
+    };
     plotBot = $.plot($("#plotBot"), 
         [ 
           { data:  initPlotData(), 
@@ -117,7 +144,7 @@ $(function () {
           { data:  initPlotData(),
             label: "Right Channel" }
         ],
-            options);
+            optionsBot);
 
     // Request data every updateInterval ms
     function update() {
