@@ -90,7 +90,7 @@ io.sockets.on('connection', function (socket) {
     var ainPath = "/sys/devices/ocp.2/helper.15/";
     if(!fs.existsSync(ainPath)) {
 	// Use device tree to make path appear.
-        fs.writeFileSync("/sys/devices/bone_capemgr.9/slots", "cape-bone-iio");
+        fs.writeFileSync("/sys/devices/bone_capemgr.7/slots", "cape-bone-iio");
     }    
 
     // Send value every time a 'message' is received.
