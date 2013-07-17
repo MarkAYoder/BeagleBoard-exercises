@@ -113,15 +113,11 @@ $(function () {
         series: { 
             shadowSize: 0, // drawing is faster without shadows
             points: { show: false},
-            lines:  { show: true, lineWidth: 5}
+            lines:  { show: true, lineWidth: 3}
         }, 
-        yaxis:    { min: -50, max: 50, 
-                  zoomRange: [10, 256], panRange: [-128, 128] },
-        xaxis:	{ show: true, 
-                  zoomRange: [10, 100], panRange: [0, 100] },
-        legend:	{ position: "ne" },
-        zoom:	{ interactive: true, amount: 1.1 },
-        pan:	{ interactive: true }
+        yaxis:  { min: -50, max: 50 },
+        xaxis:	{ show: true },
+        legend:	{ position: "ne" }
     };
     plotTop = $.plot($("#plotTop"), 
         [ 
@@ -136,7 +132,7 @@ $(function () {
         series: { 
             shadowSize: 0, // drawing is faster without shadows
             points: { show: false},
-            lines:  { show: true, lineWidth: 5}
+            lines:  { show: true, lineWidth: 3}
         }, 
         yaxis:    { min: -25, max: 25}, 
         xaxis:    { min: 0, max: 2000, show: true}, 
