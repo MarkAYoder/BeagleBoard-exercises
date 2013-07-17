@@ -39,36 +39,40 @@
     // When new data arrived, convert it and plot it.
     function message(data) {
         var myData = window.atob(data);
+        var fftSize = 512;
+        var fftOutL, fftOutR;
         // Pull out left and right channels
         for(var i=0; i<samples; i++) {
             globalDataL[i] = [i*Ts, myData.charCodeAt(2*i  )-128];
             globalDataR[i] = [i*Ts, myData.charCodeAt(2*i+1)-128];
         }
         plotTop.setData([ globalDataL, globalDataR ]);
-        // Take the fft
-        var fftSize = 512;
-        var fftData = new Float32Array(fftSize);
-        var fft = new FFT(fftSize, 8000);
-        var fftOut = new Array(fftSize);
-        for(i=0; i<fftSize; i++) {
-            fftData[i] = myData.charCodeAt(2*i  )-128;
-        }
-        fft.forward(fftData);
-        var max =0;
-        for(i=0; i<fftSize; i++) {
-            fftOut[i] = [i, fft.spectrum[i]];
-            if(fft.spectrum[i] > max) {
-                max = fft.spectrum[i];
-            }
-        }
-        status_update("max: " + max);
-        plotBot.setData([ fftOut, fftOut ]);
+        
+        fftOutL = fft(globalDataL, fftSize);
+        fftOutR = fft(globalDataR, fftSize);
+        plotBot.setData([ fftOutL, fftOutR ]);
         // since the axes don't change, we don't need to call plot.setupGrid()
         plotTop.draw();
         plotBot.draw();
 
       document.getElementById('message').innerHTML = "Server says: " +
           globalDataL.length + " points: ";
+    }
+    
+    function fft(data, size) {
+        // Take the fft
+        var fftData = new Float32Array(size);
+        var fft = new FFT(size, fs);
+        var fftOut = new Array(size);
+        var i;
+        for (i = 0; i < size; i++) {
+            fftData[i] = data[i][1]; // Pull the y-values out
+        }
+        fft.forward(fftData);
+        for (i = 0; i < size; i++) {
+            fftOut[i] = [i*fs/size, 10*Math.log(fft.spectrum[i])/Math.LN10];
+        }
+        return fftOut;
     }
 
     function status_update(txt){
@@ -111,11 +115,11 @@ $(function () {
             points: { show: false},
             lines:  { show: true, lineWidth: 5}
         }, 
-        yaxis:    { min: -128, max: 128, 
+        yaxis:    { min: -50, max: 50, 
                   zoomRange: [10, 256], panRange: [-128, 128] },
         xaxis:	{ show: true, 
                   zoomRange: [10, 100], panRange: [0, 100] },
-        legend:	{ position: "sw" },
+        legend:	{ position: "ne" },
         zoom:	{ interactive: true, amount: 1.1 },
         pan:	{ interactive: true }
     };
@@ -127,15 +131,16 @@ $(function () {
             label: "Right Channel" }
         ],
             optionsTop );
+
     var optionsBot = {
         series: { 
             shadowSize: 0, // drawing is faster without shadows
             points: { show: false},
             lines:  { show: true, lineWidth: 5}
         }, 
-        yaxis:    { min: 0, max: 10}, 
-        xaxis:    { show: true}, 
-        legend:	{ position: "sw" }
+        yaxis:    { min: -25, max: 25}, 
+        xaxis:    { min: 0, max: 2000, show: true}, 
+        legend:	{ position: "ne" }
     };
     plotBot = $.plot($("#plotBot"), 
         [ 
