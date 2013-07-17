@@ -115,7 +115,7 @@ io.sockets.on('connection', function (socket) {
         child = child_process.spawn(
            "/usr/bin/arecord",
            [
-            "-Dplughw:1,0",
+            "-Dplughw:0,0",
             "-c2", "-r8000", "-fU8", "-traw", 
             "--buffer-size=800", "--period-size=800", "-N"
            ]
