@@ -29,7 +29,7 @@ server = http.createServer(function (req, res) {
     switch (path) {
     case '/':
         res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write('<h1>Hello!</h1>Try<ul><li><a href="/IRtrack.html">IR Tracking Demo</a></li></ul>');
+        res.write('<h1>Hello!</h1>Try<ul><li><a href="/ioPlot.html">IO Plotting Demo</a></li></ul>');
 
         res.end();
         break;
