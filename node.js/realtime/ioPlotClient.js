@@ -86,11 +86,11 @@
     }
 
     function gpio(data) {
-	    var idx = gpioNum.indexOf(data[0]);
+	    var idx = gpioNum.indexOf(data.pin);
 //        var num = data[0];
 //        data = atob(data[1]);
-        data = data[1];
-        gpioData[idx][igpio[idx]] = [igpio[idx], data];
+//        data = data[1];
+        gpioData[idx][igpio[idx]] = [igpio[idx], data.value];
         igpio[idx]++;
 //        status_update("gpio" + num + "(" + idx + "): " + data + " igpio: " + igpio[idx]);
         if(igpio[idx] >= samples) {
