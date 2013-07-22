@@ -55,7 +55,7 @@ io.sockets.on('connection', function (socket) {
     // define its event handlers
 
     // Send whole display every time a 'i2c' is received.
-    socket.on('i2c', function (i2cNum) {
+    socket.on('matrix', function (i2cNum) {
 //        console.log('Got i2c request:' + i2cNum);
         exec('i2cdump -y -r 0x00-0x0f 1 ' + i2cNum + ' b',
             function (error, stdout, stderr) {
@@ -65,7 +65,7 @@ io.sockets.on('connection', function (socket) {
 		// Get the last line of the output and send the string
 		lines = lines[1].substr(0,47);
 		console.log("lines = %s", lines);
-                socket.emit('i2c', lines);
+                socket.emit('matrix', lines);
                 if(error) { console.log('error: ' + error); }
                 if(stderr) {console.log('stderr: ' + stderr); }
             });

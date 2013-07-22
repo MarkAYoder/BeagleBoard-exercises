@@ -50,7 +50,7 @@ function LEDclick(i, j) {
 
         socket.on('i2c',  i2c);
 	// Read display for initial image.  Store in disp[]
-        socket.emit("i2c", i2cNum);
+        socket.emit("matrix", i2cNum);
 
         firstconnect = false;
       }
