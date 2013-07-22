@@ -13,7 +13,7 @@
       if(firstconnect) {
         socket = io.connect(null);
 
-        socket.on('message', function(data){ message(data); });
+        socket.on('audio', function(data){ audio(data); });
         socket.on('connect', function()
             { status_update("Connected to Server"); });
         socket.on('disconnect', function()
@@ -37,7 +37,7 @@
     }
 
     // When new data arrived, convert it and plot it.
-    function message(data) {
+    function audio(data) {
         var myData = window.atob(data);
         var fftSize = 512;
         var fftOutL, fftOutR;
@@ -149,7 +149,7 @@ $(function () {
 
     // Request data every updateInterval ms
     function update() {
-        socket.send("Send more data");
+        socket.emit('audio', "Send more data");
         setTimeout(update, updateInterval);
     }
     update();

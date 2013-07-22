@@ -19,7 +19,7 @@ server = http.createServer(function (req, res) {
     switch (path) {
     case '/':
         res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write('<h1>Hello!</h1>Try<ul><li><a href="/realtimeDemo.html">Real-time Audio Demo</a></li><li><a href="/buttonBox.html">Button Box Demo</a></li></ul>');
+        res.write('<h1>Hello!</h1>Try<ul><li><a href="/audioDemo.html">Real-time Audio Demo</a></li><li><a href="/buttonBox.html">Button Box Demo</a></li></ul>');
 
         res.end();
         break;
@@ -81,11 +81,11 @@ io.sockets.on('connection', function (socket) {
     // now that we have our connected 'socket' object, we can 
     // define its event handlers
 
-    // Send a packet of data every time a 'message' is received.
-    socket.on('message', function (message) {
+    // Send a packet of data every time a 'audio' is received.
+    socket.on('audio', function (message) {
 //        console.log("Received message: " + message + 
 //            " - from client " + socket.id);
-        socket.emit('message', sendData() );
+        socket.emit('audio', sendData() );
     });
 
     socket.on('disconnect', function () {
