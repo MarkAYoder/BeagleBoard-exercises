@@ -18,11 +18,11 @@ var port = 8083, // Port to listen on
     
 //  Audio
     var frameCount = 0, // Counts the frames from arecord
-    lastFrame = 0,      // Last frame sent to browser
-    audioData,    	// all data from arecord is saved here and sent
+        lastFrame = 0,      // Last frame sent to browser
+        audioData,    	// all data from arecord is saved here and sent
 			        // to the client when requested.
-    audioChild = 0; // Process for arecord
-
+        audioChild = 0, // Process for arecord
+        audioRate = 8000;
 
 // Initialize various IO things.
 function initIO() {
@@ -53,8 +53,7 @@ server = http.createServer(function (req, res) {
 // server code
     var path = url.parse(req.url).pathname;
     console.log("path: " + path);
-    switch (path) {
-    case '/':
+    if (path === '/') {
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.write('<h1>Hello!</h1>Try: <ul>\n' +
         '<li><a href="/ioPlot.html">IO Plotting Demo</a></li>\n' +
@@ -63,16 +62,13 @@ server = http.createServer(function (req, res) {
         '</ul>');
 
         res.end();
-        break;
-
-    default:		// This is so all the files will be sent.
+    } else {
         fs.readFile(__dirname + path, function (err, data) {
             if (err) {return send404(res); }
 //            console.log("path2: " + path);
             res.write(data, 'utf8');
             res.end();
         });
-        break;
     }
 });
 
@@ -165,7 +161,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('audio', function (message) {
 //        console.log("Received message: " + message + 
 //            " - from client " + socket.id);
-        if(audioChild ===0) {
+        if(audioChild === 0) {
             startAudio();
         }
         socket.emit('audio', sendAudio() );
@@ -203,7 +199,7 @@ function startAudio(){
            "/usr/bin/arecord",
            [
             "-Dplughw:0,0",
-            "-c2", "-r8000", "-fU8", "-traw", 
+            "-c2", "-r"+audioRate, "-fU8", "-traw", 
             "--buffer-size=800", "--period-size=800", "-N"
            ]
         );
