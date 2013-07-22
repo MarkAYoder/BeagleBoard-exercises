@@ -9,12 +9,20 @@ var port = 8083, // Port to listen on
     url = require('url'),
     fs = require('fs'),
     b = require('bonescript'),
-    exec = require('child_process').exec,
+    child_process = require('child_process'),
     server,
 //    pwmPath    = "/sys/class/pwm/ehrpwm.1:0",
 
     connectCount = 0,	// Number of connections to server
     errCount = 0;	// Counts the AIN errors.
+    
+//  Audio
+    var frameCount = 0, // Counts the frames from arecord
+    lastFrame = 0,      // Last frame sent to browser
+    audioData,    	// all data from arecord is saved here and sent
+			        // to the client when requested.
+    audioChild = 0; // Process for arecord
+
 
 // Initialize various IO things.
 function initIO() {
@@ -112,7 +120,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('i2c', function (i2cNum) {
 //        console.log('Got i2c request:' + i2cNum);
-        exec('i2cget -y 1 ' + i2cNum + ' 0 w',
+        child_process.exec('i2cget -y 1 ' + i2cNum + ' 0 w',
             function (error, stdout, stderr) {
 //     The TMP102 returns a 12 bit value with the digits swapped
                 stdout = '0x' + stdout.substring(4,6) + stdout.substring(2,4);
@@ -153,6 +161,15 @@ io.sockets.on('connection', function (socket) {
         }
     });
     
+    // Send a packet of data every time a 'audio' is received.
+    socket.on('audio', function (message) {
+//        console.log("Received message: " + message + 
+//            " - from client " + socket.id);
+        if(audioChild ===0) {
+            startAudio();
+        }
+        socket.emit('audio', sendAudio() );
+    });
 //    socket.on('slider', function(slideNum, value) {
 //    console.log('slider' + slideNum + " = " + value);
 //        fs.writeFile(pwmPath + "/duty_percent", value);
@@ -168,3 +185,52 @@ io.sockets.on('connection', function (socket) {
     console.log("connectCount = " + connectCount);
 });
 
+function sendAudio() {
+//        console.log("Sending data");
+    if(frameCount === lastFrame) {
+//            console.log("Already sent frame " + lastFrame);
+    } else {
+        lastFrame = frameCount;
+    }
+    return(audioData);
+}
+
+function startAudio(){
+    try {
+        console.log("process.platform: " + process.platform);
+        if(process.platform !== "darwin") {
+        audioChild = child_process.spawn(
+           "/usr/bin/arecord",
+           [
+            "-Dplughw:0,0",
+            "-c2", "-r8000", "-fU8", "-traw", 
+            "--buffer-size=800", "--period-size=800", "-N"
+           ]
+        );
+        } else {
+        audioChild = child_process.spawn(
+           "/Users/yoder/bin/sox-14.4.0/rec",
+           [
+            "-c2", "-r44100", "-tu8",  
+            "--buffer", "1600", "-q", "-"
+           ]
+        );
+
+        }
+//        console.log("arecord started");
+        audioChild.stdout.setEncoding('base64');
+        audioChild.stdout.on('data', function(data) {
+            // Save data read from arecord in globalData
+            audioData = data;
+            frameCount++;
+        });
+        audioChild.stderr.on('data', function(data) {
+            console.log("arecord: " + data);
+        });
+        audioChild.on('exit', function(code) {
+            console.log("arecord exited with: " + code);
+        });
+    } catch(err) {
+        console.log("arecord error: " + err);
+    }
+}

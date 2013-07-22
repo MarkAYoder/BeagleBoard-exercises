@@ -85,7 +85,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('audio', function (message) {
 //        console.log("Received message: " + message + 
 //            " - from client " + socket.id);
-        socket.emit('audio', sendData() );
+        socket.emit('audio', sendAudio() );
     });
 
     socket.on('disconnect', function () {
@@ -97,7 +97,7 @@ io.sockets.on('connection', function (socket) {
         console.log("connectCount = " + connectCount);
     });
 
-    function sendData() {
+    function sendAudio() {
 //        console.log("Sending data");
         if(frameCount === lastFrame) {
 //            console.log("Already sent frame " + lastFrame);
