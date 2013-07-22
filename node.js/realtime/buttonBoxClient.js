@@ -60,9 +60,7 @@
     // When new data arrived, convert it and plot it.
     
     function ain(data) {
-//        data = atob(data)/4096 * 1.8;
-//        data = isNaN(data) ? 0 : data;
-        status_update("ain: " + data.value);
+//        status_update("ain: " + data.value);
         ainData[iain] = [iain, data.value];
         iain++;
         if(iain >= samples) {
@@ -75,8 +73,6 @@
     }
 
     function gpio(data) {
-//        data = atob(data);
-//        status_update("gpio: " + data);
         gpioData[igpio] = [igpio, data.value];
         igpio++;
         if(igpio >= samples) {
@@ -108,7 +104,7 @@
 
     function send(){
       socket.emit("ain", "Hello Server!");    
-    };
+    }
 
 //    connect();
 
@@ -170,13 +166,13 @@ $(function () {
         series: { 
             shadowSize: 0, // drawing is faster without shadows
             points: { show: false},
-            lines:  { show: true, lineWidth: 5},
+            lines:  { show: true, lineWidth: 5}
         }, 
         yaxis:	{ min: 0, max: 2, 
                   zoomRange: [10, 256], panRange: [-128, 128] },
         xaxis:	{ show: true, 
                   zoomRange: [10, 100], panRange: [0, 100] },
-        legend:	{ position: "sw" },
+        legend:	{ position: "ne" },
         zoom:	{ interactive: true, amount: 1.1 },
         pan:	{ interactive: true }
     };
@@ -200,7 +196,7 @@ $(function () {
                   zoomRange: [10, 256], panRange: [60, 100] },
         xaxis:	{ show: true, 
                   zoomRange: [10, 100], panRange: [0, 100] },
-        legend:	{ position: "sw" },
+        legend:	{ position: "ne" },
         zoom:	{ interactive: true, amount: 1.1 },
         pan:	{ interactive: true }
     };
