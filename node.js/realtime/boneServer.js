@@ -85,7 +85,7 @@ io.sockets.on('connection', function (socket) {
 
             socket.emit('ain', {pin:ainNum, value:x.value});
             ainLast = x.value;
-//            console.log('emitted ain: ' + x.value + ', ' + ainNum);
+            console.log('emitted ain: ' + x.value + ', ' + ainNum);
         });
     });
 
@@ -94,7 +94,7 @@ io.sockets.on('connection', function (socket) {
         b.digitalRead(gpioNum, function(x) {
             if (x.err) throw x.err;
             socket.emit('gpio', [gpioNum, x.value]);
-//            console.log('emitted gpio: ' + x.value + ', ' + gpioNum);
+            console.log('emitted gpio: ' + x.value + ', ' + gpioNum);
         });
     });
 

@@ -8,9 +8,11 @@
         ainData = [],  iain = 0, 
         gpioData = [], igpio = 0,
         i2cData = [],  ii2c = 0,
-        gpioNum = 7,
-        ainNum  = 6,
-        i2cNum  = "0x4a";
+//        gpioNum = 7,
+//        ainNum  = 6,
+        gpioNum = ["P9_42"],   // GPIO pins to plot
+        ainNum  = ["P9_35"],   // Analog ins to plot
+        i2cNum  = "0x48";
     ainData[samples] = 0;
     gpioData[samples] = 0;
     i2cData[samples] = 0;
@@ -56,11 +58,12 @@
     }
 
     // When new data arrived, convert it and plot it.
+    
     function ain(data) {
-        data = atob(data)/4096 * 1.8;
-        data = isNaN(data) ? 0 : data;
-//        status_update("ain: " + data);
-        ainData[iain] = [iain, data];
+//        data = atob(data)/4096 * 1.8;
+//        data = isNaN(data) ? 0 : data;
+        status_update("ain: " + data.value);
+        ainData[iain] = [iain, data.value];
         iain++;
         if(iain >= samples) {
             iain = 0;
@@ -68,6 +71,7 @@
         }
         plotTop.setData([ ainData, gpioData ]);
         plotTop.draw();
+//        setTimeout(function(){socket.emit("ain", data.pin);}, updateTopInterval);
     }
 
     function gpio(data) {
@@ -209,8 +213,8 @@ $(function () {
 
     // Request data every updateInterval ms
     function updateTop() {
-        socket.emit("ain",  ainNum);
-        socket.emit("gpio", gpioNum);
+        socket.emit("ain",  ainNum[0]);
+        socket.emit("gpio", gpioNum[0]);
         setTimeout(updateTop, updateTopInterval);
     }
     updateTop();
