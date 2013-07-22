@@ -59,6 +59,7 @@ server = http.createServer(function (req, res) {
         '<li><a href="/ioPlot.html">IO Plotting Demo</a></li>\n' +
         '<li><a href="/buttonBox.html">Button Box Demo</a></li>\n' +
         '<li><a href="/audioDemo.html">Audio Demo</a></li>\n' +
+        '<li><a href="/matrixLED.html">Matrix LED Demo</a></li>\n' +
         '</ul>');
 
         res.end();
@@ -166,6 +167,31 @@ io.sockets.on('connection', function (socket) {
         }
         socket.emit('audio', sendAudio() );
     });
+    
+    socket.on('matrix', function (i2cNum) {
+//        console.log('Got i2c request:' + i2cNum);
+        child_process.exec('i2cdump -y -r 0x00-0x0f 1 ' + i2cNum + ' b',
+            function (error, stdout, stderr) {
+//      The LED has 8 16-bit values
+//                console.log('i2cget: "' + stdout + '"');
+		var lines = stdout.split("00: ");
+		// Get the last line of the output and send the string
+		lines = lines[1].substr(0,47);
+		console.log("lines = %s", lines);
+                socket.emit('matrix', lines);
+                if(error) { console.log('error: ' + error); }
+                if(stderr) {console.log('stderr: ' + stderr); }
+            });
+    });
+    
+    // Sets one column every time i2cset is received.
+    socket.on('i2cset', function(params) {
+//    console.log(params);
+	// Double i since display has 2 bytes per LED
+	child_process.exec('i2cset -y 1 ' + params.i2cNum + ' ' + 2*params.i + ' ' +
+		params.disp); 
+    });
+    
 //    socket.on('slider', function(slideNum, value) {
 //    console.log('slider' + slideNum + " = " + value);
 //        fs.writeFile(pwmPath + "/duty_percent", value);

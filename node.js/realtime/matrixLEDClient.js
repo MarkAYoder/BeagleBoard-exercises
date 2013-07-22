@@ -4,17 +4,17 @@
 	disp = [];
 
 // Create a matrix of LEDs inside the <table> tags.
-var matrix;
+var matrixData;
 for(var j=7; j>=0; j--) {
-	matrix += '<tr>';
+	matrixData += '<tr>';
 	for(var i=0; i<8; i++) {
-	    matrix += '<td><div class="LED" id="id'+i+'_'+j+
+	    matrixData += '<td><div class="LED" id="id'+i+'_'+j+
 		'" onclick="LEDclick('+i+','+j+')">'+
 		i+','+j+'</div></td>';
 	    }
-	matrix += '</tr>';
+	matrixData += '</tr>';
 }
-$('#matrixLED').append(matrix);
+$('#matrixLED').append(matrixData);
 
 // Send one column when LED is clicked.
 function LEDclick(i, j) {
@@ -48,7 +48,7 @@ function LEDclick(i, j) {
         socket.on('reconnect_failed', function()
             { message("Reconnect Failed"); });
 
-        socket.on('i2c',  i2c);
+        socket.on('matrix',  matrix);
 	// Read display for initial image.  Store in disp[]
         socket.emit("matrix", i2cNum);
 
@@ -65,7 +65,7 @@ function LEDclick(i, j) {
 
     // When new data arrives, convert it and display it.
     // data is a string of 16 values, each a pair of hex digits.
-    function i2c(data) {
+    function matrix(data) {
 	var i,j;
 	disp = [];
 //        status_update("i2c: " + data);
@@ -97,7 +97,7 @@ function LEDclick(i, j) {
     }
 
     function updateFromLED(){
-      socket.emit("i2c", i2cNum);    
+      socket.emit("matrix", i2cNum);    
     };
 
 connect();
