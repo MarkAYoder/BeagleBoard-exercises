@@ -51,6 +51,7 @@ server = http.createServer(function (req, res) {
         res.write('<h1>Hello!</h1>Try: <ul>\n' +
         '<li><a href="/ioPlot.html">IO Plotting Demo</a></li>\n' +
         '<li><a href="/buttonBox.html">Button Box Demo</a></li>\n' +
+        '<li><a href="/audioDemo.html">Audio Demo</a></li>\n' +
         '</ul>');
 
         res.end();
@@ -151,6 +152,11 @@ io.sockets.on('connection', function (socket) {
             trigger("none none none none");
         }
     });
+    
+//    socket.on('slider', function(slideNum, value) {
+//    console.log('slider' + slideNum + " = " + value);
+//        fs.writeFile(pwmPath + "/duty_percent", value);
+//    });
 
     socket.on('disconnect', function () {
         console.log("Connection " + socket.id + " terminated.");
