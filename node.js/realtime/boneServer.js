@@ -58,7 +58,7 @@ server = http.createServer(function (req, res) {
         res.write('<h1>BeagleBoard Demos</h1><ul>\n' +
         '<li><a href="/ioPlot.html">IO Plotting</a></li>\n' +
         '<li><a href="/buttonBox.html">Button Box</a></li>\n' +
-        '<li><a href="/audioDemo.html">Real-time audio</a></li>\n' +
+        '<li><a href="/audio.html">Real-time audio</a></li>\n' +
         '<li><a href="/matrixLED.html">Matrix LED</a></li>\n' +
         '</ul>');
 
