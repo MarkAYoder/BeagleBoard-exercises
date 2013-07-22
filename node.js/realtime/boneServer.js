@@ -4,7 +4,7 @@
 // buttonBox, ioPlot, realtimeDemo
 "use strict";
 
-var port = 8083, // Port to listen on
+var port = 8080, // Port to listen on
     http = require('http'),
     url = require('url'),
     fs = require('fs'),
@@ -17,9 +17,9 @@ var port = 8083, // Port to listen on
     errCount = 0;	// Counts the AIN errors.
     
 //  Audio
-    var frameCount = 0, // Counts the frames from arecord
+    var frameCount = 0,     // Counts the frames from arecord
         lastFrame = 0,      // Last frame sent to browser
-        audioData,    	// all data from arecord is saved here and sent
+        audioData,          // all data from arecord is saved here and sent
 			        // to the client when requested.
         audioChild = 0, // Process for arecord
         audioRate = 8000;

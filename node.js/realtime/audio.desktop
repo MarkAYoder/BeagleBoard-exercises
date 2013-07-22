@@ -5,6 +5,6 @@ Type=Application
 Terminal=false
 Icon[C]=gnome-terminal
 Name[C]=Real-Time Audio Demo
-Exec=exercises/node.js/GettingStarted/realtimeDemo.sh
+Exec=exercises/node.js/realtime/audio.sh
 Name=git Class
 Icon=gnome-terminal
