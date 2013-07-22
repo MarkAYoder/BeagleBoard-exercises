@@ -55,11 +55,11 @@ server = http.createServer(function (req, res) {
     console.log("path: " + path);
     if (path === '/') {
         res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write('<h1>Hello!</h1>Try: <ul>\n' +
-        '<li><a href="/ioPlot.html">IO Plotting Demo</a></li>\n' +
-        '<li><a href="/buttonBox.html">Button Box Demo</a></li>\n' +
-        '<li><a href="/audioDemo.html">Audio Demo</a></li>\n' +
-        '<li><a href="/matrixLED.html">Matrix LED Demo</a></li>\n' +
+        res.write('<h1>BeagleBoard Demos</h1><ul>\n' +
+        '<li><a href="/ioPlot.html">IO Plotting</a></li>\n' +
+        '<li><a href="/buttonBox.html">Button Box</a></li>\n' +
+        '<li><a href="/audioDemo.html">Real-time audio</a></li>\n' +
+        '<li><a href="/matrixLED.html">Matrix LED</a></li>\n' +
         '</ul>');
 
         res.end();
