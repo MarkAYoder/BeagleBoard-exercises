@@ -75,9 +75,9 @@
     }
 
     function gpio(data) {
-        data = atob(data);
+//        data = atob(data);
 //        status_update("gpio: " + data);
-        gpioData[igpio] = [igpio, data];
+        gpioData[igpio] = [igpio, data.value];
         igpio++;
         if(igpio >= samples) {
             igpio = 0;
