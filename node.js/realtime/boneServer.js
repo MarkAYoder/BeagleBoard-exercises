@@ -11,16 +11,32 @@ var port = 8083, // Port to listen on
     b = require('bonescript'),
     exec = require('child_process').exec,
     server,
-    connectCount = 0;	// Number of connections to server
+//    pwmPath    = "/sys/class/pwm/ehrpwm.1:0",
 
-    var errCount = 0;	// Counts the AIN errors.
-    var ainLast;        // Remembers last AIN value (hack)
+    connectCount = 0,	// Number of connections to server
+    errCount = 0;	// Counts the AIN errors.
 
 // Initialize various IO things.
 function initIO() {
     // Make sure gpios 7 and 20 are available.
     b.pinMode('P9_42', b.INPUT);
     b.pinMode('P9_41', b.INPUT);
+    
+    // Initialize pwm
+    // Clear up any unmanaged usage
+/*
+    fs.writeFileSync(pwmPath+'/request', '0');
+    // Allocate and configure the PWM
+    fs.writeFileSync(pwmPath+'/request', '1');
+    fs.writeFileSync(pwmPath+'/period_freq', 1000);
+    fs.writeFileSync(pwmPath+'/duty_percent', '0');
+    fs.writeFileSync(pwmPath+'/polarity', '0');
+    fs.writeFileSync(pwmPath+'/run', '1');
+    // Set pin Mux
+//    Don't know why the wiretFileSync doesn't work
+//    fs.writeFileSync(pinMuxPath+'/gpmc_a2', '0x0e'); // pwm, no pull up
+    exec("echo 0x0e > " + pinMuxPath + "/gpmc_a2");
+*/
 }
 
 initIO();
@@ -77,14 +93,9 @@ io.sockets.on('connection', function (socket) {
     socket.on('ain', function (ainNum) {
         b.analogRead(ainNum, function(x) {
             if(x.err && errCount++<5) console.log("AIN read error");
-//            if(x.value > 0.94) {
-//                x.value = ainLast;   // Hack
-//                console.log("ain Hack");
-//            }
         if(typeof x.value !== 'number') console.log('x.value = ' + x.value);
 
             socket.emit('ain', {pin:ainNum, value:x.value});
-            ainLast = x.value;
 //            console.log('emitted ain: ' + x.value + ', ' + ainNum);
         });
     });
