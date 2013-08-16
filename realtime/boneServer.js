@@ -54,23 +54,15 @@ server = http.createServer(function (req, res) {
     var path = url.parse(req.url).pathname;
     console.log("path: " + path);
     if (path === '/') {
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write('<h1>BeagleBoard Demos</h1><ul>\n' +
-        '<li><a href="/ioPlot.html">IO Plotting</a></li>\n' +
-        '<li><a href="/buttonBox.html">Button Box</a></li>\n' +
-        '<li><a href="/audio.html">Real-time audio</a></li>\n' +
-        '<li><a href="/matrixLED.html">Matrix LED</a></li>\n' +
-        '</ul>');
-
-        res.end();
-    } else {
-        fs.readFile(__dirname + path, function (err, data) {
-            if (err) {return send404(res); }
-//            console.log("path2: " + path);
-            res.write(data, 'utf8');
-            res.end();
-        });
+        path = '/boneServer.html';
     }
+
+    fs.readFile(__dirname + path, function (err, data) {
+        if (err) {return send404(res); }
+//            console.log("path2: " + path);
+        res.write(data, 'utf8');
+        res.end();
+    });
 });
 
 function send404(res) {
