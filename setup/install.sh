@@ -1,57 +1,27 @@
-#!/usr/bash
+#!/bin/bash
 # Here are the extra things I install on the bone
 # --Mark
-# 6-Jul-2012
-ssh-copy-id root@bone2
-ssh -X root@bone2
-cd ~
-echo yoder-bone > /etc/hostname
+# 20-Aug-2013
+set -e
+BONE=192.168.7.2
+BONE_NAME=yoder-black-bone
 
-opkg update
-opkg install openssh-keygen
-git config --global user.name "Mark A. Yoder"
-git config --global user.email Mark.A.Yoder@Rose-Hulman.edu
-git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises
-# git commit --amend --reset-author
-cp exercises/.bashrc .
-ln -s /var/lib/cloud9 .
-cd exercises/pinMux
-ln -s $PWD/pinMux.html /var/lib/cloud9/bone101
-cd cloud9
-git pull
-cd
+if [ 1 == 0 ] ; then
+sh-copy-id root@$BONE
+DATE=`date`
+ssh root@$BONE "date -s \"$DATE\""
+ssh root@$BONE "echo $BONE_NAME > /etc/hostname"
+ssh root@$BONE "opkg update"
 
-mount /dev/mmcblk0p1 /media/mmc1/
-cd /media/mmc1/
-# Add optargs=video=HDMI-A-1:640x480@60 to uEnv.txt to use the pico DLP
+ssh root@$BONE "git config --global user.name \"Mark A. Yoder\""
+ssh root@$BONE "git config --global user.email Mark.A.Yoder@Rose-Hulman.edu"
+scp -r .ssh root@BONE:.
+ssh root@$BONE "git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises"
 
-# Turn off storage gadget, turn on network at boot time.
-cd /lib/systemd/system/basic.target.wants
-rm storage-gadget-init.service
-ln -s ../network-gadget-init.service .
+ssh root@$BONE "cp exercises/.bashrc ."
+ssh root@$BONE "ln -s /var/lib/cloud9 ."
+fi
 
-opkg install alsa-dev
-cd /usr/lib
-ln -s libasound.so.2.0.0 libasound.so  # I don't know why this link is mising
+ssh root@$BONE "rm /etc/localtime"
+ssh root@$BONE "ln -s /usr/share/zoneinfo/America/New_York /etc/localtime"
 
-opkg install i2c-tools-dev
-
-# Make date and time correct.
-# http://derekmolloy.ie/automatically-setting-the-beaglebone-black-time-using-ntp/
-opkg install ntp
-Edit /lib/systemd/system/dtpdate.service
-  ExecStart=/usr/bin/ntpd -q -g -x
-systemctl enable ntpdate.service  # Seems to interfere with the USB-ethernet
-systemctl enable ntpd.service
-rm /etc/localtime
-beagle$ ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
-
-# Here are some things I've had to do in the past, but don't now
-# opkg install gcc gcc-symlinks libgcc-s-dev -force-overwrite
-# This may do the gcc install too.
-# beagle$ opkg install task-sdk-target (took about 8 minutes)
-# Also did
-# beagle$ opkg install evtest
-# Here's what's needed to run the Flot demo
-# beagle$ opkg install nodejs          (took about 1 minute)
-# beagle$ opkg install alsa-utils      (took about 1 minute)
