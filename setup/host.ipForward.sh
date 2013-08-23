@@ -49,22 +49,3 @@ scp /tmp/resolv.conf root@$beagleAddr:/etc
 # Tell the beagle to use the host as the gateway.
 ssh root@$beagleAddr "/sbin/route add default gw $hostAddr"
 
-exit 0
-
-# The following might not be needed.
-sudo iptables -L
-echo ======
-sudo iptables -t nat -A POSTROUTING -s 192.168.0.0/16 -o eth0 -j MASQUERADE
-echo ======
-sudo iptables -L
-
-exit 0
-
-echo ======
-sudo iptables -A FORWARD -s 192.168.0.0/16 -o eth0 -j ACCEPT
-sudo iptables -L
-
-echo ======
-sudo iptables -A FORWARD -d 192.168.0.0/16 -m state --state ESTABLISHED,RELATED -i eth0 -j ACCEPT
-sudo iptables -L
-

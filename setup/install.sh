@@ -8,7 +8,7 @@ set -e
 BONE=192.168.7.2
 BONE_NAME=yoder-black-bone
 
-if [ 1 == 0 ] ; then
+if [ 1 == 1 ] ; then
 # Make it so ssh will run without a password
 ssh-copy-id root@$BONE
 
