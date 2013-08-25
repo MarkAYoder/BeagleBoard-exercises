@@ -37,14 +37,23 @@ ssh root@$beagleAddr "mv -n /etc/resolv.conf /etc/resolv.conf.orig"
 # same name servers as the host.
 cat - << EOF > /tmp/resolv.conf
 # This is installed by host.ipForward.sh on the host
-# Mark A. Yoder, 11-Sept-2012
+# Mark A. Yoder, 25-Aug-2013
+# Use the campus name servers if on compus, otherwise use the Google name servers
+search rose-hulman.edu dhcp.rose-hulman.edu wlan.rose-hulman.edu
+
+EOF
+if ifconfig | grep "addr:137.112."; then
+cat - << EOF >> /tmp/resolv.conf
 nameserver 137.112.18.59
 nameserver 137.112.5.28
 nameserver 137.112.4.196
-search rose-hulman.edu
+EOF
+else
+cat - << EOF >> /tmp/resolv.conf
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 EOF
+fi
 scp /tmp/resolv.conf root@$beagleAddr:/etc
 # Tell the beagle to use the host as the gateway.
 ssh root@$beagleAddr "/sbin/route add default gw $hostAddr"
