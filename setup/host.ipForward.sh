@@ -38,10 +38,11 @@ ssh root@$beagleAddr "mv -n /etc/resolv.conf /etc/resolv.conf.orig"
 cat - << EOF > /tmp/resolv.conf
 # This is installed by host.ipForward.sh on the host
 # Mark A. Yoder, 25-Aug-2013
-# Use the campus name servers if on compus, otherwise use the Google name servers
 search rose-hulman.edu dhcp.rose-hulman.edu wlan.rose-hulman.edu
 
 EOF
+
+# Use the campus name servers if on compus, otherwise use the Google name servers
 if ifconfig | grep "addr:137.112."; then
 cat - << EOF >> /tmp/resolv.conf
 nameserver 137.112.18.59
