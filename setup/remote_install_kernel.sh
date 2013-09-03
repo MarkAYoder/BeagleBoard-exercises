@@ -2,12 +2,12 @@
 # This is for installing on the eMMC on the BBB.  Use like:
 # Edit below so BeagleAddr points to the IP address of the BBB.  Then:
 # host$ cd ../../linux-dev/tools
-# host$ ln -s ../../exercises/setup/my_install_kernel.sh ../../exercises/setup/remote_install_kernel.sh .
+# host$ ln -s ../../exercises/setup/beagle_install_kernel.sh ../../exercises/setup/remote_install_kernel.sh .
 # host$ cd ..
 # host$ tools/remote_install_kernel.sh
 # The needed files will be copied on the BBB. Then on the BBB:
 # beagle$ cd linux-dev
-# beagle$ tools/my_install_kernal.sh
+# beagle$ tools/beagle_install_kernal.sh
 # The files will be copied to the correct places.  Reboot and enjoy.
 
 BeagleAddr=137.112.41.116
@@ -29,6 +29,6 @@ fi
 
 ssh root@$BeagleAddr mkdir -p linux-dev/KERNEL/include/generated linux-dev/tools
 scp ${DIR}/KERNEL/include/generated/utsrelease.h root@$BeagleAddr:linux-dev/KERNEL/include/generated/utsrelease.h
-scp tools/my_install_kernel.sh root@$BeagleAddr:linux-dev/tools
+scp tools/beagle_install_kernel.sh root@$BeagleAddr:linux-dev/tools
 scp -r version.sh system.sh deploy root@$BeagleAddr:linux-dev
 
