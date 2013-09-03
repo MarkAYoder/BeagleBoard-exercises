@@ -1,10 +1,4 @@
-8a9,20
-> config EXAMPLE
->   tristate "Enable Example"
->   default m
->   help
->     Enable example driver
-> 
+8a9,14
 > config LPD8806
 >   tristate "Enable LPD8806 LED light strand driver"
 >   default m

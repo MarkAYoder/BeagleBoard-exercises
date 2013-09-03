@@ -4,12 +4,7 @@
 # 2. inserts the lpd8806 kernel module
 
 # Enable SPI0
-if [ ! -e /lib/firmware/BB-SPI0-01-00A0.dtbo ] 
-then
-	echo Copying
-	cp driver/BB-SPI0-01-00A0.dtbo /lib/firmware
-fi
-echo BB-SPI0-01 > /sys/devices/bone_capemgr.*/slots
+echo BB-SPI0 > /sys/devices/bone_capemgr.*/slots
 
 # Insert module
 cd driver

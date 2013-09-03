@@ -1,3 +1,2 @@
-56a57,58
-> obj-$(CONFIG_EXAMPLE) += example.o
+56a57,57
 > obj-$(CONFIG_LPD8806) += lpd8806.o
