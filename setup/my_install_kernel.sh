@@ -1,5 +1,7 @@
 #!/bin/sh -e
 # Modified by Mark A. Yoder for installing on eMMC
+# First run remote_install_kernel.sh on the host.  It will copy this and other
+# needed files to the BBB.  Then run this file on the BBB to install.
 # 
 # Copyright (c) 2009-2013 Robert Nelson <robertcnelson@gmail.com>
 #
@@ -22,17 +24,14 @@
 # THE SOFTWARE.
 
 unset KERNEL_UTS
-unset MMC
 unset ZRELADDR
-
-BOOT_PARITION="1"
 
 DIR=$PWD
 
 . ${DIR}/version.sh
 
 mmc_write_rootfs () {
-	echo "Installing ${KERNEL_UTS}-modules.tar.gz to ${partition}"
+	echo "Installing ${KERNEL_UTS}-modules.tar.gz"
 
 	if [ -d "${location}/lib/modules/${KERNEL_UTS}" ] ; then
 		rm -rf "${location}/lib/modules/${KERNEL_UTS}" || true
@@ -41,7 +40,7 @@ mmc_write_rootfs () {
 	tar ${UNTAR} "${DIR}/deploy/${KERNEL_UTS}-modules.tar.gz" -C "${location}"
 	sync
 
-	echo "Installing ${KERNEL_UTS}-firmware.tar.gz to ${partition}"
+	echo "Installing ${KERNEL_UTS}-firmware.tar.gz"
 
 	if [ -d "${DIR}/deploy/tmp" ] ; then
 		rm -rf "${DIR}/deploy/tmp" || true
