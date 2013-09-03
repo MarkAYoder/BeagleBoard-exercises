@@ -13,14 +13,6 @@
 BeagleAddr=137.112.41.116
 DIR=$PWD
 
-ssh root@$BeagleAddr mkdir -p linux-dev/KERNEL/include/generated linux-dev/tools
-scp ${DIR}/KERNEL/include/generated/utsrelease.h root@$BeagleAddr:linux-dev/KERNEL/include/generated/utsrelease.h
-scp tools/my_install_kernel.sh root@$BeagleAddr:linux-dev/tools
-scp -r version.sh system.sh deploy root@$BeagleAddr:linux-dev
-
-# This will make the root filesystem appear at linux-dev/deploy/disk
-ssh root@$BeagleAddr ln -s / linux-dev/deploy/disk
-
 if [ -f "${DIR}/system.sh" ] ; then
 	. ${DIR}/system.sh
 
@@ -32,5 +24,11 @@ else
 	echo "Missing system.sh, please copy system.sh.sample to system.sh and edit as needed"
 	echo "cp system.sh.sample system.sh"
 	echo "gedit system.sh"
+	exit 1
 fi
+
+ssh root@$BeagleAddr mkdir -p linux-dev/KERNEL/include/generated linux-dev/tools
+scp ${DIR}/KERNEL/include/generated/utsrelease.h root@$BeagleAddr:linux-dev/KERNEL/include/generated/utsrelease.h
+scp tools/my_install_kernel.sh root@$BeagleAddr:linux-dev/tools
+scp -r version.sh system.sh deploy root@$BeagleAddr:linux-dev
 
