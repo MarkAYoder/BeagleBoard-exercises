@@ -20,7 +20,7 @@ ssh root@$BONE "date -s \"$DATE\""
 ssh root@$BONE "echo $BONE_NAME > /etc/hostname"
 
 # Update the package manager
-ssh root@$BONE "opkg update"
+# ssh root@$BONE "opkg update"
 fi
 
 # Clone the ECE497 exercises from github
