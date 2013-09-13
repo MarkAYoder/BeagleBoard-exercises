@@ -40,7 +40,7 @@ void monitor(FILE *fp) {
 }
 
 void main() {
-        char *file = "/sys/class/leds/beagleboard::usr0/brightness";
+        const char *file = "/sys/class/leds/beagleboard::usr0/brightness";
         FILE *fp;
         if ((fp = fopen(file, "r")) == NULL) {
                 fprintf(stderr, "error: cannot open %s\n", file);
