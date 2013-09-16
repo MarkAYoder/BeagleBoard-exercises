@@ -1,3 +1,4 @@
+#!/usr/bin/node
 // Program to test looking up information in /usr/share/bone101/static/bone.js
 
 var b = require('bonescript');
