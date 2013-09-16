@@ -14,10 +14,11 @@ void monitor(FILE *fp) {
 
         mvprintw(1, 1, "brightness:");
         mvprintw(2, 1, "     count:");
+        mvprintw(4, 1, "Hit 'q' to quit");
 
         while (run) {
                 char buffer[16];
-                memset(buffer, 0, sizeof(buffer));
+                // memset(buffer, 0, sizeof(buffer));
 
                 fseek(fp, 0, 0);
                 fread(buffer, sizeof(char), sizeof(buffer), fp);
