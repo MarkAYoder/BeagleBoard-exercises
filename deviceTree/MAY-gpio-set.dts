@@ -26,10 +26,10 @@
                   pinctrl_test: MAY-gpio-set {
 			pinctrl-single,pins = <
 
-//			    0x1ac 0x37  // P9_25 117 INPUT  MODE7 pullup
-			    0x1a4 0x37  // P9_27 115 INPUT  MODE7 pullup
-//			    0x194 0x37  // P9_29 111 INPUT  MODE7 pullup
-//			    0x190 0x37  // P9_31 110 INPUT  MODE7 pullup
+			    0x070 0x37  // P9_11  30 INPUT  MODE7 pullup
+			    0x078 0x37  // P9_12  60 INPUT  MODE7 pullup
+			    0x074 0x37  // P9_13  31 INPUT  MODE7 pullup
+			    0x048 0x37  // P9_14  50 INPUT  MODE7 pullup
                        
                                /* OUTPUT  GPIO(mode7) 0x07 pulldown, 0x17 pullup, 0x?f no pullup/down */
 			       /* INPUT   GPIO(mode7) 0x27 pulldown, 0x37 pullup, 0x?f no pullup/down */
