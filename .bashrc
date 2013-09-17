@@ -21,6 +21,7 @@ alias go=gnome-open
 export SLOTS=/sys/devices/bone_capemgr.*/slots
 export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pins
 export PINMUX=/sys/kernel/debug/pinctrl/44e10800.pinmux/pinmux-pins
+export PINGROUPS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pingroups
 export DVSDK="${HOME}/ti-dvsdk_omap3530-evm_4_00_00_22"
 export CDPATH=".:~:~/BeagleBoard"
 
