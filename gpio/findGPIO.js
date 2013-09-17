@@ -15,14 +15,29 @@ process.argv.forEach(function(val, index, array) {
 */
 
 function pinMux(gpio) {
-    var addr = '(' + (0x44e10800 + parseInt(gpio.muxRegOffset, 16)).toString(16) + ')';
-    console.log('pinMux');
+    var addr = '(' + (0x44e10800 + 
+                    parseInt(gpio.muxRegOffset, 16)).toString(16) + ')';
+    
 //    console.log('grep "' + addr + '" ' + PINS);
     exec('grep "' + addr + '" ' + PINS,
             function (error, stdout, stderr) {
-                console.log(stdout);
+                var mux,    // Current mux setting
+                    out,   // output string
+                    dir = 'down';    // Direction of pullup or pulldown
+
                 if(error) { console.log('error: ' + error); }
                 if(stderr) {console.log('stderr: ' + stderr); }
+                
+                console.log(stdout);
+                mux = parseInt(stdout.split(" ")[3], 16);  // Get the mux field
+                out = "Mode: " + (mux & 0x7);
+                if(!(mux & 0x8)) {   // Pullup or down is enabled
+                    if(mux & 0x10) {
+                        dir = 'up';
+                    }
+                    out += ' pull' + dir;
+                }
+                console.log(out);
             });
 }
 
