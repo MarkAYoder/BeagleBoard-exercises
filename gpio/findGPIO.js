@@ -5,6 +5,7 @@
 // Returns current pin mux
 
 var PINS = "/sys/kernel/debug/pinctrl/44e10800.pinmux/pins",
+    PINMUX = "/sys/kernel/debug/pinctrl/44e10800.pinmux/pinmux-pins",
     b = require('bonescript'),
     exec = require('child_process').exec;
 
@@ -44,6 +45,15 @@ function pinMux(gpio) {
                     out += " Slew Control Slow";
                 }
                 console.log(out);
+            });
+
+    exec('grep "' + addr + '" ' + PINMUX,
+            function (error, stdout, stderr) {
+
+                if(error) { console.log('error: ' + error); }
+                if(stderr) {console.log('stderr: ' + stderr); }
+                
+                console.log(stdout);
             });
 }
 
