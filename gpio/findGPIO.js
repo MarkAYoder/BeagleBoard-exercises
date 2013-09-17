@@ -37,6 +37,12 @@ function pinMux(gpio) {
                     }
                     out += ' pull' + dir;
                 }
+                if(mux & 0x20) {
+                    out += " Receiver Active";
+                }
+                if(mux & 0x40) {
+                    out += " Slew Control Slow";
+                }
                 console.log(out);
             });
 }
