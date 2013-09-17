@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "Compiling the overlay from .dts to .dtbo"
+
+dtc -O dtb -o MAY-gpio-set-00A0.dtbo -b 0 -@ MAY-gpio-set.dts
