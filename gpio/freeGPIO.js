@@ -14,7 +14,8 @@ var PINS = "/sys/kernel/debug/pinctrl/44e10800.pinmux/pins",
 //    console.log('grep "' + addr + '" ' + PINS);
     exec('grep "(MUX UNCLAIMED) (GPIO UNCLAIMED)" ' + PINMUX,
             function (error, stdout, stderr) {
-                var list;    // Direction of pullup or pulldown
+                var list,    // 
+                    pin;
 
                 if(error) { console.log('error: ' + error); }
                 if(stderr) {console.log('stderr: ' + stderr); }
@@ -25,7 +26,15 @@ var PINS = "/sys/kernel/debug/pinctrl/44e10800.pinmux/pins",
 //                console.log(list);
                 for(var i in list) {
                     addr = list[i].split(' ')[2].substring(1,9);
-                    console.log(addr);
+                    pin = ('0x' + (parseInt(addr,16)-0x44e10800).toString(16));
+                    console.log(pin + " " + list[i]);
+                    for(var j in b.bone.pins) {
+//                        if (b.bone.pins[j].muxRegOffset === pin) {
+                            console.log(b.bone.pins[j]);
+//                            break;
+//                        }
+                    }
+                    break;
                 }
             });
 /*
