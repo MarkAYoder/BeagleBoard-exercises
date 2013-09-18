@@ -44,5 +44,5 @@ exec('grep "(MUX UNCLAIMED) (GPIO UNCLAIMED)" ' + PINMUX,
                     }
                 }
                 keylist.sort();
-                console.log(keylist.join(', '));
+                console.log(keylist.join(' '));
             });
