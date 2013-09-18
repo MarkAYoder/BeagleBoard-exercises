@@ -35,7 +35,7 @@ function pinMux(gpio, flag) {
                 // console.log(stdout);
                 mux = parseInt(stdout.split(" ")[3], 16);  // Get the mux field
                 out = gpio.key + ' (gpio ' + gpio.gpio + ") mode: " + (mux & 0x7) + 
-                        " (" + gpio.options[mux & 0x7] + ")";
+                        " (" + gpio.options[mux & 0x7] + ") " + gpio.muxRegOffset;
                 if(!(mux & 0x8)) {   // Pullup or down is enabled
                     if(mux & 0x10) {
                         dir = 'up';
