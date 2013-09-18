@@ -16,9 +16,10 @@ var PINMUX = "/sys/kernel/debug/pinctrl/44e10800.pinmux/pinmux-pins",
 
 exec('grep "(MUX UNCLAIMED) (GPIO UNCLAIMED)" ' + PINMUX,
             function (error, stdout, stderr) {
-                var list,    // 
-                    pin,
-                    addr;
+                var list,    // Array of unused pins
+                    pin,     // pin offset in form 0x020
+                    addr,    // pin address, 44e10820
+                    keylist = []; // List of all unused header pins, P9_12
 
                 if(error)  { console.log('error: '  + error ); }
                 if(stderr) { console.log('stderr: ' + stderr); }
@@ -36,10 +37,12 @@ exec('grep "(MUX UNCLAIMED) (GPIO UNCLAIMED)" ' + PINMUX,
 //                    console.log(pin + " " + list[i]);
                     for(var j in b.bone.pins) {
                         if (b.bone.pins[j].muxRegOffset === pin) {
-                            console.log(b.bone.pins[j].key);
+//                            console.log(b.bone.pins[j].key);
+                            keylist.push(b.bone.pins[j].key);
                             break;
                         }
                     }
-//                    break;
                 }
+                keylist.sort();
+                console.log(keylist.join(', '));
             });
