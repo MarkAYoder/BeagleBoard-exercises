@@ -29,6 +29,7 @@ function pinMux(gpio) {
                 if(error) { console.log('error: ' + error); }
                 if(stderr) {console.log('stderr: ' + stderr); }
                 
+                stdout = stdout.substring(0,stdout.length-1);  // Get rid of extra \n
                 console.log(stdout);
                 mux = parseInt(stdout.split(" ")[3], 16);  // Get the mux field
                 out = "Mode: " + (mux & 0x7) + " (" + gpio.options[mux & 0x7] + ")";
