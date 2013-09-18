@@ -26,8 +26,8 @@ function pinMux(gpio) {
                     out,   // output string
                     dir = 'down';    // Direction of pullup or pulldown
 
-                if(error) { console.log('error: ' + error); }
-                if(stderr) {console.log('stderr: ' + stderr); }
+                if(error)  { console.log('error: '  + error ); }
+                if(stderr) { console.log('stderr: ' + stderr); }
                 
                 stdout = stdout.substring(0,stdout.length-1);  // Get rid of extra \n
                 console.log(stdout);
