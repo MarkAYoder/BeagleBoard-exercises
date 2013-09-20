@@ -1,3 +1,4 @@
+#!/usr/bin/node
 // From Getting Started With node.js and socket.io 
 // http://codehenge.net/blog/2011/12/getting-started-with-node-js-and-socket-io-v0-7-part-2/
 // This is a general server for the various web frontends
@@ -216,7 +217,7 @@ function startAudio(){
         audioChild = child_process.spawn(
            "/usr/bin/arecord",
            [
-            "-Dplughw:0,0",
+            "-Dplughw:1,0",
             "-c2", "-r"+audioRate, "-fU8", "-traw", 
             "--buffer-size=800", "--period-size=800", "-N"
            ]
