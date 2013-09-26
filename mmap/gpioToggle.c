@@ -47,15 +47,14 @@ int main(int argc, char *argv[]) {
     while(1) {
         // printf("ON\n");
         *gpio_setdataout_addr= GPIO_03;
-	reg = *gpio_datain;
-	reg = (reg >> 7) & 0x1;
+	reg = *gpio_datain & GPIO_07;
 	if(reg) {
             *gpio_setdataout_addr= GPIO_03;
 	} else {
             *gpio_cleardataout_addr = GPIO_03;
 	}
-	printf("reg = 0x%x\n", reg);
-        sleep(1);
+//	printf("reg = 0x%x\n", reg);
+        usleep(1);
         // printf("OFF\n");
 
         // usleep(1);
