@@ -4,11 +4,13 @@ TOOLS_CFLAGS	:= -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual \
 #
 # Programs
 #
-all:	gpiotest
+all:	gpiotest gpioToggle
 
 gpiotest:  gpiotest.c beaglebone_gpio.h
 	$(CC) $(LDFLAGS) -o $@ $^
 
+gpioToggle:  gpioToggle.c beaglebone_gpio.h
+	$(CC) $(LDFLAGS) -o $@ $^
 
 #
 # Objects
