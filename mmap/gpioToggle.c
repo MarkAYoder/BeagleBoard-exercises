@@ -43,10 +43,9 @@ int main(int argc, char *argv[]) {
     *gpio_oe_addr = reg;
     printf("GPIO1 configuration: %X\n", reg);
 
-    printf("Start blinking LED USR1\n");
+    printf("Start copying GPIO_07 to GPIO_03\n");
     while(1) {
         // printf("ON\n");
-        *gpio_setdataout_addr= GPIO_03;
 	reg = *gpio_datain & GPIO_07;
 	if(reg) {
             *gpio_setdataout_addr= GPIO_03;
@@ -54,7 +53,7 @@ int main(int argc, char *argv[]) {
             *gpio_cleardataout_addr = GPIO_03;
 	}
 //	printf("reg = 0x%x\n", reg);
-        usleep(1);
+//        usleep(1);
         // printf("OFF\n");
 
         // usleep(1);

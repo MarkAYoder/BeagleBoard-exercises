@@ -1,16 +1,17 @@
 TOOLS_CFLAGS	:= -Wstrict-prototypes -Wshadow -Wpointer-arith -Wcast-qual \
 		   -Wcast-align -Wwrite-strings -Wnested-externs -Winline \
-		   -W -Wundef -Wmissing-prototypes -O3
+		   -W -Wundef -Wmissing-prototypes
+CFLAGS  := -O3
 #
 # Programs
 #
 all:	gpiotest gpioToggle
 
 gpiotest:  gpiotest.c beaglebone_gpio.h
-	$(CC) $(LDFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 gpioToggle:  gpioToggle.c beaglebone_gpio.h
-	$(CC) $(LDFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 #
 # Objects

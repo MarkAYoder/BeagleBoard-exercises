@@ -46,7 +46,8 @@ int main(int argc, char *argv[]) {
     printf("Start blinking LED USR1\n");
     while(1) {
         // printf("ON\n");
-        *gpio_setdataout_addr= GPIO_03;
+//        *gpio_setdataout_addr= GPIO_03;
+        gpio_addr[GPIO_SETDATAOUT] = GPIO_03;
         // usleep(1);
         // printf("OFF\n");
         *gpio_cleardataout_addr = GPIO_03;
