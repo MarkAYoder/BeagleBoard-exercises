@@ -37,12 +37,6 @@ int main(int argc, char *argv[]) {
     printf("GPIO SETDATAOUTADDR mapped to %p\n", gpio_setdataout_addr);
     printf("GPIO CLEARDATAOUT mapped to %p\n", gpio_cleardataout_addr);
 
-    reg = *gpio_oe_addr;
-    printf("GPIO1 configuration: %X\n", reg);
-    reg = reg & (0xFFFFFFFF - USR1_LED);
-    *gpio_oe_addr = reg;
-    printf("GPIO1 configuration: %X\n", reg);
-
     printf("Start copying GPIO_07 to GPIO_03\n");
     while(1) {
         // printf("ON\n");

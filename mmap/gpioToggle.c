@@ -39,19 +39,18 @@ int main(int argc, char *argv[]) {
 
     reg = *gpio_oe_addr;
     printf("GPIO1 configuration: %X\n", reg);
-    reg = reg & (0xFFFFFFFF - USR1_LED);
+    reg = reg & (0xFFFFFFFF - USR3);
     *gpio_oe_addr = reg;
     printf("GPIO1 configuration: %X\n", reg);
 
-    printf("Start blinking LED USR1\n");
+    printf("Start blinking LED USR3\n");
     while(1) {
         // printf("ON\n");
-        *gpio_setdataout_addr = GPIO_03;
-//        gpio_addr[GPIO_SETDATAOUT>>2] = GPIO_03;
-//        usleep(1);
+        *gpio_setdataout_addr = USR3;
+        usleep(250000);
         // printf("OFF\n");
-        *gpio_cleardataout_addr = GPIO_03;
-        // usleep(1);
+        *gpio_cleardataout_addr = USR3;
+        usleep(250000);
     }
 
     close(fd);
