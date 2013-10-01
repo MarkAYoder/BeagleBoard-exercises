@@ -1,6 +1,5 @@
 // From : http://stackoverflow.com/questions/13124271/driving-beaglebone-gpio-through-dev-mem
 //
-// Read one gpio pin and write it out to another using mmap.
 // Be sure to set -O3 when compiling.
 // Modified by Mark A. Yoder  26-Sept-2013
 #include <stdio.h>
@@ -8,7 +7,24 @@
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <fcntl.h> 
+#include <signal.h>    // Defines signal-handling functions (i.e. trap Ctrl-C)
 #include "beaglebone_gpio.h"
+
+/****************************************************************
+ * Global variables
+ ****************************************************************/
+int keepgoing = 1;    // Set to 0 when ctrl-c is pressed
+
+/****************************************************************
+ * signal_handler
+ ****************************************************************/
+void signal_handler(int sig);
+// Callback called when SIGINT is sent to the process (Ctrl-C)
+void signal_handler(int sig)
+{
+	printf( "Ctrl-C pressed, cleaning up and exiting..\n" );
+	keepgoing = 0;
+}
 
 int main(int argc, char *argv[]) {
     volatile void *gpio_addr = NULL;
@@ -17,6 +33,10 @@ int main(int argc, char *argv[]) {
     volatile unsigned int *gpio_setdataout_addr = NULL;
     volatile unsigned int *gpio_cleardataout_addr = NULL;
     unsigned int reg;
+    
+    // Set the signal callback for Ctrl-C
+	signal(SIGINT, signal_handler);
+
     int fd = open("/dev/mem", O_RDWR);
 
     printf("Mapping %X - %X (size: %X)\n", GPIO1_START_ADDR, GPIO1_END_ADDR, GPIO1_SIZE);
@@ -44,7 +64,7 @@ int main(int argc, char *argv[]) {
     printf("GPIO1 configuration: %X\n", reg);
 
     printf("Start blinking LED USR3\n");
-    while(1) {
+    while(keepgoing) {
         // printf("ON\n");
         *gpio_setdataout_addr = USR3;
         usleep(250000);
@@ -53,6 +73,7 @@ int main(int argc, char *argv[]) {
         usleep(250000);
     }
 
+    munmap((void *)gpio_addr, GPIO1_SIZE);
     close(fd);
     return 0;
 }
