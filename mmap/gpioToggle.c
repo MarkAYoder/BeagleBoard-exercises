@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     gpio_addr = mmap(0, GPIO1_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, GPIO1_START_ADDR);
 
     gpio_oe_addr = gpio_addr + GPIO_OE;
-    gpio_datain = gpio_addr + GPIO_DATAIN;
+    gpio_oe_addr = gpio_addr + GPIO_DATAIN;
     gpio_setdataout_addr = gpio_addr + GPIO_SETDATAOUT;
     gpio_cleardataout_addr = gpio_addr + GPIO_CLEARDATAOUT;
 
@@ -39,24 +39,18 @@ int main(int argc, char *argv[]) {
 
     reg = *gpio_oe_addr;
     printf("GPIO1 configuration: %X\n", reg);
-    reg = reg & (0xFFFFFFFF - USR1_LED);
+    reg = reg & (0xFFFFFFFF - USR3);
     *gpio_oe_addr = reg;
     printf("GPIO1 configuration: %X\n", reg);
 
-    printf("Start copying GPIO_07 to GPIO_03\n");
+    printf("Start blinking LED USR3\n");
     while(1) {
         // printf("ON\n");
-	reg = *gpio_datain & GPIO_07;
-	if(reg) {
-            *gpio_setdataout_addr= GPIO_03;
-	} else {
-            *gpio_cleardataout_addr = GPIO_03;
-	}
-//	printf("reg = 0x%x\n", reg);
-//        usleep(1);
+        *gpio_setdataout_addr = USR3;
+        usleep(250000);
         // printf("OFF\n");
-
-        // usleep(1);
+        *gpio_cleardataout_addr = USR3;
+        usleep(250000);
     }
 
     close(fd);

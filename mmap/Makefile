@@ -5,12 +5,12 @@ CFLAGS  := -O3 -g
 #
 # Programs
 #
-all:	gpiotest gpioToggle
+all:	gpioThru gpioToggle
 
-gpiotest:  gpiotest.c beaglebone_gpio.h
+gpioToggle: gpioToggle.c beaglebone_gpio.h
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
 
-gpioToggle:  gpioToggle.c beaglebone_gpio.h
+gpioThru:  gpioThru.c beaglebone_gpio.h
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $<
 
 #
