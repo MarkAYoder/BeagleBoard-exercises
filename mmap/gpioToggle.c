@@ -27,11 +27,10 @@ void signal_handler(int sig)
 }
 
 int main(int argc, char *argv[]) {
-    volatile void *gpio_addr = NULL;
-    volatile unsigned int *gpio_oe_addr = NULL;
-    volatile unsigned int *gpio_datain = NULL;
-    volatile unsigned int *gpio_setdataout_addr = NULL;
-    volatile unsigned int *gpio_cleardataout_addr = NULL;
+    volatile void *gpio_addr;
+    volatile unsigned int *gpio_oe_addr;
+    volatile unsigned int *gpio_setdataout_addr;
+    volatile unsigned int *gpio_cleardataout_addr;
     unsigned int reg;
     
     // Set the signal callback for Ctrl-C
@@ -44,7 +43,6 @@ int main(int argc, char *argv[]) {
     gpio_addr = mmap(0, GPIO1_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, GPIO1_START_ADDR);
 
     gpio_oe_addr           = gpio_addr + GPIO_OE;
-    gpio_datain            = gpio_addr + GPIO_DATAIN;
     gpio_setdataout_addr   = gpio_addr + GPIO_SETDATAOUT;
     gpio_cleardataout_addr = gpio_addr + GPIO_CLEARDATAOUT;
 
