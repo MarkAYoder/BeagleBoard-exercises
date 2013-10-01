@@ -1,6 +1,6 @@
 // From : http://stackoverflow.com/questions/13124271/driving-beaglebone-gpio-through-dev-mem
 //
-// Toggles a gpio pin using mmap.
+// Read one gpio pin and write it out to another using mmap.
 // Be sure to set -O3 when compiling.
 // Modified by Mark A. Yoder  26-Sept-2013
 #include <stdio.h>
