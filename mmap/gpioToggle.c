@@ -22,7 +22,7 @@ void signal_handler(int sig);
 // Callback called when SIGINT is sent to the process (Ctrl-C)
 void signal_handler(int sig)
 {
-	printf( "Ctrl-C pressed, cleaning up and exiting..\n" );
+	printf( "\nCtrl-C pressed, cleaning up and exiting..\n" );
 	keepgoing = 0;
 }
 
@@ -43,9 +43,9 @@ int main(int argc, char *argv[]) {
 
     gpio_addr = mmap(0, GPIO1_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED, fd, GPIO1_START_ADDR);
 
-    gpio_oe_addr = gpio_addr + GPIO_OE;
-    gpio_oe_addr = gpio_addr + GPIO_DATAIN;
-    gpio_setdataout_addr = gpio_addr + GPIO_SETDATAOUT;
+    gpio_oe_addr           = gpio_addr + GPIO_OE;
+    gpio_datain            = gpio_addr + GPIO_DATAIN;
+    gpio_setdataout_addr   = gpio_addr + GPIO_SETDATAOUT;
     gpio_cleardataout_addr = gpio_addr + GPIO_CLEARDATAOUT;
 
     if(gpio_addr == MAP_FAILED) {
@@ -57,9 +57,10 @@ int main(int argc, char *argv[]) {
     printf("GPIO SETDATAOUTADDR mapped to %p\n", gpio_setdataout_addr);
     printf("GPIO CLEARDATAOUT mapped to %p\n", gpio_cleardataout_addr);
 
+    // Set USR3 to be an output pin
     reg = *gpio_oe_addr;
     printf("GPIO1 configuration: %X\n", reg);
-    reg = reg & (0xFFFFFFFF - USR3);
+    reg &= ~USR3;       // Set USR3 bit to 0
     *gpio_oe_addr = reg;
     printf("GPIO1 configuration: %X\n", reg);
 
