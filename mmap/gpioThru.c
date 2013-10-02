@@ -23,7 +23,7 @@ void signal_handler(int sig);
 // Callback called when SIGINT is sent to the process (Ctrl-C)
 void signal_handler(int sig)
 {
-    printf( "\nCtrl-C pressed, cleaning up and exiting..\n" );
+    printf( "\nCtrl-C pressed, cleaning up and exiting...\n" );
 	keepgoing = 0;
 }
 
