@@ -21,7 +21,7 @@ gpioThru:  gpioThru.c beaglebone_gpio.h
 	$(CC) $(CFLAGS) $(TOOLS_CFLAGS) -c $< -o $@
 
 clean:
-	rm gpiotest gpioToggle
+	rm gpioToggle gpioThru
 
 print:
 	@echo LDFLAGS = $(LDFLAGS)
