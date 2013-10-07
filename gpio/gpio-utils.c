@@ -204,3 +204,38 @@ int gpio_fd_close(int fd)
 	return close(fd);
 }
 
+/****************************************************************
+ * ain_get_value (from Mike McDonald)
+ * https://groups.google.com/forum/#!topic/beagleboard-ece497/SLJ5nQQ_GoU
+ ****************************************************************/
+int ain_get_value(unsigned int ain, unsigned int *value)
+{
+    int fd, len, bytesRead;
+    char buf[MAX_BUF];
+    char adc_in[ADC_BUF];
+
+    len = snprintf(buf, sizeof(buf), SYSFS_AIN_DIR "/AIN%d", ain);
+ 
+    fd = open(buf, O_RDONLY);
+    if (fd < 0) {
+        perror(buf);
+        return fd;
+    }
+    
+    // Read from the 
+    bytesRead = read(fd, adc_in, ADC_BUF);
+
+    // Turn the buffer value (a string) into an integer
+    if (bytesRead != -1) {
+        *value = atoi(adc_in);
+        adc_in[bytesRead] = (int)NULL;
+        lseek(fd, 0, SEEK_SET);
+    }
+
+    // Sleep for a little to ensure that we get good ADC values
+    usleep(1000);
+ 
+    close(fd);
+    return bytesRead;
+}
+
