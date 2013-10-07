@@ -35,6 +35,19 @@ init();
 animate();
 
 function init() {
+        // set the scene size
+	var WIDTH = 400,
+	    HEIGHT = 300;
+
+	// set some camera attributes
+	var VIEW_ANGLE = 45,
+	    ASPECT = WIDTH / HEIGHT,
+	    NEAR = 0.1,
+	    FAR = 10000;
+
+	// get the DOM element to attach to
+	// - assume we've got jQuery to hand
+	var $container = $('#container');
 
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
     camera.position.z = 300;
@@ -61,13 +74,13 @@ function init() {
     scene.add(mesh2);
 
     renderer = new THREE.CanvasRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-//    renderer.setSize(400, 300);
+//    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(400, 300);
     
     // attach the render-supplied DOM element
-//	$container.append(renderer.domElement);
+	$container.append(renderer.domElement);
 
-    document.body.appendChild(renderer.domElement);
+//    document.body.appendChild(renderer.domElement);
 
 }
 
