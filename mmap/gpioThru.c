@@ -67,6 +67,7 @@ int main(int argc, char *argv[]) {
     	} else {
             *gpio_cleardataout_addr = GPIO_03;
     	}
+        //usleep(1);
     }
 
     munmap((void *)gpio_addr, GPIO0_SIZE);
