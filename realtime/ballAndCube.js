@@ -1,7 +1,8 @@
 // Extended example from https://github.com/mrdoob/three.js/
 // http://www.aerotwist.com/tutorials/getting-started-with-three-js/
 var socket,
-    firstconnect = true;
+    firstconnect = true,
+    ainNum;
 var camera, scene, renderer;
 var geometry, material, mesh, mesh2;
 var direction = 1;
@@ -37,6 +38,17 @@ connect();
     function status_update(txt){
       document.getElementById('status').innerHTML = txt;
     }
+    
+    // When new data arrives, convert it and plot it.
+    function ain(data) {
+        var idx = ainNum.indexOf(data.pin); // Find position in ainNum array
+//        var num = data[0];
+//        data = data.value;
+        status_update("ain" + num + "(" + idx + "): " + data + ", iain: " + iain[idx]);
+
+        setTimeout(function(){socket.emit("ain", data.pin);}, updateTopInterval);
+    }
+
 
 function init() {
         // set the scene size
