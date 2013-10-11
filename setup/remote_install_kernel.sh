@@ -10,7 +10,7 @@
 # beagle$ tools/beagle_install_kernal.sh
 # The files will be copied to the correct places.  Reboot and enjoy.
 
-BeagleAddr=137.112.41.116
+BeagleAddr=192.168.7.2
 DIR=$PWD
 
 if [ -f "${DIR}/system.sh" ] ; then
