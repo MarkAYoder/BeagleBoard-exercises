@@ -78,9 +78,11 @@ if [ -f "${DIR}/system.sh" ] ; then
 	KERNEL_UTS=$(cat "${DIR}/KERNEL/include/generated/utsrelease.h" | awk '{print $3}' | sed 's/\"//g' )
 
 # This will make the root filesystem appear at linux-dev/deploy/disk
-	if [ ! -e ${DIR}/deploy/disk ]; then
-		ln -s /   ${DIR}/deploy/disk
-	fi
+#	if [ ! -e ${DIR}/deploy/disk ]; then
+#        mkdir -p ${DIR}/deploy
+        rm ${DIR}/deploy/disk || true
+		ln -s / ${DIR}/deploy/disk
+#	fi
 	location="${DIR}/deploy/disk"
 	UNTAR="xf"
 	mmc_write_rootfs
