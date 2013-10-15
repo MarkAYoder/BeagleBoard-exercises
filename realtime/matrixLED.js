@@ -35,8 +35,10 @@ function LEDclick(i, j) {
       if(firstconnect) {
         socket = io.connect(null);
 
+        // See https://github.com/LearnBoost/socket.io/wiki/Exposed-events
+        // for Exposed events
         socket.on('message', function(data)
-            { status_update("Received: message");});
+            { status_update("Received: message " + data);});
         socket.on('connect', function()
             { status_update("Connected to Server"); });
         socket.on('disconnect', function()
@@ -49,7 +51,7 @@ function LEDclick(i, j) {
             { message("Reconnect Failed"); });
 
         socket.on('matrix',  matrix);
-	// Read display for initial image.  Store in disp[]
+        // Read display for initial image.  Store in disp[]
         socket.emit("matrix", i2cNum);
 
         firstconnect = false;
@@ -66,30 +68,30 @@ function LEDclick(i, j) {
     // When new data arrives, convert it and display it.
     // data is a string of 16 values, each a pair of hex digits.
     function matrix(data) {
-	var i,j;
-	disp = [];
-//        status_update("i2c: " + data);
-	// Make data an array, each entry is a pair of digits
-	data = data.split(" ");
-//        status_update("data: " + data);
-	// Every other pair of digits are Green. The others are red.
-	// Ignore the red.
-	// Convert from hex.
-	for(i=0; i<data.length; i+=2) {
-	    disp[i/2] = parseInt(data[i], 16);
-	}
-//        status_update("disp: " + disp);
-	// i cycles through each column
-	for(i=0; i<disp.length; i++) {
-	    // j cycles through each bit
-	    for(j=0; j<8; j++) {
-		if(((disp[i]>>j)&0x1) === 1) {
-		    $('#id'+i+'_'+j).addClass('on');
-		} else {
-		    $('#id'+i+'_'+j).removeClass('on');
-		}
-	    }
-	}
+        var i, j;
+        disp = [];
+        //        status_update("i2c: " + data);
+        // Make data an array, each entry is a pair of digits
+        data = data.split(" ");
+        //        status_update("data: " + data);
+        // Every other pair of digits are Green. The others are red.
+        // Ignore the red.
+        // Convert from hex.
+        for (i = 0; i < data.length; i += 2) {
+            disp[i / 2] = parseInt(data[i], 16);
+        }
+        //        status_update("disp: " + disp);
+        // i cycles through each column
+        for (i = 0; i < disp.length; i++) {
+            // j cycles through each bit
+            for (j = 0; j < 8; j++) {
+                if (((disp[i] >> j) & 0x1) === 1) {
+                    $('#id' + i + '_' + j).addClass('on');
+                } else {
+                    $('#id' + i + '_' + j).removeClass('on');
+                }
+            }
+        }
     }
 
     function status_update(txt){
@@ -98,7 +100,7 @@ function LEDclick(i, j) {
 
     function updateFromLED(){
       socket.emit("matrix", i2cNum);    
-    };
+    }
 
 connect();
 

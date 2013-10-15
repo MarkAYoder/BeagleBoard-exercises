@@ -12,8 +12,6 @@ var port = 8080, // Port to listen on
     b = require('bonescript'),
     child_process = require('child_process'),
     server,
-//    pwmPath    = "/sys/class/pwm/ehrpwm.1:0",
-
     connectCount = 0,	// Number of connections to server
     errCount = 0;	// Counts the AIN errors.
     
@@ -21,7 +19,7 @@ var port = 8080, // Port to listen on
     var frameCount = 0,     // Counts the frames from arecord
         lastFrame = 0,      // Last frame sent to browser
         audioData,          // all data from arecord is saved here and sent
-			        // to the client when requested.
+			                // to the client when requested.
         audioChild = 0, // Process for arecord
         audioRate = 8000;
 
@@ -32,20 +30,12 @@ function initIO() {
     b.pinMode('P9_41', b.INPUT);
     
     // Initialize pwm
-    // Clear up any unmanaged usage
-/*
-    fs.writeFileSync(pwmPath+'/request', '0');
-    // Allocate and configure the PWM
-    fs.writeFileSync(pwmPath+'/request', '1');
-    fs.writeFileSync(pwmPath+'/period_freq', 1000);
-    fs.writeFileSync(pwmPath+'/duty_percent', '0');
-    fs.writeFileSync(pwmPath+'/polarity', '0');
-    fs.writeFileSync(pwmPath+'/run', '1');
-    // Set pin Mux
-//    Don't know why the wiretFileSync doesn't work
-//    fs.writeFileSync(pinMuxPath+'/gpmc_a2', '0x0e'); // pwm, no pull up
-    exec("echo 0x0e > " + pinMuxPath + "/gpmc_a2");
-*/
+}
+
+function send404(res) {
+    res.writeHead(404);
+    res.write('404');
+    res.end();
 }
 
 initIO();
@@ -66,18 +56,15 @@ server = http.createServer(function (req, res) {
     });
 });
 
-function send404(res) {
-    res.writeHead(404);
-    res.write('404');
-    res.end();
-}
-
 server.listen(port);
 console.log("Listening on " + port);
 
 // socket.io, I choose you
 var io = require('socket.io').listen(server);
 io.set('log level', 2);
+
+// See https://github.com/LearnBoost/socket.io/wiki/Exposed-events
+// for Exposed events
 
 // on a 'connection' event
 io.sockets.on('connection', function (socket) {
@@ -152,7 +139,7 @@ io.sockets.on('connection', function (socket) {
     });
     
     // Send a packet of data every time a 'audio' is received.
-    socket.on('audio', function (message) {
+    socket.on('audio', function () {
 //        console.log("Received message: " + message + 
 //            " - from client " + socket.id);
         if(audioChild === 0) {
