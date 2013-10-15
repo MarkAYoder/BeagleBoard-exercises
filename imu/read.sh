@@ -15,9 +15,9 @@ echo -ne "Accelerometer:\t"
 echo `i2cget -y $BUS $ADDR 59` `i2cget -y $BUS $ADDR 60` \
      `i2cget -y $BUS $ADDR 61` `i2cget -y $BUS $ADDR 62` \
      `i2cget -y $BUS $ADDR 63` `i2cget -y $BUS $ADDR 64` 
-
+sleep 1
 echo `i2cget -y $BUS $ADDR 59 w` \
-     `i2cget -y $BUS $ADDR 60 w` \
+     `i2cget -y $BUS $ADDR 61 w` \
      `i2cget -y $BUS $ADDR 63 w`
 
 # Read Gyro X, Y, Z
