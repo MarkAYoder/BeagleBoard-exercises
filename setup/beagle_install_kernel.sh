@@ -64,7 +64,8 @@ mmc_write_rootfs () {
 				fi
 
 				mv "${location}/boot/uImage" "${location}/boot/uImage_bak"
-				cp ${DIR}/deploy/uImage-${KERNEL_UTS} /boot
+    			cp ${DIR}/deploy/uImage-${KERNEL_UTS} /boot
+    			cp ${DIR}/deploy/${KERNEL_UTS}.config /boot
 				cd /boot
 				ln -s uImage-${KERNEL_UTS} uImage
 			fi
