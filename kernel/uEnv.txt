@@ -1,0 +1,1 @@
+optargs=quiet earlyprintk drm.debug=7 capemgr.disable_partno=BB-BONELT-HDMI,BB-BONELT-HDMIN capemgr.enable_partno=am33xx_pwm,bone_pwm_P9_21
