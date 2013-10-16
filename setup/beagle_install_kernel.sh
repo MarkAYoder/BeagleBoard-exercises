@@ -81,7 +81,7 @@ if [ -f "${DIR}/system.sh" ] ; then
 # This will make the root filesystem appear at linux-dev/deploy/disk
 #	if [ ! -e ${DIR}/deploy/disk ]; then
 #        mkdir -p ${DIR}/deploy
-        rm ${DIR}/deploy/disk || true
+        rm -rf ${DIR}/deploy/disk || true
 		ln -s / ${DIR}/deploy/disk
 #	fi
 	location="${DIR}/deploy/disk"
