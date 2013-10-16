@@ -192,7 +192,7 @@ $(function () {
             lines:  { show: true, lineWidth: 5},
             color: 2
         }, 
-        yaxis:	{ min: 70, max: 90, 
+        yaxis:	{ min: 60, max: 80, 
                   zoomRange: [10, 256], panRange: [60, 100] },
         xaxis:	{ show: true, 
                   zoomRange: [10, 100], panRange: [0, 100] },
