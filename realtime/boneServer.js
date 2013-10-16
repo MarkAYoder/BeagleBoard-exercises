@@ -22,12 +22,16 @@ var port = 8080, // Port to listen on
 			                // to the client when requested.
         audioChild = 0, // Process for arecord
         audioRate = 8000;
+        
+        // PWM
+        var pwm = 'P9_21';
 
 // Initialize various IO things.
 function initIO() {
     // Make sure gpios 7 and 20 are available.
     b.pinMode('P9_42', b.INPUT);
     b.pinMode('P9_41', b.INPUT);
+    b.pinMode(pwm,     b.INPUT);    // PWM
     
     // Initialize pwm
 }
@@ -96,12 +100,12 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('i2c', function (i2cNum) {
-//        console.log('Got i2c request:' + i2cNum);
+        console.log('Got i2c request:' + i2cNum);
         child_process.exec('i2cget -y 1 ' + i2cNum + ' 0 w',
             function (error, stdout, stderr) {
 //     The TMP102 returns a 12 bit value with the digits swapped
                 stdout = '0x' + stdout.substring(4,6) + stdout.substring(2,4);
-//                console.log('i2cget: "' + stdout + '"');
+                console.log('i2cget: "' + stdout + '"');
                 if(error) { console.log('error: ' + error); }
                 if(stderr) {console.log('stderr: ' + stderr); }
                 socket.emit('i2c', stdout);
@@ -172,10 +176,10 @@ io.sockets.on('connection', function (socket) {
 		params.disp); 
     });
     
-//    socket.on('slider', function(slideNum, value) {
-//    console.log('slider' + slideNum + " = " + value);
-//        fs.writeFile(pwmPath + "/duty_percent", value);
-//    });
+    socket.on('slider', function(slideNum, value) {
+    // console.log('slider' + slideNum + " = " + value);
+        b.analogWrite(pwm, value);
+    });
 
     socket.on('disconnect', function () {
         console.log("Connection " + socket.id + " terminated.");
