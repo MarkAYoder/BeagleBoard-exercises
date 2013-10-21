@@ -12,7 +12,7 @@
 //        ainNum  = 6,
         gpioNum = ["P9_42"],   // GPIO pins to plot
         ainNum  = ["P9_35"],   // Analog ins to plot
-        i2cNum  = "0x48";
+        i2cNum  = "0x49";
     ainData[samples] = 0;
     gpioData[samples] = 0;
     i2cData[samples] = 0;
@@ -131,9 +131,9 @@ $(function () {
         i2cNum = $(this).val();
     });
 
-    $("#slider1").slider().bind("slide", function(event, ui) {
-	socket.emit("slider",  1, ui.value);
-    });
+    $("#slider1").slider({min:0, max:100, slide: function(event, ui) {
+	socket.emit("slider",  1, ui.value/100);
+    }});
 
     var updateTopInterval = 100;
     $("#updateTopInterval").val(updateTopInterval).change(function () {
@@ -192,7 +192,7 @@ $(function () {
             lines:  { show: true, lineWidth: 5},
             color: 2
         }, 
-        yaxis:	{ min: 70, max: 90, 
+        yaxis:	{ min: 60, max: 80, 
                   zoomRange: [10, 256], panRange: [60, 100] },
         xaxis:	{ show: true, 
                   zoomRange: [10, 100], panRange: [0, 100] },

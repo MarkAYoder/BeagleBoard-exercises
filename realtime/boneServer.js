@@ -22,12 +22,16 @@ var port = 8080, // Port to listen on
 			                // to the client when requested.
         audioChild = 0, // Process for arecord
         audioRate = 8000;
+        
+        // PWM
+        var pwm = 'P9_21';
 
 // Initialize various IO things.
 function initIO() {
     // Make sure gpios 7 and 20 are available.
     b.pinMode('P9_42', b.INPUT);
     b.pinMode('P9_41', b.INPUT);
+    b.pinMode(pwm,     b.INPUT);    // PWM
     
     // Initialize pwm
 }
@@ -172,10 +176,10 @@ io.sockets.on('connection', function (socket) {
 		params.disp); 
     });
     
-//    socket.on('slider', function(slideNum, value) {
-//    console.log('slider' + slideNum + " = " + value);
-//        fs.writeFile(pwmPath + "/duty_percent", value);
-//    });
+    socket.on('slider', function(slideNum, value) {
+    // console.log('slider' + slideNum + " = " + value);
+        b.analogWrite(pwm, value);
+    });
 
     socket.on('disconnect', function () {
         console.log("Connection " + socket.id + " terminated.");

@@ -25,8 +25,16 @@ if [ `cat $ip_forward` == 0 ]
   else
     echo "IP forwarding is set on host."
 fi
-# Setup  IP masquerading on the host
+# Setup  IP masquerading on the host so the bone can reach the outside world
 sudo iptables -t nat -A POSTROUTING -s 192.168.0.0/16 -o $interface -j MASQUERADE
+
+# Setup port forwards on 3000, 8080 and 1080 so outside world can reach the bone
+# first get IP address of host outside interface
+IP_ADDR=`ifconfig $interface | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}'`
+# Now forward, first forwards 1080 to 80
+sudo iptables -t nat -A PREROUTING -p tcp -s 0/0 -d $IP_ADDR --dport 1080 -j DNAT --to $beagleAddr:80
+# sudo iptables -t nat -A PREROUTING -p tcp -s 0/0 -d $IP_ADDR --dport 3000 -j DNAT --to $beagleAddr:3000
+sudo iptables -t nat -A PREROUTING -p tcp -s 0/0 -d $IP_ADDR --dport 8080 -j DNAT --to $beagleAddr:8080
 
 # Check to see what nameservers the host is using and copy these to the same
 #  file on the Beagle
