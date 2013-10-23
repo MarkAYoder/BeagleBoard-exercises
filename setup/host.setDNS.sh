@@ -34,5 +34,5 @@ EOF
 fi
 scp /tmp/resolv.conf root@$beagleAddr:/etc
 # Tell the beagle to use the host as the gateway.
-ssh root@$beagleAddr "/sbin/route add default gw $hostAddr"
+ssh root@$beagleAddr "/sbin/route add default gw $hostAddr" || true
 
