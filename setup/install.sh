@@ -23,10 +23,13 @@ ssh root@$BONE "echo $BONE_NAME > /etc/hostname"
 # ssh root@$BONE "opkg update"
 fi
 
+# Set up DNS on bone
+./host.setDNS.sh
+scp -r .ssh root@$BONE:.
+
 # Clone the ECE497 exercises from github
 ssh root@$BONE "git config --global user.name \"Mark A. Yoder\""
 ssh root@$BONE "git config --global user.email Mark.A.Yoder@Rose-Hulman.edu"
-scp -r .ssh root@$BONE:.
 ssh root@$BONE "git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises"
 
 # Copy the .bashrc file from github so bash will use it
