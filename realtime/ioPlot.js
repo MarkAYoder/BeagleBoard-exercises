@@ -136,6 +136,7 @@ $(function () {
     // setup control widget
     $("#ainNum").val(ainNum).change(function () {
         ainNum = $(this).val().split(",");
+        updateTop();
     });
 
     $("#gpioNum").val(gpioNum).change(function () {
