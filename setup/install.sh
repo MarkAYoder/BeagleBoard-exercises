@@ -33,7 +33,7 @@ ssh root@$BONE "git config --global user.email Mark.A.Yoder@Rose-Hulman.edu"
 ssh root@$BONE "git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises"
 
 # Copy the .bashrc file from github so bash will use it
-ssh root@$BONE "ln -s exercises/.bashrc ."
+ssh root@$BONE "ln -s exercises/setup/bashrc .bashrc"
 
 # Put a symbolic link in Cloud 9 so it will see the exercises
 ssh root@$BONE "cd /var/lib/cloud9; ln -s ~/exercises ."
