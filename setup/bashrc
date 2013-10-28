@@ -7,7 +7,7 @@
 
 # My Stuff
 # Correct the date, if it's in the wrong year
-if ((`date +%Y` < 2013))
+if [[ `date +%Y` < 2013 ]]
 then
 	ntpdate ntp.org
 fi
@@ -18,12 +18,18 @@ alias ls='ls -F'
 alias gedit="gedit $1 >& /dev/null"
 alias go=gnome-open
 
+# For Device Tree Overlays
 export SLOTS=/sys/devices/bone_capemgr.*/slots
 export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pins
 export PINMUX=/sys/kernel/debug/pinctrl/44e10800.pinmux/pinmux-pins
 export PINGROUPS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pingroups
-export DVSDK="${HOME}/ti-dvsdk_omap3530-evm_4_00_00_22"
-export CDPATH=".:~:~/BeagleBoard"
+
+# For cross compiling, but ont on Bone
+if [[ `arch` != "armv7l" ]]
+then
+    export ARCH=arm
+    export CROSS_COMPILE=arm-linux-gnueabi-
+fi
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
