@@ -20,7 +20,7 @@ $('#matrixLED').append(matrixData);
 function LEDclick(i, j) {
 //	alert(i+","+j+" clicked");
     disp[i] ^= 0x1<<j;
-    socket.emit('i2cset', {i2cNum: i2cNum, i: i, 
+    socket.emit('i2cset', {i2cNum: i2cNum, i: 2*i, 
 			     disp: '0x'+disp[i].toString(16)});
 //	socket.emit('i2c', i2cNum);
     // Toggle bit on display
@@ -51,6 +51,15 @@ function LEDclick(i, j) {
             { message("Reconnect Failed"); });
 
         socket.on('matrix',  matrix);
+
+    socket.emit('i2cset', {i2cNum: i2cNum, i: 0x21, disp: 1}); // Start oscillator (p10)
+    socket.emit('i2cset', {i2cNum: i2cNum, i: 0x81, disp: 1}); // Disp on, blink off (p11)
+    socket.emit('i2cset', {i2cNum: i2cNum, i: 0xe7, disp: 1}); // Full brightness (page 15)
+    /*
+	i2c_smbus_write_byte(file, 0x21); 
+	i2c_smbus_write_byte(file, 0x81);
+	i2c_smbus_write_byte(file, 0xe7);
+    */
         // Read display for initial image.  Store in disp[]
         socket.emit("matrix", i2cNum);
 
