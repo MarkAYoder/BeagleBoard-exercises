@@ -1,4 +1,4 @@
 #!/bin/bash
 WAV=/tmp/flite.wav
 flite -o $WAV -t "$*"
-mplayer $WAV
+mplayer $WAV > /dev/null
