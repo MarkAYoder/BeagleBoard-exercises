@@ -18,7 +18,7 @@ cleanup() { # echo a newline
 
 trap cleanup SIGINT # call cleanup on Ctrl-C
 
-THIS_VALUE=`cat /sys/devices/platform/omap/tsc/ain${AIN}`
+THIS_VALUE=`cat /sys/devices/ocp.2/helper.11/AIN${AIN}`
 LAST_VALUE=$THIS_VALUE
 echo -ne ${THIS_VALUE}\\r
 
@@ -34,7 +34,7 @@ while [ "1" = "1" ]; do
   sleep 0.1
 
   LAST_VALUE=$THIS_VALUE
-  THIS_VALUE=`cat /sys/devices/platform/omap/tsc/ain${AIN}`
+  THIS_VALUE=`cat /sys/devices/ocp.2/helper.11/AIN${AIN}`
 
 done
 
