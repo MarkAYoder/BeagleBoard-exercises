@@ -1,4 +1,4 @@
-#!/bin/node
+#!/usr/bin/node
 
 var exec = require('child_process').exec;
 
