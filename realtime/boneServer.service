@@ -1,0 +1,11 @@
+[Unit]
+Description=Yoder's boneServer Demo
+
+[Service]
+WorkingDirectory=/home/root/exercises/realtime
+ExecStart=/usr/bin/node boneServer.js
+Environment=NODE_PATH=/usr/lib/node_modules
+SyslogIdentifier=bonescript
+
+[Install]
+WantedBy=multi-user.target
