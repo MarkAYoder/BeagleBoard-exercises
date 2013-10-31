@@ -38,6 +38,12 @@ ssh root@$BONE "ln -s exercises/setup/bashrc .bashrc"
 # Put a symbolic link in Cloud 9 so it will see the exercises
 ssh root@$BONE "cd /var/lib/cloud9; ln -s ~/exercises ."
 
+# Set up boneServer to run at boot time
+ssh root@$BONE "cp ~/exercises/realtime/boneServer.service /lib/systemd/system"
+ssh root@$BONE "systemctl start boneServer"
+ssh root@$BONE "systemctl enable boneServer"
+
+
 # Set the time zone to Indiana
 ssh root@$BONE "rm /etc/localtime"
 ssh root@$BONE "ln -s /usr/share/zoneinfo/America/New_York /etc/localtime"
