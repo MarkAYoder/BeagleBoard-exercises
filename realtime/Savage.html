@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>James Savage, ECE 497, Homework 9</title>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="Savage.js"></script>
+	<script>
+		window.addEventListener('load', function()
+		{
+			function translateBoardStateToMatrixColor(boardState)
+			{
+				return (boardState & BoardController.STATE_GREEN ?
+MatrixIOController.COLOR_GREEN : MatrixIOController.COLOR_RED)
+			}
+
+			applicationDelegate = {
+				matrixDataDidChange: function()
+				{
+					boardController.configureBoard(function(row, col, state) {
+						return matrixController.getMatrixColorEnabledAtPoint(row, col,
+							translateBoardStateToMatrixColor(state))
+					})
+				},
+
+				stateDidChange: function(row, col, state, enabled)
+				{
+					matrixController.setMatrixColorEnabledAtPoint(row, col,
+						translateBoardStateToMatrixColor(state), enabled)
+				}
+			}
+
+			boardController = new BoardController(applicationDelegate, document.querySelector('#container'))
+			matrixController = new MatrixIOController(applicationDelegate)
+			reloadSnapshotList()
+		})
+
+		function loadSnapshot(snapshot)
+		{
+			matrixController.setMatrix(snapshot.get())
+			applicationDelegate.matrixDataDidChange()
+		}
+
+		function reloadSnapshotList()
+		{
+			var snapshotsList = document.querySelector('#snapshots')
+			snapshotsList.innerHTML = null; // Trucate children
+
+			Snapshot.allSnapshots().forEach(function(snapshot) {
+				var snapshotItem = document.createElement('li')
+				snapshotItem.innerHTML = snapshot.uuid
+				snapshotItem.addEventListener('click', function() { loadSnapshot(snapshot) })
+
+				snapshotsList.appendChild(snapshotItem)
+			})
+		}
+	</script>
+	<style>
+		body { background: black; color: white; }
+		#wrapper { width: 450px; margin: 0 auto; }
+		table { border-spacing: 5px; margin: 0 auto; }
+		td { width: 50px; height: 50px; padding: 0; background: #333; border-radius: 10%; }
+		td.green { background: lime; }
+		td.red { background: red; }
+		td.green.red { background: orange; }
+		td svg { display: block; width: 75%; height: 75%; z-index:-1; margin: auto; }
+		svg * { cursor: pointer; }
+		.green { fill: lime; }
+		.green.off { fill: #2a3d28; }
+		.red { fill: red; }
+		.red.off { fill: #3b282a; }
+		ul { margin: 0; padding: 0; }
+		li { list-style: none; cursor: pointer; }
+	</style>
+</head>
+<body><div id="wrapper">
+	<div id="container"></div>
+	<div style="text-align: center;">
+		<input type="button" value="Reload Matrix" onclick="matrixController.reloadMatrix()">
+		<input type="button" value="Make Snapshot" onclick="var ss = new Snapshot(); ss.save(matrixController.getMatrix()); reloadSnapshotList();">
+		<input type="button" value="Clear Snapshots" onclick="Snapshot.clearAllSnapshots(); reloadSnapshotList();">
+	</div>
+	<h1>Snapshots</h1>
+	<ul id="snapshots"></ul>
+</div></body>
+</html>

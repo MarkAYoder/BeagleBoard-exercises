@@ -170,7 +170,7 @@ io.sockets.on('connection', function (socket) {
     
     // Sets one column every time i2cset is received.
     socket.on('i2cset', function(params) {
-    console.log(params);
+    // console.log(params);
 	// Double i since display has 2 bytes per LED
 	child_process.exec('i2cset -y 1 ' + params.i2cNum + ' ' + params.i + ' ' +
 		params.disp); 
