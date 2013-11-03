@@ -52,8 +52,8 @@ connect();
 
 function init() {
         // set the scene size
-    var WIDTH = 400,
-	    HEIGHT = 300;
+    var WIDTH = 800,
+	    HEIGHT = 600;
 
 	// set some camera attributes
 	var VIEW_ANGLE = 75,
@@ -69,8 +69,8 @@ function init() {
 
     geometry = new THREE.CubeGeometry(200, 200, 200);
     material = new THREE.MeshBasicMaterial({
-        color: 0xff00cc,
-        wireframe: true
+        color: 0xff77cc,
+//        wireframe: true
     });
 
     mesh = new THREE.Mesh(geometry, material);
@@ -81,10 +81,10 @@ function init() {
     camera.position.z = 300;
 	scene.add(camera)
     
-    geometry = new THREE.SphereGeometry(100, 16, 16);
+    geometry = new THREE.SphereGeometry(100, 32, 32);
     material = new THREE.MeshBasicMaterial({
         color: 0xff0000,
-//        wireframe: true
+        wireframe: true
     });
 
     mesh2 = new THREE.Mesh(geometry, material);
