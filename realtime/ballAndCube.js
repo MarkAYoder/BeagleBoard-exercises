@@ -4,7 +4,8 @@ var socket,
     firstconnect = true,
     ainNum;
 var camera, scene, renderer;
-var geometry, material, mesh, mesh2;
+var geometry, material,
+    ball, cube;
 var direction = 1;
 
 init();
@@ -73,9 +74,9 @@ function init() {
 //        wireframe: true
     });
 
-    mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
-    console.log(mesh);
+    cube = new THREE.Mesh(geometry, material);
+    scene.add(cube);
+    console.log(cube);
     
     camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
     camera.position.z = 300;
@@ -87,8 +88,8 @@ function init() {
         wireframe: true
     });
 
-    mesh2 = new THREE.Mesh(geometry, material);
-    scene.add(mesh2);
+    ball = new THREE.Mesh(geometry, material);
+    scene.add(ball);
 
     renderer = new THREE.CanvasRenderer();
 //    renderer.setSize(window.innerWidth, window.innerHeight);
@@ -106,16 +107,16 @@ function animate() {
     // note: three.js includes requestAnimationFrame shim
     requestAnimationFrame(animate);
 
-    mesh.rotation.x += 0.01;
-    mesh.rotation.y += 0.02;
+    cube.rotation.x += 0.01;
+    cube.rotation.y += 0.02;
 
-    if(mesh2.position.y > 100) {
+    if(ball.position.y > 100) {
         direction = -1;
     }
-    if(mesh2.position.y < -100) {
+    if(ball.position.y < -100) {
         direction = 1;
     }
-    mesh2.position.y += direction * 1;
+    ball.position.y += direction * 1;
 
 //    mesh2.position.x += 1;
     renderer.render(scene, camera);
