@@ -2,11 +2,12 @@
 // http://www.aerotwist.com/tutorials/getting-started-with-three-js/
 var socket,
     firstconnect = true,
-    ainNum;
+    ainNum = ["P9_36", "P9_38"],       // Pot and ultrasound
+    updateInterval = 50,   // In ms
+    ainValue = [];
 var camera, scene, renderer;
 var geometry, material,
     ball, cube;
-var direction = 1;
 
 init();
 animate();
@@ -34,6 +35,9 @@ connect();
         firstconnect = false;
       } else {
           }
+        socket.emit("ain",  ainNum[0]);
+        console.log("emitting: ain " + ainNum[0]);
+        socket.emit("ain",  ainNum[1]);
       }
 
     function status_update(txt){
@@ -43,11 +47,12 @@ connect();
     // When new data arrives, convert it and plot it.
     function ain(data) {
         var idx = ainNum.indexOf(data.pin); // Find position in ainNum array
-//        var num = data[0];
-//        data = data.value;
-        status_update("ain" + num + "(" + idx + "): " + data + ", iain: " + iain[idx]);
-
-        setTimeout(function(){socket.emit("ain", data.pin);}, updateTopInterval);
+        if(data.value !== "null") {
+            ainValue[idx] = data.value;
+        }
+        status_update("\"" + data.value + "\"");
+        console.log("data: " + data + " idx=" + idx);
+        setTimeout(function(){socket.emit("ain", ainNum[idx]);}, updateInterval);
     }
 
 
@@ -57,7 +62,7 @@ function init() {
 	    HEIGHT = 600;
 
 	// set some camera attributes
-	var VIEW_ANGLE = 75,
+	var VIEW_ANGLE = 10,
 	    ASPECT = WIDTH / HEIGHT,
 	    NEAR = 0.1,
 	    FAR = 10000;
@@ -68,9 +73,9 @@ function init() {
 
     scene = new THREE.Scene();
 
-    geometry = new THREE.CubeGeometry(200, 200, 200);
+    geometry = new THREE.CubeGeometry(200, 100, 200);
     material = new THREE.MeshBasicMaterial({
-        color: 0xff77cc,
+        color: 0xff0000
 //        wireframe: true
     });
 
@@ -79,8 +84,8 @@ function init() {
     console.log(cube);
     
     camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
-    camera.position.z = 300;
-	scene.add(camera)
+    camera.position.z = 2000;
+	scene.add(camera);
     
     geometry = new THREE.SphereGeometry(100, 32, 32);
     material = new THREE.MeshBasicMaterial({
@@ -89,11 +94,11 @@ function init() {
     });
 
     ball = new THREE.Mesh(geometry, material);
-    scene.add(ball);
+//    scene.add(ball);
 
     renderer = new THREE.CanvasRenderer();
-//    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setSize(WIDTH, HEIGHT);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+//    renderer.setSize(WIDTH, HEIGHT);
     
     // attach the render-supplied DOM element
 	$container.append(renderer.domElement);
@@ -107,9 +112,13 @@ function animate() {
     // note: three.js includes requestAnimationFrame shim
     requestAnimationFrame(animate);
 
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.02;
+    if(ainValue[1] > 0.05) {
+        cube.position.y = 300*ainValue[1] - 50;
+    }
+    cube.rotation.y = 3*ainValue[0];
+    cube.rotation.x = 3.14159/6;
 
+/*
     if(ball.position.y > 100) {
         direction = -1;
     }
@@ -117,6 +126,7 @@ function animate() {
         direction = 1;
     }
     ball.position.y += direction * 1;
+*/
 
 //    mesh2.position.x += 1;
     renderer.render(scene, camera);

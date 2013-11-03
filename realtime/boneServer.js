@@ -83,10 +83,14 @@ io.sockets.on('connection', function (socket) {
     socket.on('ain', function (ainNum) {
         b.analogRead(ainNum, function(x) {
             if(x.err && errCount++<5) console.log("AIN read error");
-        if(typeof x.value !== 'number') console.log('x.value = ' + x.value);
-
-            socket.emit('ain', {pin:ainNum, value:x.value});
-//            console.log('emitted ain: ' + x.value + ', ' + ainNum);
+            if(typeof x.value !== 'number' || x.value === "NaN") {
+                console.log('x.value = ' + x.value);
+            } else {
+                socket.emit('ain', {pin:ainNum, value:x.value});
+            }
+//            if(ainNum === "P9_38") {
+//                console.log('emitted ain: ' + x.value + ', ' + ainNum);
+//            }
         });
     });
 
