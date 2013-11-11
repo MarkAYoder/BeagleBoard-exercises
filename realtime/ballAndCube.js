@@ -7,7 +7,7 @@ var socket,
     ainValue = [];
 var camera, scene, renderer;
 var geometry, material,
-    ball, cube;
+    ball, cube, torus;
 
 init();
 animate();
@@ -36,7 +36,7 @@ connect();
       } else {
           }
         socket.emit("ain",  ainNum[0]);
-        console.log("emitting: ain " + ainNum[0]);
+//        console.log("emitting: ain " + ainNum[0]);
         socket.emit("ain",  ainNum[1]);
       }
 
@@ -51,7 +51,7 @@ connect();
             ainValue[idx] = data.value;
         }
         status_update("\"" + data.value + "\"");
-        console.log("data: " + data + " idx=" + idx);
+//        console.log("data: " + data + " idx=" + idx);
         setTimeout(function(){socket.emit("ain", ainNum[idx]);}, updateInterval);
     }
 
@@ -67,39 +67,70 @@ function init() {
 	    NEAR = 0.1,
 	    FAR = 10000;
 
-	// get the DOM element to attach to
-	// - assume we've got jQuery to hand
-	var $container = $('#container');
-
     scene = new THREE.Scene();
 
     geometry = new THREE.CubeGeometry(200, 100, 200);
+    for ( var i = 0; i < geometry.faces.length; i += 2 ) {
+        var hex = Math.random() * 0xffffff;
+//        var hex = 0x00ff00;
+    	geometry.faces[ i ].color.setHex( hex );
+    	geometry.faces[ i + 1 ].color.setHex( hex );
+        console.log("i=" + i);
+    }
+    console.log(geometry);
     material = new THREE.MeshBasicMaterial({
-        color: 0xff0000
+//        color: 0xff0000,
+//        wireframeLinewidth: 10,
+        vertexColors: THREE.FaceColors, overdraw: 0.5
 //        wireframe: true
     });
 
     cube = new THREE.Mesh(geometry, material);
+
     scene.add(cube);
-    console.log(cube);
-    
-    camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
-    camera.position.z = 2000;
-	scene.add(camera);
-    
+    // console.log(cube);
+
     geometry = new THREE.SphereGeometry(100, 32, 32);
     material = new THREE.MeshBasicMaterial({
-        color: 0xff0000,
+        color: 0x0000ff,
         wireframe: true
     });
 
     ball = new THREE.Mesh(geometry, material);
+    ball.position.x = -200;
 //    scene.add(ball);
 
+    geometry = new THREE.TorusGeometry(100, 40, 32, 16);
+    material = new THREE.MeshBasicMaterial({
+        color: 0x00ff00,
+        wireframe: false
+    });
+
+    torus = new THREE.Mesh(geometry, material);
+    torus.position.x = 200;
+//    scene.add(torus);
+
+    // create a point light
+    var pointLight = new THREE.PointLight(0xFFFFFF);
+    // set its position
+    pointLight.position.x = 10;
+    pointLight.position.y = 50;
+    pointLight.position.z = 130;
+    // add to the scene
+    scene.add(pointLight);
+
+    camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
+    camera.position.z = 2000;
+    scene.add(camera);
+    
     renderer = new THREE.CanvasRenderer();
+    // renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
 //    renderer.setSize(WIDTH, HEIGHT);
     
+    // get the DOM element to attach to
+	// - assume we've got jQuery to hand
+	var $container = $('#container');
     // attach the render-supplied DOM element
 	$container.append(renderer.domElement);
 
