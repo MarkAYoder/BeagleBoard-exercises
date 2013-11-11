@@ -62,22 +62,26 @@ function init() {
 	    HEIGHT = 600;
 
 	// set some camera attributes
-	var VIEW_ANGLE = 10,
+	var VIEW_ANGLE = 15,
 	    ASPECT = WIDTH / HEIGHT,
 	    NEAR = 0.1,
 	    FAR = 10000;
 
     scene = new THREE.Scene();
-
+    
+    var faceColors = [0xff0000, 0x00ff00, 0x0000ff, 0xef0000, 0x00ef00, 0x7f0000];
     geometry = new THREE.CubeGeometry(200, 100, 200);
     for ( var i = 0; i < geometry.faces.length; i += 2 ) {
+/*
         var hex = Math.random() * 0xffffff;
-//        var hex = 0x00ff00;
     	geometry.faces[ i ].color.setHex( hex );
     	geometry.faces[ i + 1 ].color.setHex( hex );
-        console.log("i=" + i);
+//        console.log("i=" + i);
+*/
+        geometry.faces[ i ].color.setHex(faceColors[i/2]);
+        geometry.faces[ i + 1 ].color.setHex(faceColors[i/2]);
     }
-    console.log(geometry);
+//    console.log(geometry);
     material = new THREE.MeshBasicMaterial({
 //        color: 0xff0000,
 //        wireframeLinewidth: 10,
@@ -90,6 +94,19 @@ function init() {
     scene.add(cube);
     // console.log(cube);
 
+	var loader = new THREE.TextureLoader();
+	loader.load( 'beagle-hd-logo.gif', function ( texture ) {
+
+		var geometry = new THREE.SphereGeometry( 100, 200, 100 );
+
+		var material = new THREE.MeshBasicMaterial( { map: texture, overdraw: true } );
+		var boris = new THREE.Mesh( geometry, material );
+        boris.position.x = -200;
+        boris.rotation.y = Math.PI/3;
+		scene.add( boris );
+        console.log( boris );
+	} );
+                
     geometry = new THREE.SphereGeometry(100, 32, 32);
     material = new THREE.MeshBasicMaterial({
         color: 0x0000ff,
