@@ -24,8 +24,8 @@ export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pins
 export PINMUX=/sys/kernel/debug/pinctrl/44e10800.pinmux/pinmux-pins
 export PINGROUPS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pingroups
 
-# For cross compiling, but ont on Bone
-if [[ `arch` != "armv7l" ]]
+# For cross compiling, but on the Bone
+if [[ ! -e /etc/dogtag ]]
 then
     export ARCH=arm
     export CROSS_COMPILE=arm-linux-gnueabi-
