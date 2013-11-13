@@ -39,7 +39,7 @@
 // therefor I use the name "MPU6050....".
 
 
-#include "MPU6050.h"
+#include "mpu6050.h"
 
 // Use the following global variables and access functions to help store the overall
 // rotation angle of the sensor
@@ -79,7 +79,7 @@ float    base_x_gyro;
 float    base_y_gyro;
 float    base_z_gyro;
 
-
+#ifdef HACK 
 int read_gyro_accel_vals(uint8_t* accel_t_gyro_ptr) {
   // Read the raw values.
   // Read 14 bytes at once, 
@@ -155,53 +155,37 @@ void calibrate_sensors() {
   
   //Serial.println("Finishing Calibration");
 }
+#endif
 
-
-void setup()
+// void setup()
 {      
-  int error;
-  uint8_t c;
+    int error, file;
+    uint8_t c;
 
-
-  Serial.begin(19200);
-  /*
-  Serial.println(F("InvenSense MPU-6050"));
-  Serial.println(F("June 2012"));
+    printf("InvenSense MPU-6050\n");
+    printf("November 2013\n"));
   */
-  // Initialize the 'Wire' class for the I2C-bus.
-  Wire.begin();
+    // Initialize the 'Wire' class for the I2C-bus.
+    //Wire.begin();
+    file = i2c_init("1", "0x68");
 
+    // default at power-up:
+    //    Gyro at 250 degrees second
+    //    Acceleration at 2g
+    //    Clock source at internal 8MHz
+    //    The device is in sleep mode.
+    //
 
-  // default at power-up:
-  //    Gyro at 250 degrees second
-  //    Acceleration at 2g
-  //    Clock source at internal 8MHz
-  //    The device is in sleep mode.
-  //
+    res = i2c_smbus_read_byte_data(file, MPU6050_WHO_AM_I);
+    printf("MPU6050_WHO_AM_I = %d (0x%x)\n", res, res);
 
-  error = MPU6050_read (MPU6050_WHO_AM_I, &c, 1);
-  /*
-  Serial.print(F("WHO_AM_I : "));
-  Serial.print(c,HEX);
-  Serial.print(F(", error = "));
-  Serial.println(error,DEC);
-  */
-
-  // According to the datasheet, the 'sleep' bit
-  // should read a '1'. But I read a '0'.
-  // That bit has to be cleared, since the sensor
-  // is in sleep mode at power-up. Even if the
-  // bit reads '0'.
-  error = MPU6050_read (MPU6050_PWR_MGMT_2, &c, 1);
-  /*
-  Serial.print(F("PWR_MGMT_2 : "));
-  Serial.print(c,HEX);
-  Serial.print(F(", error = "));
-  Serial.println(error,DEC);
-  */
-
-  // Clear the 'sleep' bit to start the sensor.
-  MPU6050_write_reg (MPU6050_PWR_MGMT_1, 0);
+     // Clear the 'sleep' bit to start the sensor.
+    res = i2c_smbus_read_byte_data(file, MPU6050_PWR_MGMT_1);
+    printf("MPU6050_PWR_MGMT_1 = %d (0x%x)\n", res, res);
+    i2c_smbus_write_byte_data(file, MPU6050_PWR_MGMT_1, 0);
+    res = i2c_smbus_read_byte_data(file, MPU6050_PWR_MGMT_1);
+    printf("MPU6050_PWR_MGMT_1= %d (0x%x)\n", res, res);
+    exit(1);
   
   //Initialize the angles
   calibrate_sensors();  
@@ -209,7 +193,8 @@ void setup()
 }
 
 
-void loop()
+// void loop()
+while(1)
 {
   int error;
   double dT;
@@ -434,4 +419,34 @@ int MPU6050_write_reg(int reg, uint8_t data)
   error = MPU6050_write(reg, &data, 1);
 
   return (error);
+}
+
+// --------------------------------------------------------
+// i2c_init
+//
+// Open the i2c device and set the address
+//
+init i2c_init(char* bus, char* address_string) {
+    int res, i2cbus, address, file;
+	char filename[20];
+	int force = 0;
+
+	i2cbus = lookup_i2c_bus(bus);
+	printf("i2cbus = %d\n", i2cbus);
+//	if (i2cbus < 0)
+//		help();
+
+	address = parse_i2c_address(address_string);
+	printf("address = 0x%2x\n", address);
+//	if (address < 0)
+//		help();
+
+	file = open_i2c_dev(i2cbus, filename, sizeof(filename), 0);
+	printf("file = %d\n", file);
+	if (file < 0
+	 || check_funcs(file)
+	 || set_slave_addr(file, address, force))
+		exit(1);
+
+    return file;
 }

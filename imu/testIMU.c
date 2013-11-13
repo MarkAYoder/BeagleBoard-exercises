@@ -35,7 +35,7 @@
 #include <unistd.h>
 #include "i2c-dev.h"
 #include "i2cbusses.h"
-#include "MPU6050.h"
+#include "mpu6050.h"
 
 static void help(void) __attribute__ ((noreturn));
 
