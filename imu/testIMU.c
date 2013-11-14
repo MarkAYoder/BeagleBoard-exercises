@@ -126,18 +126,4 @@ int main(int argc, char *argv[])
     res = i2c_smbus_read_byte_data(file, MPU6050_PWR_MGMT_1);
     printf("MPU6050_PWR_MGMT_1= %d (0x%x)\n", res, res);
     exit(1);
-// Fade the display
-	int daddress;
-	for(daddress = 0xef; daddress >= 0xe0; daddress--) {
-//	    printf("writing: 0x%02x\n", daddress);
-	    res = i2c_smbus_write_byte(file, daddress);
-	    usleep(100000);	// Sleep 0.1 seconds
-	}
-
-	if (res < 0) {
-		fprintf(stderr, "Error: Write failed\n");
-		close(file);
-		exit(1);
-	}
-	exit(0);
 }

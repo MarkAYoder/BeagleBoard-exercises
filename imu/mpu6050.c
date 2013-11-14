@@ -38,8 +38,17 @@
 // For program code, I omit the '-', 
 // therefor I use the name "MPU6050....".
 
-
+#include <errno.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include "i2c-dev.h"
+#include "i2cbusses.h"
 #include "mpu6050.h"
+
+int i2c_init(const char* bus, const char* address_string);
+static int check_funcs(int file);
 
 // Use the following global variables and access functions to help store the overall
 // rotation angle of the sensor
@@ -79,23 +88,37 @@ float    base_x_gyro;
 float    base_y_gyro;
 float    base_z_gyro;
 
-#ifdef HACK 
-int read_gyro_accel_vals(uint8_t* accel_t_gyro_ptr) {
-  // Read the raw values.
-  // Read 14 bytes at once, 
-  // containing acceleration, temperature and gyro.
-  // With the default settings of the MPU-6050,
-  // there is no filter enabled, and the values
-  // are not very stable.  Returns the error value
+int read_gyro_accel_vals(int file, accel_t_gyro*  accel_t_gyro_ptr) {
+        int count, i, tmp;
+    // Read the raw values.
+    // Read 14 bytes at once, 
+    // containing acceleration, temperature and gyro.
+    // With the default settings of the MPU-6050,
+    // there is no filter enabled, and the values
+    // are not very stable.  Returns the error value
   
-  accel_t_gyro_union* accel_t_gyro = (accel_t_gyro_union *) accel_t_gyro_ptr;
-   
-  int error = MPU6050_read (MPU6050_ACCEL_XOUT_H, (uint8_t *) accel_t_gyro, sizeof(*accel_t_gyro));
+    // accel_t_gyro_union* accel_t_gyro = (accel_t_gyro_union *) accel_t_gyro_ptr;
 
-  // Swap all high and low bytes.
-  // After this, the registers values are swapped, 
-  // so the structure name like x_accel_l does no 
-  // longer contain the lower byte.
+    count = i2c_smbus_read_i2c_block_data(file, MPU6050_ACCEL_XOUT_H, 
+                                            sizeof(*accel_t_gyro_ptr), accel_t_gyro_ptr);
+    //  int error = MPU6050_read (MPU6050_ACCEL_XOUT_H, (uint8_t *) accel_t_gyro, sizeof(*accel_t_gyro));
+    // Swap all high and low bytes.
+    // After this, the registers values are swapped, 
+    // so the structure name like x_accel_l does no 
+    // longer contain the lower byte.    
+    for(i=0; i<7; i++) {
+        printf("%6d: %6d\t\t", i, accel_t_gyro_ptr->value[i]);
+        tmp = accel_t_gyro_ptr->byte[2*i];
+        accel_t_gyro_ptr->byte[2*i] = accel_t_gyro_ptr->byte[2*i+1];
+        accel_t_gyro_ptr->byte[2*i+1] = tmp;
+        printf("%6d: %6d\n", i, accel_t_gyro_ptr->value[i]);
+    }
+    printf("count = %d\n", count);
+    printf("x_accel = %d\n", accel_t_gyro_ptr->name.x_accel);
+    printf("y_accel = %d\n", accel_t_gyro_ptr->name.y_accel);
+    printf("z_accel = %d\n", accel_t_gyro_ptr->name.z_accel);
+
+#ifdef HACK
   uint8_t swap;
   #define SWAP(x,y) swap = x; x = y; y = swap
 
@@ -108,8 +131,10 @@ int read_gyro_accel_vals(uint8_t* accel_t_gyro_ptr) {
   SWAP ((*accel_t_gyro).reg.z_gyro_h, (*accel_t_gyro).reg.z_gyro_l);
 
   return error;
+  #endif
 }
 
+#ifdef HACK
 // The sensor should be motionless on a horizontal surface 
 //  while calibration is happening
 void calibrate_sensors() {
@@ -155,16 +180,18 @@ void calibrate_sensors() {
   
   //Serial.println("Finishing Calibration");
 }
-#endif
+#endif 
 
 // void setup()
-{      
-    int error, file;
-    uint8_t c;
+int main(int argc, char *argv[]) {      
+    int error, file, res;
+    int count, i;
+    accel_t_gyro test;
 
-    printf("InvenSense MPU-6050\n");
-    printf("November 2013\n"));
-  */
+
+    printf("InvenSense MPU-6050/n");
+    printf("November 2013/n");
+
     // Initialize the 'Wire' class for the I2C-bus.
     //Wire.begin();
     file = i2c_init("1", "0x68");
@@ -174,7 +201,6 @@ void calibrate_sensors() {
     //    Acceleration at 2g
     //    Clock source at internal 8MHz
     //    The device is in sleep mode.
-    //
 
     res = i2c_smbus_read_byte_data(file, MPU6050_WHO_AM_I);
     printf("MPU6050_WHO_AM_I = %d (0x%x)\n", res, res);
@@ -185,20 +211,27 @@ void calibrate_sensors() {
     i2c_smbus_write_byte_data(file, MPU6050_PWR_MGMT_1, 0);
     res = i2c_smbus_read_byte_data(file, MPU6050_PWR_MGMT_1);
     printf("MPU6050_PWR_MGMT_1= %d (0x%x)\n", res, res);
-    exit(1);
+    
   
-  //Initialize the angles
-  calibrate_sensors();  
-  set_last_read_angle_data(millis(), 0, 0, 0, 0, 0, 0);
-}
+    printf("Starting Calibration\n");
+  
+    // Discard the first set of values read from the IMU
+    read_gyro_accel_vals(file, &test);
+  
+    //Initialize the angles
+  
+    calibrate_sensors(file);  
+//  set_last_read_angle_data(millis(), 0, 0, 0, 0, 0, 0);
+
+// }
 
 
 // void loop()
+#ifdef HACK
 while(1)
 {
-  int error;
   double dT;
-  accel_t_gyro_union accel_t_gyro;
+  // accel_t_gyro_union accel_t_gyro;
 
   /*
   Serial.println(F(""));
@@ -323,8 +356,11 @@ while(1)
   // Delay so we don't swamp the serial port
   delay(5);
 }
+#endif
 
+} // End of main
 
+#ifdef HACK
 // --------------------------------------------------------
 // MPU6050_read
 //
@@ -420,13 +456,14 @@ int MPU6050_write_reg(int reg, uint8_t data)
 
   return (error);
 }
+#endif
 
 // --------------------------------------------------------
 // i2c_init
 //
 // Open the i2c device and set the address
 //
-init i2c_init(char* bus, char* address_string) {
+int i2c_init(const char* bus, const char* address_string) {
     int res, i2cbus, address, file;
 	char filename[20];
 	int force = 0;
@@ -449,4 +486,21 @@ init i2c_init(char* bus, char* address_string) {
 		exit(1);
 
     return file;
+}
+
+static int check_funcs(int file) {
+    unsigned long funcs;
+
+	/* check adapter functionality */
+	if (ioctl(file, I2C_FUNCS, &funcs) < 0) {
+		fprintf(stderr, "Error: Could not get the adapter "
+			"functionality matrix: %s\n", strerror(errno));
+		return -1;
+	}
+
+	if (!(funcs & I2C_FUNC_SMBUS_WRITE_BYTE)) {
+		fprintf(stderr, MISSING_FUNC_FMT, "SMBus send byte");
+		return -1;
+	}
+	return 0;
 }
