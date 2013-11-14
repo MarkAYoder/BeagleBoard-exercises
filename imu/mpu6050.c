@@ -88,7 +88,7 @@ float    base_x_gyro;
 float    base_y_gyro;
 float    base_z_gyro;
 
-int read_gyro_accel_vals(int file, accel_t_gyro*  accel_t_gyro_ptr) {
+int read_gyro_accel_vals(int file, accel_t_gyro_d*  accel_t_gyro_ptr) {
         int count, i, tmp;
     // Read the raw values.
     // Read 14 bytes at once, 
@@ -117,27 +117,11 @@ int read_gyro_accel_vals(int file, accel_t_gyro*  accel_t_gyro_ptr) {
     printf("x_accel = %d\n", accel_t_gyro_ptr->name.x_accel);
     printf("y_accel = %d\n", accel_t_gyro_ptr->name.y_accel);
     printf("z_accel = %d\n", accel_t_gyro_ptr->name.z_accel);
-
-#ifdef HACK
-  uint8_t swap;
-  #define SWAP(x,y) swap = x; x = y; y = swap
-
-  SWAP ((*accel_t_gyro).reg.x_accel_h, (*accel_t_gyro).reg.x_accel_l);
-  SWAP ((*accel_t_gyro).reg.y_accel_h, (*accel_t_gyro).reg.y_accel_l);
-  SWAP ((*accel_t_gyro).reg.z_accel_h, (*accel_t_gyro).reg.z_accel_l);
-  SWAP ((*accel_t_gyro).reg.t_h, (*accel_t_gyro).reg.t_l);
-  SWAP ((*accel_t_gyro).reg.x_gyro_h, (*accel_t_gyro).reg.x_gyro_l);
-  SWAP ((*accel_t_gyro).reg.y_gyro_h, (*accel_t_gyro).reg.y_gyro_l);
-  SWAP ((*accel_t_gyro).reg.z_gyro_h, (*accel_t_gyro).reg.z_gyro_l);
-
-  return error;
-  #endif
 }
 
-#ifdef HACK
 // The sensor should be motionless on a horizontal surface 
 //  while calibration is happening
-void calibrate_sensors() {
+void calibrate_sensors(int file) {
   int                   num_readings = 10;
   float                 x_accel = 0;
   float                 y_accel = 0;
@@ -145,23 +129,24 @@ void calibrate_sensors() {
   float                 x_gyro = 0;
   float                 y_gyro = 0;
   float                 z_gyro = 0;
-  accel_t_gyro_union    accel_t_gyro;
+  accel_t_gyro_d          accel_t_gyro;
+  int i;
   
   //Serial.println("Starting Calibration");
 
   // Discard the first set of values read from the IMU
-  read_gyro_accel_vals((uint8_t *) &accel_t_gyro);
+  read_gyro_accel_vals(file, &accel_t_gyro);
   
   // Read and average the raw values from the IMU
-  for (int i = 0; i < num_readings; i++) {
-    read_gyro_accel_vals((uint8_t *) &accel_t_gyro);
-    x_accel += accel_t_gyro.value.x_accel;
-    y_accel += accel_t_gyro.value.y_accel;
-    z_accel += accel_t_gyro.value.z_accel;
-    x_gyro += accel_t_gyro.value.x_gyro;
-    y_gyro += accel_t_gyro.value.y_gyro;
-    z_gyro += accel_t_gyro.value.z_gyro;
-    delay(100);
+  for (i = 0; i < num_readings; i++) {
+    read_gyro_accel_vals(file, &accel_t_gyro);
+    x_accel += accel_t_gyro.name.x_accel;
+    y_accel += accel_t_gyro.name.y_accel;
+    z_accel += accel_t_gyro.name.z_accel;
+    x_gyro += accel_t_gyro.name.x_gyro;
+    y_gyro += accel_t_gyro.name.y_gyro;
+    z_gyro += accel_t_gyro.name.z_gyro;
+    usleep(100000);
   }
   x_accel /= num_readings;
   y_accel /= num_readings;
@@ -180,13 +165,12 @@ void calibrate_sensors() {
   
   //Serial.println("Finishing Calibration");
 }
-#endif 
 
 // void setup()
 int main(int argc, char *argv[]) {      
     int error, file, res;
     int count, i;
-    accel_t_gyro test;
+    accel_t_gyro_d test;
 
 
     printf("InvenSense MPU-6050/n");

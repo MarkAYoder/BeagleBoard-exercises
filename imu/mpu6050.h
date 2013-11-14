@@ -603,4 +603,4 @@ typedef union {
     } name;
     short value[7];
     unsigned char byte[14];
-} accel_t_gyro;
+} accel_t_gyro_d;
