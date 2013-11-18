@@ -163,7 +163,7 @@ void calibrate_sensors(int file) {
   base_y_gyro = y_gyro;
   base_z_gyro = z_gyro;
   
-  //Serial.println("Finishing Calibration");
+  printf("Finishing Calibration\n");
 }
 
 // void setup()
@@ -205,12 +205,8 @@ int main(int argc, char *argv[]) {
     //Initialize the angles
   
     calibrate_sensors(file);  
-//  set_last_read_angle_data(millis(), 0, 0, 0, 0, 0, 0);
+    //set_last_read_angle_data(millis(), 0, 0, 0, 0, 0, 0);
 
-// }
-
-
-// void loop()
 #ifdef HACK
 while(1)
 {
