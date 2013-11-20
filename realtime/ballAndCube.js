@@ -69,7 +69,8 @@ function init() {
 
     scene = new THREE.Scene();
     
-    var faceColors = [0xff0000, 0x00ff00, 0x0000ff, 0xef0000, 0x00ef00, 0x7f0000];
+    var faceColors = [0x7f0000, 0x00ff00, 0x0000ff, 0xff0000, 0x007f00, 0x7f0000];
+    
     geometry = new THREE.CubeGeometry(200, 100, 200);
     for ( var i = 0; i < geometry.faces.length; i += 2 ) {
 /*
@@ -85,7 +86,7 @@ function init() {
     material = new THREE.MeshBasicMaterial({
 //        color: 0xff0000,
 //        wireframeLinewidth: 10,
-        vertexColors: THREE.FaceColors, overdraw: 0.5
+        vertexColors: THREE.FaceColors, overdraw: true
 //        wireframe: true
     });
 
@@ -93,7 +94,7 @@ function init() {
 
     scene.add(cube);
     // console.log(cube);
-
+/*
 	var loader = new THREE.TextureLoader();
 	loader.load( 'beagle-hd-logo.gif', function ( texture ) {
 
@@ -106,7 +107,7 @@ function init() {
 		scene.add( boris );
         console.log( boris );
 	} );
-                
+*/                
     geometry = new THREE.SphereGeometry(100, 32, 32);
     material = new THREE.MeshBasicMaterial({
         color: 0x0000ff,
@@ -126,15 +127,6 @@ function init() {
     torus = new THREE.Mesh(geometry, material);
     torus.position.x = 200;
 //    scene.add(torus);
-
-    // create a point light
-    var pointLight = new THREE.PointLight(0xFFFFFF);
-    // set its position
-    pointLight.position.x = 10;
-    pointLight.position.y = 50;
-    pointLight.position.z = 130;
-    // add to the scene
-    scene.add(pointLight);
 
     camera = new THREE.PerspectiveCamera(VIEW_ANGLE, ASPECT, NEAR, FAR);
     camera.position.z = 2000;
