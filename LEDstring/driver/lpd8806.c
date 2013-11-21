@@ -7,7 +7,11 @@
 
 #define DRIVER_NAME "lpd8806"
 
-#define STRAND_LEN 160 // Length of data memory
+#define MAX_STRING_LEN 320 // Length of data memory
+
+static int string_len = 160;
+module_param(string_len, int, 0);
+MODULE_PARM_DESC(string_len, "Set String Length.");
 
 //SPI 2.0 running at 10Mhz
 #define SPI_BUS_NUM 1
@@ -16,14 +20,14 @@
 
 
 /*
- * This is a sysfs driver for 5m light strand made by Adafruit:
+ * This is a sysfs driver for 5m light string made by Adafruit:
  * 
  * http://adafruit.com/products/306
  * 
  * The driver creates a new kset called "lpd8806" inside 
  * "/sys/firmware/". It adds to this one kobject called "device". 
  * Inside "device" are the files for two attributes: "data" and "grb".
- * The "data" attribute stores the state of the strand, and the "grb"
+ * The "data" attribute stores the state of the string, and the "grb"
  * attribute stores the status of the first LED.
  * 
  */
@@ -39,7 +43,7 @@ static struct spi_device *device;
 struct lpd8806_obj {
   struct kobject kobj;
   unsigned char grb[3];
-  unsigned char data[STRAND_LEN * 3];
+  unsigned char data[MAX_STRING_LEN * 3];
 };
 #define to_lpd8806_obj(x) container_of(x, struct lpd8806_obj, kobj)
 
@@ -115,7 +119,7 @@ static ssize_t lpd8806_show(struct lpd8806_obj *obj, struct lpd8806_attr *attr, 
   } else if (strcmp(attr->attr.name, "data") == 0) {
     int i;
     int count;
-    for (i = 0; i < STRAND_LEN * 3; i += 3) {
+    for (i = 0; i < string_len * 3; i += 3) {
       count = sprintf(buf, "%s%d [%hhu %hhu %hhu]\n", buf, i/3,
 	obj->data[i+1] & 0x7F, obj->data[i] & 0x7F, obj->data[i+2] & 0x7F);  
     }
@@ -126,20 +130,20 @@ static ssize_t lpd8806_show(struct lpd8806_obj *obj, struct lpd8806_attr *attr, 
 }
 
 /*
- * This function will write the entire data array to the strand and then
+ * This function will write the entire data array to the string and then
  * latch it. The interface to the controllers has been reverse
  * engineered so the number of latch bytes is just based on guesswork.
  */
-static void update_strand(struct lpd8806_obj *obj) {
+static void update_string(struct lpd8806_obj *obj) {
   int ret;
   unsigned char latch[] = {0, 0, 0, 0, 0, 0};
-  ret = spi_write(device, &obj->data[0], 3 * STRAND_LEN);
+  ret = spi_write(device, &obj->data[0], 3 * string_len);
   if (ret != 0) {
-    printk("LPD8806 Strand Write Failure: %d\n", ret);
+    printk("LPD8806 String Write Failure: %d\n", ret);
   }
   ret = spi_write(device, latch, 6);
   if (ret != 0) {
-    printk("LPD8806 Strand Latch Failure: %d\n", ret);
+    printk("LPD8806 string Latch Failure: %d\n", ret);
   }
 }
 
@@ -153,7 +157,7 @@ static ssize_t lpd8806_store(struct lpd8806_obj *obj, struct lpd8806_attr *attr,
     int index = 0;	// Index of LED to change
     unsigned char g, r, b;
     
-    // Strand is 7 bit GRB with 1 bit for latch
+    // String is 7 bit GRB with 1 bit for latch
     // printk("lpd8806_store, buf = \"%s\"\n", buf);
     sscanf(buf, "%hhu %hhu %hhu %d", &r, &g, &b, &index);
     // printk("rgb=%hhu,%hhu,%hhu, index = %d\n", r, g, b, index);
@@ -163,14 +167,14 @@ static ssize_t lpd8806_store(struct lpd8806_obj *obj, struct lpd8806_attr *attr,
 
 /*
     // Shift out data
-    for (i = 3 * (STRAND_LEN - 1); i > 0; i -= 3) {
+    for (i = 3 * (string_len - 1); i > 0; i -= 3) {
       obj->data[i] = obj->data[i-3];
       obj->data[i+1] = obj->data[i-2];
       obj->data[i+2] = obj->data[i-1];
     }
 */
 
-    if(index>=0 && index<STRAND_LEN) {
+    if(index>=0 && index<string_len) {
       obj->data[3*index+0] = obj->grb[0];
       obj->data[3*index+1] = obj->grb[1];
       obj->data[3*index+2] = obj->grb[2];
@@ -188,7 +192,7 @@ static ssize_t lpd8806_store(struct lpd8806_obj *obj, struct lpd8806_attr *attr,
     }
     // printk("display = %d\n", display);
     if(display) {
-      update_strand(obj);
+      update_string(obj);
     }
     return count;
   } else if (strcmp(attr->attr.name, "data") == 0) {
@@ -206,7 +210,7 @@ static ssize_t lpd8806_store(struct lpd8806_obj *obj, struct lpd8806_attr *attr,
         if (sscanf(tok, "%hhu", &color) == 1) {
           obj->data[i] = color | 0x80;
           i++;
-          if (i == 3*STRAND_LEN) {
+          if (i == 3*string_len) {
             break;
           }
         }
@@ -215,7 +219,7 @@ static ssize_t lpd8806_store(struct lpd8806_obj *obj, struct lpd8806_attr *attr,
       obj->grb[0] = obj->data[0];
       obj->grb[1] = obj->data[1];
       obj->grb[2] = obj->data[2];
-      update_strand(obj);
+      update_string(obj);
       kfree(temp);
       return count;
     }
@@ -276,7 +280,7 @@ static struct lpd8806_obj *create_lpd8806_obj(const char *name) {
     obj->grb[i] = 0;
   }
   
-  for (i = 0; i < STRAND_LEN * 3; i++) {
+  for (i = 0; i < string_len * 3; i++) {
     obj->data[i] = 0x80;
   }
   
@@ -370,7 +374,7 @@ static int __init lpd8806_init(void) {
   
   spi_write(device, latch, 6);
   
-  printk("LPD8806 Driver Added\n");
+  printk("LPD8806 Driver Added. String Length = %d\n", string_len);
   
   put_device(&master->dev);
   
@@ -391,5 +395,5 @@ module_init(lpd8806_init);
 module_exit(lpd8806_exit);
 
 MODULE_DESCRIPTION("LPD8806 DRIVER");
-MODULE_AUTHOR("GREG LARMORE & SEAN RICHARDSON");
+MODULE_AUTHOR("GREG LARMORE, SEAN RICHARDSON and Mark A. Yoder");
 MODULE_LICENSE("GPL");

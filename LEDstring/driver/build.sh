@@ -13,4 +13,4 @@ make -C ~/BeagleBoard/linux-dev/KERNEL SUBDIRS=$PWD modules
 popd
 cp $DRIVER_PATH/lpd8806.ko .
 
-scp *.ko bone:.
+scp lpd8806.ko bone:.
