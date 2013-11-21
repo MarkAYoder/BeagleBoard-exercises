@@ -6,7 +6,8 @@
 #include <signal.h>
 #include <math.h>
 
-#define STRAND_LEN 160 // Number of LEDs on strand
+int string_len = 160;
+
 #define MAX 10
 #define DELAY 1000000
 
@@ -16,7 +17,7 @@ int running=1;
 
 void clear() {
   int i;
-  for (i=0; i<STRAND_LEN; i++) {
+  for (i=0; i<string_len; i++) {
     fprintf(rgb_fp, "0 0 0 %d", i);
   }
 }
@@ -41,7 +42,7 @@ void pattern4(int skip) {
   int phase;
   for(phase=0; phase<skip*period; phase++) {
     clear();
-    for(i=phase-skip*period; i<STRAND_LEN; i+=skip*period) {
+    for(i=phase-skip*period; i<string_len; i+=skip*period) {
       rgb(MAX,   0,   0, i+0*skip, 0);
       rgb(  0, MAX,   0, i+1*skip, 0);  
       rgb(  0,   0, MAX, i+2*skip, 0);  
@@ -58,13 +59,13 @@ void pattern5(int timeUp, int timeBack) {
   int i, j;
   int smooth=10;
 
-  for(i=0; i<STRAND_LEN-1; i++) {
+  for(i=0; i<string_len-1; i++) {
     for(j=1; j<=smooth; j++) {
       rgb(0, (smooth-j), 0, i,   0);
       rgb(0,        (j), 0, i+1, timeUp/(smooth*1.5));
     }
   }
-  for(i=STRAND_LEN-1; i>=0; i--) {
+  for(i=string_len-1; i>=0; i--) {
     for(j=1; j<=smooth; j++) {
       rgb(0,  0, (smooth-j), i+1, 0);
       rgb(0,  0,        (j), i  , timeBack/(smooth*1.5));
@@ -77,14 +78,14 @@ void pattern3(int timeUp, int timeBack) {
   int i;
 
   // Climbing up
-  for(i=0; i<STRAND_LEN-1; i++) {
+  for(i=0; i<string_len-1; i++) {
     rgb(   0, 0, 0, i,   0);
-    rgb((i*20/STRAND_LEN)+1, 0, 0, i+1, timeUp);
+    rgb((i*20/string_len)+1, 0, 0, i+1, timeUp);
   }
   // Sledding down
-  for(i=STRAND_LEN-1; i>=0; i--) {
+  for(i=string_len-1; i>=0; i--) {
     rgb(0,  0,  0, i+1, 0);
-    rgb(0,  0, (STRAND_LEN-i+4)*20/STRAND_LEN, i  , timeBack);
+    rgb(0,  0, (string_len-i+4)*20/string_len, i  , timeBack);
   }
 }
 
@@ -92,7 +93,7 @@ void pattern3(int timeUp, int timeBack) {
 void pattern6(int timeUp, int timeBack) {
   int i, top;
 #ifdef HACK
-  for(top=STRAND_LEN; top>0; top-=10) {
+  for(top=string_len; top>0; top-=10) {
     // Falling down
     for(i=top; i>=0; i--) {
       rgb(0,  0, 0, i+1, 0);
@@ -127,7 +128,7 @@ void pattern7(int timeUp, int timeBack) {
 // Pattern 0 outputs all the same color
 void pattern0(int r, int g, int b) {
   int i;
-  for (i=0; i<STRAND_LEN; i++) {
+  for (i=0; i<string_len; i++) {
     rgb(r, g, b, i, 0);
   }
   display();
@@ -136,7 +137,7 @@ void pattern0(int r, int g, int b) {
 // Pattern 1 outputs a string of increasing brightness
 void pattern1() {
   int i;
-  for (i=0; i<STRAND_LEN; i++) {
+  for (i=0; i<string_len; i++) {
     rgb(0, i%127, 0, i, 20000);
   }
 }
@@ -150,7 +151,7 @@ void pattern2() {
   r = rand() % 0x7F;
   b = rand() % 0x7F;
  
-  for (j = 0; j < STRAND_LEN * 3; j += 3) {
+  for (j = 0; j < string_len * 3; j += 3) {
     rgb(r, b, g, j/3, 0);
   }
   display();
@@ -168,7 +169,7 @@ void signal_handler(int signo){
   }
 }
 
-int main(int argc, char *argv[]) { 
+int main(int argc, char *argv[], char *envp[]) { 
   rgb_fp = fopen("/sys/firmware/lpd8806/device/rgb", "w");
 //  ain_fp = fopen("/sys/devices/platform/omap/tsc/ain6", "r");
   setbuf(rgb_fp, NULL);
@@ -182,6 +183,12 @@ int main(int argc, char *argv[]) {
     printf("Error with SIGINT handler\n");
     return 1;
   }
+  
+  string_len = atoi(getenv("STRING_LEN"));
+  if(string_len == 0) {
+      string_len = 160;
+  }
+  printf("string_len = %d\n", string_len);
   
   int pattern=3;
   int arg=4;
