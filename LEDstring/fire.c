@@ -16,12 +16,12 @@
  ****************************************************************/
  
 #define POLL_TIMEOUT (60 * 1000) /* 60 seconds */
-#define STRAND_LEN 160	// Number of LEDs on strand
 #define MAX 50		// Brightness
 
 /****************************************************************
  * Global variables
  ****************************************************************/
+int string_len = 160;
 static FILE *rgb_fp;
 int keepgoing = 1;	// Set to 0 when ctrl-c is pressed
 
@@ -56,7 +56,7 @@ void rgb(int red, int green, int blue, int index, int us) {
 
 void up() {
 	int i;
-	for(i=0; i<STRAND_LEN; i++) {
+	for(i=0; i<string_len; i++) {
 //		printf("Fire: %d, %d!\n", count, i);
 		rgb( 0,  0,  0, i-1,   0);
 		rgb(MAX, MAX, MAX,   i, 50000);
@@ -65,7 +65,7 @@ void up() {
 
 void down() {
 	int i;
-	for(i=STRAND_LEN-1; i>=-1; i--) {
+	for(i=string_len-1; i>=-1; i--) {
 //		printf("Fire: %d, %d!\n", count, i);
 		rgb( 0,  0,  0, i  ,   0);
 		rgb( 0, MAX,  0, i-1, 20000);
@@ -122,6 +122,13 @@ int main(int argc, char **argv, char **envp)
 	if(argc == 3) {
 		dir = atoi(argv[2]);
 	}
+    string_len = atoi(getenv("STRING_LEN"));
+    if(string_len == 0) {
+      string_len = 160;
+    }
+  printf("string_len = %d\n", string_len);
+  
+
 
 	gpio_export(gpio);
 	gpio_set_dir(gpio, 0);
