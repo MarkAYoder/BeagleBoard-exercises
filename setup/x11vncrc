@@ -1,0 +1,6 @@
+# x11vnc configuration
+
+display :0	# Overides DISPLAY to use local framebuffer
+shared		# Let more than one person attach
+forever		# Keep running, even after last one detaches
+usepw		# Use a password

@@ -33,8 +33,9 @@ ssh root@$BONE "git config --global user.email Mark.A.Yoder@Rose-Hulman.edu"
 ssh root@$BONE "git config --global color.ui true"
 ssh root@$BONE "git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises"
 
-# Copy the .bashrc file from github so bash will use it
+# Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
 ssh root@$BONE "ln -s exercises/setup/bashrc .bashrc"
+ssh root@$BONE "ln -s exercises/setup/x11vncrc .x11vncrc"
 
 # Put a symbolic link in Cloud 9 so it will see the exercises
 ssh root@$BONE "cd /var/lib/cloud9; ln -s ~/exercises ."
