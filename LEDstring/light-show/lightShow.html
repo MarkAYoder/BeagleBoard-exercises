@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <script type="text/javascript" src="/blockly/storage.js"></script>
+        <script type="text/javascript" src="/blockly/common.js"></script>
+        <script type="text/javascript" src="/blockly/blockly_compressed.js"></script>
+		<script type="text/javascript" src="/blockly/blocks_compressed.js"></script>
+    	<script type="text/javascript" src="/blockly/javascript_compressed.js"></script>
+    	<script type="text/javascript" src="/blockly/python_compressed.js"></script>
+		<script type="text/javascript" src="/blockly/en.js"></script>
+		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="lightShow.js"></script>
+        <script type="text/javascript" src="initBlocks.js"></script>
+        <link href="lightShow.css" rel="stylesheet" type="text/css"/>
+
+		<script>
+		  function init() {
+			Blockly.inject(document.getElementById("blocklyDiv"),
+				{path: './blockly/', toolbox: document.getElementById('toolbox')});
+                // https://code.google.com/p/blockly/wiki/Installation
+                
+            // This will save the diagram on exit and restore it the next time
+            // https://code.google.com/p/blockly/wiki/CloudStorageWithAppEngine
+            // If no localStorage, load a default defined in initBlocks.js
+            var url = window.location.href.split('#')[0];
+            if ('localStorage' in window && window.localStorage[url]) {
+                window.setTimeout(BlocklyStorage.restoreBlocks, 0);
+            } else {
+                BlocklyApps.loadBlocks(defaultXml);
+            }
+            BlocklyStorage.backupOnUnload();
+            
+			// Let the top-level application know that Blockly is ready.
+			//window.parent.blocklyLoaded(Blockly);
+			var runJS = function() {
+				Blockly.JavaScript.INFINITE_LOOP_TRAP = '  checkTimeout();\n';
+				var timeouts = 0;
+				var checkTimeout = function() {
+					if (timeouts++ > 1000000) {
+						throw 'Code_timeout';
+					}
+				};
+				var code = Blockly.JavaScript.workspaceToCode();
+				Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+				try {
+					console.log("printf code:");
+					console.log(code);
+                    runCode(code);
+					// eval(code);
+				} catch (e) {
+					alert('Code_badCode');
+				}
+			};
+			document.getElementById("runButton").onclick = runJS;
+            
+            var stopJS = function() {
+                stopCode();
+            };
+            document.getElementById("codeButton").onclick = stopJS;
+            
+            var codeJS = function() {
+                document.getElementById('code').innerText = 
+                    Blockly.Python.workspaceToCode() + Blockly.JavaScript.workspaceToCode();
+            };
+            document.getElementById("codeButton").onclick = codeJS;
+            
+            var xmlJS = function() {
+                document.getElementById('code').innerText = 
+                    Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
+            };
+            document.getElementById("xmlButton").onclick = xmlJS;
+            
+            var xmlInJS = function() {
+                Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, document.getElementById('code').innerText);
+
+            };
+            document.getElementById("xmlInButton").onclick = xmlInJS;
+		  }
+		</script>
+        
+	</head>
+	<body onload="init()">
+		<table border="1" bordercolor="#000000" style="background-color:#FFFFFF" width="100%" cellpadding="3" cellspacing="3" height="100%">
+			<tr>
+				<td>
+					<p/>Program the LEDstring with the drag and drop interface on the left. 
+    				<br/>The LED control blocks are in the <b>Lights</b> menu. 
+                    <br/>Use <b>Set Light at position</b> to set the lights, however they
+                    won't be updated until the <b>Send lights then delay light updates</b>
+                    block is run.
+                    <p/>
+                    <button type="button" id="runButton">Run</button>
+                    <button type="button" id="stopButton">Stop</button>
+                    <button type="button" id="codeButton">Code</button>
+                    <button type="button" id="xmlButton">xml</button>
+                    <button type="button" id="xmlInButton"></button>
+                        <span id="statusUpdate"></span><br/>
+                        <form><textarea id="code"></textarea></form>
+						<div  id="cnvs"><canvas id="canvas" width="1440" height="9"></canvas></div>
+					</p>
+				</td>
+			</tr>
+			<tr height="100%">
+				<td id="blocklyDiv"></td>
+			</tr>
+
+		</table>
+	
+		<xml id="toolbox" style="display: none">
+			<category name="Logic">
+				<block type="controls_if"></block>
+				<block type="logic_compare"></block>
+				<block type="logic_operation"></block>
+				<block type="logic_negate"></block>
+				<block type="logic_boolean"></block>
+				<block type="logic_null"></block>
+				<block type="logic_ternary"></block>
+			</category>
+			<category name="Loops">
+				<block type="controls_repeat_ext">
+					<value name="TIMES">
+						<block type="math_number">
+							<title name="NUM">LED Light Show</title>
+						</block>
+					</value>
+				</block>
+				<block type="controls_whileUntil"></block>
+				<block type="controls_for">
+					<value name="FROM">
+						<block type="math_number">
+							<title name="NUM">1</title>
+						</block>
+					</value>
+					<value name="TO">
+						<block type="math_number">
+							<title name="NUM">10</title>
+						</block>
+					</value>
+					<value name="BY">
+						<block type="math_number">
+							<title name="NUM">1</title>
+						</block>
+					</value>
+				</block>
+				<block type="controls_forEach"></block>
+				<block type="controls_flow_statements"></block>
+			</category>
+			<category name="Math">
+				<block type="math_number"></block>
+				<block type="math_arithmetic"></block>
+				<block type="math_single"></block>
+				<block type="math_trig"></block>
+				<block type="math_constant"></block>
+				<block type="math_number_property"></block>
+				<block type="math_change">
+					<value name="DELTA">
+						<block type="math_number">
+							<title name="NUM">1</title>
+						</block>
+					</value>
+				</block>
+				<block type="math_round"></block>
+				<block type="math_on_list"></block>
+				<block type="math_modulo"></block>
+				<block type="math_constrain">
+					<value name="LOW">
+						<block type="math_number">
+							<title name="NUM">1</title>
+						</block>
+					</value>
+					<value name="HIGH">
+						<block type="math_number">
+							<title name="NUM">100</title>
+						</block>
+					</value>
+				</block>
+				<block type="math_random_int">
+					<value name="FROM">
+						<block type="math_number">
+							<title name="NUM">1</title>
+						</block>
+					</value>
+					<value name="TO">
+						<block type="math_number">
+							<title name="NUM">100</title>
+						</block>
+					</value>
+				</block>
+				<block type="math_random_float"></block>
+			</category>
+			<category name="Text">
+				<block type="text"></block>
+				<block type="text_join"></block>
+				<block type="text_append">
+					<value name="TEXT">
+						<block type="text"></block>
+					</value>
+				</block>
+				<block type="text_length"></block>
+				<block type="text_isEmpty"></block>
+				<block type="text_indexOf">
+					<value name="VALUE">
+						<block type="variables_get">
+							<title name="VAR">text</title>
+						</block>
+					</value>
+				</block>
+				<block type="text_charAt">
+					<value name="VALUE">
+						<block type="variables_get">
+							<title name="VAR">text</title>
+						</block>
+					</value>
+				</block>
+				<block type="text_getSubstring">
+					<value name="STRING">
+						<block type="variables_get">
+							<title name="VAR">text</title>
+						</block>
+					</value>
+				</block>
+				<block type="text_changeCase"></block>
+				<block type="text_trim"></block>
+				<block type="text_print"></block>
+				<block type="text_prompt"></block>
+			</category>
+			<category name="Lists">
+				<block type="lists_create_empty"></block>
+				<block type="lists_create_with"></block>
+				<block type="lists_repeat">
+					<value name="NUM">
+						<block type="math_number">
+							<title name="NUM">5</title>
+						</block>
+					</value>
+				</block>
+				<block type="lists_length"></block>
+				<block type="lists_isEmpty"></block>
+				<block type="lists_indexOf">
+					<value name="VALUE">
+						<block type="variables_get">
+							<title name="VAR">list</title>
+						</block>
+					</value>
+				</block>
+				<block type="lists_getIndex">
+					<value name="VALUE">
+						<block type="variables_get">
+							<title name="VAR">list</title>
+						</block>
+					</value>
+				</block>
+				<block type="lists_setIndex">
+					<value name="LIST">
+						<block type="variables_get">
+							<title name="VAR">list</title>
+						</block>
+					</value>
+				</block>
+				<block type="lists_getSublist">
+					<value name="LIST">
+						<block type="variables_get">
+							<title name="VAR">list</title>
+						</block>
+					</value>
+				</block>
+			</category>
+			<category name="Lights">
+				<block type="light_set_light"></block>
+				<block type="light_send_lights"></block>
+			</category>
+			<!--category name="Colour">
+				<block type="colour_picker"></block>
+				<block type="colour_random"></block>
+				<block type="colour_rgb"></block>
+				<block type="colour_blend"></block>
+			</category-->
+			<category name="Variables" custom="VARIABLE"></category>
+			<category name="Procedures" custom="PROCEDURE"></category>
+		</xml>
+	</body>
+	
+	<script type="text/javascript">
+		Blockly.Blocks['light_set_light'] = {
+			init: function() {
+				this.setHelpUrl('http://www.example.com/');
+				this.setColour(330);
+				this.appendValueInput("pos")
+					.setCheck("Number")
+					.appendTitle("Set Light at position");
+				this.appendValueInput("red")
+					.setCheck("Number")
+					.setAlign(Blockly.ALIGN_RIGHT)
+					.appendTitle("to RGB");
+				this.appendValueInput("green")
+					.setCheck("Number")
+					.setAlign(Blockly.ALIGN_RIGHT);
+				this.appendValueInput("blue")
+					.setCheck("Number")
+					.setAlign(Blockly.ALIGN_RIGHT);
+				this.setInputsInline(true);
+				this.setPreviousStatement(true, "null");
+				this.setNextStatement(true, "null");
+				this.setTooltip('');
+			}
+		};
+
+		Blockly.JavaScript['light_set_light'] = function(block) {
+			var value_pos = Blockly.JavaScript.valueToCode(block, 'pos', Blockly.JavaScript.ORDER_ATOMIC);
+			var value_red = Blockly.JavaScript.valueToCode(block, 'red', Blockly.JavaScript.ORDER_ATOMIC);
+			var value_green = Blockly.JavaScript.valueToCode(block, 'green', Blockly.JavaScript.ORDER_ATOMIC);
+			var value_blue = Blockly.JavaScript.valueToCode(block, 'blue', Blockly.JavaScript.ORDER_ATOMIC);
+			// TODO: Assemble ' + language + ' into code variable.
+
+			//var code = 'console.log("sending light[' + value_pos +','+ value_red +','+ value_green +','+ value_blue + ']");';
+			var code = "setLight(" + value_red +", " + value_green + ", " + value_blue + ", " + value_pos +");";
+			//code += "socket.emit('LEDChain',{r:"+value_red+", g:"+value_green+", b:"+value_blue+", p:"+value_pos+"});";
+			return code;
+		};
+        Blockly.Python['light_set_light'] = function(block) {
+            var value_pos = Blockly.Python.valueToCode(block, 'pos', Blockly.Python.ORDER_ATOMIC);
+            var value_red = Blockly.Python.valueToCode(block, 'red', Blockly.Python.ORDER_ATOMIC);
+            var value_green = Blockly.Python.valueToCode(block, 'green', Blockly.Python.ORDER_ATOMIC);
+            var value_blue = Blockly.Python.valueToCode(block, 'blue', Blockly.Python.ORDER_ATOMIC);
+            // TODO: Assemble Python into code variable.
+            var code = 'Test Code';
+            console.log("Generating Python");
+            return code;
+};
+		
+		Blockly.Blocks['light_send_lights'] = {
+			init: function() {
+				this.setHelpUrl('http://www.example.com/');
+				this.setColour(330);
+				this.appendValueInput("delay")
+					.setCheck("Number")
+					.appendTitle("Send lights then delay light updates for");
+				this.appendDummyInput()
+					.appendTitle("milliseconds");
+				this.setInputsInline(true);
+				this.setPreviousStatement(true, "null");
+				this.setNextStatement(true, "null");
+				this.setTooltip('');
+			}
+		};
+
+		Blockly.JavaScript['light_send_lights'] = function(block) {
+			var value_delay = Blockly.JavaScript.valueToCode(block, 'delay', Blockly.JavaScript.ORDER_ATOMIC);
+			var code = 'sendLights(' + value_delay + ');';
+			return code;
+		};
+	</script>
+</html>

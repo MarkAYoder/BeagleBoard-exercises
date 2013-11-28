@@ -1,30 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>BeagleBone Demos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
   </head>
-  <body>
-    <h1>BeagleBone Demo</h1>
-    <a href="http://beagleboard.org" target="_blank">
-        <img src="beagle-hd-logo.gif" width=200 align="right"></a>
-    By <i>Mark A. Yoder</i>
-    <p/>
-    <ul>
-        <li><a href="/ioPlot.html">IO Plotting</a></li>
-        <li><a href="/buttonBox.html">Button Box</a></li>
-        <li><a href="/audio.html">Real-time audio</a></li>
-        <li><a href="/matrixLED.html">Matrix LED</a></li>
-        <li><a href="/Savage.html">Student Matrix LED</a></li>
-        <li><a href="/ballAndCube.html">Ball and Cube</a></li>
-    </ul>
-    <p/>
-    <a href="http://Rose-Hulman.edu" target="_blank">
-        <img src="RoseLogo96.png" width=200></a>
-    <a href="http://www.ti.com/sitara" target="_blank">
-        <img src="hdr_ti_logo.gif" width=200 align="right"></a>
-    <br/>
-    <p/>
+  
+  <body padding-top="0px" style="background-image:url(images/green_cup.png)">
+  <!-- From http://www.sitepoint.com/understanding-twitter-bootstrap-3/ -->
+    
+    <div class="container-fluid">
+        <div class="page-header">
+     		<a href="http://beagleboard.org" target="_blank">
+        		<img src="images/beagle-hd-logo.gif" width=300 align="right"></a>
+            <h1>BeagleBone Demos</h1>
+       </div>
+    </div>
+    
+    <div class="container">
+          <div class="row">
+            <div class="col-md-4">
+              <h3 class="text-center">ioPlot</h3>
+              <a href="/ioPlot.html"><img class="img-responsive img-thumbnail" src="images/ioPlot.jpg"></a>
+              <p>Dummy Text..</p>
+            </div>
+
+            <div class="col-md-4">
+              <h3 class="text-center">Button Box</h3>
+              <a href=" /buttonBox.html"><img class="img-responsive img-thumbnail" src="images/buttonBox.jpg"></a>
+              <p>Dummy Text..</p>
+            </div>
+
+            <div class="col-md-4">
+              <h3 class="text-center">Real-time audio</h3>
+              <a href="/audio.html"><img class="img-responsive img-thumbnail" src="images/audio.jpg"></a>
+              <p>Dummy Text ...</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <h3 class="text-center">Matrix LED</h3>
+              <a href="matrixLED.html"><img class="img-responsive img-thumbnail" src="images/matrixLED.jpg"></a>
+              <p>Dummy Text..</p>
+            </div>
+
+            <div class="col-md-4">
+              <h3 class="text-center">Student Matrix LED</h3>
+              <a href="/Savage.html"><img class="img-responsive img-thumbnail" src="images/studentLED.jpg"></a>
+              <p>Dummy Text..</p>
+            </div>
+
+            <div class="col-md-4">
+              <h3 class="text-center">Ball and Cube</h3>
+              <a href="/ballAndCube.html"><img class="img-responsive img-thumbnail" src="images/ballAndCube.jpg"></a>
+              <p>Dummy Text ...</p>
+             </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <h3 class="text-center">Full Screen Mario</h3>
+              <a href="/FullScreenMario/index.html"><img class="img-responsive img-thumbnail" src="images/fullScreenMario.jpg"></a>
+              <p>Dummy Text..</p>
+            </div>
+
+            <div class="col-md-4">
+              <h3 class="text-center">XXX</h3>
+              <a href="/Savage.html"><img class="img-responsive img-thumbnail" src="images/feat2.jpg"></a>
+              <p>Dummy Text..</p>
+            </div>
+
+            <div class="col-md-4">
+              <h3 class="text-center">YYY</h3>
+              <a href="/ballAndCube.html"><img class="img-responsive img-thumbnail" src="images/feat3.jpg"></a>
+              <p>Dummy Text ...</p>
+             </div>
+          </div>
+
+        </div>
+        </p>
+        <footer>
+        <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+		<a href="http://Rose-Hulman.edu" target="_blank">
+        		<img src="images/RoseLogo96.png" width=300></a>
+	  </div>
+
+          <div class="col-md-4">
+	  </div>
+
+          <div class="col-md-4">
+              	<a href="http://www.ti.com/sitara" target="_blank">
+        	<img src="images/hdr_ti_logo.gif" width=300></a>
+          </div>
+        </div>
+        </div>
+      </footer>
+  
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
-

@@ -1,6 +1,6 @@
 CC=gcc
 
-TARGETS=fire
+TARGETS=fire tree twinkle
 
 all: $(TARGETS)
 
@@ -23,19 +23,19 @@ lpd8806:
 	scp ~/BeagleBoard/kernel/kernel/drivers/char/lpd8806.ko root@yoder-white-bone:/.
 
 clean: 
-	clear
 	rm -f $(TARGETS)
 
 test: test.o
 	$(CC) $^ -o $@
 
 tree:	tree.o
-	$(CC) $^ -o $@
+	$(CC) $^ -o $@ -lm
 
 fire:	fire.o gpio.o
 	$(CC) $^ -o $@ -lpthread
 
+twinkle:	twinkle.o
+	$(CC) $^ -o $@ -lpthread
+
 %.o: %.c
 	$(CC) -c $< -o $@
-
-

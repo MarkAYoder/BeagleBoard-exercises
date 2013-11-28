@@ -5,10 +5,10 @@
 if [ "x${1}" != "xkill" ]
 then
   # Launch 5 sledders
-  for i in {1..5}
+  for i in {1..10}
   do
     ./tree 3 60000 20000 &
-    sleep 1.25
+    sleep 2
   done
 
   # ./fire 48 0 &
