@@ -40,5 +40,4 @@ IP_ADDR=`ifconfig $interface | grep "inet addr" | awk -F: '{print $2}' | awk '{p
 #  file on the Beagle
 # This makes it so you can connect to the Beagle without using your password.
 ssh-copy-id root@$beagleAddr
-# Update the /etc/resovl.conf on the Bone 
-./host.setDNS.sh
+
