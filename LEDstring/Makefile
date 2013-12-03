@@ -1,6 +1,6 @@
 CC=gcc
 
-TARGETS=fire
+TARGETS=fire tree
 
 all: $(TARGETS)
 
@@ -23,7 +23,6 @@ lpd8806:
 	scp ~/BeagleBoard/kernel/kernel/drivers/char/lpd8806.ko root@yoder-white-bone:/.
 
 clean: 
-	clear
 	rm -f $(TARGETS)
 
 test: test.o
@@ -37,5 +36,3 @@ fire:	fire.o gpio.o
 
 %.o: %.c
 	$(CC) -c $< -o $@
-
-
