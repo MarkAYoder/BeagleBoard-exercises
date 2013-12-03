@@ -53,5 +53,9 @@ systemctl enable boneServer
 # Set the time zone to Indiana
 rm /etc/localtime
 ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
+
+# Run if ssh is refusing connections
+# rm /etc/dropbear/dropbear_rsa_host_key
+# reboot
 "
 ################
