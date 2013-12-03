@@ -16,37 +16,42 @@ ssh-copy-id root@$BONE
 DATE=`date`
 ssh root@$BONE "date -s \"$DATE\""
 
-# Set the network name of the board
-ssh root@$BONE "echo $BONE_NAME > /etc/hostname"
-
 # Update the package manager
 # ssh root@$BONE "opkg update"
-fi
 
 # Set up DNS on bone
 ./host.setDNS.sh
 scp -r .ssh root@$BONE:.
+fi
+
+################
+ssh root@$BONE "
+# Set the network name of the board
+echo $BONE_NAME > /etc/hostname
 
 # Clone the ECE497 exercises from github
-ssh root@$BONE "git config --global user.name \"Mark A. Yoder\""
-ssh root@$BONE "git config --global user.email Mark.A.Yoder@Rose-Hulman.edu"
-ssh root@$BONE "git config --global color.ui true"
-ssh root@$BONE "git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises"
+git config --global user.name \"Mark A. Yoder\"
+git config --global user.email Mark.A.Yoder@Rose-Hulman.edu
+git config --global color.ui true
+git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises
 
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
-ssh root@$BONE "ln -s exercises/setup/bashrc .bashrc"
-ssh root@$BONE "ln -s exercises/setup/x11vncrc .x11vncrc"
+ln -s exercises/setup/bashrc .bashrc
+ln -s exercises/setup/x11vncrc .x11vncrc
+cd /etc/gdm
+mv custom.conf custom.conf.orig
+sed s/TimedLoginEnable=true/TimedLoginEnable=false/ custom.conf.orig > custom.conf
 
 # Put a symbolic link in Cloud 9 so it will see the exercises
-ssh root@$BONE "cd /var/lib/cloud9; ln -s ~/exercises ."
+cd /var/lib/cloud9; ln -s ~/exercises .
 
 # Set up boneServer to run at boot time
-ssh root@$BONE "cp ~/exercises/realtime/boneServer.service /lib/systemd/system"
-ssh root@$BONE "systemctl start boneServer"
-ssh root@$BONE "systemctl enable boneServer"
-
+cp ~/exercises/realtime/boneServer.service /lib/systemd/system
+systemctl start boneServer
+systemctl enable boneServer
 
 # Set the time zone to Indiana
-ssh root@$BONE "rm /etc/localtime"
-ssh root@$BONE "ln -s /usr/share/zoneinfo/America/New_York /etc/localtime"
-
+rm /etc/localtime
+ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
+"
+################
