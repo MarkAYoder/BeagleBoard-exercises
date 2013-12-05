@@ -43,7 +43,8 @@ mv custom.conf custom.conf.orig
 sed s/TimedLoginEnable=true/TimedLoginEnable=false/ custom.conf.orig > custom.conf
 
 # Put a symbolic link in Cloud 9 so it will see the exercises
-cd /var/lib/cloud9; ln -s ~/exercises .
+cd /var/lib/cloud9
+ln -s ~/exercises .
 
 # Set up boneServer to run at boot time
 cp ~/exercises/realtime/boneServer.service /lib/systemd/system
@@ -58,4 +59,5 @@ ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
 # rm /etc/dropbear/dropbear_rsa_host_key
 # reboot
 "
+
 ################
