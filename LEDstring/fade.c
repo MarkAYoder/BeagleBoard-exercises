@@ -66,7 +66,7 @@ void *fade(void *env) {
 //		printf("Fire: %d, %d!\n", count, i);
 		rgb( i, i,  i, led, 20000);
 	}
-//	pthread_exit(NULL);
+	pthread_exit(NULL);
 }
 
 /****************************************************************
@@ -101,7 +101,7 @@ int main(int argc, char **argv, char **envp)
 	while (keepgoing) {
             fade_env = rand() % string_len;
     		pthread_create(&fadeThread, NULL, &fade, &fade_env);
-            sleep(1);
+            usleep(200000);
 	}
 	return 0;
 }

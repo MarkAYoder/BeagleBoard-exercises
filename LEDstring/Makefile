@@ -1,6 +1,6 @@
 CC=gcc
 
-TARGETS=fire tree
+TARGETS=fire tree fade
 
 all: $(TARGETS)
 
@@ -32,6 +32,9 @@ tree:	tree.o
 	$(CC) $^ -o $@
 
 fire:	fire.o gpio.o
+	$(CC) $^ -o $@ -lpthread
+
+fade:	fade.o
 	$(CC) $^ -o $@ -lpthread
 
 %.o: %.c
