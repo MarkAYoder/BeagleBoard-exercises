@@ -8,20 +8,17 @@
 #include <poll.h>
 #include <signal.h>	// Defines signal-handling functions (i.e. trap Ctrl-C)
 
-#include "fire.h"
-#include "gpio.h"
 
 /****************************************************************
  * Constants
  ****************************************************************/
  
-#define POLL_TIMEOUT (60 * 1000) /* 60 seconds */
-#define MAX 50		// Brightness
+#define MAX 127		// Brightness
 
 /****************************************************************
  * Global variables
  ****************************************************************/
-int string_len = 320;
+int string_len = 160;
 static FILE *rgb_fp;
 int keepgoing = 1;	// Set to 0 when ctrl-c is pressed
 
@@ -58,15 +55,13 @@ void *fade(void *env) {
 	int *tmp = env;
 	int led = *tmp;	// Initial direction
     int i;
-    for(i=0; i<MAX; i++) {
-//		printf("Fire: %d, %d!\n", count, i);
-		rgb( i, i,  i, led, 20000);
+    for(i=0; i<MAX; i+=10) {
+		rgb( i, i,  i, led, 2000);
 	}
-    for(i=MAX; i>=0; i--) {
-//		printf("Fire: %d, %d!\n", count, i);
-		rgb( i, i,  i, led, 20000);
+    for(i=MAX; i>=0; i-=10) {
+		rgb( i, i,  i, led, 2000);
 	}
-	pthread_exit(NULL);
+    pthread_exit(NULL);
 }
 
 /****************************************************************
@@ -74,12 +69,6 @@ void *fade(void *env) {
  ****************************************************************/
 int main(int argc, char **argv, char **envp)
 {
-    int led;
-	if (argc < 2) {
-		printf("Usage: fade LED#<gpio-pin>\n\n");
-		exit(-1);
-	}
-
 	// Set the signal callback for Ctrl-C
 	signal(SIGINT, signal_handler);
 
@@ -89,18 +78,17 @@ int main(int argc, char **argv, char **envp)
 		printf("Opening rgb failed\n");
 		exit(0);
 	}
-    
-    led = atoi(argv[1]);
 
-    string_len = atoi(getenv("STRING_LEN"));
-    if(string_len == 0) {
-      string_len = 160;
+    if(getenv("STRING_LEN")) {
+    	string_len = atoi(getenv("STRING_LEN"));
+    } else {
+      	string_len = 160;
     }
-  printf("string_len = %d\n", string_len);
+    printf("string_len = %d\n", string_len);
  
 	while (keepgoing) {
             fade_env = rand() % string_len;
-    		pthread_create(&fadeThread, NULL, &fade, &fade_env);
+    	    pthread_create(&fadeThread, NULL, &fade, &fade_env);
             usleep(200000);
 	}
 	return 0;
