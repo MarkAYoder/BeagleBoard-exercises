@@ -140,10 +140,17 @@ void pattern1() {
   for (i=0; i<string_len; i++) {
     rgb(0, i%127, 0, i, 20000);
   }
+  for (i=0; i<string_len; i++) {
+    rgb(0, 0, i%127, i, 20000);
+  }
+  for (i=0; i<string_len; i++) {
+    rgb(i%127, 0, 0, i, 20000);
+  }
+
 }
 
 void pattern2() {
-  int i, j;
+  int i;
   unsigned char g, r, b;
   srand(time(NULL));
   
@@ -151,8 +158,8 @@ void pattern2() {
   r = rand() % 0x7F;
   b = rand() % 0x7F;
  
-  for (j = 0; j < string_len * 3; j += 3) {
-    rgb(r, b, g, j/3, 0);
+  for (i=0; i<string_len; i++) {
+    rgb(r, b, g, i, 0);
   }
   display();
   usleep(200000);

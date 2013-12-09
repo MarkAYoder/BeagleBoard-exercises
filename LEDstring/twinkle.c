@@ -55,11 +55,13 @@ void *twinkle(void *env) {
 	int *tmp = env;
 	int led = *tmp;	// Initial direction
     int i;
-    for(i=0; i<MAX; i+=20) {
-		rgb( i, i,  i, led, 20000);
+    int delay;
+    delay = 10000 + rand() % 50000;
+    for(i=0; i<MAX; i+=10) {
+		rgb( i, i,  i, led, delay);
 	}
-    for(i=MAX; i>=0; i-=20) {
-		rgb( i, i,  i, led, 20000);
+    for(i=MAX; i>=0; i-=10) {
+		rgb( i, i,  i, led, delay);
 	}
     rgb( 0, 0,  0, led, 0);
     
@@ -71,7 +73,7 @@ void *twinkle(void *env) {
  ****************************************************************/
 int main(int argc, char **argv, char **envp)
 {
-    int err, i, delay = 200000;
+    int err, i, delay = 100000;
 	// Set the signal callback for Ctrl-C
 	signal(SIGINT, signal_handler);
 
