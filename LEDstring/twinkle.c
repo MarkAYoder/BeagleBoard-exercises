@@ -23,10 +23,10 @@ static FILE *rgb_fp;
 int keepgoing = 1;	// Set to 0 when ctrl-c is pressed
 
 /* Global thread environment */
-int fade_env = 0;
+int twinkle_env = 0;
 
 /* Thread handle */
-pthread_t fadeThread;
+pthread_t twinkleThread;
 
 /****************************************************************
  * signal_handler
@@ -51,7 +51,7 @@ void rgb(int red, int green, int blue, int index, int us) {
         usleep(us);
 }
 
-void *fade(void *env) {
+void *twinkle(void *env) {
 	int *tmp = env;
 	int led = *tmp;	// Initial direction
     int i;
@@ -71,7 +71,7 @@ void *fade(void *env) {
  ****************************************************************/
 int main(int argc, char **argv, char **envp)
 {
-    int err, i;
+    int err, i, delay = 200000;
 	// Set the signal callback for Ctrl-C
 	signal(SIGINT, signal_handler);
 
@@ -89,18 +89,23 @@ int main(int argc, char **argv, char **envp)
     }
     printf("string_len = %d\n", string_len);
     
+    if(argc == 2) {
+        delay = atoi(argv[1]);
+    }
+    printf("delay= %d\n", delay);
+    
     for(i=0; i<string_len; i++) {
         rgb(0, 0, 0, i, 0);    
     }
  
 	for(i=0; keepgoing; i++) {
-            fade_env = rand() % string_len;
-    	    err = pthread_create(&fadeThread, NULL, &fade, &fade_env);
-            if(err) {
-                printf("pthread_create err = %d, i=%d\n", err, i);
-                printf("EAGAIN = %d\n", EAGAIN);
-            }
-            usleep(200000);
+        twinkle_env = rand() % string_len;
+	    err = pthread_create(&twinkleThread, NULL, &twinkle, &twinkle_env);
+        if(err) {
+            printf("pthread_create err = %d, i=%d\n", err, i);
+            printf("EAGAIN = %d\n", EAGAIN);
+        }
+        usleep(delay);
 	}
 	return 0;
 }

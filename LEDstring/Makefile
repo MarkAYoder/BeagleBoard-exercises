@@ -1,6 +1,6 @@
 CC=gcc
 
-TARGETS=fire tree fade
+TARGETS=fire tree twinkle
 
 all: $(TARGETS)
 
@@ -34,7 +34,7 @@ tree:	tree.o
 fire:	fire.o gpio.o
 	$(CC) $^ -o $@ -lpthread
 
-fade:	fade.o
+twinkle:	twinkle.o
 	$(CC) $^ -o $@ -lpthread
 
 %.o: %.c
