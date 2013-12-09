@@ -55,13 +55,15 @@ void *fade(void *env) {
 	int *tmp = env;
 	int led = *tmp;	// Initial direction
     int i;
-    for(i=0; i<MAX; i+=10) {
-		rgb( i, i,  i, led, 2000);
+    for(i=0; i<MAX; i+=20) {
+		rgb( i, i,  i, led, 20000);
 	}
-    for(i=MAX; i>=0; i-=10) {
-		rgb( i, i,  i, led, 2000);
+    for(i=MAX; i>=0; i-=20) {
+		rgb( i, i,  i, led, 20000);
 	}
-    pthread_exit(NULL);
+    rgb( 0, 0,  0, led, 0);
+    
+    pthread_detach(pthread_self());
 }
 
 /****************************************************************
@@ -69,6 +71,7 @@ void *fade(void *env) {
  ****************************************************************/
 int main(int argc, char **argv, char **envp)
 {
+    int err, i;
 	// Set the signal callback for Ctrl-C
 	signal(SIGINT, signal_handler);
 
@@ -85,10 +88,18 @@ int main(int argc, char **argv, char **envp)
       	string_len = 160;
     }
     printf("string_len = %d\n", string_len);
+    
+    for(i=0; i<string_len; i++) {
+        rgb(0, 0, 0, i, 0);    
+    }
  
-	while (keepgoing) {
+	for(i=0; keepgoing; i++) {
             fade_env = rand() % string_len;
-    	    pthread_create(&fadeThread, NULL, &fade, &fade_env);
+    	    err = pthread_create(&fadeThread, NULL, &fade, &fade_env);
+            if(err) {
+                printf("pthread_create err = %d, i=%d\n", err, i);
+                printf("EAGAIN = %d\n", EAGAIN);
+            }
             usleep(200000);
 	}
 	return 0;
