@@ -2,18 +2,36 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<script type="text/javascript" src="/blockly/blockly_compressed.js"></script>
+        <script type="text/javascript" src="/blockly/storage.js"></script>
+        <script type="text/javascript" src="/blockly/common.js"></script>
+        <script type="text/javascript" src="/blockly/blockly_compressed.js"></script>
 		<script type="text/javascript" src="/blockly/blocks_compressed.js"></script>
 		<script type="text/javascript" src="/blockly/javascript_compressed.js"></script>
 		<script type="text/javascript" src="/blockly/en.js"></script>
 		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
-		<script type="text/javascript" src="lightShow.js"></script>
+        <script type="text/javascript" src="lightShow.js"></script>
+        <script type="text/javascript" src="initBlocks.js"></script>
         <link href="lightShow.css" rel="stylesheet" type="text/css"/>
+        
 
 		<script>
 		  function init() {
 			Blockly.inject(document.getElementById("blocklyDiv"),
 				{path: './blockly/', toolbox: document.getElementById('toolbox')});
+                // https://code.google.com/p/blockly/wiki/Installation
+                
+            // This will save the diagram on exit and restore it the next time
+            // https://code.google.com/p/blockly/wiki/CloudStorageWithAppEngine
+            // If no localStorage, load a default defined in initBlocka.sj
+            var url = window.location.href.split('#')[0];
+            console.log(localStorage);
+            if ('localStorage' in window && window.localStorage[url]) {
+                window.setTimeout(BlocklyStorage.restoreBlocks, 0);
+            } else {
+                BlocklyApps.loadBlocks(defaultXml);
+            }
+            BlocklyStorage.backupOnUnload();
+            
 			// Let the top-level application know that Blockly is ready.
 			//window.parent.blocklyLoaded(Blockly);
 			var runJS = function() {
@@ -37,12 +55,14 @@
 			document.getElementById("runButton").onclick = runJS;
 		  }
 		</script>
+        
 	</head>
 	<body onload="init()">
 		<table border="1" bordercolor="#000000" style="background-color:#FFFFFF" width="100%" cellpadding="3" cellspacing="3" height="100%">
 			<tr>
 				<td>
-					<p>Please program the LEDstring with the drag and drop interface bellow. <button type="button" id="runButton">Run</button></p>
+					<p>Please program the LEDstring with the drag and drop interface below. 
+                    <button type="button" id="runButton">Run</button></p>
 					<p>Be sure to use the "Set Light" and "Delay" blocks. 
 						<span id="statusUpdate"></span>
 						<div id="cnvs"><canvas id="canvas" width="1440" height="9"></canvas></div>
