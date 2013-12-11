@@ -12,7 +12,6 @@
         <script type="text/javascript" src="lightShow.js"></script>
         <script type="text/javascript" src="initBlocks.js"></script>
         <link href="lightShow.css" rel="stylesheet" type="text/css"/>
-        
 
 		<script>
 		  function init() {
@@ -22,9 +21,8 @@
                 
             // This will save the diagram on exit and restore it the next time
             // https://code.google.com/p/blockly/wiki/CloudStorageWithAppEngine
-            // If no localStorage, load a default defined in initBlocka.sj
+            // If no localStorage, load a default defined in initBlocks.js
             var url = window.location.href.split('#')[0];
-            console.log(localStorage);
             if ('localStorage' in window && window.localStorage[url]) {
                 window.setTimeout(BlocklyStorage.restoreBlocks, 0);
             } else {
@@ -61,9 +59,12 @@
 		<table border="1" bordercolor="#000000" style="background-color:#FFFFFF" width="100%" cellpadding="3" cellspacing="3" height="100%">
 			<tr>
 				<td>
-					<p>Please program the LEDstring with the drag and drop interface below. 
-                    <button type="button" id="runButton">Run</button></p>
-					<p>Be sure to use the "Set Light" and "Delay" blocks. 
+					<p/>Program the LEDstring with the drag and drop interface on the left. 
+    				<br/>The LED control blocks are in the <b>Lights</b> menu. 
+                    <br/>Use <b>Set Light at position</b> to set the lights, however they
+                    won't be updated until the <b>Send lights then delay light updates</b>
+                    block is run.
+                    <p/><button type="button" id="runButton">Run</button></p>
 						<span id="statusUpdate"></span>
 						<div id="cnvs"><canvas id="canvas" width="1440" height="9"></canvas></div>
 					</p>
