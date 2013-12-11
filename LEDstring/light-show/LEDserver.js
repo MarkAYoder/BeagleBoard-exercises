@@ -45,7 +45,7 @@ server = http.createServer(function (req, res) {
 	var path = url.parse(req.url).pathname;
 	console.log("path: " + path);
 	if (path === '/') {
-		path = '/boneServer.html';
+		path = '/lightShow.html';
 	}
 
 	fs.readFile(__dirname + path, function (err, data) {
