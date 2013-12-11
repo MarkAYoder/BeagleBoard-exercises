@@ -1,0 +1,72 @@
+body {
+  font-family: sans-serif;
+  font-size: 16px;
+  margin: 25px;
+  max-width: 650px;
+}
+
+
+#setup {
+	font-size: 10px;
+}
+
+.LED {
+	display: inline-block;
+	margin: 0px 0px 0px 0px;
+	padding:0px 0px 0px 0px;
+	height: 25px;
+	width:  25px;
+	border-radius: 30%;
+	font-size: 12px;
+	font-family: Courier;
+	border: 1px solid #eeeeee;
+	background-color: #eeeeee;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.Ron.on {
+	border: 1px solid #730;
+	background-color: #f70;
+}
+
+.on {
+	border: 1px solid #070;
+	background-color: #0f0;
+}
+
+.Ron {
+	border: 1px solid #700;
+	background-color: #f00;
+}
+
+#i2cNum {
+	text-align: right; 
+	width:	3em;
+}
+
+#update {
+	float: right;
+	display: inline;
+}
+
+#RoseLogo {
+	float:	right;
+	width:	200px;
+}
+
+#addresses {
+	float:	right;
+}
+
+#bottom {
+	float:	left;
+}
+
+#signature {
+	clear:	both;
+}
