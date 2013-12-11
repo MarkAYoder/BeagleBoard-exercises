@@ -1,0 +1,32 @@
+
+  html, body {
+	background-color: #fff;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	height: 100%;
+  }
+  .blocklySvg {
+	height: 100%;
+	width: 100%;
+  }
+  #statusUpdate {
+	color:red;
+	font-weight:bold;
+  }
+  .color-box {
+	margin: 0px;
+	width: 1120px;
+	height: 7px;
+	padding: 0px;
+	display: block;
+	background-color: #000;
+}
+.color-box-inline {
+	margin: 1px;
+	padding: 0px;
+	width: 5px;
+	height: 5px;
+	display: block;
+	background-color: #fff;
+}
