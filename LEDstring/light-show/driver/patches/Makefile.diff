@@ -1,2 +1,0 @@
-56a57,57
-> obj-$(CONFIG_LPD8806) += lpd8806.o

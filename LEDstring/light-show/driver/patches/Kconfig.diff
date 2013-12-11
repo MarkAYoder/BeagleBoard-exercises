@@ -1,7 +1,0 @@
-8a9,14
-> config LPD8806
->   tristate "Enable LPD8806 LED light strand driver"
->   default m
->   help
->     SPI driver for the LPD8806 LED light strand from Adafruit
-> 
