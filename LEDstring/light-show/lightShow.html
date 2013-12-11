@@ -12,7 +12,7 @@
 
 		<script>
 		  function init() {
-			Blockly.inject(document.body.getElementsByTagName("td")[1],
+			Blockly.inject(document.getElementById("blocklyDiv"),
 				{path: './blockly/', toolbox: document.getElementById('toolbox')});
 			// Let the top-level application know that Blockly is ready.
 			//window.parent.blocklyLoaded(Blockly);
@@ -42,7 +42,7 @@
 		<table border="1" bordercolor="#000000" style="background-color:#FFFFFF" width="100%" cellpadding="3" cellspacing="3" height="100%">
 			<tr>
 				<td>
-					<p>Pleace program the LEDstring with the drag and drop interface bellow. <button type="button" id="runButton">Run</button></p>
+					<p>Please program the LEDstring with the drag and drop interface bellow. <button type="button" id="runButton">Run</button></p>
 					<p>Be sure to use the "Set Light" and "Delay" blocks. 
 						<span id="statusUpdate"></span>
 						<div id="cnvs"><canvas id="canvas" width="1440" height="9"></canvas></div>
@@ -50,7 +50,7 @@
 				</td>
 			</tr>
 			<tr height="100%">
-				<td></td>
+				<td id="blocklyDiv"></td>
 			</tr>
 		</table>
 	
