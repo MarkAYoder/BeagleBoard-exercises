@@ -15,6 +15,7 @@
  
 #define MAX 127		// Brightness
 #define LPD8806 "/sys/firmware/lpd8806/device"
+#define MAX_STRING_LEN 320
 
 /****************************************************************
  * Global variables
@@ -25,6 +26,15 @@ int keepgoing = 1;	// Set to 0 when ctrl-c is pressed
 
 /* Global thread environment */
 int twinkle_env = 0;
+
+// Current state of LED string
+
+    typedef struct rgb {
+        int r;
+        int g;
+        int b;
+    } rgb;
+    rgb currentState[MAX_STRING_LEN];
 
 /* Thread handle */
 pthread_t twinkleThread;
@@ -43,7 +53,7 @@ void display() {
 	  fprintf(rgb_fp, "0 0 0 -1\n");
 }
 
-void rgb(int red, int green, int blue, int index, int us) {
+void set_rgb(int red, int green, int blue, int index, int us) {
 	fprintf(rgb_fp, "%d %d %d %d", red, green, blue, index);
 	if(us) {
 	        display();
@@ -59,12 +69,12 @@ void *twinkle(void *env) {
     int delay;
     delay = 10000 + rand() % 50000;
     for(i=0; i<MAX; i+=10) {
-		rgb( i, i,  i, led, delay);
+		set_rgb( i, i,  i, led, delay);
 	}
     for(i=MAX; i>=0; i-=10) {
-		rgb( i, i,  i, led, delay);
+		set_rgb( i, i,  i, led, delay);
 	}
-    rgb( 0, 0,  0, led, 0);
+    set_rgb( currentState[led].r, currentState[led].g,  currentState[led].b, led, 0);
     
     pthread_detach(pthread_self());
 }
@@ -76,7 +86,8 @@ int main(int argc, char **argv, char **envp)
 {
     int err, i, delay = 100000;
     int r, g, b, index;    // Value of current LED
-	// Set the signal callback for Ctrl-C
+
+// Set the signal callback for Ctrl-C
 	signal(SIGINT, signal_handler);
 
     rgb_fp = fopen(LPD8806 "/rgb", "w");
@@ -92,9 +103,13 @@ int main(int argc, char **argv, char **envp)
 		exit(0);
 	}
     printf("Starting to read data\n");
-    while(fscanf(data_fp, "%d \[%d %d %d]\n", &index, &r, &g, &b) != EOF) {
-        printf("%d: %d, %d, %d\n", index, r, g, b);
+    for(i=0; fscanf(data_fp, "%d \[%d %d %d]\n", &index, &currentState[i].r, &currentState[i].g, &currentState[i].b) != EOF; i++) {
     }
+#ifdef HACK
+    for(i=0; i<10; i++) {
+        printf("%d: %d, %d, %d\n", i, currentState[i].r,currentState[i].g, currentState[i].b);
+    }
+#endif
 
     if(getenv("STRING_LEN")) {
     	string_len = atoi(getenv("STRING_LEN"));
@@ -110,7 +125,7 @@ int main(int argc, char **argv, char **envp)
 
 #ifdef HACK
     for(i=0; i<string_len; i++) {
-        rgb(0, 0, 0, i, 0);    
+        set_rgb(0, 0, 0, i, 0);    
     }
 #endif
  
