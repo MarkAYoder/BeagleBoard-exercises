@@ -75,6 +75,7 @@ void *twinkle(void *env) {
 int main(int argc, char **argv, char **envp)
 {
     int err, i, delay = 100000;
+    int r, g, b, index;    // Value of current LED
 	// Set the signal callback for Ctrl-C
 	signal(SIGINT, signal_handler);
 
@@ -85,11 +86,15 @@ int main(int argc, char **argv, char **envp)
 		exit(0);
 	}
 
-    data_fp = fopen(LPD8806 "/data", "w");
-	if(rgb_fp == NULL) {
+    data_fp = fopen(LPD8806 "/data", "r");
+	if(data_fp == NULL) {
 		printf("Opening data failed\n");
 		exit(0);
 	}
+    printf("Starting to read data\n");
+    while(fscanf(data_fp, "%d \[%d %d %d]\n", &index, &r, &g, &b) != EOF) {
+        printf("%d: %d, %d, %d\n", index, r, g, b);
+    }
 
     if(getenv("STRING_LEN")) {
     	string_len = atoi(getenv("STRING_LEN"));
