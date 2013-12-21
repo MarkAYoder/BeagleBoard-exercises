@@ -195,11 +195,12 @@ int main(int argc, char *argv[], char *envp[]) {
     return 1;
   }
   
-  string_len = atoi(getenv("STRING_LEN"));
-  if(string_len == 0) {
-      string_len = 160;
-  }
-  printf("string_len = %d\n", string_len);
+    if(getenv("STRING_LEN")) {
+        string_len = atoi(getenv("STRING_LEN"));
+    } else {
+      	string_len = 160;
+    }
+    printf("string_len = %d\n", string_len);
   
   int pattern=3;
   int arg=4;
