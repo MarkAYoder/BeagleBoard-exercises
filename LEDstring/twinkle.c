@@ -74,7 +74,8 @@ void *twinkle(void *env) {
     for(i=MAX; i>=0; i-=10) {
 		set_rgb( i, i,  i, led, delay);
 	}
-    set_rgb(currentState[led].r, currentState[led].g,  currentState[led].b, led, 0);
+//    set_rgb(currentState[led].r, currentState[led].g,  currentState[led].b, led, 0);
+    set_rgb(0, 0, 0, led, 0);
     
     pthread_detach(pthread_self());
 }
@@ -97,6 +98,7 @@ int main(int argc, char **argv, char **envp)
 		exit(0);
 	}
 
+#ifdef HACK //This is unstable
     data_fp = fopen(LPD8806 "/data", "r");
 	if(data_fp == NULL) {
 		printf("Opening data failed\n");
@@ -105,7 +107,7 @@ int main(int argc, char **argv, char **envp)
     printf("Starting to read data\n");
     for(i=0; fscanf(data_fp, "%d \[%d %d %d]\n", &index, &currentState[i].r, &currentState[i].g, &currentState[i].b) != EOF; i++) {
     }
-#ifdef HACK
+
     for(i=0; i<10; i++) {
         printf("%d: %d, %d, %d\n", i, currentState[i].r, currentState[i].g, currentState[i].b);
     }
