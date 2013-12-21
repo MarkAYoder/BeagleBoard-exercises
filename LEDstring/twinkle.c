@@ -14,12 +14,13 @@
  ****************************************************************/
  
 #define MAX 127		// Brightness
+#define LPD8806 "/sys/firmware/lpd8806/device"
 
 /****************************************************************
  * Global variables
  ****************************************************************/
 int string_len = 160;
-static FILE *rgb_fp;
+static FILE *rgb_fp, *data_fp;
 int keepgoing = 1;	// Set to 0 when ctrl-c is pressed
 
 /* Global thread environment */
@@ -77,10 +78,16 @@ int main(int argc, char **argv, char **envp)
 	// Set the signal callback for Ctrl-C
 	signal(SIGINT, signal_handler);
 
-	rgb_fp = fopen("/sys/firmware/lpd8806/device/rgb", "w");
+    rgb_fp = fopen(LPD8806 "/rgb", "w");
 	setbuf(rgb_fp, NULL);	// Turn buffering off
 	if(rgb_fp == NULL) {
 		printf("Opening rgb failed\n");
+		exit(0);
+	}
+
+    data_fp = fopen(LPD8806 "/data", "w");
+	if(rgb_fp == NULL) {
+		printf("Opening data failed\n");
 		exit(0);
 	}
 
@@ -95,10 +102,12 @@ int main(int argc, char **argv, char **envp)
         delay = atoi(argv[1]);
     }
     printf("delay= %d\n", delay);
-    
+
+#ifdef HACK
     for(i=0; i<string_len; i++) {
         rgb(0, 0, 0, i, 0);    
     }
+#endif
  
 	for(i=0; keepgoing; i++) {
         twinkle_env = rand() % string_len;
