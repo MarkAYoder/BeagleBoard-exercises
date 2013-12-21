@@ -74,7 +74,7 @@ void *twinkle(void *env) {
     for(i=MAX; i>=0; i-=10) {
 		set_rgb( i, i,  i, led, delay);
 	}
-    set_rgb( currentState[led].r, currentState[led].g,  currentState[led].b, led, 0);
+    set_rgb(currentState[led].r, currentState[led].g,  currentState[led].b, led, 0);
     
     pthread_detach(pthread_self());
 }
@@ -107,7 +107,7 @@ int main(int argc, char **argv, char **envp)
     }
 #ifdef HACK
     for(i=0; i<10; i++) {
-        printf("%d: %d, %d, %d\n", i, currentState[i].r,currentState[i].g, currentState[i].b);
+        printf("%d: %d, %d, %d\n", i, currentState[i].r, currentState[i].g, currentState[i].b);
     }
 #endif
 
