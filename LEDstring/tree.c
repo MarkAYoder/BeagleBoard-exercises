@@ -114,7 +114,7 @@ void pattern4(int skip) {
   }
 }
 
-// Pattern 5 is a single LED running smoothly along.running smoothly along.
+// Pattern 5 is a single LED running smoothly along.
 void pattern5(int timeUp, int timeBack) {
   int i, j;
   int smooth=10;
@@ -133,23 +133,24 @@ void pattern5(int timeUp, int timeBack) {
   }
 }
 
-// Pattern 6 is a single LED falling and bouncing
+// Pattern 6 is a sine wave
 void pattern6(int timeUp, int timeBack) {
-  int i, top;
-#ifdef HACK
-  for(top=string_len; top>0; top-=10) {
-    // Falling down
-    for(i=top; i>=0; i--) {
-      rgb(0,  0, 0, i+1, 0);
-      rgb(0, 15, 0, i  , timeBack-(pow(top-i,2)/pow(top,2)*timeBack*19/20));
-    }
-    // Bouncing up
-    for(i=0; i<top-10; i++) {
-      rgb(0,  0, 0, i,   0);
-      rgb(0, 15, 0, i+1, timeUp-(pow(top-i,2)/pow(top,2)*timeUp*19/20));
-    }
+  int r, g, b;
+  float i, 
+        f = 10.0;  // Frequency
+  static int phase = 0;
+
+  for(i=0; i<string_len; i++) {
+      r = (int) (25 * (sin(2*M_PI*f*(i+phase   )/string_len) + 1)) + 1;
+      g = (int) (25 * (sin(2*M_PI*f*(i+phase+5 )/string_len) + 1)) + 1;
+      b = (int) (25 * (sin(2*M_PI*f*(i+phase+10)/string_len) + 1)) + 1;
+      // printf("%f: %d\n", i, value);
+      rgb(r, g, b, i, 0);
   }
-  #endif
+  phase++;
+  // printf("phase = %d\n", phase);
+  display();
+  usleep(10000);
 }
 
 // Pattern 7 reads the analog in and positions the LED.

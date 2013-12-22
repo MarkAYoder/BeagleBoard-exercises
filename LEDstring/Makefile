@@ -29,7 +29,7 @@ test: test.o
 	$(CC) $^ -o $@
 
 tree:	tree.o
-	$(CC) $^ -o $@
+	$(CC) $^ -o $@ -lm
 
 fire:	fire.o gpio.o
 	$(CC) $^ -o $@ -lpthread
