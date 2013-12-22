@@ -135,22 +135,24 @@ void pattern5(int timeUp, int timeBack) {
 
 // Pattern 6 is a sine wave
 void pattern6(int timeUp, int timeBack) {
-  int r, g, b;
+  int r, g, b,
+    shift = 3,
+    amplitude = 25;
   float i, 
-        f = 10.0;  // Frequency
+        f = 20.0;  // Frequency
   static int phase = 0;
 
   for(i=0; i<string_len; i++) {
-      r = (int) (25 * (sin(2*M_PI*f*(i+phase   )/string_len) + 1)) + 1;
-      g = (int) (25 * (sin(2*M_PI*f*(i+phase+5 )/string_len) + 1)) + 1;
-      b = (int) (25 * (sin(2*M_PI*f*(i+phase+10)/string_len) + 1)) + 1;
+      r = (int) (amplitude * (sin(2*M_PI*f*(i-phase-0*shift)/string_len) + 1)) + 1;
+      g = (int) (amplitude * (sin(2*M_PI*f*(i-phase-1*shift)/string_len) + 1)) + 1;
+      b = (int) (amplitude * (sin(2*M_PI*f*(i-phase-2*shift)/string_len) + 1)) + 1;
       // printf("%f: %d\n", i, value);
       rgb(r, g, b, i, 0);
   }
   phase++;
   // printf("phase = %d\n", phase);
   display();
-  usleep(10000);
+  usleep(50000);
 }
 
 // Pattern 7 reads the analog in and positions the LED.
