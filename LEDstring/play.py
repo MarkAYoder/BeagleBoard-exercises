@@ -1,6 +1,7 @@
 #!/usr/bin/python
 from time import sleep
 import math
+import threading
 
 len = 320
 max = 30
@@ -14,22 +15,24 @@ def clear(r,g,b):
         fo.write("%d %d %d %d" % (r, g, b, i))
         
 def skiUpDown():
-    for i in range(0, len-1):
-        fo.write("%d %d %d %d" % (0, 0, 0, i))
-        fo.write("%d %d %d %d" % (max, 0, 0, i+1))
-        fo.write("\n");
-        sleep(0.05)
-    
-    for i in range(len, 1, -1):
-        fo.write("%d %d %d %d" % (0, 0, 0, i))
-        fo.write("%d %d %d %d" % (0, 0, max, i-1))
-        fo.write("\n");
-        sleep(0.02)
-    
-clear(0, 20, 0)
-
-while True:
-    skiUpDown()
+    while True:
+        for i in range(0, len-1):
+            fo.write("%d %d %d %d" % (0, 0, 0, i))
+            fo.write("%d %d %d %d" % (max, 0, 0, i+1))
+            fo.write("\n");
+            sleep(0.05)
         
+        for i in range(len, 1, -1):
+            fo.write("%d %d %d %d" % (0, 0, 0, i))
+            fo.write("%d %d %d %d" % (0, 0, max, i-1))
+            fo.write("\n");
+            sleep(0.02)
+    
+clear(0, 2, 0)
+
+for i in range(10):
+    threading.Thread(target=skiUpDown).start()
+    sleep(2)
+    
 # Close opened file
-fo.close()
+# fo.close()
