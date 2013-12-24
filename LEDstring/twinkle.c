@@ -16,6 +16,7 @@
 #define MAX 127		// Brightness
 #define LPD8806 "/sys/firmware/lpd8806/device"
 #define MAX_STRING_LEN 320
+#define UPDATE_RATE  10000  // micro seconds between string updates
 
 /****************************************************************
  * Global variables
@@ -50,13 +51,25 @@ void signal_handler(int sig)
 }
 
 void display() {
-	  fprintf(rgb_fp, "0 0 0 -1\n");
+	  fprintf(rgb_fp, "\n");
+}
+
+void *keepDisplaying(void *env) {
+    int *tmp = env;
+    int delay = *tmp;
+    
+    printf("keepDisplaying called with delay = %d\n", delay);
+    
+    while(keepgoing) {
+        display();
+        usleep(delay);
+    }
 }
 
 void set_rgb(int red, int green, int blue, int index, int us) {
 	fprintf(rgb_fp, "%d %d %d %d", red, green, blue, index);
 	if(us) {
-	        display();
+	        // display();
 //    		printf("sending %d %d %d %d for %d\n", red, green, blue, index, us);
         }
         usleep(us);
@@ -67,12 +80,19 @@ void *twinkle(void *env) {
 	int led = *tmp;	// Initial direction
     int i;
     int delay;
+    int r, g, b, step = 10;
+#define MASK 0x3f
+    
+    r = (rand() % MASK)/step;
+    g = (rand() % MASK)/step;
+    b = (rand() % MASK)/step;
+    
     delay = 10000 + rand() % 50000;
-    for(i=0; i<MAX; i+=10) {
-		set_rgb( i, i,  i, led, delay);
+    for(i=1; i<=step; i++) {
+		set_rgb( i*r, i*g,  i*b, led, delay);
 	}
-    for(i=MAX; i>=0; i-=10) {
-		set_rgb( i, i,  i, led, delay);
+    for(i=step; i>0; i--) {
+		set_rgb( i*r, i*g,  i*g, led, delay);
 	}
 //    set_rgb(currentState[led].r, currentState[led].g,  currentState[led].b, led, 0);
     set_rgb(0, 0, 0, led, 0);
@@ -123,13 +143,20 @@ int main(int argc, char **argv, char **envp)
     if(argc == 2) {
         delay = atoi(argv[1]);
     }
-    printf("delay= %d\n", delay);
+    printf("delay between twinkles = %d\n", delay);
 
 #ifdef HACK
     for(i=0; i<string_len; i++) {
         set_rgb(0, 0, 0, i, 0);    
     }
 #endif
+
+    int update_rate = UPDATE_RATE;
+    err = pthread_create(&twinkleThread, NULL, &keepDisplaying, &update_rate);
+    if(err) {
+        printf("keepDisplaying pthread_create err = %d, i=%d\n", err, i);
+        printf("EAGAIN = %d\n", EAGAIN);
+    }
  
 	for(i=0; keepgoing; i++) {
         twinkle_env = rand() % string_len;
