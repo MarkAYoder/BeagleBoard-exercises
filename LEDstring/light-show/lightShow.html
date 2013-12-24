@@ -51,6 +51,22 @@
 				}
 			};
 			document.getElementById("runButton").onclick = runJS;
+            
+            var codeJS = function() {
+                document.getElementById('code').innerText = 
+                    Blockly.JavaScript.workspaceToCode();
+            };
+            document.getElementById("codeButton").onclick = codeJS;
+            
+            var xmlJS = function() {
+                document.getElementById('code').innerText = defaultXml;
+            };
+            document.getElementById("xmlButton").onclick = xmlJS;
+            
+            var xmlInJS = function() {
+                BlocklyApps.loadBlocks(document.getElementById('code').innerText);
+            };
+            document.getElementById("xmlInButton").onclick = xmlInJS;
 		  }
 		</script>
         
@@ -64,15 +80,21 @@
                     <br/>Use <b>Set Light at position</b> to set the lights, however they
                     won't be updated until the <b>Send lights then delay light updates</b>
                     block is run.
-                    <p/><button type="button" id="runButton">Run</button></p>
-						<span id="statusUpdate"></span>
-						<div id="cnvs"><canvas id="canvas" width="1440" height="9"></canvas></div>
+                    <p/>
+                    <button type="button" id="runButton">Run</button>
+                    <button type="button" id="codeButton">Code</button>
+                    <button type="button" id="xmlButton">xml</button>
+                    <button type="button" id="xmlInButton">xml Input</button>
+                        <span id="statusUpdate"></span><br/>
+                        <form><textarea id="code"></textarea></form>
+						<div  id="cnvs"><canvas id="canvas" width="1440" height="9"></canvas></div>
 					</p>
 				</td>
 			</tr>
 			<tr height="100%">
 				<td id="blocklyDiv"></td>
 			</tr>
+
 		</table>
 	
 		<xml id="toolbox" style="display: none">
