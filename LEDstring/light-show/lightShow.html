@@ -59,12 +59,14 @@
             document.getElementById("codeButton").onclick = codeJS;
             
             var xmlJS = function() {
-                document.getElementById('code').innerText = defaultXml;
+                document.getElementById('code').innerText = 
+                    Blockly.Xml.domToText(Blockly.Xml.workspaceToDom(Blockly.mainWorkspace));
             };
             document.getElementById("xmlButton").onclick = xmlJS;
             
             var xmlInJS = function() {
-                Blockly.Xml.domToWorkspace(Blockly.getMainWorkspace(), document.getElementById('code').innerText);
+                Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, document.getElementById('code').innerText);
+
             };
             document.getElementById("xmlInButton").onclick = xmlInJS;
 		  }
@@ -84,7 +86,7 @@
                     <button type="button" id="runButton">Run</button>
                     <button type="button" id="codeButton">Code</button>
                     <button type="button" id="xmlButton">xml</button>
-                    <button type="button" id="xmlInButton">xml Input</button>
+                    <button type="button" id="xmlInButton"></button>
                         <span id="statusUpdate"></span><br/>
                         <form><textarea id="code"></textarea></form>
 						<div  id="cnvs"><canvas id="canvas" width="1440" height="9"></canvas></div>
