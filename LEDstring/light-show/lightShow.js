@@ -20,8 +20,6 @@ var drawCanvas = function() {
 	var width = canvas.getBoundingClientRect().width;
 	var height = canvas.getBoundingClientRect().height;
 	
-	
-	
 	ctx.fillStyle = "rgb(0,0,0)";
 	ctx.fillRect(0, 0, width, height);
 
@@ -32,7 +30,6 @@ var drawCanvas = function() {
 };
 //drawCanvas();
 window.setTimeout("drawCanvas()",0);
-
 
 var setLight = function(r, g, b, p){
 	if (p >=0 && p <NUMLIGHTS){

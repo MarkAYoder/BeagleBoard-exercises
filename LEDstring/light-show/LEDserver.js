@@ -24,12 +24,6 @@ lightDeltasQueue.totalDelay = 0; // miliseconds of delay in the frams in the
 	
 // Initialize various IO things.
 function initIO() {
-	// Make sure gpios 7 and 20 are available.
-	//b.pinMode('P9_42', b.INPUT);
-	//b.pinMode('P9_41', b.INPUT);
-	//b.pinMode(pwm,	 b.INPUT);	// PWM
-	
-	// Initialize pwm
 }
 
 function send404(res) {
@@ -71,7 +65,6 @@ var setLights = function(lightsToChange){
 				(Math.min(Math.max(Math.round(lightsToChange[i][2]),0),127) | 0) + " " + 
 				(Math.min(Math.max(Math.round(lightsToChange[i][3]),0),NUMLIGHTS-1) | 0); 
 			b.writeTextFile(file, ledChain);
-				
 		}
 	}
 	b.writeTextFile(file, "\n");
@@ -80,7 +73,7 @@ var setLights = function(lightsToChange){
 var processLights = function(){
 	var currentDelta;
 	while (lightDeltasQueue.length > 0){
-		currentDelta= lightDeltasQueue.shift();
+		currentDelta = lightDeltasQueue.shift();
 		setLights(currentDelta.data);
 		lightDeltasQueue.totalDelay -= (currentDelta.delay | 0);
 		if (10000 > (currentDelta.delay | 0) > 0 ) {
@@ -98,7 +91,6 @@ var restartProcessing = function(){
 	}
 };
 
-
 // socket.io, I choose you
 var io = require('socket.io').listen(server);
 io.set('log level', 2);
@@ -106,7 +98,6 @@ io.set('log level', 2);
 // See https://github.com/LearnBoost/socket.io/wiki/Exposed-events
 // for Exposed events
 
-	
 // on a 'connection' event
 io.sockets.on('connection', function (socket) {
 

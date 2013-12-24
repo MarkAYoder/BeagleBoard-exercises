@@ -64,7 +64,7 @@
             document.getElementById("xmlButton").onclick = xmlJS;
             
             var xmlInJS = function() {
-                BlocklyApps.loadBlocks(document.getElementById('code').innerText);
+                Blockly.Xml.domToWorkspace(Blockly.getMainWorkspace(), document.getElementById('code').innerText);
             };
             document.getElementById("xmlInButton").onclick = xmlInJS;
 		  }
