@@ -22,20 +22,11 @@
  * Global variables
  ****************************************************************/
 int string_len = 160;
-static FILE *rgb_fp, *data_fp;
+static FILE *rgb_fp;
 int keepgoing = 1;	// Set to 0 when ctrl-c is pressed
 
 /* Global thread environment */
 int twinkle_env = 0;
-
-// Current state of LED string
-
-    typedef struct rgb {
-        int r;
-        int g;
-        int b;
-    } rgb;
-    rgb currentState[MAX_STRING_LEN];
 
 /* Thread handle */
 pthread_t twinkleThread;
@@ -54,6 +45,8 @@ void display() {
 	  fprintf(rgb_fp, "\n");
 }
 
+// This is the master update thread.  None of the other threads update the string.
+// Instead this updates the whole thread at a regular interval.
 void *keepDisplaying(void *env) {
     int *tmp = env;
     int delay = *tmp;
@@ -69,12 +62,14 @@ void *keepDisplaying(void *env) {
 void set_rgb(int red, int green, int blue, int index, int us) {
 	fprintf(rgb_fp, "%d %d %d %d", red, green, blue, index);
 	if(us) {
-	        // display();
-//    		printf("sending %d %d %d %d for %d\n", red, green, blue, index, us);
+        // No need to display since keepDisplaying thread does it
+	    // display();
+        // printf("sending %d %d %d %d for %d\n", red, green, blue, index, us);
         }
-        usleep(us);
+    usleep(us);
 }
 
+// Animate each twinkle.  Pass the time in us between updates
 void *twinkle(void *env) {
 	int *tmp = env;
 	int led = *tmp;	// Initial direction
@@ -118,21 +113,6 @@ int main(int argc, char **argv, char **envp)
 		exit(0);
 	}
 
-#ifdef HACK //This is unstable
-    data_fp = fopen(LPD8806 "/data", "r");
-	if(data_fp == NULL) {
-		printf("Opening data failed\n");
-		exit(0);
-	}
-    printf("Starting to read data\n");
-    for(i=0; fscanf(data_fp, "%d \[%d %d %d]\n", &index, &currentState[i].r, &currentState[i].g, &currentState[i].b) != EOF; i++) {
-    }
-
-    for(i=0; i<10; i++) {
-        printf("%d: %d, %d, %d\n", i, currentState[i].r, currentState[i].g, currentState[i].b);
-    }
-#endif
-
     if(getenv("STRING_LEN")) {
     	string_len = atoi(getenv("STRING_LEN"));
     } else {
@@ -144,12 +124,6 @@ int main(int argc, char **argv, char **envp)
         delay = atoi(argv[1]);
     }
     printf("delay between twinkles = %d\n", delay);
-
-#ifdef HACK
-    for(i=0; i<string_len; i++) {
-        set_rgb(0, 0, 0, i, 0);    
-    }
-#endif
 
     int update_rate = UPDATE_RATE;
     err = pthread_create(&twinkleThread, NULL, &keepDisplaying, &update_rate);
