@@ -84,14 +84,20 @@ void *twinkle(void *env) {
     
     delay = 10000 + rand() % 50000;
     for(i=1; i<=step; i++) {
-		set_rgb( i*r, i*g,  i*b, led, delay);
+		set_rgb(i*r, i*g,  i*b, led, delay);
 	}
-    for(i=step; i>0; i--) {
-		set_rgb( i*r, i*g,  i*g, led, delay);
-	}
-//    set_rgb(currentState[led].r, currentState[led].g,  currentState[led].b, led, 0);
-    set_rgb(0, 0, 0, led, 0);
-    
+    // Make 1 in 10 roll down the string
+    if(rand()%100) {
+        for(i=step; i>0; i--) {
+    		set_rgb(i*r, i*g,  i*g, led, delay);
+    	}
+        set_rgb(0, 0, 0, led, 0);
+    } else {
+        for(i=led-1; i>0; i--) {
+            set_rgb(   0,    0,    0, i+1, delay);
+            set_rgb(10*r, 10*g, 10*b, i  , delay);
+        }
+    }    
     pthread_detach(pthread_self());
 }
 
