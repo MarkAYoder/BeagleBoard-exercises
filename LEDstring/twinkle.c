@@ -92,12 +92,17 @@ void *twinkle(void *env) {
     		set_rgb(i*r, i*g,  i*g, led, delay);
     	}
         set_rgb(0, 0, 0, led, 0);
-    } else {
+    } else if(rand()%100) {
         for(i=led-1; i>0; i--) {
-            set_rgb(   0,    0,    0, i+1, delay);
-            set_rgb(10*r, 10*g, 10*b, i  , delay);
+            set_rgb(   0,    0,    0, i+1, 0);
+            set_rgb((i%10)*r, (i%10)*g, (i%10)*b, i  , 2*delay);
         }
-    }    
+    } else {
+        for(i=led; i<MAX_STRING_LEN-1; i++) {
+            set_rgb(   0,    0,    0, i, 0);
+            set_rgb((i%10)*r, (i%10)*g, (i%10)*b, i+1  , 100*delay);
+        }
+    }
     pthread_detach(pthread_self());
 }
 
