@@ -2,9 +2,11 @@
 # Playing with inporting audo in
 # Taken from http://stackoverflow.com/questions/6867675/audio-recording-in-python
 # http://pyalsaaudio.sourceforge.net/
-# opkg install opkg install python-pyalsaaudio
+# opkg install python-pyalsaaudio
 
-import alsaaudio, wave, numpy
+from time import sleep
+import alsaaudio, numpy
+# import wave
 
 import threading
 
@@ -43,13 +45,14 @@ def onTo(here):
 # This is the master update thread.  None of the other threads update the string.
 # Instead this updates the whole thread at a regular interval.
 def keepDisplaying():
+    global updated
     delay = 0.01
     print "keepDisplaying called with delay = %d" % (delay);
     while True:
         if updated:
             fo.write("\n")
             updated = False
-        sleep(0.01);
+        sleep(0.01)
     
 clear(0, 2, 0)
 
@@ -59,7 +62,7 @@ threading.Thread(target=keepDisplaying).start()
 while True:
     l, data = inp.read()
     a = numpy.fromstring(data, dtype='int16')
-    mean = numpy.abs(a).mean()
+    mean = numpy.int16(numpy.abs(a).mean())
     print mean
-    onTo(mean)
+    onTo(mean/2)
 #    w.writeframes(data)
