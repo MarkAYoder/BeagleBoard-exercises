@@ -21,7 +21,7 @@ ssh root@$BONE "date -s \"$DATE\""
 
 # Set up DNS on bone
 ./host.setDNS.sh
-scp -r .ssh root@$BONE:.
+scp ssh/* root@$BONE:.ssh
 fi
 
 ################
@@ -54,7 +54,8 @@ systemctl enable boneServer
 # Set the time zone to Indiana
 rm /etc/localtime
 ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
-
+"
+exit
 # Run if ssh is refusing connections
 # rm /etc/dropbear/dropbear_rsa_host_key
 # reboot
