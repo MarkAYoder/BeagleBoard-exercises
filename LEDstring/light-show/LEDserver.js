@@ -69,7 +69,7 @@ function setLight(r, g, blue, led) {
 }
 
 function sendLights(delay) {
-    console.log("sendLights");
+    console.log("sendLights(" + delay + ")");
     b.writeTextFile(file, "\n");
 }
 

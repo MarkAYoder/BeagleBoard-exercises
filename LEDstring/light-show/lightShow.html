@@ -6,7 +6,8 @@
         <script type="text/javascript" src="/blockly/common.js"></script>
         <script type="text/javascript" src="/blockly/blockly_compressed.js"></script>
 		<script type="text/javascript" src="/blockly/blocks_compressed.js"></script>
-		<script type="text/javascript" src="/blockly/javascript_compressed.js"></script>
+    	<script type="text/javascript" src="/blockly/javascript_compressed.js"></script>
+    	<script type="text/javascript" src="/blockly/python_compressed.js"></script>
 		<script type="text/javascript" src="/blockly/en.js"></script>
 		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
         <script type="text/javascript" src="lightShow.js"></script>
@@ -46,7 +47,7 @@
 					console.log("printf code:");
 					console.log(code);
                     runCode(code);
-					eval(code);
+					// eval(code);
 				} catch (e) {
 					alert('Code_badCode');
 				}
@@ -60,7 +61,7 @@
             
             var codeJS = function() {
                 document.getElementById('code').innerText = 
-                    Blockly.JavaScript.workspaceToCode();
+                    Blockly.Python.workspaceToCode() + Blockly.JavaScript.workspaceToCode();
             };
             document.getElementById("codeButton").onclick = codeJS;
             
@@ -317,6 +318,16 @@
 			//code += "socket.emit('LEDChain',{r:"+value_red+", g:"+value_green+", b:"+value_blue+", p:"+value_pos+"});";
 			return code;
 		};
+        Blockly.Python['light_set_light'] = function(block) {
+            var value_pos = Blockly.Python.valueToCode(block, 'pos', Blockly.Python.ORDER_ATOMIC);
+            var value_red = Blockly.Python.valueToCode(block, 'red', Blockly.Python.ORDER_ATOMIC);
+            var value_green = Blockly.Python.valueToCode(block, 'green', Blockly.Python.ORDER_ATOMIC);
+            var value_blue = Blockly.Python.valueToCode(block, 'blue', Blockly.Python.ORDER_ATOMIC);
+            // TODO: Assemble Python into code variable.
+            var code = 'Test Code';
+            console.log("Generating Python");
+            return code;
+};
 		
 		Blockly.Blocks['light_send_lights'] = {
 			init: function() {
