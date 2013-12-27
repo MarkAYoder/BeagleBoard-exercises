@@ -49,6 +49,10 @@ var sendLights = function(delay) {
 	socket.emit('LEDChain2', {data:lightsToSend, delay:(delay | 0)});
 };
 
+function runCode(code) {
+    socket.emit('runCode', {code:code});
+}
+
 //socket.emit('i2cset', {i2cNum: i2cNum, i: 2*i, 
 //			 disp: '0x'+disp[i].toString(16)});
 
