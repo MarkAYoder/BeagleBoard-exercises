@@ -53,6 +53,11 @@
 			};
 			document.getElementById("runButton").onclick = runJS;
             
+            var stopJS = function() {
+                stopCode();
+            };
+            document.getElementById("codeButton").onclick = stopJS;
+            
             var codeJS = function() {
                 document.getElementById('code').innerText = 
                     Blockly.JavaScript.workspaceToCode();
@@ -85,6 +90,7 @@
                     block is run.
                     <p/>
                     <button type="button" id="runButton">Run</button>
+                    <button type="button" id="stopButton">Stop</button>
                     <button type="button" id="codeButton">Code</button>
                     <button type="button" id="xmlButton">xml</button>
                     <button type="button" id="xmlInButton"></button>
