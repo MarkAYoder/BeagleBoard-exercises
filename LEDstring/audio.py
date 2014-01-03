@@ -2,7 +2,7 @@
 # Playing with inporting audo in
 # Taken from http://stackoverflow.com/questions/6867675/audio-recording-in-python
 # http://pyalsaaudio.sourceforge.net/
-# opkg install opkg install python-pyalsaaudio
+# opkg install python-pyalsaaudio
 
 import alsaaudio, wave, numpy
 
