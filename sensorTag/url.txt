@@ -1,0 +1,3 @@
+http://www.zephyr-labs.com/?p=87
+
+http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Gatt_Server
