@@ -50,12 +50,15 @@ void pattern1() {
   int i;
   for (i=0; i<string_len; i++) {
     rgb(0, i%127, 0, i, 20000);
+    if(!running) return;
   }
   for (i=0; i<string_len; i++) {
     rgb(0, 0, i%127, i, 20000);
+    if(!running) return;
   }
   for (i=0; i<string_len; i++) {
     rgb(i%127, 0, 0, i, 20000);
+    if(!running) return;
   }
 }
 
