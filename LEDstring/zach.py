@@ -23,7 +23,7 @@ def keepDisplaying(delay):
     print "keepDisplaying called with delay = %f" % delay
     
     while keepgoing:
-        fo.write("0 0 0 -1\n")
+        fo.write("\n")
         sleep(delay)
 
 # Turn whole string off
@@ -37,15 +37,11 @@ def skiUpDown():
         for i in range(0, len):
             fo.write("%d %d %d %d" % (0, 0, 0, i))
             fo.write("%d %d %d %d" % (max, 0, 0, i+1))
-            if not keepgoing:
-                break
             sleep(0.05)
         
         for i in range(len, 1, -1):
             fo.write("%d %d %d %d" % (0, 0, 0, i))
             fo.write("%d %d %d %d" % (0, 0, max, i-1))
-            if not keepgoing:
-                break
             sleep(0.02)
     
 # Open a file
