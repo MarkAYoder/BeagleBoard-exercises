@@ -109,7 +109,7 @@ class SensorCallbacks:
         ambT = (v[3]<<8)+v[2]
         targetT = calcTmpTarget(objT, ambT)
         self.data['t006'] = targetT
-        # print "T006 %.1f" % targetT
+        print "T006 %.1f" % targetT
 
     def accel(self,v):
         (xyz,mag) = calcAccel(v[0],v[1],v[2])
@@ -120,14 +120,15 @@ class SensorCallbacks:
         global led, ledOld, fo
         xyz = calcGyro(v[0],v[1],v[2])
         self.data['gyro'] = xyz
-        print "GYRO", xyz
+        # print "GYRO", xyz
+        xyz[1] -= -0.0152671755725
         # print xyz[1]
-        led -= 10*xyz[1]
+        led -= 30*xyz[1]
         if led < 0:
             led = 0
         elif led >= 320:
             led = 319
-        print "%f, %f" % (led, ledOld)
+        # print "%f, %f" % (led, ledOld)
         if round(led) != ledOld:
             print "New LED: ", round(led)
             fo.write("%d %d %d %d"   % (0,  0, 0, ledOld))
