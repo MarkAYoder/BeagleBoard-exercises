@@ -2,6 +2,8 @@
 # Michael Saunby. April 2013
 # From: https://github.com/msaunby/ble-sensor-pi
 #
+# opkg updat
+# opkg install python-distutils python-email python-compile python-resource python-pip
 # wget http://pexpect.sourceforge.net/pexpect-2.3.tar.gz
 # tar xzf pexpect-2.3.tar.gz
 # cd pexpect-2.3
@@ -115,7 +117,7 @@ class SensorCallbacks:
         # print "ACCL", xyz
 
     def gyro(self,v):
-        global led, ledOld
+        global led, ledOld, fo
         xyz = calcGyro(v[0],v[1],v[2])
         self.data['gyro'] = xyz
         print "GYRO", xyz
@@ -128,9 +130,9 @@ class SensorCallbacks:
         print "%f, %f" % (led, ledOld)
         if round(led) != ledOld:
             print "New LED: ", round(led)
-        # fo.write("%d %d %d %d"   % (0,  0, 0, ledOld))
+            fo.write("%d %d %d %d"   % (0,  0, 0, ledOld))
             ledOld = round(led)
-        # fo.write("%d %d %d %d\n" % (0, 30, 0, ledOld))
+            fo.write("%d %d %d %d\n" % (0, 30, 0, ledOld))
 
     def humidity(self, v):
         rawT = (v[1]<<8)+v[0]
@@ -169,7 +171,7 @@ class SensorCallbacks:
 def main():
     global datalog
     global barometer
-    global led, ledOld
+    global led, ledOld, fo
 
     bluetooth_adr = sys.argv[1]
     #data['addr'] = bluetooth_adr
@@ -177,10 +179,10 @@ def main():
         datalog = open(sys.argv[2], 'w+')
     
     # Open file for LED string and turn on an LED
-    # fo = open("/sys/firmware/lpd8806/device/rgb", "w", 0)
+    fo = open("/sys/firmware/lpd8806/device/rgb", "w", 0)
     led = 50
     ledOld = led
-    # fo.write("%d %d %d %d\n" % (0, 30, 0, led))
+    fo.write("%d %d %d %d\n" % (0, 30, 0, led))
 
     while True:
      try:   
