@@ -59,6 +59,11 @@ exit
 # Run if ssh is refusing connections
 # rm /etc/dropbear/dropbear_rsa_host_key
 # reboot
+
+# Load Full Screen Mario
+# git clone https://github.com/Diogenesthecynic/FullScreenMario.git
+# cd exercises/realtime
+# ln -s ~/FullScreenMario .
 "
 
 ################
