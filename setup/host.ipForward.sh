@@ -30,11 +30,16 @@ sudo iptables -t nat -A POSTROUTING -s 192.168.0.0/16 -o $interface -j MASQUERAD
 
 # Setup port forwards on 3000, 8080 and 1080 so outside world can reach the bone
 # first get IP address of host outside interface
+# 3000 is cloud9
+# 8080 is boneServer
+# 1080 is the standard webserver mapped to 80 on the bone
+# 5900 is x11vnc
 IP_ADDR=`ifconfig $interface | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}'`
 # Now forward, first forwards 1080 to 80
 # sudo iptables -t nat -A PREROUTING -p tcp -s 0/0 -d $IP_ADDR --dport 1080 -j DNAT --to $beagleAddr:80
 # sudo iptables -t nat -A PREROUTING -p tcp -s 0/0 -d $IP_ADDR --dport 3000 -j DNAT --to $beagleAddr:3000
 # sudo iptables -t nat -A PREROUTING -p tcp -s 0/0 -d $IP_ADDR --dport 8080 -j DNAT --to $beagleAddr:8080
+# sudo iptables -t nat -A PREROUTING -p tcp -s 0/0 -d $IP_ADDR --dport 5900 -j DNAT --to $beagleAddr:5900
 
 # Check to see what nameservers the host is using and copy these to the same
 #  file on the Beagle
