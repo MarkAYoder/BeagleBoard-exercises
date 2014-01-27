@@ -11,6 +11,8 @@ if [[ `date +%Y` < 2013 ]]
 then
 	ntpdate ntp.org
 fi
+# This is so node.js can find it's libraries
+export NODE_PATH=/usr/lib/node_modules
 
 alias syn='synergyc yoder-9.dhcp.rose-hulman.edu'
 alias d=pushd

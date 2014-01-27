@@ -1,0 +1,3997 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    193744,       3988]
+NotebookOptionsPosition[    192239,       3934]
+NotebookOutlinePosition[    192598,       3950]
+CellTagsIndexPosition[    192555,       3947]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ NamespaceBox["WolframAlphaQueryResults",
+  DynamicModuleBox[{Typeset`q$$ = "weather", Typeset`opts$$ = {
+   AppearanceElements -> {"Extrusion", "Warnings", "Assumptions", "Pods"}, 
+    Asynchronous -> All, 
+    Method -> {
+     "ExtrusionChosen" -> {
+       "InstantaneousWeather:WeatherData", 
+        "Latest recorded weather for Terre Haute, Indiana", 1, 1, "Content"}, 
+      "Formats" -> {"cell", "minput", "moutput", "msound", "dataformats"}, 
+      "ExtrusionOpen" -> False}}, Typeset`elements$$ = {
+   "Extrusion", "Warnings", "Assumptions", "Pods"}, Typeset`pod1$$ = 
+   XMLElement[
+   "pod", {"title" -> "Input interpretation", "scanner" -> "Identity", "id" -> 
+     "Input", "position" -> "100", "error" -> "false", "numsubpods" -> "1"}, {
+    
+     XMLElement["subpod", {"title" -> ""}, {
+       XMLElement["cell", {"compressed" -> False, "string" -> True}, {
+         Cell[
+          BoxData[
+           FormBox[
+            TagBox[
+             FormBox[
+              TagBox[
+               GridBox[{{
+                  PaneBox[
+                   StyleBox[
+                    TagBox[
+                    GridBox[{{
+                    ItemBox[
+                    StyleBox[
+                    "\"weather\"", {
+                    LineIndent -> 0, LineSpacing -> {0.9, 0, 1.5}}], 
+                    Alignment -> {Center}, StripOnInput -> False]}}, 
+                    GridBoxBackground -> {"Columns" -> {
+                    GrayLevel[0.949]}, "Rows" -> {{None}}}, 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    ColumnsEqual -> False, RowsEqual -> False, 
+                    GridBoxDividers -> {"Columns" -> {
+                    GrayLevel[0.84], 
+                    GrayLevel[0.84]}, "Rows" -> {{
+                    GrayLevel[0.84]}}, 
+                    "RowsIndexed" -> {
+                    1 -> GrayLevel[0.84], -1 -> GrayLevel[0.84]}}, 
+                    GridBoxSpacings -> {
+                    "Columns" -> {1, 1}, "Rows" -> {{0.3}}}, 
+                    GridBoxAlignment -> {
+                    "Columns" -> {{Left}}, "Rows" -> {{Baseline}}}, 
+                    AllowScriptLevelChange -> False, BaselinePosition -> 1], 
+                    Global`TagBoxWrapper["Separator" -> " | "]], 
+                    LineSpacing -> {1, 0, 1.5}, LineIndent -> 0], 
+                   BaselinePosition -> Center]}}, 
+                GridBoxItemSize -> {
+                 "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                ColumnsEqual -> False, RowsEqual -> False, 
+                GridBoxSpacings -> {"Columns" -> {{
+                    AbsoluteThickness[-1]}}, "Rows" -> {{0}}}, 
+                AllowScriptLevelChange -> False], 
+               Global`TagBoxWrapper["Separator" -> " | "]], TraditionalForm], 
+             PolynomialForm[#, TraditionalOrder -> False]& ], 
+            TraditionalForm]], "Output"]}], 
+       XMLElement[
+       "dataformats", {}, {"plaintext,computabledata,formatteddata"}]}]}], 
+   Typeset`pod2$$ = XMLElement[
+   "pod", {"title" -> "Latest recorded weather for Terre Haute, Indiana", 
+     "scanner" -> "Data", "id" -> "InstantaneousWeather:WeatherData", 
+     "position" -> "200", "error" -> "false", "numsubpods" -> "1", "primary" -> 
+     "true"}, {
+     XMLElement["subpod", {"title" -> ""}, {
+       XMLElement["cell", {"compressed" -> True, "string" -> False}, {
+         Cell[
+          BoxData[
+           FormBox[
+            TagBox[
+             GridBox[{{
+                StyleBox[
+                 TagBox[
+                  GridBox[{{
+                    TagBox[
+                    PaneBox[
+                    "\"temperature\"", 
+                    BaseStyle -> {{
+                    BaselinePosition -> Baseline, FontColor -> 
+                    GrayLevel[0.3]}, LineSpacing -> {0.9, 0, 1.5}, 
+                    LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                    TextAlignment -> Left}, BaselinePosition -> Baseline], 
+                    Global`TagBoxWrapper["Label"]], 
+                    TemplateBox[{"  ", "\"  \"", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["25", 
+                    Global`TagBoxWrapper["StringBoxes" -> "25"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], 
+                    StyleBox[
+                    RowBox[{"\"(\"", "\[NoBreak]", 
+                    TemplateBox[{"\"wind chill\"", "\": \"", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["13", 
+                    Global`TagBoxWrapper["StringBoxes" -> "13"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False]}, "RowDefault"], "\[NoBreak]",
+                     "\")\""}], {
+                    GrayLevel[0.6], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowWithSeparators"]}, {
+                    TagBox[
+                    PaneBox[
+                    "\"conditions\"", 
+                    BaseStyle -> {{
+                    BaselinePosition -> Baseline, FontColor -> 
+                    GrayLevel[0.3]}, LineSpacing -> {0.9, 0, 1.5}, 
+                    LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                    TextAlignment -> Left}, BaselinePosition -> Baseline], 
+                    Global`TagBoxWrapper["Label"]], 
+                    TemplateBox[{"\"overcast\""}, "RowDefault"]}, {
+                    TagBox[
+                    PaneBox[
+                    "\"relative humidity\"", 
+                    BaseStyle -> {{
+                    BaselinePosition -> Baseline, FontColor -> 
+                    GrayLevel[0.3]}, LineSpacing -> {0.9, 0, 1.5}, 
+                    LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                    TextAlignment -> Left}, BaselinePosition -> Baseline], 
+                    Global`TagBoxWrapper["Label"]], 
+                    TemplateBox[{"  ", "\"  \"", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["58", 
+                    Global`TagBoxWrapper["StringBoxes" -> "58"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    "\"%\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], 
+                    StyleBox[
+                    RowBox[{"\"(\"", "\[NoBreak]", 
+                    FormBox[
+                    TagBox[
+                    FormBox[
+                    TemplateBox[{"\"dew point: \"", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["12", 
+                    Global`TagBoxWrapper["StringBoxes" -> "12"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False]}, "RowDefault"], 
+                    TraditionalForm], Format[#, TraditionalForm]& ], 
+                    TraditionalForm], "\[NoBreak]", "\")\""}], {
+                    GrayLevel[0.6], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowWithSeparators"]}, {
+                    TagBox[
+                    PaneBox[
+                    "\"wind speed\"", 
+                    BaseStyle -> {{
+                    BaselinePosition -> Baseline, FontColor -> 
+                    GrayLevel[0.3]}, LineSpacing -> {0.9, 0, 1.5}, 
+                    LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                    TextAlignment -> Left}, BaselinePosition -> Baseline], 
+                    Global`TagBoxWrapper["Label"]], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["14", 
+                    Global`TagBoxWrapper["StringBoxes" -> "14"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"mph\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False]}}, 
+                   GridBoxAlignment -> {
+                    "Columns" -> {Left, Left}, "Rows" -> {{Baseline}}}, 
+                   AutoDelete -> False, 
+                   GridBoxBackground -> {"Columns" -> {None, None}}, 
+                   GridBoxFrame -> {
+                    "Columns" -> {{True}}, "Rows" -> {{True}}}, 
+                   GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                   GridBoxSpacings -> {
+                    "Columns" -> {{1.5}, 2}, "Rows" -> {{1}}}, FrameStyle -> 
+                   GrayLevel[0.84], BaselinePosition -> Automatic, 
+                   AllowScriptLevelChange -> False], "Grid"], 
+                 LineSpacing -> {0.9, 0, 1.5}, LineIndent -> 0, StripOnInput -> 
+                 False]}, {
+                StyleBox[
+                 RowBox[{"\"(\"", "\[NoBreak]", 
+                   TemplateBox[{
+                    TemplateBox[{
+                    TemplateBox[{"  ", "\"  \"", 
+                    StyleBox[
+                    RowBox[{
+                    RowBox[{"\"1\"", "\[InvisibleSpace]", " ", 
+                    StyleBox[
+                    "\"hour\"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 0, {
+                    FontFamily :> Global`$UnitFontFamily, FontSize -> 
+                    Smaller}, StripOnInput -> False]}], "\[InvisibleSpace]", 
+                    " ", 
+                    RowBox[{"\"2\"", "\[InvisibleSpace]", " ", 
+                    StyleBox[
+                    "\"minutes\"", 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, {FontFamily :> Global`$UnitFontFamily, FontSize -> 
+                    Smaller}, StripOnInput -> False]}]}]]}, 
+                    "RowWithSeparators"], "\" ago\""}, "RowDefault"]}, 
+                    "RowDefault"], "\[NoBreak]", "\")\""}], {
+                 FontFamily -> "Verdana", FontSize -> 10, 
+                  GrayLevel[0.5], LinebreakAdjustments -> {1, 100, 1, 0, 100},
+                   LineIndent -> 0}, StripOnInput -> False]}}, 
+              GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+              "Column", 
+              GridBoxItemSize -> {
+               "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+             "Column"], TraditionalForm]], "Output"]}], 
+       XMLElement[
+       "dataformats", {}, {
+        "plaintext,computabledata,formatteddata,numberdata,quantitydata"}]}], 
+     
+     XMLElement["states", {"count" -> "2"}, {
+       XMLElement[
+       "state", {
+        "name" -> "Show metric", "input" -> 
+         "InstantaneousWeather:WeatherData__Show metric"}, {}], 
+       XMLElement[
+       "state", {
+        "name" -> "More", "input" -> 
+         "InstantaneousWeather:WeatherData__More"}, {}]}], 
+     XMLElement["infos", {"count" -> "1"}, {
+       XMLElement["info", {}, {
+         XMLElement["units", {"count" -> "1"}, {
+           XMLElement[
+           "unit", {"short" -> "mph", "long" -> "miles per hour"}, {}], 
+           XMLElement["cell", {"compressed" -> False, "string" -> True}, {
+             Cell[
+              BoxData[
+               FormBox[
+                StyleBox[
+                 TagBox[
+                  GridBox[{{
+                    StyleBox[
+                    StyleBox[
+                    TagBox[
+                    RowBox[{
+                    StyleBox[
+                    "\"mph\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], 10, StripOnInput -> False], 
+                    StyleBox[
+                    "\"miles per hour\"", FontSize -> 10, 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, {FontFamily :> Global`$UnitFontFamily, FontSize -> 
+                    Smaller}, 
+                    GrayLevel[0.6], StripOnInput -> False]}}, 
+                   GridBoxAlignment -> {
+                    "Columns" -> {Left, Left}, "Rows" -> {{Baseline}}}, 
+                   AutoDelete -> False, 
+                   GridBoxBackground -> {"Columns" -> {{None}}}, 
+                   GridBoxFrame -> {
+                    "Columns" -> {{True}}, "Rows" -> {{True}}}, 
+                   GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                   GridBoxSpacings -> {
+                    "Columns" -> {{1.5}}, "Rows" -> {{0.5}}}, FrameStyle -> 
+                   GrayLevel[0.84], BaselinePosition -> Automatic, 
+                   AllowScriptLevelChange -> False], "Grid"], 
+                 LineSpacing -> {0.9, 0, 1.5}, LineIndent -> 0, StripOnInput -> 
+                 False], TraditionalForm]], "Output"]}]}]}]}]}], 
+   Typeset`pod3$$ = XMLElement[
+   "pod", {"title" -> "Weather forecast for Terre Haute, Indiana", "scanner" -> 
+     "Data", "id" -> "WeatherForecast:WeatherData", "position" -> "300", 
+     "error" -> "false", "numsubpods" -> "2", "primary" -> "true"}, {
+     XMLElement["subpod", {"title" -> "Today"}, {
+       XMLElement["cell", {"compressed" -> True, "string" -> False}, {
+         Cell[
+          BoxData[
+           FormBox[
+            StyleBox[
+             TagBox[
+              GridBox[{{
+                 FormBox[
+                  TagBox[
+                   FormBox[
+                    TemplateBox[{
+                    TemplateBox[{
+                    StyleBox[
+                    "\"between \"", 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False]}, "RowDefault"], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["12", 
+                    Global`TagBoxWrapper["StringBoxes" -> "12"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], "\"\"", 
+                    TemplateBox[{}, "RowDefault"], 
+                    TemplateBox[{
+                    StyleBox[
+                    "\" and \"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 0, 
+                    GrayLevel[0.6], StripOnInput -> False]}, "RowDefault"], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["26", 
+                    Global`TagBoxWrapper["StringBoxes" -> "26"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], "\"\"", 
+                    TemplateBox[{}, "RowDefault"]}, "RowDefault"], 
+                    TraditionalForm], Format[#, TraditionalForm]& ], 
+                  TraditionalForm]}, {
+                 StyleBox[
+                  RowBox[{
+                    StyleBox[
+                    TemplateBox[{"\"few clouds\"", "\" \"", 
+                    StyleBox[
+                    RowBox[{"\"(\"", "\[NoBreak]", 
+                    TemplateBox[{"\"mid-morning\"", 
+                    StyleBox[
+                    "\" to \"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 0, 
+                    GrayLevel[0.6], {
+                    GrayLevel[0.8]}, StripOnInput -> False], 
+                    "\"late morning\""}, "RowDefault"], "\[NoBreak]", 
+                    "\")\""}], {
+                    GrayLevel[0.6], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, StripOnInput -> False], 
+                    StyleBox[
+                    RowBox[{"\[NoBreak]", 
+                    PaneBox[
+                    "\"  |  \"", BaselinePosition -> Baseline, BaseStyle -> 
+                    GrayLevel[0.6]]}], AutoSpacing -> True], 
+                    StyleBox[
+                    TemplateBox[{"\"clear\"", "\" \"", 
+                    StyleBox[
+                    RowBox[{"\"(\"", "\[NoBreak]", 
+                    TemplateBox[{"\"late morning\"", 
+                    StyleBox[
+                    "\" to \"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 0, 
+                    GrayLevel[0.6], {
+                    GrayLevel[0.8]}, StripOnInput -> False], 
+                    "\"late afternoon\""}, "RowDefault"], "\[NoBreak]", 
+                    "\")\""}], {
+                    GrayLevel[0.6], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, StripOnInput -> False], 
+                    StyleBox[
+                    RowBox[{"\[NoBreak]", 
+                    PaneBox[
+                    "\"  |  \"", BaselinePosition -> Baseline, BaseStyle -> 
+                    GrayLevel[0.6]]}], AutoSpacing -> True], 
+                    StyleBox[
+                    TemplateBox[{"\"snow\"", "\" \"", 
+                    StyleBox[
+                    RowBox[{"\"(\"", "\[NoBreak]", 
+                    FormBox[
+                    TagBox[
+                    FormBox[
+                    TemplateBox[{"\"early afternoon\"", 
+                    TemplateBox[{
+                    StyleBox[
+                    "\" onward\"", 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], {
+                    GrayLevel[0.8]}, StripOnInput -> False]}, "RowDefault"]}, 
+                    "RowDefault"], TraditionalForm], 
+                    Format[#, TraditionalForm]& ], TraditionalForm], 
+                    "\[NoBreak]", "\")\""}], {
+                    GrayLevel[0.6], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, StripOnInput -> False], 
+                    StyleBox[
+                    RowBox[{"\[NoBreak]", 
+                    PaneBox[
+                    "\"  |  \"", BaselinePosition -> Baseline, BaseStyle -> 
+                    GrayLevel[0.6]]}], AutoSpacing -> True], 
+                    StyleBox[
+                    TemplateBox[{"\"partly cloudy\"", "\" \"", 
+                    StyleBox[
+                    RowBox[{"\"(\"", "\[NoBreak]", 
+                    FormBox[
+                    TagBox[
+                    FormBox[
+                    TemplateBox[{"\"late afternoon\"", 
+                    TemplateBox[{
+                    StyleBox[
+                    "\" onward\"", 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], {
+                    GrayLevel[0.8]}, StripOnInput -> False]}, "RowDefault"]}, 
+                    "RowDefault"], TraditionalForm], 
+                    Format[#, TraditionalForm]& ], TraditionalForm], 
+                    "\[NoBreak]", "\")\""}], {
+                    GrayLevel[0.6], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, StripOnInput -> False]}], 
+                  LinebreakAdjustments -> {1, 10, 0, 0, 100}, LineIndent -> 
+                  0]}}, GridBoxAlignment -> {
+                "Columns" -> {Left}, "Rows" -> {{Baseline}}}, AutoDelete -> 
+               False, GridBoxBackground -> {"Columns" -> {{None}}}, 
+               GridBoxFrame -> {"Columns" -> {{True}}, "Rows" -> {{True}}}, 
+               GridBoxItemSize -> {
+                "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+               GridBoxSpacings -> {"Columns" -> {{1.5}, 2}, "Rows" -> {{1}}}, 
+               FrameStyle -> GrayLevel[0.84], BaselinePosition -> Automatic, 
+               AllowScriptLevelChange -> False], "Grid"], 
+             LineSpacing -> {0.9, 0, 1.5}, LineIndent -> 0, StripOnInput -> 
+             False], TraditionalForm]], "Output"]}], 
+       XMLElement[
+       "dataformats", {}, {
+        "plaintext,computabledata,formatteddata,numberdata,quantitydata"}]}], 
+     
+     XMLElement["subpod", {"title" -> "Tonight"}, {
+       XMLElement["cell", {"compressed" -> True, "string" -> False}, {
+         Cell[
+          BoxData[
+           FormBox[
+            StyleBox[
+             TagBox[
+              GridBox[{{
+                 FormBox[
+                  TagBox[
+                   FormBox[
+                    TemplateBox[{
+                    TemplateBox[{
+                    StyleBox[
+                    "\"between \"", 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False]}, "RowDefault"], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["13", 
+                    Global`TagBoxWrapper["StringBoxes" -> "13"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], "\"\"", 
+                    TemplateBox[{}, "RowDefault"], 
+                    TemplateBox[{
+                    StyleBox[
+                    "\" and \"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 0, 
+                    GrayLevel[0.6], StripOnInput -> False]}, "RowDefault"], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["31", 
+                    Global`TagBoxWrapper["StringBoxes" -> "31"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], "\"\"", 
+                    TemplateBox[{}, "RowDefault"]}, "RowDefault"], 
+                    TraditionalForm], Format[#, TraditionalForm]& ], 
+                  TraditionalForm]}, {
+                 StyleBox[
+                  RowBox[{
+                    StyleBox[
+                    TemplateBox[{"\"snow\"", "\" \"", 
+                    StyleBox[
+                    
+                    RowBox[{
+                    "\"(\"", "\[NoBreak]", "\"all night\"", "\[NoBreak]", 
+                    "\")\""}], {
+                    GrayLevel[0.6], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, StripOnInput -> False], 
+                    StyleBox[
+                    RowBox[{"\[NoBreak]", 
+                    PaneBox[
+                    "\"  |  \"", BaselinePosition -> Baseline, BaseStyle -> 
+                    GrayLevel[0.6]]}], AutoSpacing -> True], 
+                    StyleBox[
+                    TemplateBox[{"\"partly cloudy\"", "\" \"", 
+                    StyleBox[
+                    RowBox[{"\"(\"", "\[NoBreak]", 
+                    TemplateBox[{"\"late afternoon\"", 
+                    StyleBox[
+                    "\" to \"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 0, 
+                    GrayLevel[0.6], {
+                    GrayLevel[0.8]}, StripOnInput -> False], "\"night\""}, 
+                    "RowDefault"], "\[NoBreak]", "\")\""}], {
+                    GrayLevel[0.6], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, StripOnInput -> False], 
+                    StyleBox[
+                    RowBox[{"\[NoBreak]", 
+                    PaneBox[
+                    "\"  |  \"", BaselinePosition -> Baseline, BaseStyle -> 
+                    GrayLevel[0.6]]}], AutoSpacing -> True], 
+                    StyleBox[
+                    TemplateBox[{"\"cloudy\"", "\" \"", 
+                    StyleBox[
+                    RowBox[{"\"(\"", "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{
+                    TemplateBox[{"\"late night\"", 
+                    StyleBox[
+                    "\" to \"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 0, 
+                    GrayLevel[0.6], {
+                    GrayLevel[0.8]}, StripOnInput -> False], 
+                    "\"early morning\""}, "RowDefault"], 
+                    StyleBox[
+                    RowBox[{"\[NoBreak]", 
+                    PaneBox[
+                    "\"  |  \"", BaselinePosition -> Baseline, BaseStyle -> 
+                    GrayLevel[0.6]]}], AutoSpacing -> True], 
+                    FormBox[
+                    TagBox[
+                    FormBox[
+                    TemplateBox[{"\"early morning\"", 
+                    TemplateBox[{
+                    StyleBox[
+                    "\" onward\"", LinebreakAdjustments -> {1, 100, 1, 0, 
+                    100}, LineIndent -> 0, 
+                    GrayLevel[0.6], {
+                    GrayLevel[0.8]}, StripOnInput -> False]}, "RowDefault"]}, 
+                    "RowDefault"], TraditionalForm], 
+                    Format[#, TraditionalForm]& ], TraditionalForm]}], 
+                    LinebreakAdjustments -> {1, 10, 0, 0, 100}, LineIndent -> 
+                    0], "\[NoBreak]", "\")\""}], {
+                    GrayLevel[0.6], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, StripOnInput -> False], 
+                    StyleBox[
+                    RowBox[{"\[NoBreak]", 
+                    PaneBox[
+                    "\"  |  \"", BaselinePosition -> Baseline, BaseStyle -> 
+                    GrayLevel[0.6]]}], AutoSpacing -> True], 
+                    StyleBox[
+                    TemplateBox[{"\"overcast\"", "\" \"", 
+                    StyleBox[
+                    
+                    RowBox[{
+                    "\"(\"", "\[NoBreak]", "\"early morning\"", "\[NoBreak]", 
+                    "\")\""}], {
+                    GrayLevel[0.6], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, StripOnInput -> False]}], 
+                  LinebreakAdjustments -> {1, 10, 0, 0, 100}, LineIndent -> 
+                  0]}}, GridBoxAlignment -> {
+                "Columns" -> {Left}, "Rows" -> {{Baseline}}}, AutoDelete -> 
+               False, GridBoxBackground -> {"Columns" -> {{None}}}, 
+               GridBoxFrame -> {"Columns" -> {{True}}, "Rows" -> {{True}}}, 
+               GridBoxItemSize -> {
+                "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+               GridBoxSpacings -> {"Columns" -> {{1.5}, 2}, "Rows" -> {{1}}}, 
+               FrameStyle -> GrayLevel[0.84], BaselinePosition -> Automatic, 
+               AllowScriptLevelChange -> False], "Grid"], 
+             LineSpacing -> {0.9, 0, 1.5}, LineIndent -> 0, StripOnInput -> 
+             False], TraditionalForm]], "Output"]}], 
+       XMLElement[
+       "dataformats", {}, {
+        "plaintext,computabledata,formatteddata,numberdata,quantitydata"}]}], 
+     
+     XMLElement["states", {"count" -> "3"}, {
+       XMLElement[
+       "state", {
+        "name" -> "Show metric", "input" -> 
+         "WeatherForecast:WeatherData__Show metric"}, {}], 
+       XMLElement[
+       "state", {
+        "name" -> "More days", "input" -> 
+         "WeatherForecast:WeatherData__More days"}, {}], 
+       XMLElement[
+       "state", {
+        "name" -> "More details", "input" -> 
+         "WeatherForecast:WeatherData__More details"}, {}]}]}], 
+   Typeset`pod4$$ = XMLElement[
+   "pod", {"title" -> "Weather history & forecast", "scanner" -> "Data", "id" -> 
+     "WeatherCharts:WeatherData", "position" -> "400", "error" -> "false", 
+     "numsubpods" -> "4"}, {
+     XMLElement["subpod", {"title" -> "Temperature"}, {
+       XMLElement["cell", {"compressed" -> True, "string" -> False}, {
+         Cell[
+          BoxData[
+           FormBox[
+            TagBox[
+             GridBox[{{
+                TagBox[
+                 GridBox[{{
+                    GraphicsBox[{{{}, 
+                    GraphicsComplexBox[CompressedData["
+1:eJzt1/tTlUUYB/AVQUA0bxAXQUQtud9OIJIHuYioaYqmFoIpxitqjMcrjqa+
+XlBCCYsSTwqGmmbg0bK8i2hmEaCAFcM0UepEKkWa4XgJTvvs+3rq+/4HzZz3
+F/3Ms/u8u/s+u2fxSV84OcOGMbasC2P0L3+iH165Haej52h8LGPySbLcmnxi
+QA6ZTX+E8VWPuXmwNfmBsL4D2svXO7C9uZPb4GxKuvYojvKdNnNL9LTEUvw8
+q7sd59C416DPE95gw60MTTjRlruO0rfGkO27oavsuQ30fjvhLY5kfffGvXdG
+kCc4gdl6sni/JOK9enL/7JtacKE9mlz/FLd8od03tZdwYW90aR/u9430CE/t
+S3ExvyjKf4lcW0MPWXZwRruSe/PmK52Fb2niTS4Y3+lqWY9hlL8OLYe5odPc
+LesTQe0fk8X30JHlVA8wq0DLvfujvftb1le0L/HE+DVPiMuZXpi/GC3vHYDt
+C70xnjEQx3/cB+c3dBDE5VuD0QlDMF/ZM5jvp2cxnjUUxxPih77rjz4aiOth
+F2yphzCKLwu21JPwsFD0wzD0aR16dQR65DBL/erIXYbjeL6IxvXJGYH1kxSD
+doyFepUd4qD+2Hi0XB2H/b+Jx3hyAjo/AfPfxzgLGIXtJyZi+6xEbO8xGp2h
+celo3I99kmC/ssNJGL+BZm5jMD4DzUya+NUxeF4EjsPzJFvj98iMzrfuwhc0
+8YAXwGwWWj6v8fTxeL7tGY/xZo3dX8Tz8oeJeN4WJ6N9pnLH8vSGDuEb09Af
+voz55qbgee2XiuNrTcP1OvQqntcLZ1M+J1OS2TyS/HU6947CWif19yFsDpgV
+kieF7lqwQ/k+Ua/R955zpaRaqYdzaPke+ch2m4ZOcyT5QAaNpyrCLlzZ/59L
+3AM7MqMyJLG/sjMt+cPE95hH8/uqRF9kDKH48Pnos1mW+QeS1y60rL8veY0B
+43GLIM6Wo+WuS9DHlqK/1HjGMvTm5fi+sSvQTivRtavQBavR1RrbrwGzII3n
+oeXkteh+67D9tPW4nt+hWeRGjBdp/MomdP9ctMeb6B81dtyC3q3x7Hz04AJc
+71+2Wc6jIaK+3kHPexcdsN3y++ND/r0I1+ewEepPXrQT61NXjPXbXoL1b73P
+1Vnvc9b7nPU+Z73PWe9z1vuc9T5nvc/9r+9z/ru5Z0lS85ndz5EN+7i3GY19
+FneI+8Oxg6ob8p8n/22i/DqdS2Ue7UcW/5na/4iXyJd7kvuO2ZzdvC+cfLmC
+u7KmpofdND+y80Wl/xKncvG9UqqU+Kiyu6L/B5eV961ybtOTW64q7csKssT7
+A5tUh6SJ829xs9LftHq+GM+JG6oX/CrinTfV/FWRw8mj2tT+ETPF+/LuqeOd
+FCXa1z1Q55M6UfjpTnX+e3LEeqR2rVfXo6fwHod6Jb+X8vt+s6cSPxniJc6D
+4H7csZK0f9xsf/JSN6V9j7NjRT2f8lLjwbkBZDaYWzYam0o9hpJH+5J5NXT4
+O5K3BnGzTEmysW05x90QTuY/OA+mdK3kdosiz5UkfUQ38kw9mfefJLWN5N4X
+r+R3//PAAMp3O6le+R7VNUHk0AnqfFw3inpYPrlerMcmjz9CyWemq/37NvUl
+26RRfj7hg4Zayj8mXR1PY81fNL635qrjcUkR4/n2dXKsTnfv00MU91iszL/F
+VOxO+WZlq+PJjhlE3v8GtefV/9Ipe/Jv69R8th+3U//wzTQe/h9XkxPlX7GV
+4ny3HW9n1L7ibaX/0ce+3mTbIjW/faOox3G76pXvb7OA9gvbVvpk/hfp/Gff
+71fal20oE3HPcvX7358inP6J6kvVwh8dU9areaurqIe202r+mIhIy36TWq9H
+ll/xrnwS/4/F31f/WtmvT/wPf4Ivqw==
+                    "], {{{}, {
+                    EdgeForm[], 
+                    RGBColor[0.928, 0.928, 0.966, 0.5], 
+                    GraphicsGroupBox[{
+                    PolygonBox[CompressedData["
+1:eJwt0mdbDQAYBuCjzAaFkgptK6tIRUqUdkTZyikNdA7qSCKjYbQ0COnyV7u7
+rj7cz/t8fD68mcFwSygqEAhs4v/GHRQRVvV/rPCXP/xmmV/8ZIlFFpjnB3PM
+MsM0U3znG1/5wiQTjDPGZz7xkQ+M8p53jPCWYd4wxGsi61sZ4BUveUGYEP08
+5xlP6aOXHrp5QhedBHlMB+084iEPuM897nKH27TRyi1u0sINrtNME400UE8d
+tdRwjWqquMoVKrlMBeVcooyLXKCUEoo5TxHnOEshBZzhNKc4yQnyOc4xjnKE
+w+SRSw7ZZJFJBoc4yAHSSSOV/aSwj2SS2MsedpNIArvYSTxxxBLDDrazja1s
+YTPRrP/gGutxM7M=
+                    "]]}]}, {}, {}, {}, {
+                    EdgeForm[], 
+                    RGBColor[0.928, 0.928, 0.966, 0.5], 
+                    GraphicsGroupBox[{
+                    
+                    PolygonBox[{{315, 370, 371, 369, 368, 367, 366, 365, 364, 
+                    363, 362, 361, 360, 359, 358, 357, 356, 355, 354, 353, 
+                    352, 351, 350, 349, 348, 347, 346, 345, 344, 343, 342, 
+                    341, 340, 339, 338, 337, 336, 335, 334, 333, 332, 331, 
+                    330, 329, 328, 327, 326, 325, 324, 323, 322, 321, 320, 
+                    319, 318, 317, 
+                    316}}]}]}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}}, {{}, {}, {
+                    Hue[0.67, 0.6, 0.6], 
+                    Directive[
+                    RGBColor[0.24720000000000014`, 0.24, 0.6], 
+                    Dashing[{Small, Small}]], 
+                    
+                    LineBox[{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 
+                    15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 
+                    29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 
+                    43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 
+                    57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 
+                    71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 
+                    85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 
+                    99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110,
+                     111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 
+                    122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 
+                    133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 
+                    144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 
+                    155, 156, 157}]}, {
+                    Hue[0.9060679774997897, 0.6, 0.6], 
+                    Directive["XKCDWhiteBackground" -> False, 
+                    AbsoluteThickness[1], 
+                    RGBColor[0.24720000000000014`, 0.24, 0.6]], 
+                    
+                    LineBox[{158, 159, 160, 161, 162, 163, 164, 165, 166, 167,
+                     168, 169, 170, 171}], 
+                    
+                    LineBox[{172, 173, 174, 175, 176, 177, 178, 179, 180, 181,
+                     182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 
+                    193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 
+                    204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214}], 
+                    
+                    LineBox[{215, 216, 217, 218, 219, 220, 221, 222, 223, 224,
+                     225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 
+                    236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 
+                    247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 
+                    258, 259, 260}], 
+                    
+                    LineBox[{261, 262, 263, 264, 265, 266, 267, 268, 269, 270,
+                     271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 
+                    282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 
+                    293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 
+                    304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314}]}, {
+                    Hue[0.1421359549995791, 0.6, 0.6], 
+                    Directive[
+                    RGBColor[0.24720000000000014`, 0.24, 0.6], 
+                    Dashing[{0, Small}]], 
+                    
+                    LineBox[{315, 316, 317, 318, 319, 320, 321, 322, 323, 324,
+                     325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 
+                    336, 337, 338, 339, 340, 341, 342, 343, 344, 345, 346, 
+                    347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 
+                    358, 359, 360, 361, 362, 363, 364, 365, 366, 367, 368, 
+                    369}]}}}], {}}, {Antialiasing -> False, 
+                    RGBColor[1, 0, 0], 
+                    
+                    LineBox[{{3599038800, -7.952805383300847}, {
+                    3599038800, 38.472800576782255`}}]}}, {
+                    GridLines -> Dynamic[
+                    
+                    Join[{{3598732800, 3598819200, 3598905600, 3598992000, 
+                    3599078400, 3599164800, 3599251200}, {-10, -5, 0, 5, 10, 
+                    15, 20, 25, 30, 35, 40}}, 
+                    Replace[
+                    MousePosition[{"Graphics", Graphics}, None], {
+                    None -> {{}, {}}, {
+                    Pattern[CalculateUtilities`GraphicsUtilities`Private`x$, 
+                    Blank[]], 
+                    Pattern[CalculateUtilities`GraphicsUtilities`Private`y$, 
+                    Blank[]]} :> {{{
+                    CalculateUtilities`GraphicsUtilities`Private`x$, 
+                    GrayLevel[0.7]}}, {{
+                    CalculateUtilities`GraphicsUtilities`Private`y$, 
+                    GrayLevel[0.7]}}}}], 2]], FrameLabel -> {None, None}, 
+                    AxesLabel -> {None, None}, AspectRatio -> 0.2, 
+                    AxesOrigin -> {3.598782922989718*^9, 0}, BaselinePosition -> 
+                    Scaled[0.56], Frame -> True, FrameTicks -> {{{{-10, 
+                    FormBox[
+                    RowBox[{"-", "10"}], TraditionalForm], {0.01, 0}}, {-5, 
+                    FormBox["\"\"", TraditionalForm], {0.005, 0}}, {0, 
+                    FormBox["0", TraditionalForm], {0.01, 0}}, {5, 
+                    FormBox["\"\"", TraditionalForm], {0.005, 0}}, {10, 
+                    FormBox["10", TraditionalForm], {0.01, 0}}, {15, 
+                    FormBox["\"\"", TraditionalForm], {0.005, 0}}, {20, 
+                    FormBox["20", TraditionalForm], {0.01, 0}}, {25, 
+                    FormBox["\"\"", TraditionalForm], {0.005, 0}}, {30, 
+                    FormBox["30", TraditionalForm], {0.01, 0}}, {35, 
+                    FormBox["\"\"", TraditionalForm], {0.005, 0}}, {40, 
+                    FormBox["40", TraditionalForm], {0.01, 0}}, {
+                    15.259997596740703`, 
+                    FormBox[
+                    StyleBox[
+                    "\"100%\"", ShowContents -> False, StripOnInput -> False],
+                     TraditionalForm], {0, 0}}}, None}, {{{3598776000, 
+                    FormBox["\"Jan 15\"", TraditionalForm], 0}, {3598862400, 
+                    FormBox["\"Jan 16\"", TraditionalForm], 0}, {3598948800, 
+                    FormBox["\"Jan 17\"", TraditionalForm], 0}, {3599035200, 
+                    FormBox["\"Jan 18\"", TraditionalForm], 0}, {3599121600, 
+                    FormBox["\"Jan 19\"", TraditionalForm], 0}, {3599208000, 
+                    FormBox["\"Jan 20\"", TraditionalForm], 0}, {3599294400, 
+                    FormBox["\"Jan 21\"", TraditionalForm], 0}}, {{3598776000, 
+                    FormBox["\"Wed\"", TraditionalForm], 0}, {3598862400, 
+                    FormBox["\"Thu\"", TraditionalForm], 0}, {3598948800, 
+                    FormBox["\"Fri\"", TraditionalForm], 0}, {3599035200, 
+                    FormBox["\"Sat\"", TraditionalForm], 0}, {3599121600, 
+                    FormBox["\"Sun\"", TraditionalForm], 0}, {3599208000, 
+                    FormBox["\"Mon\"", TraditionalForm], 0}, {3599294400, 
+                    FormBox["\"Tue\"", TraditionalForm], 0}}}}, 
+                    GridLines -> {{3598732800, 3598819200, 3598905600, 
+                    3598992000, 3599078400, 3599164800, 3599251200}, {-10, -5,
+                     0, 5, 10, 15, 20, 25, 30, 35, 40}}, GridLinesStyle -> {
+                    GrayLevel[0.85], 
+                    GrayLevel[0.9]}, ImageSize -> {
+                    Scaled[0.95], 
+                    Scaled[0.95]}, Method -> {}, 
+                    PlotRange -> {{
+                    3.598782922989718*^9, 3599297580}, {-7.952805383300847, 
+                    38.472800576782255`}}, PlotRangeClipping -> True, 
+                    PlotRangePadding -> {Automatic, Automatic}, Prolog -> {
+                    Opacity[0], 
+                    TagBox[
+                    RectangleBox[
+                    Scaled[{0, 0}], 
+                    Scaled[{1, 1}]], 
+                    Annotation[#, "CarlToldMeToPutALabelHere", "Frame"]& ]}, 
+                    Ticks -> None}]}}, 
+                  GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                  DefaultBaseStyle -> "Column", 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+                 "Column"]}, {
+                TagBox[
+                 GridBox[{{
+                    RowBox[{
+                    StyleBox[
+                    "\"\"", ShowContents -> False, StripOnInput -> False], 
+                    " ", 
+                    StyleBox[
+                    StyleBox[
+                    "\"100%\"", ShowContents -> False, StripOnInput -> False],
+                     9, StripOnInput -> False]}], 
+                    TagBox[
+                    GridBox[{{
+                    ItemBox[
+                    "\"\"", ItemSize -> {Automatic, 0.5}, StripOnInput -> 
+                    False], "\[SpanFromLeft]", "\[SpanFromLeft]"}, {
+                    ItemBox[
+                    TagBox[
+                    GridBox[{{
+                    TemplateBox[{
+                    StyleBox[
+                    TemplateBox[{"\"low\"", "\": \""}, "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["9", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "9"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False]}, "RowDefault"]}, {
+                    StyleBox[
+                    
+                    TemplateBox[{"\"Sat, Jan 18, 8:00am\"", "\"\""}, 
+                    "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, {FontFamily -> "Verdana", FontSize -> 10}, 
+                    GrayLevel[0.5], StripOnInput -> False]}}, 
+                    GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                    DefaultBaseStyle -> "Column", 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{0}}}], "Column"], 
+                    ItemSize -> {12, 2}, Frame -> True, FrameStyle -> 
+                    GrayLevel[0.84], Alignment -> {Center, Automatic}, 
+                    StripOnInput -> False], 
+                    ItemBox[
+                    TagBox[
+                    GridBox[{{
+                    StyleBox[
+                    "\"average high: \"", 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["29", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "29"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False]}, {
+                    StyleBox[
+                    "\"average low: \"", 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["15", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "15"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False]}}, AutoDelete -> False, 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {"Columns" -> {{0}}, "Rows" -> {{0}}}],
+                     "Grid"], ItemSize -> {12, 2}, Frame -> True, FrameStyle -> 
+                    GrayLevel[0.84], Alignment -> {Center, Automatic}, 
+                    StripOnInput -> False], 
+                    ItemBox[
+                    TagBox[
+                    GridBox[{{
+                    TemplateBox[{
+                    StyleBox[
+                    TemplateBox[{"\"high\"", "\": \""}, "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["34", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "34"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False]}, "RowDefault"]}, {
+                    StyleBox[
+                    
+                    TemplateBox[{"\"Thu, Jan 16, 7:00pm\"", "\", ...\""}, 
+                    "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, {FontFamily -> "Verdana", FontSize -> 10}, 
+                    GrayLevel[0.5], StripOnInput -> False]}}, 
+                    GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                    DefaultBaseStyle -> "Column", 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{0}}}], "Column"], 
+                    ItemSize -> {12, 2}, Frame -> True, FrameStyle -> 
+                    GrayLevel[0.84], Alignment -> {Center, Automatic}, 
+                    StripOnInput -> False]}, {
+                    ItemBox[
+                    "\"\"", ItemSize -> {Automatic, 1}, StripOnInput -> 
+                    False], "\[SpanFromLeft]", "\[SpanFromLeft]"}}, 
+                    GridBoxAlignment -> {"Columns" -> {{Left}}}, AutoDelete -> 
+                    False, GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {
+                    "Columns" -> {{0.2}}, "Rows" -> {{0}}}], "Grid"]}}, 
+                  AutoDelete -> False, 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                  GridBoxSpacings -> {"Columns" -> {{0}}, "Rows" -> {{0}}}], 
+                 "Grid"]}}, GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+              DefaultBaseStyle -> "Column", 
+              GridBoxItemSize -> {
+               "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+             "Column"], TraditionalForm]], "Output"]}], 
+       XMLElement[
+       "dataformats", {}, {
+        "plaintext,computabledata,formatteddata,timeseriesdata"}]}], 
+     XMLElement["subpod", {"title" -> "Cloud cover"}, {
+       XMLElement["cell", {"compressed" -> True, "string" -> False}, {
+         Cell[
+          BoxData[
+           FormBox[
+            TagBox[
+             GridBox[{{
+                TagBox[
+                 GridBox[{{
+                    GraphicsBox[{{{}, 
+                    GraphicsComplexBox[CompressedData["
+1:eJzt1d9Lk1EYB/CDBpXRlRZivwhvVmaUUdjFii3JCrrYLorKIldqi2KbmYql
+zsi00mY/aNgPrRyaEIZQY/ZDox9kWbI3NSso+oGytimBTLoI6Tyn3mPf9y/o
+Yi+M8eE5e/ac5z3P+y602Mw5MYyxdv6hb8acpSv9QQOTl7PHIP15LfdLI7p2
+HXoczVIyMG7Llv5B7ragl+8Bs/Map+9Fd6GdYxq35KDv5qKL9mG+3VaMr96P
+fngQXW6T7ieX2aUDZIMDzArRzthDaG8B5n+m8Y7DuL6qEOMbi9EzStCvj6Bd
+pegejaeWYX9SNbainaZydHwFrt9yDOMDaLbqOMbdGm87gZ5TjU46if6o8fTT
+6EaNs2vRyS5pP3moDuej5RzaegGdchE94sb7d7se8zsu4/+vuIqONKCj8xqd
+1+i8Tvo/n1e2uBHyM7uHe0FlyOSbP0BxbyvO46827kv1dH0nG+9wj+uyXI8j
+4nxWd2D+3k5uhz5usMk+Qk54yk3Sxz0nb38h83WQr/ViPcN96CXv0fmf0L5v
+6IkAOmMUfWoM7f/JHea7rwwpVM/sCe41ouCv5KxYJWgQ5Q+GyDemKer+hsiB
+mdxPItQQ4aXx3B5a3iT6U5CIvjePOy+XrmEyS+ZeRO3Uhcnrddyz2jK/lCSI
+eE2qAvW+SUMnpqN36dEeIzqYiV62WVHvR6t43pi5qRsmXwP5wVZZP503FrNT
++hF5g4XbLH7QTT6Tp6j9+0DuPyD394qclC/72Seen0XcFM1yiX43H1XU8/WO
+HK7AetOq0MU16M6z6Clu9KYr6Lrr6LfN6Lm30JZ29E0vevQ+Wszb3/PepcYn
+/ef9+Y/FvKr+DQ+8Pb8=
+                    "], {{{}, {
+                    EdgeForm[], 
+                    RGBColor[0.928, 0.928, 0.966, 0.5], 
+                    GraphicsGroupBox[{
+                    
+                    PolygonBox[{{1, 176, 177, 59, 58, 57, 56, 55, 54, 53, 52, 
+                    51, 50, 49, 48, 47, 46, 45, 44, 43, 42, 41, 40, 39, 38, 
+                    37, 36, 35, 34, 33, 32, 31, 30, 29, 28, 27, 26, 25, 24, 
+                    23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9,
+                     8, 7, 6, 5, 4, 3, 2}}]}]}, {}, {}, {}, {
+                    EdgeForm[], 
+                    RGBColor[0.928, 0.928, 0.966, 0.5], 
+                    GraphicsGroupBox[{
+                    
+                    PolygonBox[{{119, 174, 175, 173, 172, 171, 170, 169, 168, 
+                    167, 166, 165, 164, 163, 162, 161, 160, 159, 158, 157, 
+                    156, 155, 154, 153, 152, 151, 150, 149, 148, 147, 146, 
+                    145, 144, 143, 142, 141, 140, 139, 138, 137, 136, 135, 
+                    134, 133, 132, 131, 130, 129, 128, 127, 126, 125, 124, 
+                    123, 122, 121, 
+                    120}}]}]}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}}, {{}, {}, {
+                    Hue[0.67, 0.6, 0.6], 
+                    Directive[
+                    RGBColor[0.24720000000000014`, 0.24, 0.6], 
+                    Dashing[{Small, Small}]], 
+                    
+                    LineBox[{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 
+                    15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 
+                    29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 
+                    43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 
+                    57, 58, 59}]}, {
+                    Hue[0.9060679774997897, 0.6, 0.6], 
+                    Directive["XKCDWhiteBackground" -> False, 
+                    AbsoluteThickness[1], 
+                    RGBColor[0.24720000000000014`, 0.24, 0.6]], 
+                    LineBox[{61, 62}], 
+                    LineBox[{63, 64, 65}], 
+                    
+                    LineBox[{66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 
+                    78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 
+                    92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 
+                    105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 
+                    116, 117, 118}]}, {
+                    Hue[0.1421359549995791, 0.6, 0.6], 
+                    Directive[
+                    RGBColor[0.24720000000000014`, 0.24, 0.6], 
+                    Dashing[{0, Small}]], 
+                    
+                    LineBox[{119, 120, 121, 122, 123, 124, 125, 126, 127, 128,
+                     129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 
+                    140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 
+                    151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 
+                    162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 
+                    173}]}}}], {}}, {Antialiasing -> False, 
+                    RGBColor[1, 0, 0], 
+                    LineBox[{{3599038800, -0.1}, {3599038800, 1.1}}]}}, {
+                    GridLines -> Dynamic[
+                    
+                    Join[{{3598732800, 3598819200, 3598905600, 3598992000, 
+                    3599078400, 3599164800, 3599251200}, {0, 1}}, 
+                    Replace[
+                    MousePosition[{"Graphics", Graphics}, None], {
+                    None -> {{}, {}}, {
+                    Pattern[CalculateUtilities`GraphicsUtilities`Private`x$, 
+                    Blank[]], 
+                    Pattern[CalculateUtilities`GraphicsUtilities`Private`y$, 
+                    Blank[]]} :> {{{
+                    CalculateUtilities`GraphicsUtilities`Private`x$, 
+                    GrayLevel[0.7]}}, {{
+                    CalculateUtilities`GraphicsUtilities`Private`y$, 
+                    GrayLevel[0.7]}}}}], 2]], FrameLabel -> {None, None}, 
+                    AxesLabel -> {None, None}, AspectRatio -> 0.1, 
+                    AxesOrigin -> {3.598782922989718*^9, 0}, BaselinePosition -> 
+                    Scaled[0.56], Frame -> True, FrameTicks -> {{{{0, 
+                    FormBox["\"0%\"", TraditionalForm]}, {
+                    NCache[
+                    Rational[1, 2], 0.5], 
+                    FormBox[
+                    StyleBox[
+                    "\"100%\"", ShowContents -> False, StripOnInput -> False],
+                     TraditionalForm]}, {1, 
+                    FormBox["\"100%\"", TraditionalForm]}}, 
+                    None}, {{{3598776000, 
+                    FormBox["\"Jan 15\"", TraditionalForm], 0}, {3598862400, 
+                    FormBox["\"Jan 16\"", TraditionalForm], 0}, {3598948800, 
+                    FormBox["\"Jan 17\"", TraditionalForm], 0}, {3599035200, 
+                    FormBox["\"Jan 18\"", TraditionalForm], 0}, {3599121600, 
+                    FormBox["\"Jan 19\"", TraditionalForm], 0}, {3599208000, 
+                    FormBox["\"Jan 20\"", TraditionalForm], 0}, {3599294400, 
+                    FormBox["\"Jan 21\"", TraditionalForm], 0}}, {{3598776000, 
+                    FormBox["\"Wed\"", TraditionalForm], 0}, {3598862400, 
+                    FormBox["\"Thu\"", TraditionalForm], 0}, {3598948800, 
+                    FormBox["\"Fri\"", TraditionalForm], 0}, {3599035200, 
+                    FormBox["\"Sat\"", TraditionalForm], 0}, {3599121600, 
+                    FormBox["\"Sun\"", TraditionalForm], 0}, {3599208000, 
+                    FormBox["\"Mon\"", TraditionalForm], 0}, {3599294400, 
+                    FormBox["\"Tue\"", TraditionalForm], 0}}}}, 
+                    GridLines -> {{3598732800, 3598819200, 3598905600, 
+                    3598992000, 3599078400, 3599164800, 3599251200}, {0, 1}}, 
+                    GridLinesStyle -> {
+                    GrayLevel[0.85], 
+                    GrayLevel[0.9]}, ImageSize -> {
+                    Scaled[0.95], 
+                    Scaled[0.95]}, Method -> {}, 
+                    PlotRange -> {{3.598782922989718*^9, 3599297580}, {-0.1, 
+                    1.1}}, PlotRangeClipping -> True, 
+                    PlotRangePadding -> {Automatic, Automatic}, Prolog -> {
+                    Opacity[0], 
+                    TagBox[
+                    RectangleBox[
+                    Scaled[{0, 0}], 
+                    Scaled[{1, 1}]], 
+                    Annotation[#, "CarlToldMeToPutALabelHere", "Frame"]& ]}, 
+                    Ticks -> None}]}}, 
+                  GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                  DefaultBaseStyle -> "Column", 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+                 "Column"]}, {
+                TagBox[
+                 GridBox[{{
+                    StyleBox[
+                    StyleBox[
+                    "\"100%\"", ShowContents -> False, StripOnInput -> False],
+                     10, StripOnInput -> False], 
+                    FrameBox[
+                    StyleBox[
+                    RowBox[{
+                    StyleBox[
+                    StyleBox[
+                    TemplateBox[{
+                    StyleBox[
+                    "\"clear\"", FontColor -> GrayLevel[0.3], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False], "\": \"", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["26.5", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "26.5"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    "\"%\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], "\" \"", 
+                    StyleBox[
+                    RowBox[{"\"(\"", "\[NoBreak]", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["1.3", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "1.3"]], 
+                    "\[InvisibleSpace]", " ", 
+                    StyleBox[
+                    "\"days\"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 
+                    0, {FontFamily :> $CellContext`$UnitFontFamily, FontSize -> 
+                    Smaller}, StripOnInput -> False]}], Identity], #& , 
+                    SyntaxForm -> Dot], "Unit", SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], "\[NoBreak]", "\")\""}], {
+                    GrayLevel[0.6], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False], "\" \""}, "RowDefault"], 
+                    "Caption", Smaller, StripOnInput -> False], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, StripOnInput -> False], 
+                    StyleBox[
+                    RowBox[{"\[NoBreak]", 
+                    PaneBox[
+                    "\"  |  \"", BaselinePosition -> Baseline, BaseStyle -> 
+                    GrayLevel[0.6]]}], AutoSpacing -> True], 
+                    StyleBox[
+                    StyleBox[
+                    TemplateBox[{
+                    StyleBox[
+                    "\"overcast\"", FontColor -> GrayLevel[0.3], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False], "\": \"", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["24.4", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "24.4"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    "\"%\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], "\" \"", 
+                    StyleBox[
+                    RowBox[{"\"(\"", "\[NoBreak]", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["1.2", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "1.2"]], 
+                    "\[InvisibleSpace]", " ", 
+                    StyleBox[
+                    "\"days\"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 
+                    0, {FontFamily :> $CellContext`$UnitFontFamily, FontSize -> 
+                    Smaller}, StripOnInput -> False]}], Identity], #& , 
+                    SyntaxForm -> Dot], "Unit", SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], "\[NoBreak]", "\")\""}], {
+                    GrayLevel[0.6], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False], "\" \""}, "RowDefault"], 
+                    "Caption", Smaller, StripOnInput -> False], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, StripOnInput -> False]}], 
+                    LinebreakAdjustments -> {1, 10, 0, 0, 100}, LineIndent -> 
+                    0], FrameStyle -> GrayLevel[0.84], StripOnInput -> 
+                    False]}}, GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                  AutoDelete -> False, 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                  GridBoxSpacings -> {"Columns" -> {{0}}}], "Grid"]}}, 
+              GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+              "Column", 
+              GridBoxItemSize -> {
+               "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+             "Column"], TraditionalForm]], "Output"]}], 
+       XMLElement[
+       "dataformats", {}, {
+        "plaintext,computabledata,formatteddata,timeseriesdata"}]}], 
+     XMLElement["subpod", {"title" -> "Conditions"}, {
+       XMLElement["cell", {"compressed" -> True, "string" -> False}, {
+         Cell[
+          BoxData[
+           FormBox[
+            TagBox[
+             GridBox[{{
+                GraphicsBox[{{Antialiasing -> False, 
+                   RGBColor[1, 0, 0], 
+                   LineBox[
+                    NCache[{{3599038800, 
+                    Rational[1, 2]}, {3599038800, 
+                    Rational[5, 2]}}, {{3599038800, 0.5}, {
+                    3599038800, 2.5}}]]}, 
+                  Dashing[{0, Small}], 
+                  GrayLevel[0.7], {
+                   LineBox[{{3.598782922989718*^9, 1}, {3599297580, 1}}], 
+                   LineBox[{{3.598782922989718*^9, 2}, {3599297580, 2}}]}, 
+                  AbsoluteThickness[2], {{
+                    RGBColor[0.24720000000000014`, 0.24, 0.6], {{{}, 
+                    
+                    LineBox[{{3.59878638*^9, 2}, {
+                    3.59878674*^9, 2}}]}, {{}, {}}, {{}, 
+                    LineBox[{{3.59878854*^9, 2}, {3.59879121*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59879121*^9, 2}, {3.59879301*^9, 2}}]}, {{}, 
+                    
+                    LineBox[{{3.59879301*^9, 2}, {
+                    3.59879538*^9, 
+                    2}}]}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, \
+{{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, \
+{}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, 
+                    LineBox[{{3.598845*^9, 2}, {3.59884629*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59884629*^9, 2}, {3.59884707*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59884707*^9, 2}, {3.5988486*^9, 2}}]}, {
+                    LineBox[{{3.5988486*^9, 1}, {3.59885016*^9, 1}}], 
+                    LineBox[{{3.5988486*^9, 2}, {3.59885016*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59885016*^9, 2}, {3.59885094*^9, 2}}]}, {
+                    LineBox[{{3.59885094*^9, 1}, {3.5988516*^9, 1}}], 
+                    LineBox[{{3.59885094*^9, 2}, {3.5988516*^9, 2}}]}, {
+                    LineBox[{{3.5988516*^9, 1}, {3.59885223*^9, 1}}], 
+                    LineBox[{{3.5988516*^9, 2}, {3.59885223*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59885223*^9, 2}, {3.59885361*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59885361*^9, 2}, {3.5988549*^9, 2}}]}, {{}, 
+                    LineBox[{{3.5988549*^9, 2}, {3.59885571*^9, 2}}]}, {
+                    LineBox[{{3.59885571*^9, 1}, {3.5988567*^9, 1}}], 
+                    LineBox[{{3.59885571*^9, 2}, {3.5988567*^9, 2}}]}, {{}, 
+                    LineBox[{{3.5988567*^9, 2}, {3.59885724*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59885724*^9, 2}, {3.59885793*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59885793*^9, 2}, {3.59885901*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59885901*^9, 2}, {3.59885985*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59885985*^9, 2}, {3.59886027*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59886027*^9, 2}, {3.59886075*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59886075*^9, 2}, {3.59886135*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59886135*^9, 2}, {3.59886183*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59886183*^9, 2}, {3.59886336*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59886336*^9, 2}, {3.59886504*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59886504*^9, 2}, {3.59886546*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59886546*^9, 2}, {3.59886576*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59886576*^9, 2}, {3.59886636*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59886636*^9, 2}, {3.59886699*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59886699*^9, 2}, {3.59886759*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59886759*^9, 2}, {3.59886858*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59886858*^9, 2}, {3.59886948*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59886948*^9, 2}, {3.59887002*^9, 2}}]}, {{}, 
+                    
+                    LineBox[{{3.59887002*^9, 2}, {
+                    3.59887152*^9, 
+                    2}}]}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, \
+{{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, \
+{}}, {{}, {}}, {{}, 
+                    
+                    LineBox[{{3.59891637*^9, 2}, {
+                    3.59891742*^9, 
+                    2}}]}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, \
+{{}, {}}, {{}, 
+                    LineBox[{{3.59892771*^9, 2}, {3.59892951*^9, 2}}]}, {{}, 
+                    
+                    LineBox[{{3.59892951*^9, 2}, {
+                    3.59893398*^9, 2}}]}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, 
+                    
+                    LineBox[{{3.598944*^9, 2}, {
+                    3.59894499*^9, 
+                    2}}]}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, \
+{{}, {}}, {{}, 
+                    LineBox[{{3.59895738*^9, 2}, {3.59896098*^9, 2}}]}, {{}, 
+                    
+                    LineBox[{{3.59896098*^9, 2}, {
+                    3.59896458*^9, 2}}]}, {{}, {}}, {{}, 
+                    LineBox[{{3.59896818*^9, 2}, {3.59897022*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59897022*^9, 2}, {3.5989707*^9, 2}}]}, {{}, 
+                    LineBox[{{3.5989707*^9, 2}, {3.59897109*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59897109*^9, 2}, {3.59897148*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59897148*^9, 2}, {3.59897265*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59897265*^9, 2}, {3.59897538*^9, 2}}]}, {{}, 
+                    
+                    LineBox[{{3.59897538*^9, 2}, {
+                    3.59897847*^9, 
+                    2}}]}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, \
+{{}, 
+                    LineBox[{{3.59898978*^9, 2}, {3.5989926*^9, 2}}]}, {{}, 
+                    LineBox[{{3.5989926*^9, 2}, {3.5989944*^9, 2}}]}, {{}, 
+                    LineBox[{{3.5989944*^9, 2}, {3.59899638*^9, 2}}]}, {{}, 
+                    LineBox[{{3.59899638*^9, 2}, {3.59899818*^9, 2}}]}, {{}, 
+                    
+                    LineBox[{{3.59899818*^9, 2}, {
+                    3.59900058*^9, 
+                    2}}]}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, \
+{{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, 
+                    LineBox[{{3.59903859*^9, 2}, {3.5990442*^9, 2}}]}, {{}, 
+                    LineBox[{{3.5990442*^9, 2}, {3.599055*^9, 2}}]}, {{}, 
+                    LineBox[{{3.599055*^9, 2}, {3.5990658*^9, 2}}]}, {{}, 
+                    LineBox[{{3.5990658*^9, 2}, {3.5990766*^9, 2}}]}, {{}, 
+                    LineBox[{{3.5990766*^9, 2}, {3.5990874*^9, 2}}]}, {{}, 
+                    LineBox[{{3.5990874*^9, 2}, {3.5990982*^9, 2}}]}, {{}, 
+                    
+                    LineBox[{{3.5990982*^9, 2}, {
+                    3.599109*^9, 
+                    2}}]}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, \
+{{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, {}}, {{}, 
+                    LineBox[{{3.5992386*^9, 2}, {3.5992494*^9, 2}}]}, {{}, 
+                    LineBox[{{3.5992494*^9, 2}, {3.5992602*^9, 2}}]}, {{}, 
+                    LineBox[{{3.5992602*^9, 2}, {3.599271*^9, 2}}]}, {{}, 
+                    LineBox[{{3.599271*^9, 2}, {3.5992818*^9, 2}}]}, {{}, 
+                    LineBox[{{3.5992818*^9, 2}, {3.5992872*^9, 2}}]}}}}}, {
+                 GridLines -> Dynamic[
+                    Map[{{#, 
+                    GrayLevel[0.7]}}& , 
+                    MousePosition[{"Graphics", Graphics}, None]]], PlotRange -> 
+                  NCache[{{
+                    3.59878292298971799999999987562659953254`24.1492117770885*\
+^9, 3599297580}, {
+                    Rational[1, 2], 
+                    Rational[5, 2]}}, {{3.598782922989718*^9, 3599297580}, {
+                    0.5, 2.5}}], AspectRatio -> 0.085, ImageSize -> {
+                    Scaled[0.95], 
+                    Scaled[0.95]}, 
+                  GridLines -> {{3598732800, 3598819200, 3598905600, 
+                    3598992000, 3599078400, 3599164800, 3599251200}, None}, 
+                  GridLinesStyle -> {
+                    GrayLevel[0.85], 
+                    GrayLevel[0.9]}, FrameTicks -> {{{{1, 
+                    FormBox["\"fog\"", TraditionalForm]}, {2, 
+                    FormBox["\"snow\"", TraditionalForm]}, {
+                    NCache[
+                    Rational[3, 2], 1.5], 
+                    FormBox[
+                    StyleBox[
+                    "\"100%\"", ShowContents -> False, StripOnInput -> False],
+                     TraditionalForm], {0, 0}}}, None}, {{{3598776000, 
+                    FormBox["\"Jan 15\"", TraditionalForm], 0}, {3598862400, 
+                    FormBox["\"Jan 16\"", TraditionalForm], 0}, {3598948800, 
+                    FormBox["\"Jan 17\"", TraditionalForm], 0}, {3599035200, 
+                    FormBox["\"Jan 18\"", TraditionalForm], 0}, {3599121600, 
+                    FormBox["\"Jan 19\"", TraditionalForm], 0}, {3599208000, 
+                    FormBox["\"Jan 20\"", TraditionalForm], 0}, {3599294400, 
+                    FormBox["\"Jan 21\"", TraditionalForm], 0}}, {{3598776000, 
+                    FormBox["\"Wed\"", TraditionalForm], 0}, {3598862400, 
+                    FormBox["\"Thu\"", TraditionalForm], 0}, {3598948800, 
+                    FormBox["\"Fri\"", TraditionalForm], 0}, {3599035200, 
+                    FormBox["\"Sat\"", TraditionalForm], 0}, {3599121600, 
+                    FormBox["\"Sun\"", TraditionalForm], 0}, {3599208000, 
+                    FormBox["\"Mon\"", TraditionalForm], 0}, {3599294400, 
+                    FormBox["\"Tue\"", TraditionalForm], 0}}}}, Frame -> True,
+                   FrameStyle -> Directive[
+                    GrayLevel[0, 0.35], FontColor -> GrayLevel[0.25], 
+                    FontOpacity -> 1], Prolog -> {
+                    Opacity[0], 
+                    TagBox[
+                    RectangleBox[
+                    Scaled[{0, 0}], 
+                    Scaled[{1, 1}]], 
+                    Annotation[#, "CarlToldMeToPutALabelHere", "Frame"]& ]}, 
+                  PlotRangeClipping -> True}]}, {
+                TagBox[
+                 GridBox[{{
+                    StyleBox[
+                    StyleBox[
+                    "\"100%\"", ShowContents -> False, StripOnInput -> False],
+                     10, StripOnInput -> False], 
+                    FrameBox[
+                    StyleBox[
+                    RowBox[{
+                    StyleBox[
+                    StyleBox[
+                    TemplateBox[{
+                    StyleBox[
+                    "\"snow\"", FontColor -> GrayLevel[0.3], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False], "\": \"", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["45.8", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "45.8"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    "\"%\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], "\" \"", 
+                    StyleBox[
+                    RowBox[{"\"(\"", "\[NoBreak]", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["2.2", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "2.2"]], 
+                    "\[InvisibleSpace]", " ", 
+                    StyleBox[
+                    "\"days\"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 
+                    0, {FontFamily :> $CellContext`$UnitFontFamily, FontSize -> 
+                    Smaller}, StripOnInput -> False]}], Identity], #& , 
+                    SyntaxForm -> Dot], "Unit", SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], "\[NoBreak]", "\")\""}], {
+                    GrayLevel[0.6], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False], "\" \""}, "RowDefault"], 
+                    "Caption", Smaller, StripOnInput -> False], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, StripOnInput -> False], 
+                    StyleBox[
+                    RowBox[{"\[NoBreak]", 
+                    PaneBox[
+                    "\"  |  \"", BaselinePosition -> Baseline, BaseStyle -> 
+                    GrayLevel[0.6]]}], AutoSpacing -> True], 
+                    StyleBox[
+                    StyleBox[
+                    TemplateBox[{
+                    StyleBox[
+                    "\"fog\"", FontColor -> GrayLevel[0.3], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False], "\": \"", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["0.9", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "0.9"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    "\"%\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], "\" \"", 
+                    StyleBox[
+                    RowBox[{"\"(\"", "\[NoBreak]", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["1.1", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "1.1"]], 
+                    "\[InvisibleSpace]", " ", 
+                    StyleBox[
+                    "\"hours\"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 
+                    0, {FontFamily :> $CellContext`$UnitFontFamily, FontSize -> 
+                    Smaller}, StripOnInput -> False]}], Identity], #& , 
+                    SyntaxForm -> Dot], "Unit", SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], "\[NoBreak]", "\")\""}], {
+                    GrayLevel[0.6], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False], "\" \""}, "RowDefault"], 
+                    "Caption", Smaller, StripOnInput -> False], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, StripOnInput -> False]}], 
+                    LinebreakAdjustments -> {1, 10, 0, 0, 100}, LineIndent -> 
+                    0], FrameStyle -> GrayLevel[0.84], StripOnInput -> 
+                    False]}}, GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                  AutoDelete -> False, 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                  GridBoxSpacings -> {"Columns" -> {{0}}}], "Grid"]}}, 
+              GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+              "Column", 
+              GridBoxItemSize -> {
+               "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+             "Column"], TraditionalForm]], "Output"]}], 
+       XMLElement[
+       "dataformats", {}, {"plaintext,computabledata,formatteddata"}]}], 
+     XMLElement["subpod", {"title" -> "Precipitation rate"}, {
+       XMLElement["cell", {"compressed" -> True, "string" -> False}, {
+         Cell[
+          BoxData[
+           FormBox[
+            TagBox[
+             GridBox[{{
+                TagBox[
+                 GridBox[{{
+                    GraphicsBox[{{{}, 
+                    GraphicsComplexBox[CompressedData["
+1:eJzt1vlLVFEUB/DngmZmVpp75UK42zgtbpnOlI5JbgNmipb7hjpp40Imbpma
+a03mDzaazWRFJUVlmWZI9oOEy8sWJBRCEhtDCBESy7q3cOT7y/wBMQ8ejw/n
+vHPfu+++w7VJFAlTNBmGWSInvTJMWe/ymIKnX8XvDHeQ+xEXrxAzyqPM9xf6
+9yp6kBkHV2qiA7TRujroYV10nR46RF+1DQ3Q7Ga0ZAs6chva1Bg9uR3dZoqO
+M0fvskR/tkLLdqJTrNH2tuivdui7u9HZ9ug9jujvTuhHLuh8N7QHB73sju7b
+iy7Zj/bzQGt4oV95o6sOogWH0Hr+6Dc8dMNhdFgA8SadysF4Tg1dv1sFGJ8I
+QrcEY37UMYybh6I/haGlEWibSPTMcax/8wTG02LQjrHo+Tj0/VOqLUpAuyep
+9mIy+kkqujAd7ZWJfpGt2qUiNC8XrXUG/VqMri5Q7aNFaP2z6JFidFMJOqIU
+bVSOfl+Bbj2Pjr6AtqxBT9WiO+rQCQ1ouyb0l2b0rcvojCto56vopXa0ur+r
++7u6v6/H1f1d3d//o/7OOHUQK8TeywdmxWQ9MqflxM4twbkTrTLqnjvEfh1j
+sjBJG/XPbuIKf+tkYbSImv+YOGOfxUieYSp1TS9xY6Css33Kh3p0gDjfW7rx
+pYRLbTyE48cMo6+Pomcn0C6T6Lxp9LMZ9Ooc+sgC+uIievwH2mQVHavFKnhy
+Nn2o2zONvs+NDcQCGZtlwsmhnjMg9pGGGlVmJlC7GRE/+DivsdKfRC02U94f
+Rf18B/F0zlNXAS+cmrFj1+aLTx3owMJ81ruy8DxvuWgzT/RJX7Scj/UUAuV4
+QmpOCOYXCFn4fv1RSttSa8ZhflAiujEN/S4LbZGHji/E+l3nMP6tHM2tRhfV
+owcuobVbcf6Dr2G8uRP9oQttdQ+d+BB9uwe90If++7+t89/+ak1/AEPyesY=
+
+                    "], {{{}, {
+                    EdgeForm[], 
+                    RGBColor[0.928, 0.928, 0.966, 0.5], 
+                    GraphicsGroupBox[{
+                    
+                    PolygonBox[{{53, 55, 54}, {1, 245, 2}, {44, 46, 45}, {47, 
+                    49, 48}}]}]}, {}, {}, {}, {
+                    EdgeForm[], 
+                    RGBColor[0.928, 0.928, 0.966, 0.5], 
+                    GraphicsGroupBox[{
+                    PolygonBox[{{235, 237, 236}, {229, 231, 230}}], 
+                    PolygonBox[{{219, 222, 221, 220}, {222, 225, 224, 223}}], 
+                    
+                    
+                    PolygonBox[{{189, 244, 196, 195, 194, 193, 192, 191, 
+                    190}}], 
+                    
+                    PolygonBox[{{207, 216, 215, 214, 213, 212, 211, 210, 209, 
+                    208}}]}]}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}}, {{}, {}, {
+                    Hue[0.67, 0.6, 0.6], 
+                    Directive[
+                    RGBColor[0.24720000000000014`, 0.24, 0.6], 
+                    Dashing[{Small, Small}]], 
+                    
+                    LineBox[{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 
+                    15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 
+                    29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 
+                    43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 
+                    57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 
+                    71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 
+                    85, 86, 87, 88, 89, 90, 91, 92, 93, 94}]}, {
+                    Hue[0.9060679774997897, 0.6, 0.6], 
+                    Directive["XKCDWhiteBackground" -> False, 
+                    AbsoluteThickness[1], 
+                    RGBColor[0.24720000000000014`, 0.24, 0.6]], 
+                    
+                    LineBox[{95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 
+                    105}], 
+                    
+                    LineBox[{106, 107, 108, 109, 110, 111, 112, 113, 114, 115,
+                     116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 
+                    127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 
+                    138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 
+                    149, 150, 151, 152, 153}], 
+                    LineBox[{154, 155, 156}], 
+                    LineBox[{157, 158, 159}], 
+                    LineBox[{160, 161, 162}], 
+                    LineBox[{163, 164, 165, 166, 167, 168}], 
+                    
+                    LineBox[{169, 170, 171, 172, 173, 174, 175, 176, 177, 178,
+                     179, 180, 181, 182, 183, 184}], 
+                    LineBox[{185, 186, 187}]}, {
+                    Hue[0.1421359549995791, 0.6, 0.6], 
+                    Directive[
+                    RGBColor[0.24720000000000014`, 0.24, 0.6], 
+                    Dashing[{0, Small}]], 
+                    
+                    LineBox[{189, 190, 191, 192, 193, 194, 195, 196, 197, 198,
+                     199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 
+                    210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 
+                    221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 
+                    232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 
+                    243}]}}}], {}}, {Antialiasing -> False, 
+                    RGBColor[1, 0, 0], 
+                    LineBox[{{3599038800, 0}, {3599038800, 0.101}}]}}, {
+                    GridLines -> Dynamic[
+                    
+                    Join[{{3598732800, 3598819200, 3598905600, 3598992000, 
+                    3599078400, 3599164800, 3599251200}, {
+                    0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12}}, 
+                    Replace[
+                    MousePosition[{"Graphics", Graphics}, None], {
+                    None -> {{}, {}}, {
+                    Pattern[CalculateUtilities`GraphicsUtilities`Private`x$, 
+                    Blank[]], 
+                    Pattern[CalculateUtilities`GraphicsUtilities`Private`y$, 
+                    Blank[]]} :> {{{
+                    CalculateUtilities`GraphicsUtilities`Private`x$, 
+                    GrayLevel[0.7]}}, {{
+                    CalculateUtilities`GraphicsUtilities`Private`y$, 
+                    GrayLevel[0.7]}}}}], 2]], FrameLabel -> {None, None}, 
+                    AxesLabel -> {None, None}, AspectRatio -> 0.1, 
+                    AxesOrigin -> {3.598782922989718*^9, 0}, BaselinePosition -> 
+                    Scaled[0.56], Frame -> True, FrameTicks -> {{{{0, 
+                    FormBox["0", TraditionalForm], {0.01, 0}}, {0.02, 
+                    FormBox["\"\"", TraditionalForm], {0.005, 0}}, {0.04, 
+                    FormBox["0.04`", TraditionalForm], {0.01, 0}}, {0.06, 
+                    FormBox["\"\"", TraditionalForm], {0.005, 0}}, {0.08, 
+                    FormBox["0.08`", TraditionalForm], {0.01, 0}}, {0.1, 
+                    FormBox["\"\"", TraditionalForm], {0.005, 0}}, {0.12, 
+                    FormBox["0.12`", TraditionalForm], {0.01, 0}}, {0.0505, 
+                    FormBox[
+                    StyleBox[
+                    "\"100%\"", ShowContents -> False, StripOnInput -> False],
+                     TraditionalForm], {0, 0}}}, None}, {{{3598776000, 
+                    FormBox["\"Jan 15\"", TraditionalForm], 0}, {3598862400, 
+                    FormBox["\"Jan 16\"", TraditionalForm], 0}, {3598948800, 
+                    FormBox["\"Jan 17\"", TraditionalForm], 0}, {3599035200, 
+                    FormBox["\"Jan 18\"", TraditionalForm], 0}, {3599121600, 
+                    FormBox["\"Jan 19\"", TraditionalForm], 0}, {3599208000, 
+                    FormBox["\"Jan 20\"", TraditionalForm], 0}, {3599294400, 
+                    FormBox["\"Jan 21\"", TraditionalForm], 0}}, {{3598776000, 
+                    FormBox["\"Wed\"", TraditionalForm], 0}, {3598862400, 
+                    FormBox["\"Thu\"", TraditionalForm], 0}, {3598948800, 
+                    FormBox["\"Fri\"", TraditionalForm], 0}, {3599035200, 
+                    FormBox["\"Sat\"", TraditionalForm], 0}, {3599121600, 
+                    FormBox["\"Sun\"", TraditionalForm], 0}, {3599208000, 
+                    FormBox["\"Mon\"", TraditionalForm], 0}, {3599294400, 
+                    FormBox["\"Tue\"", TraditionalForm], 0}}}}, 
+                    GridLines -> {{3598732800, 3598819200, 3598905600, 
+                    3598992000, 3599078400, 3599164800, 3599251200}, {
+                    0, 0.02, 0.04, 0.06, 0.08, 0.1, 0.12}}, GridLinesStyle -> {
+                    GrayLevel[0.85], 
+                    GrayLevel[0.9]}, ImageSize -> {
+                    Scaled[0.95], 
+                    Scaled[0.95]}, Method -> {}, 
+                    PlotRange -> {{3.598782922989718*^9, 3599297580}, {
+                    0, 0.101}}, PlotRangeClipping -> True, 
+                    PlotRangePadding -> {Automatic, Automatic}, Prolog -> {
+                    Opacity[0], 
+                    TagBox[
+                    RectangleBox[
+                    Scaled[{0, 0}], 
+                    Scaled[{1, 1}]], 
+                    Annotation[#, "CarlToldMeToPutALabelHere", "Frame"]& ]}, 
+                    Ticks -> None}]}}, 
+                  GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                  DefaultBaseStyle -> "Column", 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+                 "Column"]}, {
+                TagBox[
+                 GridBox[{{
+                    TemplateBox[{
+                    StyleBox[
+                    StyleBox[
+                    "\"100%\"", ShowContents -> False, StripOnInput -> False],
+                     9, StripOnInput -> False], 
+                    StyleBox[
+                    
+                    RowBox[{
+                    "\"(\"", "\[NoBreak]", 
+                    "\"with water equivalent of snow\"", "\[NoBreak]", 
+                    "\")\""}], {FontFamily -> "Verdana", FontSize -> 10, 
+                    GrayLevel[0.5], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowDefault"]}, {
+                    TagBox[
+                    GridBox[{{
+                    RowBox[{
+                    StyleBox[
+                    "\"\"", ShowContents -> False, StripOnInput -> False], 
+                    " ", 
+                    StyleBox[
+                    StyleBox[
+                    "\"100%\"", ShowContents -> False, StripOnInput -> False],
+                     9, StripOnInput -> False]}], 
+                    TagBox[
+                    GridBox[{{
+                    ItemBox[
+                    "\"\"", ItemSize -> {Automatic, 0.5}, StripOnInput -> 
+                    False]}, {
+                    ItemBox[
+                    TagBox[
+                    GridBox[{{
+                    TemplateBox[{
+                    StyleBox[
+                    TemplateBox[{"\"maximum\"", "\": \""}, "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["0.04", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "0.04"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    
+                    RowBox[{"\"in\"", "\[InvisibleSpace]", "\"/\"", 
+                    "\[InvisibleSpace]", "\"h\""}], FontFamily -> "Helvetica",
+                     FontSize -> Smaller]}], Identity], #& , SyntaxForm -> 
+                    Dot], "Unit", SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False]}, "RowDefault"]}, {
+                    StyleBox[
+                    
+                    TemplateBox[{"\"Sat, Jan 18, 4:00pm\"", "\"\""}, 
+                    "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, {FontFamily -> "Verdana", FontSize -> 10}, 
+                    GrayLevel[0.5], StripOnInput -> False]}}, 
+                    GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                    DefaultBaseStyle -> "Column", 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{0}}}], "Column"], 
+                    ItemSize -> {12, 2}, Frame -> True, FrameStyle -> 
+                    GrayLevel[0.84], Alignment -> {Center, Automatic}, 
+                    StripOnInput -> False]}, {
+                    ItemBox[
+                    "\"\"", ItemSize -> {Automatic, 1}, StripOnInput -> 
+                    False]}}, GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                    AutoDelete -> False, 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {
+                    "Columns" -> {{0.2}}, "Rows" -> {{0}}}], "Grid"]}}, 
+                    AutoDelete -> False, 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {"Columns" -> {{0}}, "Rows" -> {{0}}}],
+                     "Grid"]}}, GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                  DefaultBaseStyle -> "Column", 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+                 "Column"]}}, GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+              DefaultBaseStyle -> "Column", 
+              GridBoxItemSize -> {
+               "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+             "Column"], TraditionalForm]], "Output"]}], 
+       XMLElement[
+       "dataformats", {}, {
+        "plaintext,computabledata,formatteddata,timeseriesdata"}]}], 
+     XMLElement["states", {"count" -> "3"}, {
+       XMLElement[
+       "statelist", {
+        "count" -> "9", "value" -> "Current week", "delimiters" -> ""}, {
+         XMLElement[
+         "state", {
+          "name" -> "Current week", "input" -> 
+           "WeatherCharts:WeatherData__Current week"}, {}], 
+         XMLElement[
+         "state", {
+          "name" -> "Current day", "input" -> 
+           "WeatherCharts:WeatherData__Current day"}, {}], 
+         XMLElement[
+         "state", {
+          "name" -> "Next week", "input" -> 
+           "WeatherCharts:WeatherData__Next week"}, {}], 
+         XMLElement[
+         "state", {
+          "name" -> "Past week", "input" -> 
+           "WeatherCharts:WeatherData__Past week"}, {}], 
+         XMLElement[
+         "state", {
+          "name" -> "Past month", "input" -> 
+           "WeatherCharts:WeatherData__Past month"}, {}], 
+         XMLElement[
+         "state", {
+          "name" -> "Past year", "input" -> 
+           "WeatherCharts:WeatherData__Past year"}, {}], 
+         XMLElement[
+         "state", {
+          "name" -> "Past 5 years", "input" -> 
+           "WeatherCharts:WeatherData__Past 5 years"}, {}], 
+         XMLElement[
+         "state", {
+          "name" -> "Past 10 years", "input" -> 
+           "WeatherCharts:WeatherData__Past 10 years"}, {}], 
+         XMLElement[
+         "state", {
+          "name" -> "All", "input" -> 
+           "WeatherCharts:WeatherData__All"}, {}]}], 
+       XMLElement[
+       "state", {
+        "name" -> "Show metric", "input" -> 
+         "WeatherCharts:WeatherData__Show metric"}, {}], 
+       XMLElement[
+       "state", {
+        "name" -> "More", "input" -> 
+         "WeatherCharts:WeatherData__More"}, {}]}]}], Typeset`pod5$$ = 
+   XMLElement[
+   "pod", {"title" -> "Historical temperatures for January 18", "scanner" -> 
+     "Data", "id" -> "HistoricalTemperature:WeatherData", "position" -> "500",
+      "error" -> "false", "numsubpods" -> "1"}, {
+     XMLElement["subpod", {"title" -> ""}, {
+       XMLElement["cell", {"compressed" -> True, "string" -> False}, {
+         Cell[
+          BoxData[
+           FormBox[
+            TagBox[
+             GridBox[{{
+                TagBox[
+                 GridBox[{{
+                    GraphicsBox[{{}, 
+                    GraphicsComplexBox[CompressedData["
+1:eJzt1l9oU1cYAPBbYe5B/Aduaq1YQYdgq7GZzqZ/ck/aro1VW+tLu4eRuS7m
+QVjV6ip0JlImVOuf0YpGNqKsxQ1FxGoHhcUoKkPjqH8epj6YNm3SBKVp40OF
+4d33fTWf38B393DPy+XjXL77nXN+59yzdNu3dd9M0zRtSZam4ROarz9vUB33
++1Xf7kod4lTE85/Y9WHPoMq1YivFeCB/kOLZ+QWFGDftXzyE75+9Xb0e40h3
+w5D6MxxuCXorMK69e4L6dwYNJ8ah8ftDatIw9gYNnfI7ZkVVyjDO5WR/Svk9
+G6L4/vmc7BKM9WMHoypiGIEd25dhfOnqjajSoICHgX475p9uRFUoHL4ZyC6g
+/HlFw8rldh9VWhXGlq3fDWN/VZ+1GOMz+3qHsb5+Z4ei/HfGhpXFaq3oSzso
+f2rliOzPne8ZkeM/XtI9onQ3thWU/2iE4umP/1pO+a/kxJQOb+cX5IUgnvO0
+PobjNQxvOfb7sk7EcHyLL018Tvnr7seU9pMf2uNrmL9lZhzrh0b1agFnHOuB
+RvU03fohjvMFbR3Gcz6+EX9T31rKX/w6juN99Or1GlrPbbZRhYvd9eI55ne1
+7x19k99K+Z9cHlU+iL5onIf1Nmljo1gfNBut5ycrExjv6VxAce2m7Qnl8/tf
+5RWsovw//5KQ9bhuPkvI+geSi5JYf9nhDlpvfW59EvtntWlUb+SrriTm/3FH
+nOohjyus1iJXTzV7hHhGfUM1e4T3/whkl7NHi7W3ufNvnT3C+FMP7pVIjy/P
+xarYYxf67qxlj9D/z6MFDvYovJBHqld3skdRL3n00XzN1zMeoX/LkZOF7NGC
+9S90skfI15KIlbJHiB2uHgd7nJq/CvYI8VDNpnL2OGl41355WmeP8P19IwOr
+2SN8/7f092ukx/TWr3Olx/PjExXsEcbfPX55I3uEfA2hO/P0jEeYj8/aD5Sy
+R7FfyCPUd3GXp4Q9wvu/3r5bzB7B5+/OsI09wn6+lmuh/Uwewc/cNq30rcdw
+uKOxaIme8SjXEz2mDG8wcNrOHuH7yVZjvfQYGIvb2GPKsD+ruWdnjzB+dTjs
+YI8wX4XtWTb2KM63jMfe8YnN0mMmznj8qE2rZI9QT39zuow9ivOOPJ5Cf+lq
+9tiI55Vexx7F/JJHkY880vtaLXsU9ZJHcV6SR/j+i1ZDsUdxHpPHqf1rlx4z
+3yOPHrc76OzYwB6h/uvN6Y3sEfwcUr4y9ij+B+RRjJ88apDggwvP7RmP4jwk
+jzC/0VZvDXsM0fm3jD3S/ojp0iO0SvYoxkseqb/XwR5FP3kU+5k8Tp1/ZexR
+9JNHcR6TR7Fe5FHMJ3mcRN8+B3sU9ZNHOd/oUfxvyKPYH+/0aP6vzf/1+/xf
+m/dH0+P/yaN5fzTvj+b98a1H8/5o3h9xf/wLWfM+oA==
+                    
+                    "], {{{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, \
+{}, {}, {
+                    RGBColor[
+                    0.49813333333333343`, 0.4933333333333333, 
+                    0.7333333333333333], 
+                    LineBox[{1, 124}], 
+                    LineBox[{84, 125}], 
+                    LineBox[{85, 126}], 
+                    LineBox[{86, 127}], 
+                    LineBox[{87, 128}], 
+                    LineBox[{88, 129}], 
+                    LineBox[{89, 130}], 
+                    LineBox[{90, 131}], 
+                    LineBox[{91, 132}], 
+                    LineBox[{92, 133}], 
+                    LineBox[{93, 134}], 
+                    LineBox[{94, 135}], 
+                    LineBox[{95, 136}], 
+                    LineBox[{96, 137}], 
+                    LineBox[{97, 138}], 
+                    LineBox[{98, 139}], 
+                    LineBox[{99, 140}], 
+                    LineBox[{100, 141}], 
+                    LineBox[{101, 142}], 
+                    LineBox[{102, 143}], 
+                    LineBox[{103, 144}], 
+                    LineBox[{104, 145}], 
+                    LineBox[{105, 146}], 
+                    LineBox[{106, 147}], 
+                    LineBox[{107, 148}], 
+                    LineBox[{108, 149}], 
+                    LineBox[{109, 150}], 
+                    LineBox[{110, 151}], 
+                    LineBox[{111, 152}], 
+                    LineBox[{112, 153}], 
+                    LineBox[{113, 154}], 
+                    LineBox[{114, 155}], 
+                    LineBox[{115, 156}], 
+                    LineBox[{116, 157}], 
+                    LineBox[{117, 158}], 
+                    LineBox[{118, 159}], 
+                    LineBox[{119, 160}], 
+                    LineBox[{120, 161}], 
+                    LineBox[{121, 162}], 
+                    LineBox[{122, 163}], 
+                    LineBox[{123, 164}]}}, {{
+                    Hue[0.67, 0.6, 0.6], 
+                    Directive[
+                    RGBColor[0, 0, 1]], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 165], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 166], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 167], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 168], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 169], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 170], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 171], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 172], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 173], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 174], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 175], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 176], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 177], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 178], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 179], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 180], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 181], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 182], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 183], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 184], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 185], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 186], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 187], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 188], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 189], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 190], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 191], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 192], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 193], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 194], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 195], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 196], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 197], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 198], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 199], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 200], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 201], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 202], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 203], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 204], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 205], 
+                    "InsetString"]}, {
+                    Hue[0.9060679774997897, 0.6, 0.6], 
+                    Directive[
+                    RGBColor[0.6, 0.24, 0.4428931686004542]], 
+                    TagBox[
+                    InsetBox["", 206], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 207], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 208], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 209], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 210], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 211], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 212], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 213], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 214], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 215], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 216], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 217], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 218], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 219], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 220], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 221], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 222], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 223], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 224], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 225], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 226], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 227], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 228], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 229], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 230], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 231], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 232], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 233], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 234], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 235], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 236], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 237], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 238], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 239], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 240], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 241], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 242], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 243], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 244], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 245], "InsetString"], 
+                    TagBox[
+                    InsetBox["", 246], "InsetString"]}, {
+                    Hue[0.1421359549995791, 0.6, 0.6], 
+                    Directive[
+                    RGBColor[1, 0, 0]], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 247], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 248], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 249], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 250], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 251], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 252], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 253], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 254], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 255], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 256], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 257], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 258], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 259], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 260], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 261], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 262], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 263], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 264], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 265], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 266], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 267], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 268], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 269], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 270], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 271], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 272], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 273], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 274], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 275], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 276], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 277], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 278], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 279], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 280], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 281], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 282], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 283], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 284], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 285], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 286], "InsetString"], 
+                    TagBox[
+                    InsetBox["\[FilledVerySmallSquare]", 287], 
+                    "InsetString"]}, {}}}], {}}, {GridLines -> Dynamic[
+                    Map[{{#, 
+                    GrayLevel[0.7]}}& , 
+                    MousePosition[{"Graphics", Graphics}, None]]], 
+                    FrameLabel -> {None, None}, AxesLabel -> {None, None}, 
+                    AspectRatio -> 0.15, AxesOrigin -> {2.305152*^9, 0.}, 
+                    Frame -> True, FrameTicks -> {{{{-20, 
+                    FormBox[
+                    RowBox[{"-", "20"}], TraditionalForm], {0.01, 0}}, {-10, 
+                    FormBox["\"\"", TraditionalForm], {0.005, 0}}, {0, 
+                    FormBox["0", TraditionalForm], {0.01, 0}}, {10, 
+                    FormBox["\"\"", TraditionalForm], {0.005, 0}}, {20, 
+                    FormBox["20", TraditionalForm], {0.01, 0}}, {30, 
+                    FormBox["\"\"", TraditionalForm], {0.005, 0}}, {40, 
+                    FormBox["40", TraditionalForm], {0.01, 0}}, {50, 
+                    FormBox["\"\"", TraditionalForm], {0.005, 0}}, {60, 
+                    FormBox["60", TraditionalForm], {0.01, 0}}, {70, 
+                    FormBox["\"\"", TraditionalForm], {0.005, 0}}, {80, 
+                    FormBox["80", TraditionalForm], {0.01, 0}}}, 
+                    None}, {{{2210457600, 
+                    FormBox[
+                    TemplateBox[{"1970"}, "RowDefault"], TraditionalForm]}, {
+                    2368224000, 
+                    FormBox[
+                    TemplateBox[{"1975"}, "RowDefault"], TraditionalForm]}, {
+                    2525990400, 
+                    FormBox[
+                    TemplateBox[{"1980"}, "RowDefault"], TraditionalForm]}, {
+                    2683843200, 
+                    FormBox[
+                    TemplateBox[{"1985"}, "RowDefault"], TraditionalForm]}, {
+                    2841609600, 
+                    FormBox[
+                    TemplateBox[{"1990"}, "RowDefault"], TraditionalForm]}, {
+                    2999376000, 
+                    FormBox[
+                    TemplateBox[{"1995"}, "RowDefault"], TraditionalForm]}, {
+                    3157142400, 
+                    FormBox[
+                    TemplateBox[{"2000"}, "RowDefault"], TraditionalForm]}, {
+                    3314995200, 
+                    FormBox[
+                    TemplateBox[{"2005"}, "RowDefault"], TraditionalForm]}, {
+                    3472761600, 
+                    FormBox[
+                    TemplateBox[{"2010"}, "RowDefault"], TraditionalForm]}, {
+                    3630528000, 
+                    FormBox[
+                    TemplateBox[{"2015"}, "RowDefault"], 
+                    TraditionalForm]}}, {{2210457600, 
+                    FormBox["\"\"", TraditionalForm]}, {2368224000, 
+                    FormBox["\"\"", TraditionalForm]}, {2525990400, 
+                    FormBox["\"\"", TraditionalForm]}, {2683843200, 
+                    FormBox["\"\"", TraditionalForm]}, {2841609600, 
+                    FormBox["\"\"", TraditionalForm]}, {2999376000, 
+                    FormBox["\"\"", TraditionalForm]}, {3157142400, 
+                    FormBox["\"\"", TraditionalForm]}, {3314995200, 
+                    FormBox["\"\"", TraditionalForm]}, {3472761600, 
+                    FormBox["\"\"", TraditionalForm]}, {3630528000, 
+                    FormBox["\"\"", TraditionalForm]}}}}, 
+                    GridLines -> {None, None}, GridLinesStyle -> 
+                    GrayLevel[0.9], 
+                    ImagePadding -> {{Automatic, Automatic}, {Automatic, 1}}, 
+                    ImageSize -> {
+                    Scaled[0.95], 
+                    Scaled[0.95]}, Method -> {}, 
+                    PlotRange -> {{2.305152*^9, 
+                    3.567456*^9}, {-14.098001098632835`, 73.00400123596188}}, 
+                    PlotRangeClipping -> True, PlotRangePadding -> {{
+                    Scaled[0.02], 
+                    Scaled[0.02]}, {
+                    Scaled[0.1], 
+                    Scaled[0.1]}}, Prolog -> {
+                    Opacity[0], 
+                    TagBox[
+                    RectangleBox[
+                    Scaled[{0, 0}], 
+                    Scaled[{1, 1}]], 
+                    Annotation[#, "CarlToldMeToPutALabelHere", "Frame"]& ]}, 
+                    Ticks -> None}]}, {
+                    TagBox[
+                    GridBox[{{
+                    ItemBox[
+                    TagBox[
+                    GridBox[{{
+                    TemplateBox[{
+                    StyleBox[
+                    TemplateBox[{"\"low\"", "\": \""}, "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    RowBox[{"-", 
+                    TagBox["14", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "14"]]}], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False]}, "RowDefault"]}, {
+                    StyleBox[
+                    TemplateBox[{"\"1994\"", "\"\""}, "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, {FontFamily -> "Verdana", FontSize -> 10}, 
+                    GrayLevel[0.5], StripOnInput -> False]}}, 
+                    GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                    DefaultBaseStyle -> "Column", 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{0}}}], "Column"], 
+                    ItemSize -> {12, 2}, Frame -> True, FrameStyle -> 
+                    GrayLevel[0.84], Alignment -> {Center, Automatic}, 
+                    StripOnInput -> False], 
+                    ItemBox[
+                    TagBox[
+                    GridBox[{{
+                    StyleBox[
+                    "\"average high: \"", 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["44", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "44"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False]}, {
+                    StyleBox[
+                    "\"average low: \"", 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["25", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "25"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False]}}, AutoDelete -> False, 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {"Columns" -> {{0}}, "Rows" -> {{0}}}],
+                     "Grid"], ItemSize -> {12, 2}, Frame -> True, FrameStyle -> 
+                    GrayLevel[0.84], Alignment -> {Center, Automatic}, 
+                    StripOnInput -> False], 
+                    ItemBox[
+                    TagBox[
+                    GridBox[{{
+                    TemplateBox[{
+                    StyleBox[
+                    TemplateBox[{"\"high\"", "\": \""}, "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["73", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "73"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False]}, "RowDefault"]}, {
+                    StyleBox[
+                    TemplateBox[{"\"1979\"", "\"\""}, "RowDefault"], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, {FontFamily -> "Verdana", FontSize -> 10}, 
+                    GrayLevel[0.5], StripOnInput -> False]}}, 
+                    GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                    DefaultBaseStyle -> "Column", 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{0}}}], "Column"], 
+                    ItemSize -> {12, 2}, Frame -> True, FrameStyle -> 
+                    GrayLevel[0.84], Alignment -> {Center, Automatic}, 
+                    StripOnInput -> False]}}, 
+                    GridBoxAlignment -> {"Columns" -> {{Center}}}, AutoDelete -> 
+                    False, GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {
+                    "Columns" -> {{0.2}}, "Rows" -> {{0}}}], "Grid"]}}, 
+                  GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                  DefaultBaseStyle -> "Column", 
+                  GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+                 "Column"]}, {
+                TemplateBox[{
+                  StyleBox[
+                   
+                   RowBox[{
+                    "\"(\"", "\[NoBreak]", 
+                    "\"daily ranges, not corrected for changes in local \
+weather station environment\"", "\[NoBreak]", "\")\""}], {
+                   FontFamily -> "Verdana", FontSize -> 10, 
+                    GrayLevel[0.5], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowDefault"]}}, 
+              GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+              "Column", 
+              GridBoxItemSize -> {
+               "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+             "Column"], TraditionalForm]], "Output"]}], 
+       XMLElement[
+       "dataformats", {}, {"plaintext,computabledata,formatteddata"}]}], 
+     XMLElement["states", {"count" -> "2"}, {
+       XMLElement[
+       "state", {
+        "name" -> "Show table", "input" -> 
+         "HistoricalTemperature:WeatherData__Show table"}, {}], 
+       XMLElement[
+       "state", {
+        "name" -> "Show metric", "input" -> 
+         "HistoricalTemperature:WeatherData__Show metric"}, {}]}]}], 
+   Typeset`pod6$$ = XMLElement[
+   "pod", {"title" -> "Weather station information", "scanner" -> "Data", 
+     "id" -> "WeatherStationInformation:WeatherData", "position" -> "600", 
+     "error" -> "false", "numsubpods" -> "1"}, {
+     XMLElement["subpod", {"title" -> ""}, {
+       XMLElement["cell", {"compressed" -> True, "string" -> False}, {
+         Cell[
+          BoxData[
+           FormBox[
+            StyleBox[
+             TagBox[
+              GridBox[{{
+                 TagBox[
+                  PaneBox[
+                  "\"name\"", 
+                   BaseStyle -> {{
+                    BaselinePosition -> Baseline, FontColor -> 
+                    GrayLevel[0.3]}, LineSpacing -> {0.9, 0, 1.5}, 
+                    LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                    TextAlignment -> Left}, BaselinePosition -> Baseline], 
+                  $CellContext`TagBoxWrapper["Label"]], 
+                 TemplateBox[{"  ", "\"  \"", "\"KHUF\"", 
+                   StyleBox[
+                    
+                    RowBox[{
+                    "\"(\"", "\[NoBreak]", 
+                    "\"Terre Haute International Airport\"", "\[NoBreak]", 
+                    "\")\""}], {
+                    GrayLevel[0.6], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowWithSeparators"]}, {
+                 TagBox[
+                  PaneBox[
+                  "\"relative position\"", 
+                   BaseStyle -> {{
+                    BaselinePosition -> Baseline, FontColor -> 
+                    GrayLevel[0.3]}, LineSpacing -> {0.9, 0, 1.5}, 
+                    LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                    TextAlignment -> Left}, BaselinePosition -> Baseline], 
+                  $CellContext`TagBoxWrapper["Label"]], 
+                 StyleBox[
+                  TemplateBox[{
+                    TemplateBox[{" ", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["4", #& ], "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"mi\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], 
+                    StyleBox[
+                    "\"ESE\"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 0, 
+                    GrayLevel[0.6], StripOnInput -> False]}, 
+                    "RowWithSeparator"], "\"  \"", 
+                    StyleBox[
+                    RowBox[{"\"(\"", "\[NoBreak]", 
+                    FormBox[
+                    TagBox[
+                    FormBox[
+                    TemplateBox[{"\"from \"", 
+                    
+                    TemplateBox[{"\"center of\"", "\" \"", "\"Terre Haute\""},
+                     "RowDefault"]}, "RowDefault"], TraditionalForm], 
+                    Format[#, TraditionalForm]& ], TraditionalForm], 
+                    "\[NoBreak]", "\")\""}], {
+                    FontFamily -> "Verdana", FontSize -> 10, 
+                    GrayLevel[0.5], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowDefault"], LineIndent -> 
+                  0]}, {
+                 TagBox[
+                  PaneBox[
+                  "\"relative elevation\"", 
+                   BaseStyle -> {{
+                    BaselinePosition -> Baseline, FontColor -> 
+                    GrayLevel[0.3]}, LineSpacing -> {0.9, 0, 1.5}, 
+                    LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                    TextAlignment -> Left}, BaselinePosition -> Baseline], 
+                  $CellContext`TagBoxWrapper["Label"]], 
+                 StyleBox[
+                  RowBox[{"\"(\"", "\[NoBreak]", 
+                    FormBox[
+                    TagBox[
+                    FormBox[
+                    TemplateBox[{"\"comparable to \"", 
+                    
+                    TemplateBox[{"\"center of\"", "\" \"", "\"Terre Haute\""},
+                     "RowDefault"]}, "RowDefault"], TraditionalForm], 
+                    Format[#, TraditionalForm]& ], TraditionalForm], 
+                    "\[NoBreak]", "\")\""}], {
+                   GrayLevel[0.6], 
+                   LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                   0}, StripOnInput -> False]}, {
+                 TagBox[
+                  PaneBox[
+                  "\"local time\"", 
+                   BaseStyle -> {{
+                    BaselinePosition -> Baseline, FontColor -> 
+                    GrayLevel[0.3]}, LineSpacing -> {0.9, 0, 1.5}, 
+                    LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                    TextAlignment -> Left}, BaselinePosition -> Baseline], 
+                  $CellContext`TagBoxWrapper["Label"]], 
+                 FormBox[
+                  TagBox[
+                   StyleBox[
+                    RowBox[{
+                    TemplateBox[{"\"1:55:23 pm\"", "\" \"", 
+                    StyleBox[
+                    "\"EST\"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 0, 
+                    GrayLevel[0.6], StripOnInput -> False]}, "RowDefault"], 
+                    StyleBox[
+                    RowBox[{"\[NoBreak]", 
+                    PaneBox[
+                    "\"  |  \"", BaselinePosition -> Baseline, BaseStyle -> 
+                    GrayLevel[0.6]]}], AutoSpacing -> True], 
+                    StyleBox[
+                    FormBox[
+                    FormBox[
+                    TagBox[
+                    "\"Saturday, January 18, 2014\"", Identity, 
+                    TagBoxNote -> {"Hyperlink" -> "Jan 18, 2014"}], 
+                    TraditionalForm], TraditionalForm], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False]}], 
+                    LinebreakAdjustments -> {1, 10, 0, 0, 100}, LineIndent -> 
+                    0], Identity], TraditionalForm]}, {
+                 TagBox[
+                  PaneBox[
+                  "\"local sunlight\"", 
+                   BaseStyle -> {{
+                    BaselinePosition -> Baseline, FontColor -> 
+                    GrayLevel[0.3]}, LineSpacing -> {0.9, 0, 1.5}, 
+                    LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                    TextAlignment -> Left}, BaselinePosition -> Baseline], 
+                  $CellContext`TagBoxWrapper["Label"]], 
+                 TagBox[
+                  GridBox[{{
+                    FormBox[
+                    TagBox[
+                    FormBox[
+                    TemplateBox[{
+                    StyleBox[
+                    "\"sun\"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 0, 
+                    GrayLevel[0.6], StripOnInput -> False], 
+                    TemplateBox[{
+                    StyleBox[
+                    "\" is\"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 0, 
+                    GrayLevel[0.6], StripOnInput -> False], 
+                    "\" above the horizon\""}, "RowDefault"]}, "RowDefault"], 
+                    TraditionalForm], Format[#, TraditionalForm]& ], 
+                    TraditionalForm]}, {
+                    StyleBox[
+                    RowBox[{
+                    TemplateBox[{
+                    StyleBox[
+                    "\"azimuth: \"", 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False], 
+                    StyleBox[
+                    TemplateBox[{
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["194", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "194"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+                    FontFamily -> "Helvetica", FontSize -> Smaller]}], 
+                    Identity], #& , SyntaxForm -> Dot], "Unit", SyntaxForm -> 
+                    Dot], LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 0, ZeroWidthTimes -> False], "\"  \"", 
+                    StyleBox[
+                    
+                    RowBox[{"\"(\"", "\[NoBreak]", "\"SSW\"", "\[NoBreak]", 
+                    "\")\""}], {FontFamily -> "Verdana", FontSize -> 10, 
+                    GrayLevel[0.5], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowDefault"], LineIndent -> 
+                    0]}, "RowDefault"], 
+                    StyleBox[
+                    RowBox[{"\[NoBreak]", 
+                    PaneBox[
+                    "\"  |  \"", BaselinePosition -> Baseline, BaseStyle -> 
+                    GrayLevel[0.6]]}], AutoSpacing -> True], 
+                    TemplateBox[{
+                    StyleBox[
+                    "\"altitude: \"", 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, 
+                    GrayLevel[0.6], StripOnInput -> False], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["29", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "29"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{"\[InvisibleSpace]", "\"\[Degree]\""}], 
+                    FontFamily -> "Helvetica", FontSize -> Smaller]}], 
+                    Identity], #& , SyntaxForm -> Dot], "Unit", SyntaxForm -> 
+                    Dot], LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 0, ZeroWidthTimes -> False]}, 
+                    "RowDefault"]}], 
+                    LinebreakAdjustments -> {1, 10, 0, 0, 100}, LineIndent -> 
+                    0]}}, GridBoxAlignment -> {"Columns" -> {{Left}}}, 
+                   DefaultBaseStyle -> "Column", 
+                   GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+                  "Column"]}}, 
+               GridBoxAlignment -> {
+                "Columns" -> {Left, Left}, "Rows" -> {{Baseline}}}, 
+               AutoDelete -> False, 
+               GridBoxBackground -> {"Columns" -> {None, None}}, 
+               GridBoxFrame -> {"Columns" -> {{True}}, "Rows" -> {{True}}}, 
+               GridBoxItemSize -> {
+                "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+               GridBoxSpacings -> {"Columns" -> {{1.5}, 2}, "Rows" -> {{1}}}, 
+               FrameStyle -> GrayLevel[0.84], BaselinePosition -> Automatic, 
+               AllowScriptLevelChange -> False], "Grid"], 
+             LineSpacing -> {0.9, 0, 1.5}, LineIndent -> 0, StripOnInput -> 
+             False], TraditionalForm]], "Output"]}], 
+       XMLElement[
+       "dataformats", {}, {"plaintext,computabledata,formatteddata"}]}], 
+     XMLElement["states", {"count" -> "2"}, {
+       XMLElement[
+       "state", {
+        "name" -> "Show metric", "input" -> 
+         "WeatherStationInformation:WeatherData__Show metric"}, {}], 
+       XMLElement[
+       "state", {
+        "name" -> "More", "input" -> 
+         "WeatherStationInformation:WeatherData__More"}, {}]}], 
+     XMLElement["infos", {"count" -> "2"}, {
+       XMLElement["info", {}, {
+         XMLElement["units", {"count" -> "1"}, {
+           XMLElement["unit", {"short" -> "mi", "long" -> "miles"}, {}], 
+           XMLElement["cell", {"compressed" -> False, "string" -> True}, {
+             Cell[
+              BoxData[
+               FormBox[
+                StyleBox[
+                 TagBox[
+                  GridBox[{{
+                    StyleBox[
+                    StyleBox[
+                    TagBox[
+                    RowBox[{
+                    StyleBox[
+                    "\"mi\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 0\
+, ZeroWidthTimes -> False], 10, StripOnInput -> False], 
+                    StyleBox[
+                    "\"miles\"", FontSize -> 10, 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, {FontFamily :> $CellContext`$UnitFontFamily, FontSize -> 
+                    Smaller}, 
+                    GrayLevel[0.6], StripOnInput -> False]}}, 
+                   GridBoxAlignment -> {
+                    "Columns" -> {Left, Left}, "Rows" -> {{Baseline}}}, 
+                   AutoDelete -> False, 
+                   GridBoxBackground -> {"Columns" -> {{None}}}, 
+                   GridBoxFrame -> {
+                    "Columns" -> {{True}}, "Rows" -> {{True}}}, 
+                   GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                   GridBoxSpacings -> {
+                    "Columns" -> {{1.5}}, "Rows" -> {{0.5}}}, FrameStyle -> 
+                   GrayLevel[0.84], BaselinePosition -> Automatic, 
+                   AllowScriptLevelChange -> False], "Grid"], 
+                 LineSpacing -> {0.9, 0, 1.5}, LineIndent -> 0, StripOnInput -> 
+                 False], TraditionalForm]], "Output"]}]}]}], 
+       XMLElement["info", {}, {
+         XMLElement[
+         "link", {
+          "url" -> 
+           "http://maps.google.com?ie=UTF8&z=12&t=k&ll=39.451%2C-87.308&q=39.\
+451%20N%2C%2087.308%20W", "text" -> "Satellite image"}, {}]}]}]}], 
+   Typeset`pod7$$ = XMLElement[
+   "pod", {"title" -> "Weather station comparisons", "scanner" -> "Data", 
+     "id" -> "LocalTemperature:WeatherData", "position" -> "700", "error" -> 
+     "false", "numsubpods" -> "1"}, {
+     XMLElement["subpod", {"title" -> ""}, {
+       XMLElement["cell", {"compressed" -> True, "string" -> False}, {
+         Cell[
+          BoxData[
+           FormBox[
+            TagBox[
+             GridBox[{{
+                StyleBox[
+                 TagBox[
+                  GridBox[{{
+                    TagBox[
+                    PaneBox[
+                    "\"\"", 
+                    BaseStyle -> {{
+                    BaselinePosition -> Baseline, FontColor -> 
+                    GrayLevel[0.3]}, LineSpacing -> {0.9, 0, 1.5}, 
+                    LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                    TextAlignment -> Center}, BaselinePosition -> Baseline], 
+                    $CellContext`TagBoxWrapper["Label"]], 
+                    TagBox[
+                    PaneBox[
+                    "\"position\"", 
+                    BaseStyle -> {{
+                    BaselinePosition -> Baseline, FontColor -> 
+                    GrayLevel[0.3]}, LineSpacing -> {0.9, 0, 1.5}, 
+                    LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                    TextAlignment -> Center}, BaselinePosition -> Baseline], 
+                    $CellContext`TagBoxWrapper["Label"]], 
+                    TagBox[
+                    PaneBox[
+                    "\"elevation\"", 
+                    BaseStyle -> {{
+                    BaselinePosition -> Baseline, FontColor -> 
+                    GrayLevel[0.3]}, LineSpacing -> {0.9, 0, 1.5}, 
+                    LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                    TextAlignment -> Center}, BaselinePosition -> Baseline], 
+                    $CellContext`TagBoxWrapper["Label"]], 
+                    TagBox[
+                    PaneBox[
+                    "\"current temperature\"", 
+                    BaseStyle -> {{
+                    BaselinePosition -> Baseline, FontColor -> 
+                    GrayLevel[0.3]}, LineSpacing -> {0.9, 0, 1.5}, 
+                    LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                    TextAlignment -> Center}, BaselinePosition -> Baseline], 
+                    $CellContext`TagBoxWrapper["Label"]]}, {
+                    TagBox[
+                    PaneBox[
+                    "\"KHUF\"", 
+                    BaseStyle -> {{
+                    BaselinePosition -> Baseline, FontColor -> 
+                    GrayLevel[0.3]}, LineSpacing -> {0.9, 0, 1.5}, 
+                    LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                    TextAlignment -> Left}, BaselinePosition -> Baseline], 
+                    $CellContext`TagBoxWrapper["Label"]], 
+                    TemplateBox[{
+                    InterpretationBox[
+                    StyleBox[
+                    
+                    GraphicsBox[{}, ImageSize -> {1, 0}, BaselinePosition -> 
+                    Baseline], "CacheGraphics" -> False], 
+                    Spacer[1]], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["4", #& ], "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"mi\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], 
+                    StyleBox[
+                    "\"ESE\"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 0, 
+                    GrayLevel[0.6], StripOnInput -> False]}, 
+                    "RowWithSeparator"], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["591", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "591"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"ft\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], 
+                    TemplateBox[{"  ", "\"  \"", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["25", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "25"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], 
+                    StyleBox[
+                    RowBox[{"\"(\"", "\[NoBreak]", 
+                    TemplateBox[{
+                    TemplateBox[{"  ", "\"  \"", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["1", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "1"]], 
+                    "\[InvisibleSpace]", " ", 
+                    StyleBox[
+                    "\"hour\"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 0, {
+                    FontFamily :> $CellContext`$UnitFontFamily, FontSize -> 
+                    Smaller}, StripOnInput -> False]}], Identity], #& , 
+                    SyntaxForm -> Dot], "Unit", SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False]}, "RowWithSeparators"], 
+                    "\" ago\""}, "RowDefault"], "\[NoBreak]", "\")\""}], {
+                    FontFamily -> "Verdana", FontSize -> 10, 
+                    GrayLevel[0.5], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowWithSeparators"]}, {
+                    TagBox[
+                    PaneBox[
+                    "\"KPRG\"", 
+                    BaseStyle -> {{
+                    BaselinePosition -> Baseline, FontColor -> 
+                    GrayLevel[0.3]}, LineSpacing -> {0.9, 0, 1.5}, 
+                    LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                    TextAlignment -> Left}, BaselinePosition -> Baseline], 
+                    $CellContext`TagBoxWrapper["Label"]], 
+                    TemplateBox[{
+                    InterpretationBox[
+                    StyleBox[
+                    
+                    GraphicsBox[{}, ImageSize -> {1, 0}, BaselinePosition -> 
+                    Baseline], "CacheGraphics" -> False], 
+                    Spacer[1]], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["23", #& ], "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"mi\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], 
+                    StyleBox[
+                    "\"NW\"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 0, 
+                    GrayLevel[0.6], StripOnInput -> False]}, 
+                    "RowWithSeparator"], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["653", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "653"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"ft\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], 
+                    TemplateBox[{"  ", "\"  \"", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["25", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "25"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox["\"\[Degree]F\"", FontFamily -> "Helvetica", 
+                    FontSize -> Smaller]}], Identity], #& , SyntaxForm -> 
+                    Dot], "Unit", SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], 
+                    StyleBox[
+                    RowBox[{"\"(\"", "\[NoBreak]", 
+                    TemplateBox[{
+                    TemplateBox[{"  ", "\"  \"", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["20", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "20"]], 
+                    "\[InvisibleSpace]", " ", 
+                    StyleBox[
+                    "\"minutes\"", LinebreakAdjustments -> {1, 100, 1, 0, 
+                    100}, LineIndent -> 0, {
+                    FontFamily :> $CellContext`$UnitFontFamily, FontSize -> 
+                    Smaller}, StripOnInput -> False]}], Identity], #& , 
+                    SyntaxForm -> Dot], "Unit", SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False]}, "RowWithSeparators"], 
+                    "\" ago\""}, "RowDefault"], "\[NoBreak]", "\")\""}], {
+                    FontFamily -> "Verdana", FontSize -> 10, 
+                    GrayLevel[0.5], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowWithSeparators"]}, {
+                    TagBox[
+                    PaneBox[
+                    "\"KRSV\"", 
+                    BaseStyle -> {{
+                    BaselinePosition -> Baseline, FontColor -> 
+                    GrayLevel[0.3]}, LineSpacing -> {0.9, 0, 1.5}, 
+                    LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                    TextAlignment -> Left}, BaselinePosition -> Baseline], 
+                    $CellContext`TagBoxWrapper["Label"]], 
+                    TemplateBox[{
+                    InterpretationBox[
+                    StyleBox[
+                    
+                    GraphicsBox[{}, ImageSize -> {1, 0}, BaselinePosition -> 
+                    Baseline], "CacheGraphics" -> False], 
+                    Spacer[1]], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["34", #& ], "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"mi\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], 
+                    StyleBox[
+                    "\"SSW\"", LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    LineIndent -> 0, 
+                    GrayLevel[0.6], StripOnInput -> False]}, 
+                    "RowWithSeparator"], 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["463", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "463"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"ft\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], 
+                    TemplateBox[{"  ", "\"  \"", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["30", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "30"]], 
+                    "\[NoBreak]", 
+                    StyleBox[
+                    RowBox[{}], FontFamily -> "Helvetica", FontSize -> 
+                    Smaller], "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], #& , SyntaxForm -> Dot], "Unit", 
+                    SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], 
+                    StyleBox[
+                    RowBox[{"\"(\"", "\[NoBreak]", 
+                    TemplateBox[{
+                    TemplateBox[{"  ", "\"  \"", 
+                    StyleBox[
+                    TagBox[
+                    TagBox[
+                    TagBox[
+                    RowBox[{
+                    TagBox["20", 
+                    $CellContext`TagBoxWrapper["StringBoxes" -> "20"]], 
+                    "\[InvisibleSpace]", " ", 
+                    StyleBox[
+                    "\"minutes\"", LinebreakAdjustments -> {1, 100, 1, 0, 
+                    100}, LineIndent -> 0, {
+                    FontFamily :> $CellContext`$UnitFontFamily, FontSize -> 
+                    Smaller}, StripOnInput -> False]}], Identity], #& , 
+                    SyntaxForm -> Dot], "Unit", SyntaxForm -> Dot], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False]}, "RowWithSeparators"], 
+                    "\" ago\""}, "RowDefault"], "\[NoBreak]", "\")\""}], {
+                    FontFamily -> "Verdana", FontSize -> 10, 
+                    GrayLevel[0.5], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0}, StripOnInput -> False]}, "RowWithSeparators"]}}, 
+                   GridBoxAlignment -> {
+                    "Columns" -> {Left, Left, Left, Left}, 
+                    "Rows" -> {{Baseline}}, 
+                    "ItemsIndexed" -> {{1, 1} -> {Center, Baseline}, {1, 
+                    2} -> {Center, Baseline}, {1, 3} -> {Center, Baseline}, {
+                    1, 4} -> {Center, Baseline}}}, AutoDelete -> False, 
+                   GridBoxBackground -> {
+                    "Columns" -> {None, None}, "Rows" -> {None, None}}, 
+                   GridBoxFrame -> {
+                    "Columns" -> {{True}}, "Rows" -> {{True}}}, 
+                   GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                   GridBoxSpacings -> {
+                    "Columns" -> {{1.5}, 2}, "Rows" -> {{1}}}, FrameStyle -> 
+                   GrayLevel[0.84], BaselinePosition -> Automatic, 
+                   AllowScriptLevelChange -> False], "Grid"], 
+                 LineSpacing -> {0.9, 0, 1.5}, LineIndent -> 0, StripOnInput -> 
+                 False]}, {
+                StyleBox[
+                 
+                 RowBox[{
+                  "\"(\"", "\[NoBreak]", 
+                   "\"sorted by distance and inferred reliability\"", 
+                   "\[NoBreak]", "\")\""}], {
+                 FontFamily -> "Verdana", FontSize -> 10, 
+                  GrayLevel[0.5], LinebreakAdjustments -> {1, 100, 1, 0, 100},
+                   LineIndent -> 0}, StripOnInput -> False]}}, 
+              GridBoxAlignment -> {"Columns" -> {{Left}}}, DefaultBaseStyle -> 
+              "Column", 
+              GridBoxItemSize -> {
+               "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], 
+             "Column"], TraditionalForm]], "Output"]}], 
+       XMLElement[
+       "dataformats", {}, {
+        "plaintext,computabledata,formatteddata,numberdata,quantitydata"}]}], 
+     
+     XMLElement["states", {"count" -> "2"}, {
+       XMLElement[
+       "state", {
+        "name" -> "Show metric", "input" -> 
+         "LocalTemperature:WeatherData__Show metric"}, {}], 
+       XMLElement[
+       "state", {
+        "name" -> "More", "input" -> 
+         "LocalTemperature:WeatherData__More"}, {}]}], 
+     XMLElement["infos", {"count" -> "1"}, {
+       XMLElement["info", {}, {
+         XMLElement["units", {"count" -> "2"}, {
+           XMLElement["unit", {"short" -> "ft", "long" -> "feet"}, {}], 
+           XMLElement["unit", {"short" -> "mi", "long" -> "miles"}, {}], 
+           XMLElement["cell", {"compressed" -> False, "string" -> True}, {
+             Cell[
+              BoxData[
+               FormBox[
+                StyleBox[
+                 TagBox[
+                  GridBox[{{
+                    StyleBox[
+                    StyleBox[
+                    TagBox[
+                    RowBox[{
+                    StyleBox[
+                    "\"ft\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], 10, StripOnInput -> False], 
+                    StyleBox[
+                    "\"feet\"", FontSize -> 10, 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, {FontFamily :> $CellContext`$UnitFontFamily, FontSize -> 
+                    Smaller}, 
+                    GrayLevel[0.6], StripOnInput -> False]}, {
+                    StyleBox[
+                    StyleBox[
+                    TagBox[
+                    RowBox[{
+                    StyleBox[
+                    "\"mi\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], Identity], 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, ZeroWidthTimes -> False], 10, StripOnInput -> False], 
+                    StyleBox[
+                    "\"miles\"", FontSize -> 10, 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineIndent -> 
+                    0, {FontFamily :> $CellContext`$UnitFontFamily, FontSize -> 
+                    Smaller}, 
+                    GrayLevel[0.6], StripOnInput -> False]}}, 
+                   GridBoxAlignment -> {
+                    "Columns" -> {Left, Left}, "Rows" -> {{Baseline}}}, 
+                   AutoDelete -> False, 
+                   GridBoxBackground -> {"Columns" -> {{None}}}, 
+                   GridBoxFrame -> {
+                    "Columns" -> {{True}}, "Rows" -> {{True}}}, 
+                   GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                   GridBoxSpacings -> {
+                    "Columns" -> {{1.5}}, "Rows" -> {{0.5}}}, FrameStyle -> 
+                   GrayLevel[0.84], BaselinePosition -> Automatic, 
+                   AllowScriptLevelChange -> False], "Grid"], 
+                 LineSpacing -> {0.9, 0, 1.5}, LineIndent -> 0, StripOnInput -> 
+                 False], TraditionalForm]], "Output"]}]}]}]}]}], 
+   Typeset`pod8$$, Typeset`pod9$$, Typeset`pod10$$, Typeset`pod11$$, 
+   Typeset`pod12$$, Typeset`pod13$$, Typeset`pod14$$, Typeset`pod15$$, 
+   Typeset`pod16$$, Typeset`pod17$$, Typeset`pod18$$, Typeset`pod19$$, 
+   Typeset`pod20$$, Typeset`pod21$$, Typeset`pod22$$, Typeset`pod23$$, 
+   Typeset`pod24$$, Typeset`pod25$$, Typeset`pod26$$, Typeset`pod27$$, 
+   Typeset`pod28$$, Typeset`pod29$$, Typeset`pod30$$, Typeset`pod31$$, 
+   Typeset`pod32$$, Typeset`pod33$$, Typeset`aux1$$ = {
+   True, False, {False}, True}, Typeset`aux2$$ = {True, False, {False}, True},
+    Typeset`aux3$$ = {True, False, {False, False}, True}, Typeset`aux4$$ = {
+   True, False, {False, False, False, False}, True}, Typeset`aux5$$ = {
+   True, False, {False}, True}, Typeset`aux6$$ = {True, False, {False}, True},
+    Typeset`aux7$$ = {True, False, {False}, True}, Typeset`aux8$$ = {
+   True, False, {False}, True}, Typeset`aux9$$ = {True, False, {False}, True},
+    Typeset`aux10$$ = {True, False, {False}, True}, Typeset`aux11$$ = {
+   True, False, {False}, True}, Typeset`aux12$$ = {
+   True, False, {False}, True}, Typeset`aux13$$ = {
+   True, False, {False}, True}, Typeset`aux14$$ = {
+   True, False, {False}, True}, Typeset`aux15$$ = {
+   True, False, {False}, True}, Typeset`aux16$$ = {
+   True, False, {False}, True}, Typeset`aux17$$ = {
+   True, False, {False}, True}, Typeset`aux18$$ = {
+   True, False, {False}, True}, Typeset`aux19$$ = {
+   True, False, {False}, True}, Typeset`aux20$$ = {
+   True, False, {False}, True}, Typeset`aux21$$ = {
+   True, False, {False}, True}, Typeset`aux22$$ = {
+   True, False, {False}, True}, Typeset`aux23$$ = {
+   True, False, {False}, True}, Typeset`aux24$$ = {
+   True, False, {False}, True}, Typeset`aux25$$ = {
+   True, False, {False}, True}, Typeset`aux26$$ = {
+   True, False, {False}, True}, Typeset`aux27$$ = {
+   True, False, {False}, True}, Typeset`aux28$$ = {
+   True, False, {False}, True}, Typeset`aux29$$ = {
+   True, False, {False}, True}, Typeset`aux30$$ = {
+   True, False, {False}, True}, Typeset`aux31$$ = {
+   True, False, {False}, True}, Typeset`aux32$$ = {
+   True, False, {False}, True}, Typeset`aux33$$ = {
+   True, False, {False}, True}, Typeset`asyncpods$$ = {}, Typeset`nonpods$$ = {
+    XMLElement["assumptions", {"count" -> "1"}, {
+      XMLElement[
+      "assumption", {
+       "type" -> "Clash", "word" -> "weather", "template" -> 
+        "Assuming \"${word}\" is ${desc1}. Use as ${desc2} instead", "count" -> 
+        "2"}, {
+        XMLElement[
+        "value", {
+         "name" -> "WeatherWord", "desc" -> "a weather query", "input" -> 
+          "*C.weather-_*WeatherWord-"}, {}], 
+        XMLElement[
+        "value", {
+         "name" -> "Word", "desc" -> "a word", "input" -> 
+          "*C.weather-_*Word-"}, {}]}]}], 
+    XMLElement["sources", {"count" -> "2"}, {
+      XMLElement[
+      "source", {
+       "url" -> 
+        "http://www.wolframalpha.com/sources/\
+WeatherDataSourceInformationNotes.html", "text" -> "Weather data"}, {}], 
+      XMLElement[
+      "source", {
+       "url" -> 
+        "http://www.wolframalpha.com/sources/\
+WeatherForecastDataSourceInformationNotes.html", "text" -> 
+        "Weather forecast data"}, {}]}], 
+    XMLElement["sources", {"count" -> "4"}, {
+      XMLElement[
+      "source", {
+       "url" -> 
+        "http://www.wolframalpha.com/sources/\
+AirportDataSourceInformationNotes.html", "text" -> "Airport data"}, {}], 
+      XMLElement[
+      "source", {
+       "url" -> 
+        "http://www.wolframalpha.com/sources/\
+AstronomicalDataSourceInformationNotes.html", "text" -> 
+        "Astronomical data"}, {}], 
+      XMLElement[
+      "source", {
+       "url" -> 
+        "http://www.wolframalpha.com/sources/\
+WeatherDataSourceInformationNotes.html", "text" -> "Weather data"}, {}], 
+      XMLElement[
+      "source", {
+       "url" -> 
+        "http://www.wolframalpha.com/sources/\
+WeatherForecastDataSourceInformationNotes.html", "text" -> 
+        "Weather forecast data"}, {}]}]}, Typeset`initdone$$ = True, 
+   Typeset`queryinfo$$ = {{
+    "success" -> "true", "error" -> "false", "numpods" -> "3", "datatypes" -> 
+     "City,Weather", "timedout" -> "Data,Character", "timedoutpods" -> "", 
+     "timing" -> "3.78", "parsetiming" -> "0.121", "parsetimedout" -> "false",
+      "recalculate" -> 
+     "http://www4c.wolframalpha.com/api/v2/recalc.jsp?id=\
+MSPa6132053h9hd8h970bib00005c1gfa88bdc10i2f&s=59", "id" -> 
+     "MSPa6142053h9hd8h970bib00000h68e1i5050361c9", "host" -> 
+     "http://www4c.wolframalpha.com", "server" -> "59", "related" -> 
+     "http://www4c.wolframalpha.com/api/v2/relatedQueries.jsp?id=\
+MSPa6152053h9hd8h970bib00004a68he2i0227gd1b&s=59", "version" -> "2.6"}, {
+    "success" -> "true", "error" -> "false", "numpods" -> "4", "datatypes" -> 
+     "City,Weather", "timedout" -> "", "timedoutpods" -> "", "timing" -> 
+     "4.603", "parsetiming" -> "0.", "parsetimedout" -> "false", 
+     "recalculate" -> "", "id" -> "", "host" -> 
+     "http://www4c.wolframalpha.com", "server" -> "59", "related" -> "", 
+     "version" -> "2.6"}}, Typeset`sessioninfo$$ = {
+   "TimeZone" -> -5., 
+    "Date" -> {2014, 1, 18, 13, 55, 27.737251`8.195638398349383}, "Line" -> 2,
+     "SessionID" -> 5140041919205935643}, Typeset`showpods$$ = {1, 2, 3, 4, 5,
+    6, 7}, Typeset`failedpods$$ = {8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
+   19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33}, 
+   Typeset`chosen$$ = {
+   "InstantaneousWeather:WeatherData", 
+    "Latest recorded weather for Terre Haute, Indiana", 1, 1, "Content"}, 
+   Typeset`open$$ = False, Typeset`newq$$ = "weather"}, 
+   DynamicBox[ToBoxes[
+     AlphaIntegration`FormatAlphaResults[
+      Dynamic[{
+       2, {Typeset`pod1$$, Typeset`pod2$$, Typeset`pod3$$, Typeset`pod4$$, 
+         Typeset`pod5$$, Typeset`pod6$$, Typeset`pod7$$, Typeset`pod8$$, 
+         Typeset`pod9$$, Typeset`pod10$$, Typeset`pod11$$, Typeset`pod12$$, 
+         Typeset`pod13$$, Typeset`pod14$$, Typeset`pod15$$, Typeset`pod16$$, 
+         Typeset`pod17$$, Typeset`pod18$$, Typeset`pod19$$, Typeset`pod20$$, 
+         Typeset`pod21$$, Typeset`pod22$$, Typeset`pod23$$, Typeset`pod24$$, 
+         Typeset`pod25$$, Typeset`pod26$$, Typeset`pod27$$, Typeset`pod28$$, 
+         Typeset`pod29$$, Typeset`pod30$$, Typeset`pod31$$, Typeset`pod32$$, 
+         Typeset`pod33$$}, {
+        Typeset`aux1$$, Typeset`aux2$$, Typeset`aux3$$, Typeset`aux4$$, 
+         Typeset`aux5$$, Typeset`aux6$$, Typeset`aux7$$, Typeset`aux8$$, 
+         Typeset`aux9$$, Typeset`aux10$$, Typeset`aux11$$, Typeset`aux12$$, 
+         Typeset`aux13$$, Typeset`aux14$$, Typeset`aux15$$, Typeset`aux16$$, 
+         Typeset`aux17$$, Typeset`aux18$$, Typeset`aux19$$, Typeset`aux20$$, 
+         Typeset`aux21$$, Typeset`aux22$$, Typeset`aux23$$, Typeset`aux24$$, 
+         Typeset`aux25$$, Typeset`aux26$$, Typeset`aux27$$, Typeset`aux28$$, 
+         Typeset`aux29$$, Typeset`aux30$$, Typeset`aux31$$, Typeset`aux32$$, 
+         Typeset`aux33$$}, Typeset`chosen$$, Typeset`open$$, 
+        Typeset`elements$$, Typeset`q$$, Typeset`opts$$, Typeset`nonpods$$, 
+        Typeset`queryinfo$$, Typeset`sessioninfo$$, Typeset`showpods$$, 
+        Typeset`failedpods$$, Typeset`newq$$}]], StandardForm],
+    ImageSizeCache->{320., {28., 19.}},
+    TrackedSymbols:>{Typeset`showpods$$, Typeset`failedpods$$}],
+   DynamicModuleValues:>{},
+   Initialization:>If[
+     Not[Typeset`initdone$$], Null; AlphaIntegration`DoAsyncInitialization[
+       Hold[{
+        2, {Typeset`pod1$$, Typeset`pod2$$, Typeset`pod3$$, Typeset`pod4$$, 
+          Typeset`pod5$$, Typeset`pod6$$, Typeset`pod7$$, Typeset`pod8$$, 
+          Typeset`pod9$$, Typeset`pod10$$, Typeset`pod11$$, Typeset`pod12$$, 
+          Typeset`pod13$$, Typeset`pod14$$, Typeset`pod15$$, Typeset`pod16$$, 
+          Typeset`pod17$$, Typeset`pod18$$, Typeset`pod19$$, Typeset`pod20$$, 
+          Typeset`pod21$$, Typeset`pod22$$, Typeset`pod23$$, Typeset`pod24$$, 
+          Typeset`pod25$$, Typeset`pod26$$, Typeset`pod27$$, Typeset`pod28$$, 
+          Typeset`pod29$$, Typeset`pod30$$, Typeset`pod31$$, Typeset`pod32$$, 
+          Typeset`pod33$$}, {
+         Typeset`aux1$$, Typeset`aux2$$, Typeset`aux3$$, Typeset`aux4$$, 
+          Typeset`aux5$$, Typeset`aux6$$, Typeset`aux7$$, Typeset`aux8$$, 
+          Typeset`aux9$$, Typeset`aux10$$, Typeset`aux11$$, Typeset`aux12$$, 
+          Typeset`aux13$$, Typeset`aux14$$, Typeset`aux15$$, Typeset`aux16$$, 
+          Typeset`aux17$$, Typeset`aux18$$, Typeset`aux19$$, Typeset`aux20$$, 
+          Typeset`aux21$$, Typeset`aux22$$, Typeset`aux23$$, Typeset`aux24$$, 
+          Typeset`aux25$$, Typeset`aux26$$, Typeset`aux27$$, Typeset`aux28$$, 
+          Typeset`aux29$$, Typeset`aux30$$, Typeset`aux31$$, Typeset`aux32$$, 
+          Typeset`aux33$$}, Typeset`chosen$$, Typeset`open$$, 
+         Typeset`elements$$, Typeset`q$$, Typeset`opts$$, Typeset`nonpods$$, 
+         Typeset`queryinfo$$, Typeset`sessioninfo$$, Typeset`showpods$$, 
+         Typeset`failedpods$$, Typeset`newq$$, 
+         "http://www4c.wolframalpha.com/api/v2/recalc.jsp?id=\
+MSPa6132053h9hd8h970bib00005c1gfa88bdc10i2f&s=59", Typeset`asyncpods$$}]]; 
+     Typeset`asyncpods$$ = {}; Typeset`initdone$$ = True],
+   SynchronousInitialization->False],
+  BaseStyle->{Deployed -> True},
+  DeleteWithContents->True,
+  Editable->False,
+  SelectWithContents->True]], "WolframAlphaShortInput"],
+
+Cell[BoxData[
+ InterpretationBox[
+  FrameBox[
+   StyleBox[
+    FormBox[
+     StyleBox[GridBox[{
+        {
+         StyleBox[
+          StyleBox[GridBox[{
+             {
+              PaneBox["\<\"temperature\"\>",
+               
+               BaseStyle->{{
+                 BaselinePosition -> Baseline, FontColor -> GrayLevel[0.3]}, 
+                 LineSpacing -> {0.9, 0, 1.5}, 
+                 LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                 TextAlignment -> Left},
+               BaselinePosition->Baseline], 
+              TemplateBox[{"  ","\"  \"",StyleBox[
+                 StyleBox[
+                  
+                  RowBox[{
+                   "27", "\[NoBreak]", "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], "Unit"], ZeroWidthTimes -> False, LineIndent -> 
+                 0, LinebreakAdjustments -> {1, 100, 1, 0, 100}],StyleBox[
+                 RowBox[{"\"(\"", "\[NoBreak]", 
+                   TemplateBox[{"\"wind chill\"", "\": \"", 
+                    StyleBox[
+                    StyleBox[
+                    
+                    RowBox[{
+                    "14", "\[NoBreak]", "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], "Unit"], ZeroWidthTimes -> False, LineIndent -> 
+                    0, LinebreakAdjustments -> {1, 100, 1, 0, 100}]}, 
+                    "RowDefault"], "\[NoBreak]", "\")\""}], StripOnInput -> 
+                 False, LineIndent -> 0, 
+                 LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineColor -> 
+                 GrayLevel[0.6], FrontFaceColor -> GrayLevel[0.6], 
+                 BackFaceColor -> GrayLevel[0.6], GraphicsColor -> 
+                 GrayLevel[0.6], FontColor -> GrayLevel[0.6]]},
+               "RowWithSeparators"]},
+             {
+              PaneBox["\<\"conditions\"\>",
+               
+               BaseStyle->{{
+                 BaselinePosition -> Baseline, FontColor -> GrayLevel[0.3]}, 
+                 LineSpacing -> {0.9, 0, 1.5}, 
+                 LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                 TextAlignment -> Left},
+               BaselinePosition->Baseline], 
+              TemplateBox[{"\"overcast\""},
+               "RowDefault"]},
+             {
+              PaneBox["\<\"relative humidity\"\>",
+               
+               BaseStyle->{{
+                 BaselinePosition -> Baseline, FontColor -> GrayLevel[0.3]}, 
+                 LineSpacing -> {0.9, 0, 1.5}, 
+                 LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                 TextAlignment -> Left},
+               BaselinePosition->Baseline], 
+              TemplateBox[{"  ","\"  \"",StyleBox[
+                 StyleBox[
+                  RowBox[{"58", "\[NoBreak]", 
+                    StyleBox[
+                    "\"%\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], "Unit"], ZeroWidthTimes -> False, LineIndent -> 
+                 0, LinebreakAdjustments -> {1, 100, 1, 0, 100}],StyleBox[
+                 RowBox[{"\"(\"", "\[NoBreak]", 
+                   FormBox[
+                    TagBox[
+                    FormBox[
+                    TemplateBox[{"\"dew point: \"", 
+                    StyleBox[
+                    StyleBox[
+                    
+                    RowBox[{
+                    "14", "\[NoBreak]", "\[InvisibleSpace]", "\[ThickSpace]", 
+                    "\[InvisibleSpace]", 
+                    StyleBox[
+                    "\"\[Degree]F\"", FontFamily -> "Helvetica", FontSize -> 
+                    Smaller]}], "Unit"], ZeroWidthTimes -> False, LineIndent -> 
+                    0, LinebreakAdjustments -> {1, 100, 1, 0, 100}]}, 
+                    "RowDefault"], TraditionalForm], 
+                    Format[#, TraditionalForm]& ], TraditionalForm], 
+                   "\[NoBreak]", "\")\""}], StripOnInput -> False, LineIndent -> 
+                 0, LinebreakAdjustments -> {1, 100, 1, 0, 100}, LineColor -> 
+                 GrayLevel[0.6], FrontFaceColor -> GrayLevel[0.6], 
+                 BackFaceColor -> GrayLevel[0.6], GraphicsColor -> 
+                 GrayLevel[0.6], FontColor -> GrayLevel[0.6]]},
+               "RowWithSeparators"]},
+             {
+              PaneBox["\<\"wind speed\"\>",
+               
+               BaseStyle->{{
+                 BaselinePosition -> Baseline, FontColor -> GrayLevel[0.3]}, 
+                 LineSpacing -> {0.9, 0, 1.5}, 
+                 LinebreakAdjustments -> {1, 10, 10000, 0, 100}, 
+                 TextAlignment -> Left},
+               BaselinePosition->Baseline], 
+              StyleBox[
+               StyleBox[
+                RowBox[{
+                "16", "\[NoBreak]", "\[InvisibleSpace]", "\[ThickSpace]", 
+                 "\[InvisibleSpace]", 
+                 StyleBox["\<\"mph\"\>",
+                  FontFamily->"Helvetica",
+                  FontSize->Smaller]}], "Unit"],
+               ZeroWidthTimes->False,
+               LineIndent->0,
+               LinebreakAdjustments->{1, 100, 1, 0, 100}]}
+            },
+            AllowScriptLevelChange->False,
+            AutoDelete->False,
+            BaselinePosition->Automatic,
+            FrameStyle->GrayLevel[0.84],
+            
+            GridBoxAlignment->{
+             "Columns" -> {Left, Left}, "Rows" -> {{Baseline}}},
+            GridBoxBackground->{"Columns" -> {None, None}},
+            GridBoxFrame->{"Columns" -> {{True}}, "Rows" -> {{True}}},
+            
+            GridBoxItemSize->{
+             "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+            GridBoxSpacings->{"Columns" -> {{1.5}, 2}, "Rows" -> {{1}}}], 
+           "Grid"],
+          StripOnInput->False,
+          LineSpacing->{0.9, 0, 1.5},
+          LineIndent->0]},
+        {
+         StyleBox[
+          RowBox[{"\<\"(\"\>", "\[NoBreak]", 
+           TemplateBox[{TemplateBox[{
+               TemplateBox[{"  ", "\"  \"", 
+                 StyleBox[
+                  StyleBox[
+                   RowBox[{"37", "\[InvisibleSpace]", " ", 
+                    StyleBox[
+                    "\"minutes\"", StripOnInput -> False, LineIndent -> 0, 
+                    LinebreakAdjustments -> {1, 100, 1, 0, 100}, 
+                    FontFamily :> $CellContext`$UnitFontFamily, FontSize -> 
+                    Smaller]}], "Unit"], ZeroWidthTimes -> False, LineIndent -> 
+                  0, LinebreakAdjustments -> {1, 100, 1, 0, 100}]}, 
+                "RowWithSeparators"], "\" ago\""}, "RowDefault"]},
+            "RowDefault"], "\[NoBreak]", "\<\")\"\>"}],
+          StripOnInput->False,
+          LineIndent->0,
+          LinebreakAdjustments->{1, 100, 1, 0, 100},
+          LineColor->GrayLevel[0.5],
+          FrontFaceColor->GrayLevel[0.5],
+          BackFaceColor->GrayLevel[0.5],
+          GraphicsColor->GrayLevel[0.5],
+          FontFamily->"Verdana",
+          FontSize->10,
+          FontColor->GrayLevel[0.5]]}
+       },
+       DefaultBaseStyle->"Column",
+       GridBoxAlignment->{"Columns" -> {{Left}}},
+       GridBoxItemSize->{
+        "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}], "Column"],
+     TraditionalForm], "Output",
+    ScriptLevel->0,
+    FontFamily->"Times",
+    FontSize->14,
+    Background->None],
+   BaseStyle->{Plain},
+   FrameMargins->10,
+   FrameStyle->GrayLevel[0.85],
+   RoundingRadius->5,
+   StripOnInput->False],
+  WolframAlphaResult[
+  "weather", {{"InstantaneousWeather:WeatherData", 1}, "Content"}]]], "Output",\
+
+ CellChangeTimes->{3.599065813924897*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Plots", "Subsection",
+ CellChangeTimes->{{3.599065669917858*^9, 3.599065680505212*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Plot", "[", 
+    RowBox[{
+     RowBox[{"Cos", "[", 
+      RowBox[{"2", "Pi", " ", "f", " ", "t"}], "]"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", " ", 
+       RowBox[{
+        RowBox[{"-", "2"}], "/", "440"}], ",", " ", 
+       RowBox[{"2", "/", "440"}]}], "}"}], ",", " ", 
+     RowBox[{"AxesLabel", "\[Rule]", 
+      RowBox[{"{", 
+       RowBox[{"t", ",", " ", "f"}], "}"}]}]}], "]"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{"f", ",", " ", "400", ",", " ", "800"}], "}"}]}], "]"}]], "Input",\
+
+ CellChangeTimes->{{3.598984437526181*^9, 3.598984480729085*^9}, {
+  3.59906034003413*^9, 3.59906039885242*^9}, {3.599060924086091*^9, 
+  3.599060956071376*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`f$$ = 663., Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`f$$], 400, 800}}, Typeset`size$$ = {
+    360., {114., 119.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`f$6940$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`f$$ = 400}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`f$$, $CellContext`f$6940$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Plot[
+        Cos[
+        2 Pi $CellContext`f$$ $CellContext`t], {$CellContext`t, (-2)/440, 2/
+         440}, AxesLabel -> {$CellContext`t, $CellContext`f$$}], 
+      "Specifications" :> {{$CellContext`f$$, 400, 800}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{407., {158., 164.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.599065816999357*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"Plot3D", "[", 
+  RowBox[{
+   RowBox[{"Sin", "[", 
+    RowBox[{"x", " ", "y"}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"x", ",", "0", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"y", ",", "0", ",", "3"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.599065630837501*^9, 3.599065630918605*^9}}],
+
+Cell[BoxData[
+ RowBox[{"Plot3D", "[", 
+  RowBox[{
+   RowBox[{"Exp", "[", 
+    RowBox[{"-", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"x", "^", "2"}], "+", 
+       RowBox[{"y", "^", "2"}]}], ")"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"x", ",", 
+     RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"y", ",", 
+     RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+   RowBox[{"Mesh", "\[Rule]", "None"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.599065533018043*^9, 3.5990655330411863`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"TabView", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"#", "\[Rule]", 
+      RowBox[{"KnotData", "[", "#", "]"}]}], ")"}], "&"}], "/@", 
+   RowBox[{"Take", "[", 
+    RowBox[{
+     RowBox[{"KnotData", "[", "All", "]"}], ",", "10"}], "]"}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.599064877124024*^9, 3.599064877163973*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"http", ":"}], "//", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"reference", ".", "wolfram", ".", "com"}], "/", "language"}], 
+     "/", "ref"}], "/", "device"}], "/", 
+   RowBox[{"GPIO", ".", "html"}]}]}]], "Input",
+ CellChangeTimes->{{3.5989848789071417`*^9, 3.5989848789227533`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"FindDevices", "[", "]"}]], "Input",
+ CellChangeTimes->{{3.599065161317648*^9, 3.599065161355503*^9}}],
+
+Cell[BoxData[
+ RowBox[{"FindDevices", "[", "\"\<GPIO\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.598984737804537*^9, 3.598984737825927*^9}}],
+
+Cell[BoxData[
+ RowBox[{"DeviceConfigure", "[", 
+  RowBox[{"\"\<GPIO\>\"", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"14", "\[Rule]", "\"\<Output\>\""}], ",", 
+     RowBox[{"4", "\[Rule]", "\"\<Input\>\""}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.598984946310134*^9, 3.598984946325439*^9}, {
+  3.5989851138645353`*^9, 3.5989851359654493`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"N", "[", 
+    RowBox[{"Pi", ",", " ", 
+     RowBox[{"10", "^", "6"}]}], "]"}], ";"}], " ", "//", 
+  "AbsoluteTiming"}]], "Input",
+ CellChangeTimes->{{3.5989851557655354`*^9, 3.598985197024816*^9}, {
+  3.5990660138390627`*^9, 3.599066014375798*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"0.0136530000000000002`4.15582800350568", ",", "Null"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.598985171065579*^9, 3.598985190718603*^9}, 
+   3.598985341218103*^9, 3.599066016468376*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Test of Grouping", "Section",
+ CellChangeTimes->{{3.599064723316019*^9, 3.599064778625712*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Roots", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"a", " ", 
+      RowBox[{"x", "^", "2"}]}], " ", "+", " ", 
+     RowBox[{"b", " ", "x"}], " ", "+", " ", "c"}], "\[Equal]", "0"}], ",", 
+   "x"}], "]"}]], "Input",
+ CellChangeTimes->{{3.5990635696667147`*^9, 3.599063573220985*^9}, {
+   3.599063842852868*^9, 3.5990638957909803`*^9}, {3.5990639931418543`*^9, 
+   3.59906403616591*^9}, 3.5990647461668787`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"x", "\[Equal]", 
+   FractionBox[
+    RowBox[{
+     RowBox[{"-", "b"}], "-", 
+     SqrtBox[
+      RowBox[{
+       SuperscriptBox["b", "2"], "-", 
+       RowBox[{"4", " ", "a", " ", "c"}]}]]}], 
+    RowBox[{"2", " ", "a"}]]}], "||", 
+  RowBox[{"x", "\[Equal]", 
+   FractionBox[
+    RowBox[{
+     RowBox[{"-", "b"}], "+", 
+     SqrtBox[
+      RowBox[{
+       SuperscriptBox["b", "2"], "-", 
+       RowBox[{"4", " ", "a", " ", "c"}]}]]}], 
+    RowBox[{"2", " ", "a"}]]}]}]], "Output",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.5990638964705267`*^9, {3.599064001536331*^9, 3.599064036814732*^9}, 
+   3.5990647462000713`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"FactorInteger", "[", "401", "]"}]], "Input",
+ CellChangeTimes->{{3.5990635696667147`*^9, 3.599063573220985*^9}, {
+   3.5990638244006023`*^9, 3.599063827003539*^9}, 3.5990638610741262`*^9, {
+   3.59906409831701*^9, 3.5990641223268147`*^9}, 3.5990647462366953`*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{"401", ",", "1"}], "}"}], "}"}]], "Output",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{
+  3.599063828366425*^9, 3.599063862341094*^9, {3.5990641073732033`*^9, 
+   3.599064123736341*^9}, 3.599064746265427*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Factor", "[", 
+  RowBox[{
+   RowBox[{"x", "^", "3"}], "-", 
+   RowBox[{"3", " ", 
+    RowBox[{"x", "^", "2"}]}], "-", 
+   RowBox[{"2", " ", "x"}], "+", "6"}], "]"}]], "Input",
+ CellChangeTimes->{{3.599064312771343*^9, 3.5990643127897377`*^9}, 
+   3.599064746345952*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"-", "3"}], "+", "x"}], ")"}], " ", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"-", "2"}], "+", 
+    SuperscriptBox["x", "2"]}], ")"}]}]], "Output",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{3.599064315061253*^9, 3.5990647463737793`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Roots", "[", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"x", "^", "3"}], "-", 
+     RowBox[{"3", " ", 
+      RowBox[{"x", "^", "2"}]}], "-", 
+     RowBox[{"2", " ", "x"}], "+", "6"}], "\[Equal]", "0"}], ",", "x"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.599064322264757*^9, 3.599064350884704*^9}, 
+   3.599064746403267*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"x", "\[Equal]", 
+   SqrtBox["2"]}], "||", 
+  RowBox[{"x", "\[Equal]", 
+   RowBox[{"-", 
+    SqrtBox["2"]}]}], "||", 
+  RowBox[{"x", "\[Equal]", "3"}]}]], "Output",
+ GeneratedCell->False,
+ CellAutoOverwrite->False,
+ CellChangeTimes->{{3.599064347612941*^9, 3.599064352044795*^9}, 
+   3.599064746430088*^9}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 877},
+WindowMargins->{{Automatic, 49}, {15, Automatic}},
+ShowSelection->True,
+FrontEndVersion->"10.0 for Linux ARM (32-bit) (November 19, 2013)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 175189, 3446, 64, "WolframAlphaShortInput"],
+Cell[175772, 3470, 7792, 179, 193, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[183601, 3654, 93, 1, 44, "Subsection"],
+Cell[CellGroupData[{
+Cell[183719, 3659, 760, 21, 55, "Input"],
+Cell[184482, 3682, 1629, 34, 339, "Output"]
+}, Open  ]],
+Cell[186126, 3719, 332, 9, 32, "Input"],
+Cell[186461, 3730, 526, 16, 32, "Input"],
+Cell[186990, 3748, 366, 11, 32, "Input"],
+Cell[187359, 3761, 342, 10, 32, "Input"],
+Cell[187704, 3773, 125, 2, 32, "Input"],
+Cell[187832, 3777, 141, 2, 32, "Input"],
+Cell[187976, 3781, 360, 8, 32, "Input"],
+Cell[CellGroupData[{
+Cell[188361, 3793, 295, 8, 32, "Input"],
+Cell[188659, 3803, 230, 5, 32, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[188938, 3814, 101, 1, 80, "Section"],
+Cell[CellGroupData[{
+Cell[189064, 3819, 445, 11, 32, "Input"],
+Cell[189512, 3832, 686, 24, 62, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[190235, 3861, 287, 4, 32, "Input"],
+Cell[190525, 3867, 290, 8, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[190852, 3880, 293, 8, 32, "Input"],
+Cell[191148, 3890, 326, 11, 35, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[191511, 3906, 357, 11, 32, "Input"],
+Cell[191871, 3919, 340, 11, 38, "Output"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
