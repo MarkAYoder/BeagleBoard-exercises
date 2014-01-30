@@ -5,7 +5,7 @@
 // buttonBox, ioPlot, realtimeDemo
 "use strict";
 
-var port = 8080, // Port to listen on
+var port = 9090, // Port to listen on
     http = require('http'),
     url = require('url'),
     fs = require('fs'),
