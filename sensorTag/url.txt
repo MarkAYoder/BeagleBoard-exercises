@@ -4,3 +4,5 @@ http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Gatt_Server
 
 hciconfig hci0 reset
 
+http://mike.saunby.net/2013/04/raspberry-pi-and-ti-cc2541-sensortag.html
+
