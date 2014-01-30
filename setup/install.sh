@@ -36,11 +36,10 @@ git config --global color.ui true
 git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises
 
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
+mv .bashrc .bashrc.orig
+mv .x11vncrc .x11vncrc.orig
 ln -s exercises/setup/bashrc .bashrc
 ln -s exercises/setup/x11vncrc .x11vncrc
-cd /etc/gdm
-mv custom.conf custom.conf.orig
-sed s/TimedLoginEnable=true/TimedLoginEnable=false/ custom.conf.orig > custom.conf
 
 # Put a symbolic link in Cloud 9 so it will see the exercises
 cd /var/lib/cloud9
@@ -54,6 +53,10 @@ ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
 cp ~/exercises/realtime/boneServer.service /lib/systemd/system
 systemctl start boneServer
 systemctl enable boneServer
+
+# cd /etc/gdm
+# mv custom.conf custom.conf.orig
+# sed s/TimedLoginEnable=true/TimedLoginEnable=false/ custom.conf.orig > custom.conf
 "
 exit
 # Run if ssh is refusing connections
