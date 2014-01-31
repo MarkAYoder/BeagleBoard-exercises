@@ -9,6 +9,9 @@ wget http://jqueryui.com/resources/download/jquery-ui-1.10.4.zip
 wget http://www.flotcharts.org/downloads/flot-0.8.2.zip
 # https://github.com/mrdoob/three.js/tree/master/build
 # http://www.github.com/DiogenesTheCynic/FullScreenMario
+# wget https://github.com/Diogenesthecynic/FullScreenMario/archive/master.zip
+# unzip master.zip
+# mv FullScreenMario-master/ FullScreenMario
 
 unzip jquery-ui-1.10.4.zip
 mv jquery-ui-1.10.4/ui/minified/jquery-ui.min.js .
