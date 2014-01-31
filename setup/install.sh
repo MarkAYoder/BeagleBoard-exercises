@@ -47,6 +47,9 @@ ln -s ~/exercises .
 rm /etc/localtime
 ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
 
+# Turn off cape-bone-proto
+sed -i -e 's:CAPE=cape-bone-proto:#CAPE=cape-bone-proto:g' /etc/default/capemgr
+
 # Set up boneServer to run at boot time
 cp ~/exercises/realtime/boneServer.service /lib/systemd/system
 systemctl start boneServer
