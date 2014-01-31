@@ -6,7 +6,7 @@
 # 20-Aug-2013
 set -e
 BONE=192.168.7.2
-BONE_NAME=yoder-black-bone
+BONE_NAME=yoder-debian-bone
 
 if [ 1 == 1 ] ; then
 # Make it so ssh will run without a password
@@ -36,29 +36,35 @@ git config --global color.ui true
 git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises
 
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
-ln -s exercises/setup/bashrc .bashrc
-ln -s exercises/setup/x11vncrc .x11vncrc
-cd /etc/gdm
-mv custom.conf custom.conf.orig
-sed s/TimedLoginEnable=true/TimedLoginEnable=false/ custom.conf.orig > custom.conf
+ln -s --backup=numbered exercises/setup/bashrc .bashrc
+ln -s --backup=numbered exercises/setup/x11vncrc .x11vncrc
 
 # Put a symbolic link in Cloud 9 so it will see the exercises
 cd /var/lib/cloud9
 ln -s ~/exercises .
+
+# Set the time zone to Indiana
+rm /etc/localtime
+ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
 
 # Set up boneServer to run at boot time
 cp ~/exercises/realtime/boneServer.service /lib/systemd/system
 systemctl start boneServer
 systemctl enable boneServer
 
-# Set the time zone to Indiana
-rm /etc/localtime
-ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
+# cd /etc/gdm
+# mv custom.conf custom.conf.orig
+# sed s/TimedLoginEnable=true/TimedLoginEnable=false/ custom.conf.orig > custom.conf
 "
 exit
 # Run if ssh is refusing connections
 # rm /etc/dropbear/dropbear_rsa_host_key
 # reboot
+
+# Load Full Screen Mario
+# git clone https://github.com/Diogenesthecynic/FullScreenMario.git
+# cd exercises/realtime
+# ln -s ~/FullScreenMario .
 "
 
 ################

@@ -4,3 +4,11 @@ http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Gatt_Server
 
 hciconfig hci0 reset
 
+http://mike.saunby.net/2013/04/raspberry-pi-and-ti-cc2541-sensortag.html
+
+git://github.com/msaunby/ble-sensor-pi.git
+
+ # wget http://pexpect.sourceforge.net/pexpect-2.3.tar.gz
+ # tar xzf pexpect-2.3.tar.gz
+ # cd pexpect-2.3
+ # python ./setup.py install
