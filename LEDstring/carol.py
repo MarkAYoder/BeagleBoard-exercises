@@ -20,7 +20,7 @@ while True:
         fo.write("%d %d %d %d" % (r%max, g%max, b%max, i))
         # print("0 0 127 %d" % (i))
 
-    fo.write("\n");
+    fo.write("0 0 0 -1\n");
     time = time + 1
     sleep(0.100)
 
