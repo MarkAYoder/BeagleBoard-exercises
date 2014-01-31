@@ -29,9 +29,9 @@ var port = 9090, // Port to listen on
 // Initialize various IO things.
 function initIO() {
     // Make sure gpios 7 and 20 are available.
-    // b.pinMode('P9_42', b.INPUT);
+    b.pinMode('P9_42', b.INPUT);
     b.pinMode('P9_41', b.INPUT);
-    // b.pinMode(pwm,     b.INPUT);    // PWM
+    b.pinMode(pwm,     b.INPUT);    // PWM
     
     // Initialize pwm
 }
