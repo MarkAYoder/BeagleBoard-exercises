@@ -13,6 +13,10 @@ wget http://www.flotcharts.org/downloads/flot-0.8.2.zip
 # unzip master.zip
 # mv FullScreenMario-master/ FullScreenMario
 
+# http://fortawesome.github.io/Font-Awesome/
+
+# http://subtlepatterns.com/
+
 unzip jquery-ui-1.10.4.zip
 mv jquery-ui-1.10.4/ui/minified/jquery-ui.min.js .
 mv jquery-ui-1.10.4/themes/base/jquery-ui.css .
