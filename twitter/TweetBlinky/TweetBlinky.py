@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 import time
 # import RPi.GPIO as GPIO
+import Adafruit_BBIO.GPIO as GPIO
 from twython import TwythonStreamer
 
 # Search terms
 TERMS = '#lol'
 
 # GPIO pin number of LED
-LED = 22
+LED = "P9_12"
 
 # Twitter application authentication
 APP_KEY = 'D3PuaQNFRYAtNVKXPppmw'
@@ -21,15 +22,14 @@ class BlinkyStreamer(TwythonStreamer):
         if 'text' in data:
 	    print data['text'].encode('utf-8')
 	    print
-#	    GPIO.output(LED, GPIO.HIGH)
+	    GPIO.output(LED, GPIO.HIGH)
 	    time.sleep(0.5)
-
-#	    GPIO.output(LED, GPIO.LOW)
+	    GPIO.output(LED, GPIO.LOW)
 
 # Setup GPIO as output
 #GPIO.setmode(GPIO.BOARD)
-#GPIO.setup(LED, GPIO.OUT)
-#GPIO.output(LED, GPIO.LOW)
+GPIO.setup(LED, GPIO.OUT)
+GPIO.output(LED, GPIO.LOW)
 
 # Create streamer
 try:
@@ -37,5 +37,5 @@ try:
     stream.statuses.filter(track=TERMS)
 
 except KeyboardInterrupt:
-#    GPIO.cleanup()
+    GPIO.cleanup()
     print "KeyboardInterrupt"
