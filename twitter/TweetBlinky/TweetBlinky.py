@@ -1,6 +1,8 @@
 #!/usr/bin/env python
+# Adapted from https://learn.sparkfun.com/tutorials/raspberry-pi-twitter-monitor/all
 import time
 # import RPi.GPIO as GPIO
+# http://learn.adafruit.com/setting-up-io-python-library-on-beaglebone-black/
 import Adafruit_BBIO.GPIO as GPIO
 from twython import TwythonStreamer
 
