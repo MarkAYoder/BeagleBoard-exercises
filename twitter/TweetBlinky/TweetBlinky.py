@@ -29,7 +29,7 @@ class BlinkyStreamer(TwythonStreamer):
 	    GPIO.output(LED, GPIO.LOW)
 
 # Setup GPIO as output
-#GPIO.setmode(GPIO.BOARD)
+# GPIO.setmode(GPIO.BOARD)
 GPIO.setup(LED, GPIO.OUT)
 GPIO.output(LED, GPIO.LOW)
 
