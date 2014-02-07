@@ -8,6 +8,7 @@ exit
 apt-get update
 apt-get install python-pip
 apt-get install python-dev
+easy_install -U distribute
 pip install twython
 pip install Adafruit_BBIO
 
