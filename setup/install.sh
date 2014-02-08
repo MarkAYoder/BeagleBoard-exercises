@@ -41,9 +41,9 @@ echo $BONE_NAME > /etc/hostname
 git config --global user.name \"Mark A. Yoder\"
 git config --global user.email Mark.A.Yoder@Rose-Hulman.edu
 git config --global color.ui true
-cd exercises
-git pull
-cd ..
+# cd exercises
+# git pull
+# cd ..
 
 # git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises
 
@@ -62,10 +62,15 @@ ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
 # Turn off cape-bone-proto
 sed -i -e 's:CAPE=cape-bone-proto:#CAPE=cape-bone-proto:g' /etc/default/capemgr
 
+# Make socket.io appear where others can use it
+cd /usr/lib/node_modules/
+ln -s bonescript/node_modules/socket.io/ .
+cd ~/exercises
+
 # Set up boneServer to run at boot time
 cp ~/exercises/realtime/boneServer.service /lib/systemd/system
 # systemctl start boneServer
-# systemctl enable boneServer
+systemctl enable boneServer
 
 # cd /etc/gdm
 # mv custom.conf custom.conf.orig
