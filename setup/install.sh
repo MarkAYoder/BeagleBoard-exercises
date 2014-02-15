@@ -8,7 +8,12 @@ set -e
 BONE=192.168.7.2
 BONE_NAME=yoder-debian-bone
 
-if [ 1 == 1 ] ; then
+# Grow the partition to use whole card
+if [ 1 == 0 ] ; then
+ssh root@$BONE /opt/scripts/tools/grow_partition.sh
+reboot
+fi
+
 # Make it so ssh will run without a password
 ssh-copy-id root@$BONE
 
@@ -22,18 +27,25 @@ ssh root@$BONE "date -s \"$DATE\""
 # Set up DNS on bone
 ./host.setDNS.sh
 scp ssh/* root@$BONE:.ssh
-fi
+
+# Copy local copy of exercises to bone and then pull
+echo rsyncing exercises, this will take about 40 seconds
+time rsync -az --progress ../../exercises root@bone:.
 
 ################
 ssh root@$BONE "
 # Set the network name of the board
 echo $BONE_NAME > /etc/hostname
 
-# Clone the ECE497 exercises from github
+# Set up github
 git config --global user.name \"Mark A. Yoder\"
 git config --global user.email Mark.A.Yoder@Rose-Hulman.edu
 git config --global color.ui true
-git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises
+# cd exercises
+# git pull
+# cd ..
+
+# git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises
 
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
 ln -s --backup=numbered exercises/setup/bashrc .bashrc
@@ -50,9 +62,14 @@ ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
 # Turn off cape-bone-proto
 sed -i -e 's:CAPE=cape-bone-proto:#CAPE=cape-bone-proto:g' /etc/default/capemgr
 
+# Make socket.io appear where others can use it
+cd /usr/lib/node_modules/
+ln -s bonescript/node_modules/socket.io/ .
+cd ~/exercises
+
 # Set up boneServer to run at boot time
 cp ~/exercises/realtime/boneServer.service /lib/systemd/system
-systemctl start boneServer
+# systemctl start boneServer
 systemctl enable boneServer
 
 # cd /etc/gdm
