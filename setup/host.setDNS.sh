@@ -19,8 +19,9 @@ search rose-hulman.edu dhcp.rose-hulman.edu wlan.rose-hulman.edu
 
 EOF
 
-# Use the campus name servers if on compus, otherwise use the Google name servers
-if ifconfig | grep "addr:137.112."; then
+# Use the campus name servers if on compus or is in a VM,
+# otherwise use the Google name servers
+if ifconfig | egrep "addr:137.112.|addr:192.168."; then
 cat - << EOF >> /tmp/resolv.conf
 nameserver 137.112.18.59
 nameserver 137.112.5.28
