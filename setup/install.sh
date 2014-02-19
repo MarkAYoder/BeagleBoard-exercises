@@ -30,7 +30,7 @@ scp ssh/* root@$BONE:.ssh
 
 # Copy local copy of exercises to bone and then pull
 echo rsyncing exercises, this will take about 40 seconds
-time rsync -az --progress ../../exercises root@bone:.
+time rsync -az --progress --exclude esc-media --exclude c6run_build ../../exercises root@bone:.
 
 ################
 ssh root@$BONE "
@@ -52,8 +52,10 @@ ln -s --backup=numbered exercises/setup/bashrc .bashrc
 ln -s --backup=numbered exercises/setup/x11vncrc .x11vncrc
 
 # Put a symbolic link in Cloud 9 so it will see the exercises
-cd /var/lib/cloud9
-ln -s ~/exercises .
+if [ ! -e /var/lib/cloud9/exercises ] ; then
+	cd /var/lib/cloud9
+	ln -s ~/exercises .
+fi
 
 # Set the time zone to Indiana
 rm /etc/localtime
@@ -63,8 +65,10 @@ ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
 sed -i -e 's:CAPE=cape-bone-proto:#CAPE=cape-bone-proto:g' /etc/default/capemgr
 
 # Make socket.io appear where others can use it
-cd /usr/lib/node_modules/
-ln -s bonescript/node_modules/socket.io/ .
+if [ ! -e /usr/lib/node_modules/socket.io ] ; then
+	cd /usr/lib/node_modules/
+	ln -s bonescript/node_modules/socket.io/ .
+fi
 cd ~/exercises
 
 # Set up boneServer to run at boot time
