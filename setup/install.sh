@@ -30,7 +30,7 @@ scp ssh/* root@$BONE:.ssh
 
 # Copy local copy of exercises to bone and then pull
 echo rsyncing exercises, this will take about 40 seconds
-time rsync -az --progress --exclude "*.o" --exclude esc-media --exclude c6run_build ../../exercises root@bone:.
+time rsync -az --progress --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises root@bone:.
 
 ################
 ssh root@$BONE "
