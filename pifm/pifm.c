@@ -107,7 +107,10 @@ void setup_fm()
                   0x20000000  //base
               );
 
-    if ((int)allof7e==-1) exit(-1);
+    if ((int)allof7e==-1) {
+	printf("mmap() returned -1\n");
+	exit(-1);
+    }
 
     SETBIT(GPFSEL0 , 14);
     CLRBIT(GPFSEL0 , 13);
