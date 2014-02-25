@@ -3,7 +3,8 @@
 var exec = require('child_process').exec;
 
 function speakForSelf(phrase) {
-	exec(__dirname + '/speak.sh ' + phrase, function (error, stdout, stderr) {
+//	exec(__dirname + '/speak.sh ' + phrase, function (error, stdout, stderr) {
+	exec('flite -t "' + phrase + '"', function (error, stdout, stderr) {
                 console.log(stdout);
                 if(error) { console.log('error: ' + error); }
                 if(stderr) {console.log('stderr: ' + stderr); }

@@ -51,6 +51,9 @@ git config --global color.ui true
 ln -s --backup=numbered exercises/setup/bashrc .bashrc
 ln -s --backup=numbered exercises/setup/x11vncrc .x11vncrc
 
+# Set the default sound card to NOT be HDMI
+ln -s --backup=numbered exercises/setup/asoundrc .asoundrc
+
 # Put a symbolic link in Cloud 9 so it will see the exercises
 if [ ! -e /var/lib/cloud9/exercises ] ; then
 	cd /var/lib/cloud9
