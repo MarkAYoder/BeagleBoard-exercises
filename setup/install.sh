@@ -65,7 +65,7 @@ ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
 sed -i -e 's:CAPE=cape-bone-proto:#CAPE=cape-bone-proto:g' /etc/default/capemgr
 
 # Make socket.io appear where others can use it
-if [ ! -e /usr/lib/node_modules/socket.io ] ; then
+if [ ! -e /usr/local/lib/node_modules/socket.io ] ; then
 	cd /usr/lib/node_modules/
 	ln -s bonescript/node_modules/socket.io/ .
 fi
