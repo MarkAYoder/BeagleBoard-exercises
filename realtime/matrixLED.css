@@ -5,6 +5,12 @@ body {
   max-width: 650px;
 }
 
+#slider1 { margin: 10px; width: 230px; 
+	text-align:center; 
+	position:relative;
+	right: 0px;
+	top:   0px;
+}
 
 #setup {
 	font-size: 10px;
