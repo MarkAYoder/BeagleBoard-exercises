@@ -76,8 +76,8 @@ cd ~/exercises
 
 # Set up boneServer to run at boot time
 cp ~/exercises/realtime/boneServer.service /lib/systemd/system
-# systemctl start boneServer
-systemctl enable boneServer
+systemctl start boneServer.service
+systemctl enable boneServer.service
 
 # cd /etc/gdm
 # mv custom.conf custom.conf.orig
