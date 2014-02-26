@@ -16,6 +16,11 @@ for(var j=7; j>=0; j--) {
 }
 $('#matrixLED').append(matrixData);
 
+// The slider controls the overall brightness
+$("#slider1").slider({min:0, max:15, slide: function(event, ui) {
+	socket.emit("i2cset",  {i2cNum: i2cNum, i: ui.value+0xe0, disp: 1});
+    }});
+
 // Send one column when LED is clicked.
 function LEDclick(i, j) {
 //	alert(i+","+j+" clicked");
