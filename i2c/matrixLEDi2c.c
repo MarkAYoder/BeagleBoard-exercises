@@ -138,6 +138,11 @@ int main(int argc, char *argv[])
 	    res = i2c_smbus_write_byte(file, daddress);
 	    usleep(100000);	// Sleep 0.1 seconds
 	}
+	for(daddress = 0xe1; daddress <= 0xef; daddress++) {
+//	    printf("writing: 0x%02x\n", daddress);
+	    res = i2c_smbus_write_byte(file, daddress);
+	    usleep(100000);	// Sleep 0.1 seconds
+	}
 
 	if (res < 0) {
 		fprintf(stderr, "Error: Write failed\n");
