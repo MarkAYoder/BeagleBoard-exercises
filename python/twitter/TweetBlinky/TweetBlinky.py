@@ -7,7 +7,7 @@ import Adafruit_BBIO.GPIO as GPIO
 from twython import TwythonStreamer
 
 # Search terms
-TERMS = '#lol'
+TERMS = '#ASEERosEval2014'
 
 # GPIO pin number of LED
 LED = "P9_12"
