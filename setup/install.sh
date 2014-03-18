@@ -32,6 +32,9 @@ scp ssh/* root@$BONE:.ssh
 echo rsyncing exercises, this will take about 40 seconds
 time rsync -az --progress --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises root@bone:.
 
+echo rsyncing cookbook-atlas, this will take about 2 seconds
+time rsync -az --progress ../../cookbook-atlas root@bone:.
+
 ################
 ssh root@$BONE "
 # Set the network name of the board
@@ -58,6 +61,7 @@ ln -s --backup=numbered exercises/setup/asoundrc .asoundrc
 if [ ! -e /var/lib/cloud9/exercises ] ; then
 	cd /var/lib/cloud9
 	ln -s ~/exercises .
+	ln -s ~/cookbook-atlas .
 fi
 
 # Set the time zone to Indiana
