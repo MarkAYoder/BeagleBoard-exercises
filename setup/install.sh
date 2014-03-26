@@ -75,6 +75,8 @@ sed -i -e 's:CAPE=cape-bone-proto:#CAPE=cape-bone-proto:g' /etc/default/capemgr
 if [ ! -e /usr/local/lib/node_modules/socket.io ] ; then
 	cd /usr/local/lib/node_modules/
 	ln -s bonescript/node_modules/socket.io/ .
+	ln -s bonescript/node_modules/i2c/ .
+	ln -s bonescript/node_modules/serialport/ .
 fi
 cd ~/exercises
 
