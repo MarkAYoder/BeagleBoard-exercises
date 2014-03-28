@@ -33,7 +33,7 @@ echo rsyncing exercises, this will take about 40 seconds
 time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises root@bone:.
 
 echo rsyncing cookbook-atlas, this will take about 2 seconds
-time rsync -az --progress ../../cookbook-atlas root@bone:.
+time rsync -azq ../../cookbook-atlas root@bone:.
 
 ################
 ssh root@$BONE "
