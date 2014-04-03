@@ -181,8 +181,8 @@ io.sockets.on('connection', function (socket) {
     });
     
     socket.on('slider', function(slideNum, value) {
-    // console.log('slider' + slideNum + " = " + value);
-        b.analogWrite(pwm, value);
+        console.log('slider' + slideNum + " = " + value);
+        b.analogWrite(pwm, value/5, 80);
     });
 
     socket.on('disconnect', function () {
