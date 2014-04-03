@@ -31,7 +31,7 @@ function initIO() {
     // Make sure gpios 7 and 20 are available.
     b.pinMode('P9_42', b.INPUT);
     b.pinMode('P9_41', b.INPUT);
-    b.pinMode(pwm,     b.INPUT);    // PWM
+    b.pinMode(pwm,     b.ANALOG_OUTPUT);    // PWM
     
     // Initialize pwm
 }

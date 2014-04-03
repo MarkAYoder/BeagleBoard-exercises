@@ -30,10 +30,10 @@ scp ssh/* root@$BONE:.ssh
 
 # Copy local copy of exercises to bone and then pull
 echo rsyncing exercises, this will take about 40 seconds
-time rsync -az --progress --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises root@bone:.
+time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises root@bone:.
 
 echo rsyncing cookbook-atlas, this will take about 2 seconds
-time rsync -az --progress ../../cookbook-atlas root@bone:.
+time rsync -azq ../../cookbook-atlas root@bone:.
 
 ################
 ssh root@$BONE "
@@ -75,6 +75,8 @@ sed -i -e 's:CAPE=cape-bone-proto:#CAPE=cape-bone-proto:g' /etc/default/capemgr
 if [ ! -e /usr/local/lib/node_modules/socket.io ] ; then
 	cd /usr/local/lib/node_modules/
 	ln -s bonescript/node_modules/socket.io/ .
+	ln -s bonescript/node_modules/i2c/ .
+	ln -s bonescript/node_modules/serialport/ .
 fi
 cd ~/exercises
 
