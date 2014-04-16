@@ -34,6 +34,7 @@ time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c
 
 echo rsyncing cookbook-atlas, this will take about 2 seconds
 time rsync -azq ../../cookbook-atlas root@bone:.
+time rsync -azq ../../libsoc root@bone:.
 
 ################
 ssh root@$BONE "
