@@ -1,6 +1,9 @@
 var data = d3.range(0, 2 * Math.PI, .01).map(function(t) {
   return [t, Math.cos(2 * t)];
 });
+var data2 = d3.range(0, 2 * Math.PI, .01).map(function(t) {
+  return [t, Math.cos(3 * t)];
+});
 
 var width  = 400,
     height = 400,
@@ -56,3 +59,11 @@ svg.append("path")
     .datum(data)
     .attr("class", "line")
     .attr("d", line);
+
+data2[1] = [1, 1];    
+svg.selectAll("path")
+    .datum(data2)
+    .attr("class", "line2")
+    .attr("d", line);
+
+console.log(data2[1]);

@@ -20,3 +20,9 @@
   stroke: blue;
   stroke-width: 2.5px;
 }
+
+.line2 {
+  fill: none;
+  stroke: green;
+  stroke-width: 2.5px;
+}
