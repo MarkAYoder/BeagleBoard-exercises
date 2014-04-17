@@ -36,7 +36,7 @@
       socket.disconnect();
     }
 
-    // When new data arrived, convert it and plot it.
+    // When new data has arrived, convert it and plot it.
     function audio(data) {
         var myData = window.atob(data);
         var fftSize = 512;
