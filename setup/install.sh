@@ -63,6 +63,7 @@ if [ ! -e /var/lib/cloud9/exercises ] ; then
 	cd /var/lib/cloud9
 	ln -s ~/exercises .
 	ln -s ~/cookbook-atlas .
+	ln -s ~/libsoc .
 fi
 
 # Set the time zone to Indiana
