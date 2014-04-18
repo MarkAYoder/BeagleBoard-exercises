@@ -1,0 +1,28 @@
+
+.frame {
+  fill: none;
+  stroke: #000;
+}
+.axis text {
+  font: 15px sans-serif;
+}
+.axis line, .axis circle {
+  fill: none;
+  stroke: #777;
+  stroke-dasharray: 1, 4;
+}
+.axis :last-of-type circle {
+  stroke: #333;
+  stroke-dasharray: none;
+}
+.line {
+  fill: none;
+  stroke: blue;
+  stroke-width: 2.5px;
+}
+
+.line2 {
+  fill: none;
+  stroke: green;
+  stroke-width: 2.5px;
+}
