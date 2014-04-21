@@ -1,8 +1,9 @@
+#!/usr/bin/env node
 // Tests the rotary encoder function
 
 var b = require('bonescript');
-var pinA = 'P9_26',
-    pinB = 'P9_24';
+var pinA = 'P9_41',
+    pinB = 'P9_42';
     
 var rre = require('./readRotaryEncoder.js');
 
