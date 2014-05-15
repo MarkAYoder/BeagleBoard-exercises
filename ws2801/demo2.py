@@ -23,6 +23,21 @@ import time
 
 from LedStrip_WS2801 import LedStrip_WS2801
 
+lastDemo = 0    # number of the last demo run
+cntFile = "demo.txt"
+
+def demoChange():
+    global lastDemo
+    fd = open(cntFile, "r")
+    demo = int(fd.read())
+    fd.close()
+    # print(demo)
+    if demo == lastDemo:
+        return False
+    else:
+        print "Demo changed"
+        lastDemo = demo
+        return True     # The demo number has changed
 
 def mySin(a, min, max):
     return min + ((max - min) / 2.) * (math.sin(a) + 1)
@@ -37,6 +52,8 @@ def fillAll(ledStrip, color, sleep):
     for i in range(0, ledStrip.nLeds):
         ledStrip.setPixel(i, color)
         ledStrip.update()
+        if demoChange():
+            return
         time.sleep(sleep)
 
 
@@ -61,6 +78,8 @@ def antialisedPoint(ledStrip, color, step, dscale, sleep=0):
                 delta = 0
             ledStrip.setPixel(i, [int(delta * rr), int(delta * gg), int(delta * bb)])
         ledStrip.update()
+        if demoChange():
+            return
         #   time.sleep(sleep)
 
 
@@ -108,7 +127,7 @@ if __name__ == '__main__':
     sleep = 0.2
 
     while True:
-        fd = open("demo.txt", "r")
+        fd = open(cntFile, "r")
         demo = int(fd.read())
         fd.close()
         print(demo)
@@ -122,15 +141,11 @@ if __name__ == '__main__':
             print "fillAll(ledStrip, [0, 0, max], 0.01)"
             fillAll(ledStrip, [0, 0, max], 0.01)
         elif demo == 3:
-            print "rainbowAll(ledStrip, 20, 0.01)"
-            rainbowAll(ledStrip, 20, 0.01)
-            fillAll(ledStrip, [max, 0, 0], 0.01)
-        elif demo == 4:
             print "antialisedPoint(ledStrip, [255, 0, 0], 0.5, sleep)"
             antialisedPoint(ledStrip, [255, 0, 0], 0.5, sleep)
-        elif demo == 5:
+        elif demo == 4:
             print "antialisedPoint(ledStrip, [0, 255, 0], 0.5, sleep)"
             antialisedPoint(ledStrip, [0, 255, 0], 0.5, sleep)
-        elif demo == 6:
+        elif demo == 5:
             print "antialisedPoint(ledStrip, [0, 0, 255], 0.5, sleep)"
             antialisedPoint(ledStrip, [0, 0, 255], 0.5, sleep)
