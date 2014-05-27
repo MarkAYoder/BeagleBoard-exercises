@@ -15,7 +15,7 @@ reboot
 fi
 
 # Make it so ssh will run without a password
-ssh-copy-id root@$BONE
+# ssh-copy-id root@$BONE
 
 # Set the date to that of the host computer
 DATE=`date`
@@ -26,7 +26,7 @@ ssh root@$BONE "date -s \"$DATE\""
 
 # Set up DNS on bone
 ./host.setDNS.sh
-scp ssh/* root@$BONE:.ssh
+scp -r ssh root@$BONE:.ssh
 
 # Copy local copy of exercises to bone and then pull
 echo rsyncing exercises, this will take about 40 seconds
@@ -40,6 +40,9 @@ time rsync -azq ../../libsoc root@bone:.
 ssh root@$BONE "
 # Set the network name of the board
 echo $BONE_NAME > /etc/hostname
+
+# Turn of message that appeard when you login
+mv /etc/issue.net /etc/issue.net.orig
 
 # Set up github
 git config --global user.name \"Mark A. Yoder\"
