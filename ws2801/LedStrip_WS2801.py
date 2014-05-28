@@ -23,7 +23,7 @@ class LedStrip_WS2801(object):
     def __init__(self, nLeds, nBuffers=1):
         self.spi = spidev.SpiDev()  # create spi object
         self.spi.open(1, 1)
-        self.spi.max_speed_hz = 1000000
+        self.spi.max_speed_hz = 4000000
         self.nLeds = nLeds
         self.nBuffers = nBuffers
         self.buffers = []

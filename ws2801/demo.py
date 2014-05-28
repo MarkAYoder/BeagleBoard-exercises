@@ -27,7 +27,7 @@ def mySin(a, min, max):
 
 
 def rainbow(a):
-    intense = 255
+    intense = 31
     return [int(mySin(a, 0, intense)), int(mySin(a + math.pi / 2, 0, intense)), int(mySin(a + math.pi, 0, intense))]
 
 
@@ -102,33 +102,29 @@ if __name__ == '__main__':
 
     ledStrip = LedStrip_WS2801(nrOfleds)
 
-    print "fillAll(ledStrip, [0, 0, 0], 0)"
-    fillAll(ledStrip, [0, 255, 0], delayTime)
-    print "fillAll(ledStrip, [0, 255, 0], delayTime)"
-    fillAll(ledStrip, [0, 255, 0], delayTime)
-
-    # quit()
+    max = 31
 
     while 1:
-        print "fillAll(ledStrip, [0, 255, 0], delayTime)"
-        fillAll(ledStrip, [0, 255, 0], delayTime)
-        print "rainbowAll(ledStrip, 200, 0.01)"
-        rainbowAll(ledStrip, 200, 0.01)
-        print "fillAll(ledStrip, [255, 0, 0], 0.01)"
-        fillAll(ledStrip, [255, 0, 0], 0.01)
-        print "fillAll(ledStrip, [0, 255, 0], 0.01)"
-        fillAll(ledStrip, [0, 255, 0], 0.01)
-        print "fillAll(ledStrip, [0, 0, 255], 0.01)"
-        fillAll(ledStrip, [0, 0, 255], 0.01)
+        print "fillAll(ledStrip, [0, max, 0], delayTime)"
+        fillAll(ledStrip, [0, max, 0], delayTime)
+        print "rainbowAll(ledStrip, 20, 0.01)"
+        rainbowAll(ledStrip, 20, 0.01)
+        print "fillAll(ledStrip, [max, 0, 0], 0.01)"
+        fillAll(ledStrip, [max, 0, 0], 0.01)
+        print "fillAll(ledStrip, [0, max, 0], 0.01)"
+        fillAll(ledStrip, [0, max, 0], 0.01)
+        print "fillAll(ledStrip, [0, 0, max], 0.01)"
+        fillAll(ledStrip, [0, 0, max], 0.01)
 
-        print "antialisedPoint(ledStrip, [255, 0, 0], 0.5, 0.3)"
-        antialisedPoint(ledStrip, [255, 0, 0], 0.5, 0.3)
-        print "antialisedPoint(ledStrip, [0, 255, 0], 0.5, 0.3)"
-        antialisedPoint(ledStrip, [0, 255, 0], 0.5, 0.3)
-        print "antialisedPoint(ledStrip, [0, 0, 255], 0.5, 0.3)"
-        antialisedPoint(ledStrip, [0, 0, 255], 0.5, 0.3)
+	sleep = 0.2
+        print "antialisedPoint(ledStrip, [255, 0, 0], 0.5, sleep)"
+        antialisedPoint(ledStrip, [255, 0, 0], 0.5, sleep)
+        print "antialisedPoint(ledStrip, [0, 255, 0], 0.5, sleep)"
+        antialisedPoint(ledStrip, [0, 255, 0], 0.5, sleep)
+        print "antialisedPoint(ledStrip, [0, 0, 255], 0.5, sleep)"
+        antialisedPoint(ledStrip, [0, 0, 255], 0.5, sleep)
 
-        print "rainbowAll(ledStrip, 500, 0.01)"
-        rainbowAll(ledStrip, 500, 0.01)
+        print "rainbowAll(ledStrip, 50, 0.01)"
+        rainbowAll(ledStrip, 50, 0.01)
         # print "knight_rider(ledStrip)"
         # knight_rider(ledStrip)

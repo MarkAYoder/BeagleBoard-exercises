@@ -30,7 +30,6 @@ def rainbow(a):
     intense = 255
     return [int(mySin(a, 0, intense)), int(mySin(a + math.pi / 2, 0, intense)), int(mySin(a + math.pi, 0, intense))]
 
-
 def fillAll(ledStrip, color, sleep):
     for i in range(0, ledStrip.nLeds):
         ledStrip.setPixel(i, color)
@@ -92,7 +91,6 @@ def knight_rider(ledStrip, trail_nb_leds=3, color=[255, 0, 0], times=5, sleep=0.
 
         time.sleep(0.7)
 
-
 if __name__ == '__main__':
     if len(sys.argv) == 1:
         nrOfleds = 240
@@ -106,10 +104,10 @@ if __name__ == '__main__':
 
     ledStrip = LedStrip_WS2801(nrOfleds)
 
-    print "fillAll(ledStrip, [0, 0, 0], )delayTime"
-    fillAll(ledStrip, [0, 255, 0], delayTime)
+#    print "fillAll(ledStrip, [0, 255, 0], delayTime)"
+#    fillAll(ledStrip, [0, 255, 0], delayTime)
 
-    time.sleep(1)
+#    time.sleep(1)
 
 #    print "rainbowAll(ledStrip, 25, 0.01)"
 #    rainbowAll(ledStrip, 25, 0.01)
@@ -119,7 +117,20 @@ if __name__ == '__main__':
 
     rampAll(ledStrip)
 
-    time.sleep(1)
+    time.sleep(3.5)
     fillAll(ledStrip, [1, 1, 1], delayTime)
+    time.sleep(0.5)
     fillAll(ledStrip, [0, 0, 0], delayTime)
 
+    for i in range(1, ledStrip.nLeds):
+        ledStrip.setPixel(i, [255, 0, 0])
+	ledStrip.setPixel(i-1, [0, 0, 0])
+        # ledStrip.update()
+	# time.sleep(0.005)
+
+    for i in range(0, ledStrip.nLeds, 30):
+        ledStrip.setPixel(i, [255, 255, 255])
+        ledStrip.setPixel(i+07, [255, 0, 0])
+        ledStrip.setPixel(i+14, [0, 255, 0])
+        ledStrip.setPixel(i+21, [0, 0, 255])
+    ledStrip.update()
