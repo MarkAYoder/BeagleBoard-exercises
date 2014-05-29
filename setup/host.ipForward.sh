@@ -44,5 +44,5 @@ IP_ADDR=`ifconfig $interface | grep "inet addr" | awk -F: '{print $2}' | awk '{p
 # Check to see what nameservers the host is using and copy these to the same
 #  file on the Beagle
 # This makes it so you can connect to the Beagle without using your password.
-ssh-copy-id root@$beagleAddr
+# ssh-copy-id root@$beagleAddr
 
