@@ -3,6 +3,9 @@
 // Install:
 // apt-get install libbluetooth-dev
 // npm install -g sensortag
+// hcitool lescan
+// export BLE=90:59:AF:0B:84:57
+//hcitool lecc $BLE
 
 var util = require('util');
 
@@ -11,7 +14,7 @@ var async = require('async');
 var SensorTag = require('sensortag');
 
 SensorTag.discover(function(sensorTag) {
-
+  console.log('sensorTag = ' + sensorTag);
   sensorTag.on('disconnect', function() {
     console.log('disconnected!');
     process.exit(0);
