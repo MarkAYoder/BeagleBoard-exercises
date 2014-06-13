@@ -19,7 +19,7 @@ import math
 import sys
 import time
 
-from LedStrip_WS2801 import LedStrip_WS2801, LedStrip_WS2801_FileBased
+from LedStrip_WS2801 import LedStrip_WS2801
 
 
 def mySin(a, min, max):
