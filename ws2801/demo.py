@@ -27,7 +27,7 @@ def mySin(a, min, max):
 
 
 def rainbow(a):
-    intense = 31
+    intense = 15
     return [int(mySin(a, 0, intense)), int(mySin(a + math.pi / 2, 0, intense)), int(mySin(a + math.pi, 0, intense))]
 
 
@@ -102,7 +102,7 @@ if __name__ == '__main__':
 
     ledStrip = LedStrip_WS2801(nrOfleds)
 
-    max = 31
+    max = 15
 
     while 1:
         print "fillAll(ledStrip, [0, max, 0], delayTime)"

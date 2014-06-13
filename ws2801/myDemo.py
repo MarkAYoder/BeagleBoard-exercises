@@ -119,7 +119,7 @@ if __name__ == '__main__':
 
     time.sleep(3.5)
     fillAll(ledStrip, [1, 1, 1], delayTime)
-    time.sleep(0.5)
+    time.sleep(1.5)
     fillAll(ledStrip, [0, 0, 0], delayTime)
 
     for i in range(1, ledStrip.nLeds):
