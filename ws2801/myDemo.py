@@ -39,7 +39,7 @@ def fillAll(ledStrip, color, sleep):
 def rampAll(ledStrip):
     for i in range(0, ledStrip.nLeds):
         ledStrip.setPixel(i, [i, i, i])
-    ledStrip.update()
+        ledStrip.update()
 
 def rainbowAll(ledStrip, times, sleep):
     for t in range(0, times):
@@ -98,10 +98,6 @@ if __name__ == '__main__':
         nrOfleds = int(sys.argv[1])
     delayTime = 0.0
 
-    # oldStrip = LedStrip_WS2801_FileBased(nrOfleds, "/dev/spidev0.0")
-    # fillAll(oldStrip, [255, 0, 0], delayTime)
-    # oldStrip.close()
-
     ledStrip = LedStrip_WS2801(nrOfleds)
 
 #    print "fillAll(ledStrip, [0, 255, 0], delayTime)"
@@ -117,16 +113,16 @@ if __name__ == '__main__':
 
     rampAll(ledStrip)
 
-    time.sleep(3.5)
+    time.sleep(1.5)
     fillAll(ledStrip, [1, 1, 1], delayTime)
     time.sleep(1.5)
     fillAll(ledStrip, [0, 0, 0], delayTime)
 
-    for i in range(1, ledStrip.nLeds):
+    for i in range(1, ledStrip.nLeds+1):
         ledStrip.setPixel(i, [255, 0, 0])
 	ledStrip.setPixel(i-1, [0, 0, 0])
-        # ledStrip.update()
-	# time.sleep(0.005)
+        ledStrip.update()
+	time.sleep(0.005)
 
     for i in range(0, ledStrip.nLeds, 30):
         ledStrip.setPixel(i, [255, 255, 255])
