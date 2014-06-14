@@ -26,10 +26,15 @@ from LedStrip_WS2801 import LedStrip_WS2801
 lastDemo = 0    # number of the last demo run
 cntFile = "demo.txt"
 
+# Read the control file and return True if the demo number has changed
 def demoChange():
     global lastDemo
     fd = open(cntFile, "r")
-    demo = int(fd.read())
+    demo = fd.read()
+    if len(demo) == 0:
+        print "0 len"
+        return False
+    demo = int(demo)
     fd.close()
     # print(demo)
     if demo == lastDemo:
@@ -38,15 +43,37 @@ def demoChange():
         print "Demo changed"
         lastDemo = demo
         return True     # The demo number has changed
+        
+def rainbow(ledStrip, max):
+    phase = 0
+    skip = 60
+    f = 10
+    shift = 3
+    nrOfleds = ledStrip.nLeds
+    
+    for i in range(nrOfleds-skip, nrOfleds):
+        ledStrip.setPixel(i, [0, 0, 0])
+
+    while True:
+        for i in range(0, nrOfleds-skip):
+            r = int((max * (math.sin(2*math.pi*f*(i-phase-0*shift)/nrOfleds) + 1)) + 1)
+            g = int((max * (math.sin(2*math.pi*f*(i-phase-1*shift)/nrOfleds) + 1)) + 1)
+            b = int((max * (math.sin(2*math.pi*f*(i-phase-2*shift)/nrOfleds) + 1)) + 1)
+            ledStrip.setPixel(i, [r, g, b])
+    
+        ledStrip.update()
+        if demoChange():
+            return
+        phase = phase + 0.5
+        time.sleep(0.050)
 
 def mySin(a, min, max):
     return min + ((max - min) / 2.) * (math.sin(a) + 1)
 
 
-def rainbow(a):
+def rainbowOld(a):
     intense = 15
     return [int(mySin(a, 0, intense)), int(mySin(a + math.pi / 2, 0, intense)), int(mySin(a + math.pi, 0, intense))]
-
 
 def fillAll(ledStrip, color, sleep):
     for i in range(0, ledStrip.nLeds):
@@ -149,3 +176,6 @@ if __name__ == '__main__':
         elif demo == 5:
             print "antialisedPoint(ledStrip, [0, 0, 255], 0.5, sleep)"
             antialisedPoint(ledStrip, [0, 0, 255], 0.5, sleep)
+        elif demo == 6:
+            print "rainbox"
+            rainbow(ledStrip, max)
