@@ -19,7 +19,7 @@ import math
 import sys
 import time
 
-from LedStrip_WS2801 import LedStrip_WS2801, LedStrip_WS2801_FileBased
+from LedStrip_WS2801 import LedStrip_WS2801
 
 
 def mySin(a, min, max):
@@ -104,7 +104,7 @@ if __name__ == '__main__':
 
     max = 15
 
-    while 1:
+    while True:
         print "fillAll(ledStrip, [0, max, 0], delayTime)"
         fillAll(ledStrip, [0, max, 0], delayTime)
         print "rainbowAll(ledStrip, 20, 0.01)"
