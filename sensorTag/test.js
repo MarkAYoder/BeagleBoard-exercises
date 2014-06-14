@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // From https://github.com/sandeepmistry/node-sensortag
 // Install:
-// apt-get install libbluetooth-dev
+// apt-get install libbluetooth-dev bluez
 // npm install -g sensortag
 // hcitool lescan
 // export BLE=90:59:AF:0B:84:57
