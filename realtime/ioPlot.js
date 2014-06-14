@@ -187,9 +187,9 @@ $(function () {
     plotTop = $.plot($("#plotTop"), 
         [ 
           { data:  initPlotData(), 
-            label: "Left Photo Detector"},
+            label: "Bird Sonar"},
           { data:  initPlotData(),
-            label: "Right Photo Detector"}
+            label: "Scanner Sonar"}
         ],
             optionsTop);
 
