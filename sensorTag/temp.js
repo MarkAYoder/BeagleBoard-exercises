@@ -18,8 +18,11 @@ var SensorTag = require('sensortag');
 var fs = require('fs');
 
 var demoNumber = 0;
-var maxDemo = 6;
+var maxDemo = 7;
 cntFile = "../ws2801/demo.txt"
+tempFile = "../ws2801/temp.txt"
+
+console.log("Be sure sensorTag is on");
 
 SensorTag.discover(function(sensorTag) {
   console.log('sensorTag = ' + sensorTag);
@@ -37,31 +40,35 @@ SensorTag.discover(function(sensorTag) {
         console.log('discoverServicesAndCharacteristics');
         sensorTag.discoverServicesAndCharacteristics(callback);
       },
-      // function(callback) {
-      //   console.log('enableIrTemperature');
-      //   sensorTag.enableIrTemperature(callback);
-      // },
-      // function(callback) {
-      //   setTimeout(callback, 1000);
-      // },
-      // function(callback) {
-      //   console.log('readIrTemperature');
-      //   sensorTag.readIrTemperature(function(objectTemperature, ambientTemperature) {
-      //     console.log('\tobject temperature = %d °C', objectTemperature.toFixed(1));
-      //     console.log('\tambient temperature = %d °C', ambientTemperature.toFixed(1));
+      function(callback) {
+        console.log('enableIrTemperature');
+        sensorTag.enableIrTemperature(callback);
+      },
+      function(callback) {
+        setTimeout(callback, 100);
+      },
+      function(callback) {
+        console.log('readIrTemperature');
+        sensorTag.readIrTemperature(function(objectTemperature, ambientTemperature) {
+          console.log('\tobject temperature = %d °C', objectTemperature.toFixed(1));
+          console.log('\tambient temperature = %d °C', ambientTemperature.toFixed(1));
 
-      //     callback();
-      //   });
+          callback();
+        });
 
-      //   // sensorTag.on('irTemperatureChange', function(objectTemperature, ambientTemperature) {
-      //   //   console.log('\tobject temperature = %d °C', objectTemperature.toFixed(1));
-      //   //   console.log('\tambient temperature = %d °C', ambientTemperature.toFixed(1))
-      //   // });
+        sensorTag.on('irTemperatureChange', function(objectTemperature, ambientTemperature) {
+          console.log('\tobject temperature = %d °C', objectTemperature.toFixed(1));
+          // console.log('\tambient temperature = %d °C', ambientTemperature.toFixed(1));
+          fs.writeFile(tempFile, objectTemperature + '\n', function (err) {
+            if (err) throw err;
+            // console.log('It\'s saved!');
+          });
+        });
 
-      //   // sensorTag.notifyIrTemperature(function() {
-      //   //   console.log('notifyIrTemperature');
-      //   // });
-      // },
+        sensorTag.notifyIrTemperature(function() {
+          console.log('notifyIrTemperature');
+        });
+      },
       // function(callback) {
       //   console.log('disableIrTemperature');
       //   sensorTag.disableAccelerometer(callback);
@@ -94,6 +101,39 @@ SensorTag.discover(function(sensorTag) {
 
       //   });
       // },
+      
+      // function(callback) {
+      //   console.log('enableGyroscope');
+      //   sensorTag.enableGyroscope(callback);
+      // },
+      // function(callback) {
+      //   setTimeout(callback, 1000);
+      // },
+      // function(callback) {
+      //   console.log('readGyroscope');
+      //   sensorTag.readGyroscope(function(x, y, z) {
+      //     console.log('\tx = %d °/s', x.toFixed(1));
+      //     console.log('\ty = %d °/s', y.toFixed(1));
+      //     console.log('\tz = %d °/s', z.toFixed(1));
+
+      //     callback();
+      //   });
+
+      //   sensorTag.on('gyroscopeChange', function(x, y, z) {
+      //     console.log('\tx = %d °/s', x.toFixed(1));
+      //     console.log('\ty = %d °/s', y.toFixed(1));
+      //     console.log('\tz = %d °/s', z.toFixed(1));
+      //   });
+
+      //   sensorTag.notifyGyroscope(function() {
+
+      //   });
+      // },
+      // function(callback) {
+      //   console.log('disableGyroscope');
+      //   sensorTag.disableGyroscope(callback);
+      // },
+      
       function(callback) {
         console.log('readSimpleRead');
         sensorTag.on('simpleKeyChange', function(left, right) {
@@ -115,7 +155,7 @@ SensorTag.discover(function(sensorTag) {
           console.log('demoNumber = ' + demoNumber);
           fs.writeFile(cntFile, demoNumber, function (err) {
             if (err) throw err;
-            console.log('It\'s saved!');
+            // console.log('It\'s saved!');
           });
           if (left && right) {
             sensorTag.notifySimpleKey(callback);

@@ -25,6 +25,7 @@ from LedStrip_WS2801 import LedStrip_WS2801
 
 lastDemo = 0    # number of the last demo run
 cntFile = "demo.txt"
+tempFile = "temp.txt"
 
 # Read the control file and return True if the demo number has changed
 def demoChange():
@@ -67,9 +68,33 @@ def rainbow(ledStrip, max):
         phase = phase + 0.5
         time.sleep(0.050)
 
+# Draws a bar graph with 0 in the middle and running from -max to max
+rows = 30
+def barGraph(ledStrip, bar, value, color, maxVal):
+    global rows
+    for i in range(0, rows):
+        ledStrip.setPixel(bar*rows+i, [0, 0, 0])
+    for i in range(rows/2, rows/2+value*rows/(2*maxVal), int(math.copysign(1,value))):
+        ledStrip.setPixel(bar*rows+i, color)
+
+def sensorTag(ledStrip, sleep):
+    fillAll(ledStrip, [0, 0, 0], 0)
+    while True:
+        fd = open(tempFile, "r")
+        temp = fd.readline()
+        fd.close()
+        if len(temp) == 0:
+            temp = 0;
+        temp = int(float(temp))
+
+        barGraph(ledStrip, 0, temp-30, [20,0,0], 10);
+        ledStrip.update()
+        if demoChange():
+            return
+        time.sleep(sleep)
+
 def mySin(a, min, max):
     return min + ((max - min) / 2.) * (math.sin(a) + 1)
-
 
 def rainbowOld(a):
     intense = 15
@@ -144,14 +169,18 @@ if __name__ == '__main__':
         nrOfleds = int(sys.argv[1])
     delayTime = 0.01
 
-    # oldStrip = LedStrip_WS2801_FileBased(nrOfleds, "/dev/spidev0.0")
-    # fillAll(oldStrip, [255, 0, 0], delayTime)
-    # oldStrip.close()
-
     ledStrip = LedStrip_WS2801(nrOfleds)
 
     max = 15
     sleep = 0.2
+    
+    # barGraph(ledStrip, 0,   5, [2, 0, 0], 10);
+    # barGraph(ledStrip, 1,  -5, [0, 4, 0], 10);
+    # barGraph(ledStrip, 2,  10, [0, 0, 6], 10);
+    # barGraph(ledStrip, 3, -10, [2, 2, 0], 10);
+    
+    # ledStrip.update()
+    # quit()
 
     while True:
         fd = open(cntFile, "r")
@@ -179,3 +208,6 @@ if __name__ == '__main__':
         elif demo == 6:
             print "rainbox"
             rainbow(ledStrip, max)
+        elif demo == 7:
+            print "sensorTag"
+            sensorTag(ledStrip, 1)
