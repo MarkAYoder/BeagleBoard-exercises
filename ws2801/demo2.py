@@ -24,8 +24,9 @@ import time
 from LedStrip_WS2801 import LedStrip_WS2801
 
 lastDemo = 0    # number of the last demo run
-cntFile = "demo.txt"
+cntFile  = "demo.txt"
 tempFile = "temp.txt"
+accFile  = "acc.txt"
 
 # Read the control file and return True if the demo number has changed
 def demoChange():
@@ -72,6 +73,11 @@ def rainbow(ledStrip, max):
 rows = 30
 def barGraph(ledStrip, bar, value, color, maxVal):
     global rows
+    value = int(value)
+    if value < -maxVal:
+        value = -maxVal
+    if value > maxVal:
+        value = maxVal
     for i in range(0, rows):
         ledStrip.setPixel(bar*rows+i, [0, 0, 0])
     for i in range(rows/2, rows/2+value*rows/(2*maxVal), int(math.copysign(1,value))):
@@ -86,8 +92,17 @@ def sensorTag(ledStrip, sleep):
         if len(temp) == 0:
             temp = 0;
         temp = int(float(temp))
-
         barGraph(ledStrip, 0, temp-30, [20,0,0], 10);
+        
+        fd = open(accFile, "r")
+        i=1
+        for val in fd.readline().split():
+            # print val
+            barGraph(ledStrip, i, 100*float(val), [0,10,0], 100);
+            i=i+1
+
+        fd.close()
+        
         ledStrip.update()
         if demoChange():
             return
@@ -206,7 +221,7 @@ if __name__ == '__main__':
             print "antialisedPoint(ledStrip, [0, 0, 255], 0.5, sleep)"
             antialisedPoint(ledStrip, [0, 0, 255], 0.5, sleep)
         elif demo == 6:
-            print "rainbox"
+            print "rainbow"
             rainbow(ledStrip, max)
         elif demo == 7:
             print "sensorTag"

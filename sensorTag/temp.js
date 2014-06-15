@@ -19,8 +19,9 @@ var fs = require('fs');
 
 var demoNumber = 0;
 var maxDemo = 7;
-cntFile = "../ws2801/demo.txt"
+cntFile  = "../ws2801/demo.txt"
 tempFile = "../ws2801/temp.txt"
+accFile  = "../ws2801/acc.txt"
 
 console.log("Be sure sensorTag is on");
 
@@ -74,33 +75,37 @@ SensorTag.discover(function(sensorTag) {
       //   sensorTag.disableAccelerometer(callback);
       // },
       
-      // function(callback) {
-      //   console.log('enableAccelerometer');
-      //   sensorTag.enableAccelerometer(callback);
-      // },
-      // function(callback) {
-      //   setTimeout(callback, 10);
-      // },
-      // function(callback) {
-      //   console.log('readAccelerometer');
-      //   sensorTag.readAccelerometer(function(x, y, z) {
-      //     console.log('\tx = %d G', x.toFixed(1));
-      //     console.log('\ty = %d G', y.toFixed(1));
-      //     console.log('\tz = %d G', z.toFixed(1));
+      function(callback) {
+        console.log('enableAccelerometer');
+        sensorTag.enableAccelerometer(callback);
+      },
+      function(callback) {
+        setTimeout(callback, 10);
+      },
+      function(callback) {
+        console.log('readAccelerometer');
+        sensorTag.readAccelerometer(function(x, y, z) {
+          console.log('\tx = %d G', x.toFixed(1));
+          console.log('\ty = %d G', y.toFixed(1));
+          console.log('\tz = %d G', z.toFixed(1));
 
-      //     callback();
-      //   });
+          callback();
+        });
 
-      //   sensorTag.on('accelerometerChange', function(x, y, z) {
-      //     console.log('\tx = %d G', x.toFixed(1));
-      //     console.log('\ty = %d G', y.toFixed(1));
-      //     console.log('\tz = %d G', z.toFixed(1));
-      //   });
+        sensorTag.on('accelerometerChange', function(x, y, z) {
+          console.log('\tx = %d G', x.toFixed(1));
+          console.log('\ty = %d G', y.toFixed(1));
+          console.log('\tz = %d G', z.toFixed(1));
+          fs.writeFile(accFile, x + ' ' + y + ' ' + z + '\n', function (err) {
+            if (err) throw err;
+            // console.log('It\'s saved!');
+          });
+        });
 
-      //   sensorTag.notifyAccelerometer(function() {
+        sensorTag.notifyAccelerometer(function() {
 
-      //   });
-      // },
+        });
+      },
       
       // function(callback) {
       //   console.log('enableGyroscope');
