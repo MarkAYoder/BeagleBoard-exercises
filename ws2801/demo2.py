@@ -24,9 +24,9 @@ import time
 from LedStrip_WS2801 import LedStrip_WS2801
 
 lastDemo = 0    # number of the last demo run
-cntFile  = "demo.txt"
-tempFile = "temp.txt"
-accFile  = "acc.txt"
+cntFile  = "/tmp/demo.txt"
+tempFile = "/tmp/temp.txt"
+accFile  = "/tmp/acc.txt"
 
 # Read the control file and return True if the demo number has changed
 def demoChange():
@@ -123,7 +123,6 @@ def fillAll(ledStrip, color, sleep):
             return
         time.sleep(sleep)
 
-
 def rainbowAll(ledStrip, times, sleep):
     for t in range(0, times):
         for i in range(0, ledStrip.nLeds):
@@ -188,14 +187,6 @@ if __name__ == '__main__':
 
     max = 15
     sleep = 0.2
-    
-    # barGraph(ledStrip, 0,   5, [2, 0, 0], 10);
-    # barGraph(ledStrip, 1,  -5, [0, 4, 0], 10);
-    # barGraph(ledStrip, 2,  10, [0, 0, 6], 10);
-    # barGraph(ledStrip, 3, -10, [2, 2, 0], 10);
-    
-    # ledStrip.update()
-    # quit()
 
     while True:
         fd = open(cntFile, "r")
@@ -203,26 +194,29 @@ if __name__ == '__main__':
         fd.close()
         print(demo)
         if demo == 0:
+            print "fillAll(ledStrip, [0, 0, 0], 0.01)"
+            fillAll(ledStrip, [0, 0, 0], 0.01)
+        elif demo == 1:
             print "fillAll(ledStrip, [max, 0, 0], 0.01)"
             fillAll(ledStrip, [max, 0, 0], 0.01)
-        elif demo == 1:
+        elif demo == 2:
             print "fillAll(ledStrip, [0, max, 0], delayTime)"
             fillAll(ledStrip, [0, max, 0], delayTime)
-        elif demo == 2:
+        elif demo == 3:
             print "fillAll(ledStrip, [0, 0, max], 0.01)"
             fillAll(ledStrip, [0, 0, max], 0.01)
-        elif demo == 3:
+        elif demo == 4:
             print "antialisedPoint(ledStrip, [255, 0, 0], 0.5, sleep)"
             antialisedPoint(ledStrip, [255, 0, 0], 0.5, sleep)
-        elif demo == 4:
+        elif demo == 5:
             print "antialisedPoint(ledStrip, [0, 255, 0], 0.5, sleep)"
             antialisedPoint(ledStrip, [0, 255, 0], 0.5, sleep)
-        elif demo == 5:
+        elif demo == 6:
             print "antialisedPoint(ledStrip, [0, 0, 255], 0.5, sleep)"
             antialisedPoint(ledStrip, [0, 0, 255], 0.5, sleep)
-        elif demo == 6:
+        elif demo == 7:
             print "rainbow"
             rainbow(ledStrip, max)
-        elif demo == 7:
+        elif demo == 8:
             print "sensorTag"
             sensorTag(ledStrip, 1)

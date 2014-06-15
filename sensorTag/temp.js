@@ -18,10 +18,10 @@ var SensorTag = require('sensortag');
 var fs = require('fs');
 
 var demoNumber = 0;
-var maxDemo = 7;
-cntFile  = "../ws2801/demo.txt"
-tempFile = "../ws2801/temp.txt"
-accFile  = "../ws2801/acc.txt"
+var maxDemo = 8;
+cntFile  = "/tmp/demo.txt"
+tempFile = "/tmp/temp.txt"
+accFile  = "/tmp/acc.txt"
 
 console.log("Be sure sensorTag is on");
 
@@ -35,6 +35,7 @@ SensorTag.discover(function(sensorTag) {
   async.series([
       function(callback) {
         console.log('connect');
+        fs.writeFile(cntFile, maxDemo);
         sensorTag.connect(callback);
       },
       function(callback) {
@@ -173,6 +174,9 @@ SensorTag.discover(function(sensorTag) {
       },
       function(callback) {
         console.log('disconnect');
+        fs.writeFile(cntFile, 0, function (err) {
+            if (err) throw err;
+          });
         sensorTag.disconnect(callback);
       }
     ]
