@@ -14,7 +14,7 @@ function speakForSelf(phrase) {
 speakForSelf("Hello, My name is Borris. " +
     "I am a BeagleBone Black, " +
     "a true open hardware, " +
-    "community-supported embedded computer for developers and hobbyists. " +
+    "community-supported embedded computer for educators and hobbyists. " +
     "I am powered by a 1 Giga Hertz Sitara™ ARM® Cortex-A8 processor. " +
     "I boot Linux in under 10 seconds. " +
     "You can get started on development in " +
