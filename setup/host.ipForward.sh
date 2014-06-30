@@ -1,48 +1,28 @@
 #!/bin/bash
-# These are the commands to run on the host to setup IP masquerading so the Beagle
-#  can access the Internet through the USB connection.
-# This configures the host then runs ./host.setDNS.sh to configure the bone.
-# Inspired by http://thoughtshubham.blogspot.com/2010/03/internet-over-usb-otg-on-beagleboard.html
+# Run these on the host to forward ports to the Bone.
 
-if [ $# -eq 0 ] ; then
-echo "Usage: $0 interface (such as eth0 or wlan0)"
+if [ $# -lt 2 ] ; then
+echo "Usage: $0 interface port [to port]"
+echo "interface is eth0 or wlan0
+Common  ports:
+80	http
+3000	cloud9
+5900	vnc
+9090	boneServer"
 exit 1
 fi
 
 interface=$1
+port=$2
+port2=$2
+if [ $# -eq 3 ] ; then
+port2=$3
+fi
 hostAddr=192.168.7.1
 beagleAddr=192.168.7.2
-ip_forward=/proc/sys/net/ipv4/ip_forward
 
-if [ `cat $ip_forward` == 0 ]
-  then
-    echo "You need to set IP forwarding. Edit /etc/sysctl.conf using:"
-    echo "$ sudo gedit /etc/sysctl.conf"
-    echo "and uncomment the line   \"net.ipv4.ip_forward=1\""
-    echo "to enable forwarding of packets. Then run the following:"
-    echo "$ sudo sysctl -p"
-    exit 1
-  else
-    echo "IP forwarding is set on host."
-fi
-# Setup  IP masquerading on the host so the bone can reach the outside world
-sudo iptables -t nat -A POSTROUTING -s 192.168.0.0/16 -o $interface -j MASQUERADE
-
-# Setup port forwards on 3000, 8080 and 1080 so outside world can reach the bone
+# Setup port forwards so outside world can reach the bone
 # first get IP address of host outside interface
-# 3000 is cloud9
-# 8080 is boneServer
-# 1080 is the standard webserver mapped to 80 on the bone
-# 5900 is x11vnc
 IP_ADDR=`ifconfig $interface | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}'`
-# Now forward, first forwards 1080 to 80
-# sudo iptables -t nat -A PREROUTING -p tcp -s 0/0 -d $IP_ADDR --dport 1080 -j DNAT --to $beagleAddr:80
-# sudo iptables -t nat -A PREROUTING -p tcp -s 0/0 -d $IP_ADDR --dport 3000 -j DNAT --to $beagleAddr:3000
-# sudo iptables -t nat -A PREROUTING -p tcp -s 0/0 -d $IP_ADDR --dport 8080 -j DNAT --to $beagleAddr:8080
-# sudo iptables -t nat -A PREROUTING -p tcp -s 0/0 -d $IP_ADDR --dport 5900 -j DNAT --to $beagleAddr:5900
-
-# Check to see what nameservers the host is using and copy these to the same
-#  file on the Beagle
-# This makes it so you can connect to the Beagle without using your password.
-# ssh-copy-id root@$beagleAddr
-
+sudo iptables -t nat -A PREROUTING -p tcp -s 0/0 -d $IP_ADDR --dport $port -j DNAT --to $beagleAddr:$port2
+# Replace -A with -D to delete forwarding
