@@ -40,9 +40,9 @@
 // The upper btye is RED, the lower is GREEN.
 // The single color display responds only to the lower byte
 static __u16 smile_bmp[]=
-	{0x3c, 0x42, 0xa9, 0x85, 0x85, 0xa9, 0x42, 0x3c};
+	{0x3c, 0x42, 0x2889, 0x0485, 0x0485, 0x2889, 0x42, 0x3c};
 static __u16 frown_bmp[]=
-	{0x3c00, 0x4200, 0xa900, 0x8500, 0x8500, 0xa900, 0x4200, 0x3c00};
+	{0x3c00, 0x4200, 0x8520, 0x8900, 0x8900, 0x8520, 0x4200, 0x3c00};
 static __u16 neutral_bmp[]=
 	{0x3c3c, 0x4242, 0xa9a9, 0x8989, 0x8989, 0xa9a9, 0x4242, 0x3c3c};
 
@@ -100,6 +100,12 @@ int main(int argc, char *argv[])
 	int res, i2cbus, address, file;
 	char filename[20];
 	int force = 0;
+	int demo = 0;
+
+    if(argc > 1) {
+        demo = atoi(argv[1]);
+        printf("Running demo %d\n", demo);
+    }
 
 	i2cbus = lookup_i2c_bus("1");
 	printf("i2cbus = %d\n", i2cbus);
@@ -123,26 +129,39 @@ int main(int argc, char *argv[])
 	i2c_smbus_write_byte(file, 0x81); // Disp on, blink off (p11)
 	i2c_smbus_write_byte(file, 0xe7); // Full brightness (page 15)
 
-//	Display a series of pictures
-	write_block(file, frown_bmp);
-	sleep(1);
-	write_block(file, neutral_bmp);
-	sleep(1);
-	write_block(file, smile_bmp);
-
-
-// Fade the display
-	int daddress;
-	for(daddress = 0xef; daddress >= 0xe0; daddress--) {
-//	    printf("writing: 0x%02x\n", daddress);
-	    res = i2c_smbus_write_byte(file, daddress);
-	    usleep(100000);	// Sleep 0.1 seconds
-	}
-	for(daddress = 0xe1; daddress <= 0xef; daddress++) {
-//	    printf("writing: 0x%02x\n", daddress);
-	    res = i2c_smbus_write_byte(file, daddress);
-	    usleep(100000);	// Sleep 0.1 seconds
-	}
+    switch(demo) {
+        case 0:
+        //	Display a series of pictures
+        	write_block(file, frown_bmp);
+        	sleep(1);
+        	write_block(file, neutral_bmp);
+        	sleep(1);
+        	write_block(file, smile_bmp);
+        
+        
+        // Fade the display
+        	int daddress;
+        	for(daddress = 0xef; daddress >= 0xe0; daddress--) {
+        //	    printf("writing: 0x%02x\n", daddress);
+        	    res = i2c_smbus_write_byte(file, daddress);
+        	    usleep(100000);	// Sleep 0.1 seconds
+        	}
+        	for(daddress = 0xe1; daddress <= 0xef; daddress++) {
+        //	    printf("writing: 0x%02x\n", daddress);
+        	    res = i2c_smbus_write_byte(file, daddress);
+        	    usleep(100000);	// Sleep 0.1 seconds
+        	}
+        	break;
+        case 1:
+            write_block(file, frown_bmp);
+            break;
+        case 2:
+            write_block(file, neutral_bmp);
+            break;
+        case 3:
+            write_block(file, smile_bmp);
+            break;
+    }
 
 	if (res < 0) {
 		fprintf(stderr, "Error: Write failed\n");
