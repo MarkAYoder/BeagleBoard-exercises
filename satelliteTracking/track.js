@@ -8,7 +8,7 @@ var app     = express();
 var colors  = require('colors');
 
 var	url = 'http://www.heavens-above.com/AmateurSats.aspx?lat=39.4992&lng=-87.1979&loc=Brazil&alt=189&tz=EST';
-var htmlFile = 'output.html';	
+var htmlFile = 'output2.html';	
 
     // The structure of our request call
     // The first parameter is our URL
@@ -27,6 +27,7 @@ var htmlFile = 'output.html';
             // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
 
             var $ = cheerio.load(html);
+        
             
             // fs.writeFile('output.json', JSON.stringify($), function(err) {
             //     console.log("json file written");
@@ -35,23 +36,20 @@ var htmlFile = 'output.html';
 
             // Finally, we'll define the variables we're going to capture
 
-			var title, release, rating;
-			var json = { title : "", release : "", rating : ""};
+			var json = { name : "", date : "", start : ""};
 			
-			$('.standardTable').filter(function(){
+			$('.lightrow', '.standardTable').filter(function(){
     	        var data = $(this);
     	        
-    	        console.log('data = '.red + data);
-    	        title = data.children().first().text();
-            
-                release = data.children().last().children().text();
-    
-    	        json.title = title;
-                json.release = release;
-                
+    	        // console.log('data = '.red + data);
+    	        
+    	        // console.log('length = '.green + data.find('td').length);
+    	        // console.log('a = '.blue + data.find('a'));
+    	        json.name =  data.find('a').html().split(/<>/);
+    	        console.log('a split = '.blue + JSON.stringify(json));
                 
             });
 			
-			console.log($);
+			// console.log($);
 		}
 	});
