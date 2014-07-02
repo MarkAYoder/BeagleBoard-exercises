@@ -45,13 +45,15 @@ var htmlFile = 'output2.html';
     	        
     	        // console.log('length = '.green + data.find('td').length);
     	        // console.log('a = '.blue + data.find('a'));
-    	        json.name =  data.find('a').html().split(/<>/)[0];
-    	        var date =  data.html().split('<td');
+    	        json.name =  data.find('a').html().split(/></)[0];
+    	        var td =  data.html().split('<td');
+    	        json.date = td[2];
+    	        json.start = td[3];
     	        console.log('a split = '.blue + JSON.stringify(json));
-                console.log('date = '.red + date);
-                for (var property in date) {
-                  console.log(property + ': ' + date[property]+'; ');
-                }
+                // console.log('date = '.red + td);
+                // for (var property in date) {
+                //   console.log(property + ': ' + date[property]+'; ');
+                // }
             });
 			
 			// console.log($);
