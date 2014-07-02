@@ -36,7 +36,7 @@ var htmlFile = 'output2.html';
 
             // Finally, we'll define the variables we're going to capture
 
-			var json = { name : "", date : "", start : ""};
+			var json = { name: "", date: "", start: ""};
 			
 			$('.lightrow', '.standardTable').filter(function(){
     	        var data = $(this);
@@ -45,9 +45,13 @@ var htmlFile = 'output2.html';
     	        
     	        // console.log('length = '.green + data.find('td').length);
     	        // console.log('a = '.blue + data.find('a'));
-    	        json.name =  data.find('a').html().split(/<>/);
+    	        json.name =  data.find('a').html().split(/<>/)[0];
+    	        var date =  data.html().split('<td');
     	        console.log('a split = '.blue + JSON.stringify(json));
-                
+                console.log('date = '.red + date);
+                for (var property in date) {
+                  console.log(property + ': ' + date[property]+'; ');
+                }
             });
 			
 			// console.log($);
