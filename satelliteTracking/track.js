@@ -47,9 +47,9 @@ var htmlFile = 'output2.html';
     	        // console.log('a = '.blue + data.find('a'));
     	        json.name =  data.find('a').html().split(/></)[0];
     	        var td =  data.html().split('<td');
-    	        json.date = td[2];
-    	        json.start = td[3];
-    	        console.log('a split = '.blue + JSON.stringify(json));
+    	        json.date = td[2].split('<')[0].substring(1);
+    	        json.start = td[3].split('<')[0].substring(1);
+    	        console.log('json = '.blue + JSON.stringify(json));
                 // console.log('date = '.red + td);
                 // for (var property in date) {
                 //   console.log(property + ': ' + date[property]+'; ');
