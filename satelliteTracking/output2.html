@@ -1,0 +1,219 @@
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head><title>
+	Amateur Radio Satellites - All Passes
+</title><meta name="description" content="Satellite predictions and other astronomical data customised for your location." /><link href="css/ha.css" rel="stylesheet" type="text/css" /><link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon" /><link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="http://www.heavens-above.com/scripts/standard.min.js"></script>
+    <script type="text/javascript">
+        function updateLocalTime(utc) {
+            var localdiff = parseInt($('#utcOffset').val());
+            var local_now = new Date(utc.getTime() + localdiff);
+            $('#spanTime').text(formatTime(local_now));
+        }
+
+        $(function () {
+            onClockTick = updateLocalTime;
+            startClock();
+        });
+    </script>
+    
+    </head>
+<body>
+    <form method="post" action="/AmateurSats.aspx?lat=39.4992&amp;lng=-87.1979&amp;loc=Brazil&amp;alt=189&amp;tz=EST" id="aspnetForm">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUJLTc4Mjg4OTI1D2QWAmYPZBYCAgEPFgIeBmFjdGlvbgVEL0FtYXRldXJTYXRzLmFzcHg/bGF0PTM5LjQ5OTImbG5nPS04Ny4xOTc5JmxvYz1CcmF6aWwmYWx0PTE4OSZ0ej1FU1QWIGYPFgIeBFRleHQFSTxpbnB1dCB0eXBlPSJoaWRkZW4iIG5hbWU9InV0Y09mZnNldCIgaWQ9InV0Y09mZnNldCIgdmFsdWU9Ii0xNDQwMDAwMCIgLz5kAgEPDxYCHgtOYXZpZ2F0ZVVybAU8fi8/bGF0PTM5LjQ5OTImbG5nPS04Ny4xOTc5JmxvYz1CcmF6aWwmYWx0PTE4OSZ0ej1FU1QmY3VsPWVuZGQCAw8WAh8BBQlhbm9ueW1vdXNkAgQPDxYEHwEFBkJyYXppbB8CBU1TZWxlY3RMb2NhdGlvbi5hc3B4P2xhdD0zOS40OTkyJmxuZz0tODcuMTk3OSZsb2M9QnJhemlsJmFsdD0xODkmdHo9RVNUJmN1bD1lbmRkAgUPEA8WAh4HVmlzaWJsZWhkZBYAZAIGDw8WBB8CBU1TZWxlY3RMb2NhdGlvbi5hc3B4P2xhdD0zOS40OTkyJmxuZz0tODcuMTk3OSZsb2M9QnJhemlsJmFsdD0xODkmdHo9RVNUJmN1bD1lbh8BBRYzOS40OTkywrBOLCA4Ny4xOTc5wrBXZGQCBw8PFgIfA2hkZAIIDxYCHwEFCDEzOjQwOjMwZAIJDw8WAh8BBQYtMDQ6MDBkZAIKDxBkDxYcZgIBAgICAwIEAgUCBgIHAggCCQIKAgsCDAINAg4CDwIQAhECEgITAhQCFQIWAhcCGAIZAhoCGxYcEAUO2KfZhNi52LHYqNmK2KkFAmFyZxAFB0NhdGFsw6AFAmNhZxAFBURhbnNrBQJkYWcQBQdEZXV0c2NoBQJkZWcQBRDOlc67zrvOt869zrnOus6sBQJlbGcQBQdFbmdsaXNoBQJlbmcQBQlFc3BlcmFudG8FAmVvZxAFCEVzcGHDsW9sBQJlc2cQBQdFdXNrYXJhBQJldWcQBQVTdW9taQUCZmlnEAUJRnJhbsOnYWlzBQJmcmcQBQZHYWxlZ28FAmdsZxAFCtei15HXqNeZ16oFAmhlZxAFCEl0YWxpYW5vBQJpdGcQBQnml6XmnKzoqp4FAmphZxAFCUxpZXR1dmnFswUCbHRnEAUKTmVkZXJsYW5kcwUCbmxnEAUGUG9sc2tpBQJwbGcQBRVQb3J0dWd1w6pzIGJyYXNpbGVpcm8FAnB0ZxAFFlBvcnR1Z3XDqnMgZGUgUG9ydHVnYWwFBXB0LVBUZxAFCFJvbcOibsSDBQJyb2cQBQ7QoNGD0YHRgdC60LjQuQUCcnVnEAULU2xvdmVuxI1pbmEFAnNrZxAFDVNsb3ZlbsWhxI1pbmEFAnNsZxAFB1N2ZW5za2EFAnN2ZxAFFNCj0LrRgNCw0ZfQvdGB0YzQutCwBQJ1a2cQBQznroDkvZPkuK3mlocFAnpoZxAFDOe5gemrlOS4reaWhwUGemgtQ0hUZxYBAgVkAgsPFgIfA2hkAg4PDxYCHwEFZjxhIGhyZWY9Ii8/bGF0PTM5LjQ5OTImbG5nPS04Ny4xOTc5JmxvYz1CcmF6aWwmYWx0PTE4OSZ0ej1FU1QmY3VsPWVuIiB0aXRsZT0iR28gdG8gaG9tZSBwYWdlIj5Ib21lPC9hPmRkAg8PZBYKAgEPDxYCHwEFEjMwIEp1bmUgMjAxNCAxMzoxMGRkAgIPDxYCHgdUb29sVGlwBRtzaG93IHByZXZpb3VzIHNlYXJjaCBwZXJpb2RkZAIDDw8WAh8EBRdzaG93IG5leHQgc2VhcmNoIHBlcmlvZGRkAgQPDxYCHwEFEjAxIEp1bHkgMjAxNCAxMzoxMGRkAgUPDxYCHwEFHkJyYXppbCwgMzkuNDk5MsKwTiwgODcuMTk3OcKwV2RkAhAPDxYCHwIFC0RvbmF0ZS5hc3B4ZGQCEQ8WAh8BBccCRGV2ZWxvcGVkIGFuZCBtYWludGFpbmVkIGJ5IDxhIGhyZWY9Im1haWx0bzpDaHJpcy5QZWF0QGhlYXZlbnMtYWJvdmUuY29tIj5DaHJpcyBQZWF0PC9hPiwgSGVhdmVucy1BYm92ZSBHbWJILiBQbGVhc2UgcmVhZCB0aGUgPGEgaHJlZj0iZmFxLmFzcHg/bGF0PTM5LjQ5OTImbG5nPS04Ny4xOTc5JmxvYz1CcmF6aWwmYWx0PTE4OSZ0ej1FU1QmY3VsPWVuIj5GQVE8L2E+IGJlZm9yZSBzZW5kaW5nIGUtbWFpbC4gPGEgaHJlZj0iSW1wcmludC5hc3B4P2xhdD0zOS40OTkyJmxuZz0tODcuMTk3OSZsb2M9QnJhemlsJmFsdD0xODkmdHo9RVNUJmN1bD1lbiI+SW1wcmludDwvYT4uZAITDxYCHwEFnAI8c2NyaXB0IHR5cGU9InRleHQvamF2YXNjcmlwdCI+DQo8IS0tDQogZ29vZ2xlX2FkX2NsaWVudCA9ICJjYS1wdWItNTY2ODI5NzA3NjIxNzE1NSI7IGdvb2dsZV9hZF9zbG90ID0gIjU3NDc0NzcyMTUiOyBnb29nbGVfYWRfd2lkdGggPSAxNjA7IGdvb2dsZV9hZF9oZWlnaHQgPSA2MDA7DQovLy0tPg0KPC9zY3JpcHQ+DQo8c2NyaXB0IHR5cGU9InRleHQvamF2YXNjcmlwdCIgc3JjPSIvL3BhZ2VhZDIuZ29vZ2xlc3luZGljYXRpb24uY29tL3BhZ2VhZC9zaG93X2Fkcy5qcyI+DQo8L3NjcmlwdD4NCmRkVLL/9SAO8Zob+x4/mNW9fjv6ax8Sm9Sl+YzZyQHMIH8=" />
+
+    <input type="hidden" name="utcOffset" id="utcOffset" value="-14400000" />
+    <table border="0" style="margin-left: auto; margin-right: auto; border-style: none">
+        <tr>
+            <td>
+                <a id="ctl00_hyperlinkLogo" href="./?lat=39.4992&amp;lng=-87.1979&amp;loc=Brazil&amp;alt=189&amp;tz=EST&amp;cul=en" style="display:inline-block;"><img src="images/tinylogo.jpg" alt="" /></a>
+            </td>
+            <td>
+                
+                    <script type="text/javascript"><!--
+                        google_ad_client = "ca-pub-5668297076217155";
+                        google_ad_slot = "5479771053";
+                        google_ad_width = 728;
+                        google_ad_height = 90;
+//-->
+                    </script>
+                    <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+                
+            </td>
+            <td>
+                <table class="userTable">
+                    <tr>
+                        <td>
+                            User:
+                        </td>
+                        <td>
+                            anonymous
+                        </td>
+                    </tr>
+                    <tr class="lightrow">
+                        <td>
+                            Location:
+                        </td>
+                        <td>
+                            <a id="ctl00_linkObservationSite" href="SelectLocation.aspx?lat=39.4992&amp;lng=-87.1979&amp;loc=Brazil&amp;alt=189&amp;tz=EST&amp;cul=en">Brazil</a>
+                            
+                        </td>
+                    </tr>
+                    <tr class="lightrow">
+                        <td colspan="2" align="center">
+                            (<a id="ctl00_linkLatLong" href="SelectLocation.aspx?lat=39.4992&amp;lng=-87.1979&amp;loc=Brazil&amp;alt=189&amp;tz=EST&amp;cul=en">39.4992°N, 87.1979°W</a>)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Time:
+                        </td>
+                        <td>
+                            <span id="spanTime">
+                                13:40:30</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            (UTC<span id="ctl00_lblTZ">-04:00</span>)
+                        </td>
+                    </tr>
+                    <tr class="lightrow">
+                        <td>
+                            Language:
+                        </td>
+                        <td>
+                            <select name="ctl00$ddlCulture" id="ctl00_ddlCulture">
+	<option value="ar">العربية</option>
+	<option value="ca">Catal&#224;</option>
+	<option value="da">Dansk</option>
+	<option value="de">Deutsch</option>
+	<option value="el">Ελληνικά</option>
+	<option selected="selected" value="en">English</option>
+	<option value="eo">Esperanto</option>
+	<option value="es">Espa&#241;ol</option>
+	<option value="eu">Euskara</option>
+	<option value="fi">Suomi</option>
+	<option value="fr">Fran&#231;ais</option>
+	<option value="gl">Galego</option>
+	<option value="he">עברית</option>
+	<option value="it">Italiano</option>
+	<option value="ja">日本語</option>
+	<option value="lt">Lietuvių</option>
+	<option value="nl">Nederlands</option>
+	<option value="pl">Polski</option>
+	<option value="pt">Portugu&#234;s brasileiro</option>
+	<option value="pt-PT">Portugu&#234;s de Portugal</option>
+	<option value="ro">Rom&#226;nă</option>
+	<option value="ru">Русский</option>
+	<option value="sk">Slovenčina</option>
+	<option value="sl">Slovenščina</option>
+	<option value="sv">Svenska</option>
+	<option value="uk">Українська</option>
+	<option value="zh">简体中文</option>
+	<option value="zh-CHT">繁體中文</option>
+
+</select>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <hr />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" valign="top">
+                <table width="100%">
+                    <tr>
+                        <td align="left">
+                            <span id="ctl00_lblTitle" class="pagehead">Amateur Radio Satellites - All Passes</span>
+                        </td>
+                        <td align="right" class="navbar">
+                            
+                            <span id="ctl00_lblNavBar"><a href="/?lat=39.4992&lng=-87.1979&loc=Brazil&alt=189&tz=EST&cul=en" title="Go to home page">Home</a></span>
+                        </td>
+                    </tr>
+                </table>
+                <p />
+                
+<input type="hidden" name="ctl00$cph1$hidStartUtc" id="ctl00_cph1_hidStartUtc" value="635397450300346405" />
+   <table>
+        <tr>
+            <td class="userinfo">
+                Search period start:</td>
+            <td class="userinfo">
+                <span id="ctl00_cph1_lblSearchStart">30 June 2014 13:10</span></td>
+            <td class="userinfo" rowspan="2">
+                <input type="submit" name="ctl00$cph1$btnPrev" value="&lt;" id="ctl00_cph1_btnPrev" title="show previous search period" />
+                <input type="submit" name="ctl00$cph1$btnNext" value=">" id="ctl00_cph1_btnNext" title="show next search period" />
+                </td>
+        </tr>
+        <tr>
+            <td class="userinfo">
+                Search period end:</td>
+            <td class="userinfo">
+                <span id="ctl00_cph1_lblSearchEnd">01 July 2014 13:10</span></td>
+        </tr>
+        <tr>
+            <td class="userinfo">
+                Location:</td>
+            <td class="userinfo" colspan="2">
+                <span id="ctl00_cph1_lblLocation">Brazil, 39.4992°N, 87.1979°W</span></td>
+        </tr>
+    </table>
+    <p/>
+<table class="standardTable" cellpadding="5" rules="cols">
+<tr class="tablehead">
+<td rowspan="2">Satellite</td>
+<td rowspan="2" align="center">Date</td>
+<td rowspan="2" align="center">Start</td>
+<td colspan="3" align="center">Highest point</td>
+<td rowspan="2" align="center">End</td>
+<td rowspan="2">Downlink Frequencies (MHz)</td></tr>
+<tr class="tablehead"><td align="center">Time</td><td align="center">Altitude</td>
+<td align="center">Azimuth</td></tr>
+<tr class="lightrow"><td><a href="satinfo.aspx?satid=39444&lat=39.4992&lng=-87.1979&loc=Brazil&alt=189&tz=EST&cul=en">FUNcube-1</a></td><td>30 Jun</td><td>13:12:00</td><td>13:15:35</td><td align="center">26°</td><td align="center">291° (WNW)</td><td>13:19:06</td><td>145.950 - 145.970 MHz USB</td></tr><tr class="darkrow"><td><a href="satinfo.aspx?satid=20439&lat=39.4992&lng=-87.1979&loc=Brazil&alt=189&tz=EST&cul=en">Oscar 16</a></td><td>30 Jun</td><td>13:13:45</td><td>13:16:40</td><td align="center">15°</td><td align="center">62° (ENE)</td><td>13:19:35</td><td>437.025 USB, Beacon 2401.1428</td></tr><tr class="lightrow"><td><a href="satinfo.aspx?satid=28375&lat=39.4992&lng=-87.1979&loc=Brazil&alt=189&tz=EST&cul=en">AO-Echo</a></td><td>30 Jun</td><td>13:58:41</td><td>14:01:49</td><td align="center">17°</td><td align="center">63° (ENE)</td><td>14:05:00</td><td>?</td></tr><tr class="darkrow"><td><a href="satinfo.aspx?satid=22826&lat=39.4992&lng=-87.1979&loc=Brazil&alt=189&tz=EST&cul=en">ITAMSAT 1</a></td><td>30 Jun</td><td>14:06:21</td><td>14:10:19</td><td align="center">23°</td><td align="center">65° (ENE)</td><td>14:14:18</td><td>435.822 SSB</td></tr>	
+</table><p/>
+
+                &nbsp;
+                <p />
+                <table style="border-top: 1px solid black;">
+                    <tr>
+                        <td valign="top" style="width: 100px">
+                            <a id="ctl00_linkDonate" title="Make a donation to help with the running costs of Heavens-Above" href="Donate.aspx"><img title="Make a donation to help with the running costs of Heavens-Above" src="images/btn_donate_SM.gif" alt="" /></a>
+                        </td>
+                        <td valign="top">
+                            <div class="footer">
+                                Developed and maintained by <a href="mailto:Chris.Peat@heavens-above.com">Chris Peat</a>, Heavens-Above GmbH. Please read the <a href="faq.aspx?lat=39.4992&lng=-87.1979&loc=Brazil&alt=189&tz=EST&cul=en">FAQ</a> before sending e-mail. <a href="Imprint.aspx?lat=39.4992&lng=-87.1979&loc=Brazil&alt=189&tz=EST&cul=en">Imprint</a>.
+                                </div>
+                        </td>
+                        <td>
+                            <a href="http://www.dlr.de/rb/en/" target="_blank">
+                                <img src="/images/dlrhost.gif" align="left" border="0" alt="DLR" /></a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td rowspan="1" valign="top">
+                <p />
+                <script type="text/javascript">
+<!--
+ google_ad_client = "ca-pub-5668297076217155"; google_ad_slot = "5747477215"; google_ad_width = 160; google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript" src="//pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+            </td>
+        </tr>
+    </table>
+    </form>
+</body>
+</html>
