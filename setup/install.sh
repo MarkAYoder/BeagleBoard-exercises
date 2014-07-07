@@ -14,18 +14,12 @@ ssh root@$BONE /opt/scripts/tools/grow_partition.sh
 reboot
 fi
 
-# Make it so ssh will run without a password
-# ssh-copy-id root@$BONE
-
 # Set the date to that of the host computer
 DATE=`date`
 ssh root@$BONE "date -s \"$DATE\""
 
-# Update the package manager
-# ssh root@$BONE "opkg update"
-
 # Set up DNS on bone
-./setDNS.sh
+# ./setDNS.sh
 scp -r ssh root@$BONE:.ssh
 
 # Copy local copy of exercises to bone and then pull
@@ -34,7 +28,7 @@ time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c
 
 echo rsyncing cookbook-atlas, this will take about 2 seconds
 time rsync -azq ../../cookbook-atlas root@bone:.
-time rsync -azq ../../libsoc root@bone:.
+# time rsync -azq ../../libsoc root@bone:.
 
 ################
 ssh root@$BONE "
@@ -48,26 +42,23 @@ mv /etc/issue.net /etc/issue.net.orig
 git config --global user.name \"Mark A. Yoder\"
 git config --global user.email Mark.A.Yoder@Rose-Hulman.edu
 git config --global color.ui true
-# cd exercises
-# git pull
-# cd ..
 
 # git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises
 
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
 ln -s --backup=numbered exercises/setup/bashrc .bashrc
-ln -s --backup=numbered exercises/setup/x11vncrc .x11vncrc
+# ln -s --backup=numbered exercises/setup/x11vncrc .x11vncrc
 
 # Set the default sound card to NOT be HDMI
 ln -s --backup=numbered exercises/setup/asoundrc .asoundrc
 
 # Put a symbolic link in Cloud 9 so it will see the exercises
-if [ ! -e /var/lib/cloud9/exercises ] ; then
-	cd /var/lib/cloud9
-	ln -s ~/exercises .
-	ln -s ~/cookbook-atlas .
-	ln -s ~/libsoc .
-fi
+# if [ ! -e /var/lib/cloud9/exercises ] ; then
+# 	cd /var/lib/cloud9
+# 	ln -s ~/exercises .
+# 	ln -s ~/cookbook-atlas .
+# 	ln -s ~/libsoc .
+# fi
 
 # Set the time zone to Indiana
 rm /etc/localtime
@@ -83,7 +74,6 @@ if [ ! -e /usr/local/lib/node_modules/socket.io ] ; then
 	ln -s bonescript/node_modules/i2c/ .
 	ln -s bonescript/node_modules/serialport/ .
 fi
-cd ~/exercises
 
 # Set up boneServer to run at boot time
 cp ~/exercises/realtime/boneServer.service /lib/systemd/system
