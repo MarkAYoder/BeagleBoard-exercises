@@ -25,7 +25,7 @@ ssh root@$BONE "date -s \"$DATE\""
 # ssh root@$BONE "opkg update"
 
 # Set up DNS on bone
-./host.setDNS.sh
+./setDNS.sh
 scp -r ssh root@$BONE:.ssh
 
 # Copy local copy of exercises to bone and then pull

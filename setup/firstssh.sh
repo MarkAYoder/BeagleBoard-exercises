@@ -1,4 +1,4 @@
 #!/bin/bash
-./host.setDNS.sh
-./host.doDate.sh
+./setDNS.sh
+./doDate.sh
 ssh -X root@bone
