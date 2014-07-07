@@ -1,10 +1,10 @@
-# Update git soe it can use gnome-keyring
-# apt-get install git-man/wheezy-backports
-# apt-get install git/wheezy-backports
-
-# apt-get install libgnome-keyring-dev
+# Update git so it can use gnome-keyring
+DIST=jessie
+# DIST=wheezy
+apt-get install git-man/$DIST git/$DIST libgnome-keyring-dev
 
 KEYPATH=/usr/share/doc/git/contrib/credential/gnome-keyring
 cd $KEYPATH
 make
-git config --global $KEYPATH/git-credential-gnome-keyring
+rm git-credential-gnome-keyring.o
+git config --global credential.helper $KEYPATH/git-credential-gnome-keyring
