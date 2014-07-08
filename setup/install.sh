@@ -18,8 +18,6 @@ fi
 DATE=`date`
 ssh root@$BONE "date -s \"$DATE\""
 
-# Set up DNS on bone
-# ./host.setDNS.sh
 scp -r ssh root@$BONE:.ssh
 
 # Copy local copy of exercises to bone and then pull
@@ -30,7 +28,6 @@ echo rsyncing cookbook-atlas, this will take about 2 seconds
 time rsync -azq ../../cookbook-atlas root@bone:.
 # time rsync -azq ../../libsoc root@bone:.
 
-################
 ssh root@$BONE "
 # Set the network name of the board
 echo $BONE_NAME > /etc/hostname
@@ -64,7 +61,6 @@ if [ ! -e /usr/local/lib/node_modules/socket.io ] ; then
 	ln -s bonescript/node_modules/i2c/ .
 	ln -s bonescript/node_modules/serialport/ .
 fi
-cd ~/exercises
 
 # Set up boneServer to run at boot time
 cp ~/exercises/realtime/boneServer.service /lib/systemd/system
@@ -85,5 +81,3 @@ exit
 # cd exercises/realtime
 # ln -s ~/FullScreenMario .
 "
-
-################

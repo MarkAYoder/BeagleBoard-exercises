@@ -1,7 +1,5 @@
 #!/bin/bash
-# If the date is in the wrong year, correct it.
-if ((`date +%Y` < 2013))
-then
-	ntpdate ntp.org
-fi
-
+# Copy host's date to bone
+BONE=192.168.7.2
+DATE=`date`
+ssh root@$BONE "date -s \"$DATE\""

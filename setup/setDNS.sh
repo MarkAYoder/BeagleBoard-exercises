@@ -1,7 +1,7 @@
 #!/bin/bash
 # These are the commands to run on the host so the Beagle
 #  can access the Internet through the USB connection.
-# Run host.ipForward.sh the first time. It will set up the host.
+# Run ./ipForward.sh the first time. It will set up the host.
 # Run this script if the host is already set up.
 # Inspired by http://thoughtshubham.blogspot.com/2010/03/internet-over-usb-otg-on-beagleboard.html
 
@@ -12,7 +12,7 @@ beagleAddr=192.168.7.2
 ssh root@$beagleAddr "mv -n /etc/resolv.conf /etc/resolv.conf.orig"
 # Create our own resolv.conf
 cat - << EOF > /tmp/resolv.conf
-# This is installed by host.setDNS.sh on the host
+# This is installed by ./setDNS.sh on the host
 # Mark A. Yoder, 25-FEB-2014
 search rose-hulman.edu dhcp.rose-hulman.edu wlan.rose-hulman.edu
 
