@@ -150,14 +150,13 @@ void init_tft(int deviceNum) {
 
 	LCDSendCommand(17, 0xE1, 0x0A, 0x1C, 0x0C, 0x14, 0x33, 0x2B, 0x24, 0x28, 0x27, 0x25, 0x2C, 0x39, 0x00, 0x05, 0x03, 0x0D);
 
-	LCDSendCommand(2, 0x3A, 0x06); // set for 3-wire 18-bits per pixel
+	LCDSendCommand(2, 0x3A, 0x06); // set for 3-wire 18-bits per pixel, p115
 
-	LCDSendCommand(1, 0x29);
+	LCDSendCommand(1, 0x29);		// Display On, p99
 	usleep(150);
 
 }
 
-	
 void setOrientation(int orientation) {
 	switch(orientation) {
 		case 0:
@@ -214,23 +213,23 @@ int i = width * height;
 Transfer tbuffer[7];
 void *buff_ptr = tbuffer;
 
-    LCDSendCommand(1, 0x2C);
-
+	    LCDSendCommand(1, 0x2C);
+	
     while(i-- > 0) {
-	HEADER_PIXEL(data,pixel);
+		HEADER_PIXEL(data,pixel);
+	
+		tbuffer[0].data=(pixel[2] & 0xff);
+		tbuffer[0].type=1;
+	
+		tbuffer[1].data=(pixel[1] & 0xff);
+		tbuffer[1].type=1;
+	
+		tbuffer[2].data=(pixel[0] & 0xff);
+		tbuffer[2].type=1;
+	
+		SPIWriteChunk(buff_ptr, 6);
 
-	tbuffer[0].data=(pixel[3] & 0xff);
-	tbuffer[0].type=1;
-
-	tbuffer[1].data=(pixel[1] & 0xff);
-	tbuffer[1].type=1;
-
-	tbuffer[2].data=(pixel[1] & 0xff);
-	tbuffer[2].type=1;
-
-	SPIWriteChunk(buff_ptr, 6);
-
-    }
+	    }
 
 }
 
@@ -263,7 +262,7 @@ int main(void){
 	init_tft(0);
 	setOrientation(0);
 	fillScreenBars();
-	sleep(5);
+	sleep(1);
 	displayimage();
 
 	return 0;
