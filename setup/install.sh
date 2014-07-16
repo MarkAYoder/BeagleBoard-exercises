@@ -18,8 +18,6 @@ fi
 DATE=`date`
 ssh root@$BONE "date -s \"$DATE\""
 
-# Set up DNS on bone
-# ./setDNS.sh
 scp -r ssh root@$BONE:.ssh
 
 # Copy local copy of exercises to bone and then pull
@@ -30,7 +28,6 @@ echo rsyncing cookbook-atlas, this will take about 2 seconds
 time rsync -azq ../../cookbook-atlas root@bone:.
 # time rsync -azq ../../libsoc root@bone:.
 
-################
 ssh root@$BONE "
 # Set the network name of the board
 echo $BONE_NAME > /etc/hostname
@@ -43,8 +40,6 @@ git config --global user.name \"Mark A. Yoder\"
 git config --global user.email Mark.A.Yoder@Rose-Hulman.edu
 git config --global color.ui true
 
-# git clone git@github.com:MarkAYoder/BeagleBoard-exercises.git exercises
-
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
 ln -s --backup=numbered exercises/setup/bashrc .bashrc
 # ln -s --backup=numbered exercises/setup/x11vncrc .x11vncrc
@@ -52,20 +47,12 @@ ln -s --backup=numbered exercises/setup/bashrc .bashrc
 # Set the default sound card to NOT be HDMI
 ln -s --backup=numbered exercises/setup/asoundrc .asoundrc
 
-# Put a symbolic link in Cloud 9 so it will see the exercises
-# if [ ! -e /var/lib/cloud9/exercises ] ; then
-# 	cd /var/lib/cloud9
-# 	ln -s ~/exercises .
-# 	ln -s ~/cookbook-atlas .
-# 	ln -s ~/libsoc .
-# fi
-
 # Set the time zone to Indiana
 rm /etc/localtime
 ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
 
 # Turn off cape-bone-proto
-sed -i -e 's:CAPE=cape-bone-proto:#CAPE=cape-bone-proto:g' /etc/default/capemgr
+# sed -i -e 's:CAPE=cape-bone-proto:#CAPE=cape-bone-proto:g' /etc/default/capemgr
 
 # Make socket.io appear where others can use it
 if [ ! -e /usr/local/lib/node_modules/socket.io ] ; then
@@ -94,5 +81,3 @@ exit
 # cd exercises/realtime
 # ln -s ~/FullScreenMario .
 "
-
-################
