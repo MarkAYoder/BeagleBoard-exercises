@@ -205,32 +205,32 @@ void fillScreenRandom(){
 	fclose(random);
 }
 
-
 void displayimage(){
-
-char pixel[5], *data = header_data;
-int i = width * height;
-Transfer tbuffer[7];
-void *buff_ptr = tbuffer;
-
-	    LCDSendCommand(1, 0x2C);
+	char pixel[5], *data = header_data;
+	int i = width * height;
+	Transfer tbuffer[128*128*3+1];
+	void *buff_ptr = tbuffer;
 	
-    while(i-- > 0) {
-		HEADER_PIXEL(data,pixel);
-	
-		tbuffer[0].data=(pixel[2] & 0xff);
-		tbuffer[0].type=1;
-	
-		tbuffer[1].data=(pixel[1] & 0xff);
-		tbuffer[1].type=1;
-	
-		tbuffer[2].data=(pixel[0] & 0xff);
-		tbuffer[2].type=1;
-	
-		SPIWriteChunk(buff_ptr, 6);
-
-	    }
-
+		LCDSendCommand(1, 0x2C);
+		int j = 0;
+	    while(i-- > 0) {
+			HEADER_PIXEL(data,pixel);
+		
+			tbuffer[j+0].data=(pixel[2] & 0xff);
+			tbuffer[j+0].type=1;
+		
+			tbuffer[j+1].data=(pixel[1] & 0xff);
+			tbuffer[j+1].type=1;
+		
+			tbuffer[j+2].data=(pixel[0] & 0xff);
+			tbuffer[j+2].type=1;
+			j +=3;
+		    }
+		// SPIWriteChunk(buff_ptr, 128*128*3);
+		for(i=0;i<128;i++){
+	        SPIWriteChunk(buff_ptr, 768);
+	        buff_ptr += 768;
+		}
 }
 
 void fillScreenBars(){
@@ -263,7 +263,12 @@ int main(void){
 	setOrientation(0);
 	fillScreenBars();
 	sleep(1);
+	for(int i=0; i<4; i++) {
+		setOrientation(i);
+		displayimage();
+		usleep(500000);
+	}
+	setOrientation(0);
 	displayimage();
-
 	return 0;
 }
