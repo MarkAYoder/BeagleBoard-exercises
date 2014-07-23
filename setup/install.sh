@@ -39,6 +39,11 @@ mv /etc/issue.net /etc/issue.net.orig
 git config --global user.name \"Mark A. Yoder\"
 git config --global user.email Mark.A.Yoder@Rose-Hulman.edu
 git config --global color.ui true
+# Fix postBuffer size
+cd cookbook-atlas/.git
+mv config config.orig
+sed 's/	postBuffer = 524288000//' config.orig > config
+cd
 
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
 ln -s --backup=numbered exercises/setup/bashrc .bashrc
