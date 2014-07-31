@@ -1,6 +1,58 @@
 # CHANGELOG
 
-## Version 0.11.8 - 05 June 2013
+## Version 0.14 - 15 Jul 2014
+* Fix issue #112, replaced bash condition -f with -e
+* Fix issue #117, sed: 1: invalid command code z
+* Fix issue #122, Directory upload doesn't work
+* Fix issue #132, enhanced cross compatibility for bash conditions
+
+## Version 0.13 - 17 Jan 2014
+* Minor languages fixes, based on issue #88
+* Fix issue #91, sed take long time to process regexp on big data
+* Fix issue #87, second chunked upload fails after successful first
+* Fix issue #97, greadlink not selected on OSX Mavericks
+* Fix issues #99 and #100: The stat command in OSX 10.9 has no parameter named --format
+* Fix issue #99, clarified how to install greadlink (via homebrew) for Mac OS X. Thanks to paultreny
+* Improved list command and minor changes
+* Fix issue #103, transform Unicode code-points to characters in list command
+* Add VERSION output in DEBUG mode
+* DropShell: Fixed issue with quoted command parameters
+* Fix issue with absolute paths in CD command
+* Enhancement request #108: add initial wildcard support in upload command
+* Now the destination file/dir for the upload command is mandatory
+* Fixed issue listing files/folders names containing quotes
+
+## Version 0.12.1 - 24 Oct 2013
+* Fixed unicode problem with special chars in file names
+* Fixed problem removing temp files
+* Improved detection of configuration error and better handling of http errors
+* Updated setup procedure
+* Fixed incompatibility with old bash version
+
+## Version 0.12 - 06 Sep 2013
+* Fixed problem uploading twice the same directory
+* Add checking for not allowed file names
+* Handling connection/resolving host errors
+* Better error handling
+* Converted if condition to BASH native syntax
+* Add normalize_path function, to canonicalize paths
+* Add -s option to skip existing files when upload/download
+* Removed check for free quota on every file upload to improve performance
+* Add checks for file permissions before writing/reading files on the local fs
+* Add copy function
+* Fixed unicode problem in file listing
+* A lot of minor changes and improvements
+
+## Version 0.11.9 - 27 Jun 2013
+* Add missing -f option in usage
+* Add some /dev/null redirects
+* Improved error messages
+* Improved grep syntax
+* Add function to check the cURL exit code
+* Improved messages output
+* Add new command line options: -q -d -k
+
+## Version 0.11.8 - 05 Jun 2013
 * Add move/rename function
 * Improved the configuration file management (thanks to Robert G.)
 * Updated strings to reflect the new Dropbox "Create App" page
@@ -103,7 +155,7 @@
 * Minor bug fixes
 
 ## Version 0.8.1 - 31 Aug 2011 (by Dawid Ferenczy - www.ferenczy.cz)
-* added prompt for the Dropbox password from keyboard, if there is no password 
+* added prompt for the Dropbox password from keyboard, if there is no password
   hardcoded or given as script command line parameter (interactive mode)
 * added INTERACTIVE_MODE variable - when set to 1 show CURL progress bar.
   Set to 1 automatically when there is no password hardcoded or given as
@@ -136,4 +188,4 @@
 * Code clean
 
 ## Version 0.1 - 23 Aug 2010:
-* Initial release 
+* Initial release
