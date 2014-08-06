@@ -8,12 +8,6 @@ set -e
 BONE=192.168.7.2
 BONE_NAME=yoder-debian-bone
 
-# Grow the partition to use whole card
-if [ 1 == 0 ] ; then
-ssh root@$BONE /opt/scripts/tools/grow_partition.sh
-reboot
-fi
-
 # Set the date to that of the host computer
 DATE=`date`
 ssh root@$BONE "date -s \"$DATE\""
@@ -32,7 +26,7 @@ ssh root@$BONE "
 # Set the network name of the board
 echo $BONE_NAME > /etc/hostname
 
-# Turn of message that appeard when you login
+# Turn off messages that appeard when you login
 mv /etc/issue.net /etc/issue.net.orig
 
 # Set up github
