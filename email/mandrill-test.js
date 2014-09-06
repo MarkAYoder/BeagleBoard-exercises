@@ -5,7 +5,7 @@
 
 var mandrill = require('mandrill-api/mandrill');
 
-mandrill_client = new mandrill.Mandrill('CAg05Ob5hHvIaKLYlDKL-A');
+mandrill_client = new mandrill.Mandrill('CAg05Ob5hHvIaKLYlDKL-');
 var message = {
     "html": "<p>Example HTML content</p><b>Wow!</b>",
     "text": "Example text content",
