@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// From: https://github.com/andris9/Nodemailer
 
 var nodemailer = require('nodemailer');
 
@@ -16,11 +17,11 @@ var transporter = nodemailer.createTransport({
 
 // setup e-mail data with unicode symbols
 var mailOptions = {
-    from: 'Mark A. Yoder ✔ <Mark.A.Yoder@Rose-Hulman.edu>', // sender address
-    to: 'yoder@rose-hulman.edu, Mark.A.Yoder@gmail.com', // list of receivers
-    subject: 'Test of nodemail ✔', // Subject line
-    text: 'Hello world ✔', // plaintext body
-    html: '<b>Hello world ✔</b>' // html body
+    from: 'Mark A. Yoder <Mark.A.Yoder@Rose-Hulman.edu>', // sender address
+    to: 'yoder@rose-hulman.edu', // list of receivers
+    subject: 'Test of nodemail 2', // Subject line
+    text: 'Hello world 2', // plaintext body
+    html: '<b>Hello world</b><p>Way to go!</p>' // html body
 };
 
 // send mail with defined transport object
