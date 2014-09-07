@@ -9,7 +9,7 @@ var client = require('twilio')(accountSid, authToken);
 client.messages.create({ 
 	to: "8122333219", 
 	from: "+18122333826", 
-	body: "This is a test",   
+	body: "This is a test for my class",   
 }, function(err, message) { 
 	console.log(message.sid); 
 });
