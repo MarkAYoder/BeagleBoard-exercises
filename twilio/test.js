@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// From: https://www.twilio.com/user/account/developer-tools/api-explorer/message-create 
 // Twilio Credentials 
 var accountSid = 'AC407ab27aab63fa995dbc24c43a18d204'; 
 var authToken = '99e44f31bc8c7981c4ae6d6cf9c65ed'; 
