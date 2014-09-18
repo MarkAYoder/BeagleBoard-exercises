@@ -1,28 +1,23 @@
 #!/bin/bash
-# Run these on the host to forward ports to the Bone.
+# These are the commands to run on the host to setup port forwarding to the bone
 
-if [ $# -lt 2 ] ; then
-echo "Usage: $0 interface port [to port]"
-echo "interface is eth0 or wlan0
-Common  ports:
-80	http
-3000	cloud9
-5900	vnc
-9090	boneServer"
+if [ $# -eq 0 ] ; then
+echo "Usage: $0 interface (eth0) portNumber"
 exit 1
 fi
 
 interface=$1
 port=$2
-port2=$2
-if [ $# -eq 3 ] ; then
-port2=$3
-fi
 hostAddr=192.168.7.1
 beagleAddr=192.168.7.2
 
-# Setup port forwards so outside world can reach the bone
+# Setup port forwards on 3000, 8080 and 1080 so outside world can reach the bone
 # first get IP address of host outside interface
+# 3000 is cloud9
+# 9090 is boneServer
+# 1080 is the standard webserver mapped to 80 on the bone
+# 5900 is x11vnc
 IP_ADDR=`ifconfig $interface | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}'`
-sudo iptables -t nat -A PREROUTING -p tcp -s 0/0 -d $IP_ADDR --dport $port -j DNAT --to $beagleAddr:$port2
-# Replace -A with -D to delete forwarding
+echo $IP_ADDR
+sudo iptables -t nat -A PREROUTING -p tcp -s 0/0 -d $IP_ADDR --dport $port -j DNAT --to $beagleAddr:$port
+
