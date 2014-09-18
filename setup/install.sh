@@ -62,18 +62,15 @@ if [ ! -e /usr/local/lib/node_modules/socket.io ] ; then
 fi
 
 # Set up boneServer to run at boot time
-cp ~/exercises/realtime/boneServer.service /lib/systemd/system
-systemctl start boneServer.service
-systemctl enable boneServer.service
+# cp ~/exercises/realtime/boneServer.service /lib/systemd/system
+# systemctl start boneServer.service
+# systemctl enable boneServer.service
 
 # cd /etc/gdm
 # mv custom.conf custom.conf.orig
 # sed s/TimedLoginEnable=true/TimedLoginEnable=false/ custom.conf.orig > custom.conf
 "
 exit
-# Run if ssh is refusing connections
-# rm /etc/dropbear/dropbear_rsa_host_key
-# reboot
 
 # Load Full Screen Mario
 # git clone https://github.com/Diogenesthecynic/FullScreenMario.git
