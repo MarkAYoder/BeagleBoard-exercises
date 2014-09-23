@@ -6,16 +6,16 @@ var address = 0x40;
 
 var wire = new i2c(address, {device: '/dev/i2c-1', debug: false}); // point to your i2c address, debug provides REPL interface
 
-wire.scan(function(err, data) {
-  // result contains an array of addresses
-  console.log("err: " + err);
-  console.log("data: " + JSON.stringify(data));
-});
+// wire.scan(function(err, data) {
+//   // result contains an array of addresses
+//   console.log("err: " + err);
+//   console.log("data: " + JSON.stringify(data));
+// });
 
-var byte = 0;
-wire.writeByte(byte, function(err) {
-  console.log("writeByte err: " + err);
-});
+// var byte = 0;
+// wire.writeByte(byte, function(err) {
+//   console.log("writeByte err: " + err);
+// });
 
 // wire.writeBytes(command, [byte0, byte1], function(err) {});
 
@@ -35,8 +35,10 @@ wire.readBytes(command, length, function(err, res) {
   console.log((hi << 8) | lo);
 });
 
-// wire.on('data', function(data) {
-//   // result for continuous stream contains data buffer, address, length, timestamp
-// });
+wire.on('data', function(data) {
+  // result for continuous stream contains data buffer, address, length, timestamp
+  console.log("wire.on: " + JSON.stringify(data));
+});
 
-// wire.stream(command, length, delay); // continuous stream, delay in ms
+var delay = 500;
+wire.stream(command, length, delay); // continuous stream, delay in ms
