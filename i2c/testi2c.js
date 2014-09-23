@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// npm install -g i2c
 // From: https://www.npmjs.org/package/i2c
 // wire.scan doesn't seem to work, but the rest does.
 var i2c = require('i2c');
