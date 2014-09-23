@@ -5,8 +5,8 @@
 var i2c = require('i2c');
 var address = 0x40;
 
-var wire = new i2c(address, {device: '/dev/i2c-1', debug: false}); // point to your i2c address, debug provides REPL interface
-
+// point to your i2c address, debug provides REPL interface
+var wire = new i2c(address, {device: '/dev/i2c-1', debug: false});
 // wire.scan(function(err, data) {
 //   // result contains an array of addresses
 //   console.log("err: " + err);
