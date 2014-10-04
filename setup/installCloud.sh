@@ -7,6 +7,8 @@ BONE=ec2
 BONE_NAME=yoder-aws-cloud
 
 ssh $BONE "
+apt-get update
+apt-get install git
 
 # Set up github
 git config --global user.name \"Mark A. Yoder\"
