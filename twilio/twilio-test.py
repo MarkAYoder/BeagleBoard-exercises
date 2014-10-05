@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# sudo apt-get install python-pip
+# sudo pip install twilio
 from twilio.rest import TwilioRestClient 
  
 # put your own credentials here 
