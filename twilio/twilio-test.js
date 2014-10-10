@@ -9,10 +9,12 @@ var authToken = '99e44f31bc8c7981c4ae6d6cf9c65ed';
 // The message
 var message="This is a test message.";
 
-console.log(process.argv);
-//if(process.argv.length > 2) 
-//process.exit(0);
- 
+// Use the command line as the message if given.
+if(process.argv.length > 2) {
+    message = process.argv.slice(2).join(" ");
+    console.log(message);
+}
+
 //require the Twilio module and create a REST client 
 var client = require('twilio')(accountSid, authToken); 
  
