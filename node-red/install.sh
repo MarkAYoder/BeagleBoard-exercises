@@ -24,5 +24,6 @@ npm install -g dynamodb-data-types node-postgres-named
 # Installed, but caused node-red not to run: komponist
 # To use sensorTag
 # From: https://github.com/sandeepmistry/node-sensortag
-apt-get install libbluetooth-dev
+apt-get install libbluetooth-dev bluez
 npm install -g sensortag
+hcitool lescan
