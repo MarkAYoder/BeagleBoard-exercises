@@ -20,7 +20,7 @@ var port = 9090, // Port to listen on
         lastFrame = 0,      // Last frame sent to browser
         audioData,          // all data from arecord is saved here and sent
 			                // to the client when requested.
-        audioChild = 0, // Process for arecord
+        audioChild = 0,     // Process for arecord
         audioRate = 8000;
         
         // PWM
