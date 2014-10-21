@@ -1,4 +1,4 @@
-# Makefile for compiling in-tree
+# Makefile for compiling out-of-tree
 # From Free Electrons
 
 ifneq ($(KERNELRELEASE),)
