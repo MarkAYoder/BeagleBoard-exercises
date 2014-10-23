@@ -30,7 +30,7 @@ export PINGROUPS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pingroups
 if [[ ! -e /etc/dogtag ]]
 then
     export ARCH=arm
-    export CROSS_COMPILE=arm-linux-gnueabifh-
+    export CROSS_COMPILE=arm-linux-gnueabihf-
 else
     export LD_LIBRARY_PATH=/usr/local/lib/
 fi
