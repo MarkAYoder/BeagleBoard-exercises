@@ -12,3 +12,7 @@ git clone https://github.com/MalcolmRobb/dump1090 MR-dump1090
 cd MR-dump1090
 make
 ./dump1090 --interactive --net --net-http-port 8081
+# Or on the bone
+# rtl_fm -f 103.7M -M wbfm -r 48000 - | netcat -l -p8082
+# On the host
+# nc bone 8082 | aplay -r 24k -f S16_LE
