@@ -9,4 +9,4 @@ set -x
 
 # ./autogain
 gst-launch-1.0 v4l2src device=/dev/video0 ! \
-'video/x-raw,format=UYVY,width=640,height=480,framerate=30/1' ! xvimagesink
+'video/x-raw,width=320,height=240,framerate=30/1' ! xvimagesink
