@@ -7,5 +7,5 @@ fi
 
 set -x
 
-gst-launch videotestsrc pattern=$PATTERN ! ffmpegcolorspace ! ximagesink
+gst-launch-1.0 videotestsrc pattern=$PATTERN ! videoconvert ! ximagesink
 

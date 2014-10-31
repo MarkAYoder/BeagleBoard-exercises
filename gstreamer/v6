@@ -9,7 +9,7 @@ set -x
 
 ./autogain
 
-gst-launch v4l2src ! 'video/x-raw-yuv,width=640,height=480,framerate=30/1' ! \
+gst-launch-1.0 v4l2src ! 'video/x-raw-yuv,width=640,height=480,framerate=30/1' ! \
 tee name=t_vid ! queue ! xvimagesink sync=false t_vid. ! queue ! videorate ! \
 'video/x-raw-yuv,framerate=30/1' ! theoraenc ! queue ! oggmux ! \
 filesink location=test.ogg

@@ -7,7 +7,7 @@ fi
 
 set -x
 
-gst-launch v4l2src ! 'video/x-raw-yuv,width=320,height=240,framerate=3/1' ! \
+gst-launch-1.0 v4l2src ! 'video/x-raw-yuv,width=320,height=240,framerate=3/1' ! \
 tee name=t_vid ! queue ! xvimagesink sync=false t_vid. ! queue ! videorate ! \
 video/x-raw-yuv,framerate=3/1 ! theoraenc ! queue ! mux. \
 alsasrc device=hw:1,0 !  \

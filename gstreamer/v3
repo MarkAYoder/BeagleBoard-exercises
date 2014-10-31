@@ -7,5 +7,5 @@ fi
 
 set -x
 
-gst-launch videotestsrc pattern=$PATTERN ! edgetv ! ffmpegcolorspace ! ximagesink
+gst-launch-1.0 videotestsrc pattern=$PATTERN ! edgetv ! videoconvert ! ximagesink
 

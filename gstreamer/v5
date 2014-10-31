@@ -7,9 +7,6 @@ fi
 
 set -x
 
-./autogain
-gst-launch v4l2src device=/dev/video0 ! \
-'video/x-raw-yuv,width=640,height=480,framerate=30/1' ! xvimagesink
-
-
-
+# ./autogain
+gst-launch-1.0 v4l2src device=/dev/video0 ! \
+'video/x-raw,format=UYVY,width=640,height=480,framerate=30/1' ! xvimagesink
