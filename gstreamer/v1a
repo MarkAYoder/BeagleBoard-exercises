@@ -1,0 +1,7 @@
+#! /bin/sh
+PATTERN=0
+if [ -n "$1" ] ; then
+   PATTERN=$1
+fi
+set -x
+gst-launch-1.0 videotestsrc pattern=$PATTERN ! textoverlay text="Hello" ! timeoverlay ! videoconvert ! ximagesink
