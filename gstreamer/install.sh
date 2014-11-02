@@ -5,7 +5,7 @@ apt-get update
 
 # These take 30 minutes
 apt-get install libgstreamer1.0-0 
-apt-get install gstreamer2.0-alsa gstreamer1.0-tools gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad 
+apt-get install gstreamer1.0-alsa gstreamer1.0-tools gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad 
 
 cd ../autogain
 gcc autogain.c -o autogain
