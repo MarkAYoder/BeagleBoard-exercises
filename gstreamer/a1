@@ -1,16 +1,11 @@
 #! /bin/sh
 WAVE=1
 BUFFER=100
-
 if [ -n "$1" ] ; then
    WAVE=$1
 fi
-
 if [ -n "$2" ] ; then
    BUFFER=$2
 fi
-
 set -x
-
-gst-launch audiotestsrc wave=$WAVE freq=1000 num-buffers=$BUFFER ! alsasink
-
+gst-launch-1.0 audiotestsrc wave=$WAVE freq=1000 num-buffers=$BUFFER ! alsasink

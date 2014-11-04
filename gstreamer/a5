@@ -16,5 +16,5 @@ set -x
 # gst-launch alsasrc device="plughw:1,0" num-buffers=$BUFFER ! \
 # audio/x-raw-int,rate=8000,channels=1,depth=16 ! alsasink
 
-gst-launch alsasrc device="hw:1,0" num-buffers=$BUFFER !  alsasink
+gst-launch-1.0 alsasrc device="hw:1,0" num-buffers=$BUFFER !  alsasink
 

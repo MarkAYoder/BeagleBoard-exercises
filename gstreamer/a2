@@ -1,3 +1,4 @@
 #! /bin/sh
+# git clone git@github.com:MarkAYoder/esc-media.git for bbb.blac
 set -x
-gst-launch filesrc location=esc-media/bbb.flac ! flacdec ! alsasink
+gst-launch-1.0 filesrc location=esc-media/bbb.flac ! flacdec ! alsasink
