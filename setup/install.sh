@@ -61,6 +61,11 @@ if [ ! -e /usr/local/lib/node_modules/socket.io ] ; then
 	ln -s bonescript/node_modules/serialport/ .
 fi
 
+# Turn off some services
+cd /etc/init.d/
+mkdir -p hide
+mv apache2 hide
+
 # Set up boneServer to run at boot time
 # cp ~/exercises/realtime/boneServer.service /lib/systemd/system
 # systemctl start boneServer.service
