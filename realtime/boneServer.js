@@ -6,6 +6,7 @@
 "use strict";
 
 var port = 9090, // Port to listen on
+    bus = '/dev/i2c-2',
     http = require('http'),
     url = require('url'),
     fs = require('fs'),
@@ -157,6 +158,19 @@ io.sockets.on('connection', function (socket) {
     });
     
     socket.on('matrix', function (i2cNum) {
+        var i;
+        var line = new Array(16);
+        // console.log('Got i2c request:' + i2cNum);
+        b.i2cOpen(bus, 0x70);
+        for(i=0; i<16; i++) {
+            line[i] = b.i2cReadBytes(bus, i, 1)[0].toString(16);
+            // console.log("line: " + JSON.stringify(line[i]));
+        }
+        console.log(line.join(' '));
+        socket.emit('matrix', line.join(' '));
+    });
+    
+    socket.on('matrix.old', function (i2cNum) {
 //        console.log('Got i2c request:' + i2cNum);
         child_process.exec('i2cdump -y -r 0x00-0x0f 1 ' + i2cNum + ' b',
             function (error, stdout, stderr) {
