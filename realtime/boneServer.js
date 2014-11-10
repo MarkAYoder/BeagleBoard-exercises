@@ -163,6 +163,7 @@ io.sockets.on('connection', function (socket) {
         // console.log('Got i2c request:' + i2cNum);
         b.i2cOpen(bus, 0x70);
         for(i=0; i<16; i++) {
+            // Can only read one byte at a time.  Something's wrong
             line[i] = b.i2cReadBytes(bus, i, 1)[0].toString(16);
             // console.log("line: " + JSON.stringify(line[i]));
         }
@@ -188,6 +189,12 @@ io.sockets.on('connection', function (socket) {
     
     // Sets one column every time i2cset is received.
     socket.on('i2cset', function(params) {
+        // console.log(params);
+    	b.i2cOpen(bus, params.i2cNum);
+    	b.i2cWriteBytes(bus, params.i, [params.disp]);
+    });
+    
+    socket.on('i2cset.old', function(params) {
     // console.log(params);
 	// Double i since display has 2 bytes per LED
 	child_process.exec('i2cset -y 1 ' + params.i2cNum + ' ' + params.i + ' ' +
