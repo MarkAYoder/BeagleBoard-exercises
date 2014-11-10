@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-// npm install -g i2c
+// npm install -g sleep
 
 var b = require('bonescript');
 var sleep = require('sleep');
 var port = '/dev/i2c-2'
 var TMP102 = 0x70;
-var time = 1000; // Delay between images.
+var time = 1000000; // Delay between images in us
 
 // The first btye is GREEN, the second is RED.
 // The single color display responds only to the lower byte
@@ -25,31 +25,29 @@ b.i2cOpen(port, TMP102, {}, onI2C);
 function onI2C(x) {
     var bytes = [2, 7];
     if (x.event == 'return') {
-        // b.i2cReadByte(port, onReadByte);
         b.i2cWriteByte(port,  0x21); // Start oscillator (p10)
     	b.i2cWriteByte(port,  0x81); // Disp on, blink off (p11)
     	b.i2cWriteByte(port,  0xe7); // Full brightness (page 15)
 
         b.i2cWriteBytes(port, 0x00, frown);
-        setTimeout(function() {
-            b.i2cWriteBytes(port, 0x00, neutral);
-        }, time);
-        setTimeout(function() {
-            b.i2cWriteBytes(port, 0x00, smile);
-        }, 2*time);
-        // Fade the display
-    // 	int daddress;
-    // 	for(daddress = 0xef; daddress >= 0xe0; daddress--) {
-    // //	    printf("writing: 0x%02x\n", daddress);
-    // 	    res = i2c_smbus_write_byte(file, daddress);
-    // 	    usleep(100000);	// Sleep 0.1 seconds
-    // 	}
+        sleep.usleep(time);
+        
+        b.i2cWriteBytes(port, 0x00, neutral);
+        sleep.usleep(time);
+        
+        b.i2cWriteBytes(port, 0x00, smile);
+    // Fade the display
+    	var fade;
+    	for(fade = 0xef; fade >= 0xe0; fade--) {
+    //	    printf("writing: 0x%02x\n", fade);
+    	    b.i2cWriteByte(port,  fade);
+    	    sleep.usleep(100000);	// Sleep 0.1 seconds
+    	}
+    	for(fade = 0xe1; fade <= 0xef; fade++) {
+    //	    printf("writing: 0x%02x\n", fade);
+    	    b.i2cWriteByte(port,  fade);
+    	    sleep.usleep(100000);	// Sleep 0.1 seconds
+    	}
 
-    }
-}
-
-function onReadByte(x) {
-    if (x.event == 'callback') {
-        console.log('onReadByte: ' + JSON.stringify(x));
     }
 }
