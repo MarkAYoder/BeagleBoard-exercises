@@ -7,6 +7,7 @@
 
 var port = 9090, // Port to listen on
     bus = '/dev/i2c-2',
+    i2cNum = 0,             // Remembers the address of the last request
     http = require('http'),
     url = require('url'),
     fs = require('fs'),
@@ -190,7 +191,11 @@ io.sockets.on('connection', function (socket) {
     // Sets one column every time i2cset is received.
     socket.on('i2cset', function(params) {
         // console.log(params);
-    	b.i2cOpen(bus, params.i2cNum);
+        if(params.i2cNum !== i2cNum) {
+            i2cNum = params.i2cNum;
+            console.log("i2cset: Opening " + i2cNum);
+    	    b.i2cOpen(bus, i2cNum);
+        }
     	b.i2cWriteBytes(bus, params.i, [params.disp]);
     });
     
