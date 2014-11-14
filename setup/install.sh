@@ -74,6 +74,15 @@ mv apache2 hide
 # cd /etc/gdm
 # mv custom.conf custom.conf.orig
 # sed s/TimedLoginEnable=true/TimedLoginEnable=false/ custom.conf.orig > custom.conf
+
+# Add Wheezy backport and Jessie to apt-get
+cd /etc/apt/sources.list.d
+echo \"deb ftp://ftp.debian.org/debian/ wheezy-backports main\" > wheezy-backports.list
+echo \"deb-src ftp://ftp.debian.org/debian/ wheezy-backports main\" >> wheezy-backports.list
+echo \"deb ftp://ftp.debian.org/debian/ jessie main\" > jessie.list
+echo \"deb-src ftp://ftp.debian.org/debian/ jessie main\" >> jessie.list
+echo \"deb ftp://ftp.debian.org/debian/ sid main\" > sid.list
+echo \"deb-src ftp://ftp.debian.org/debian/ sid main\" >> sid.list
 "
 exit
 
