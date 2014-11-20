@@ -35,4 +35,4 @@ print:
 	
 clean:
 	rm -rf .tmp_versions .lpd8806* lpd8806*.mod.c *.o 
-	rm Module.symvers modules.order
+	rm Module.symvers modules.order .built-in.o.cmd
