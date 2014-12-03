@@ -84,7 +84,7 @@ echo \"deb ftp://ftp.debian.org/debian/ jessie main\" > jessie.list
 echo \"deb-src ftp://ftp.debian.org/debian/ jessie main\" >> jessie.list
 echo \"deb ftp://ftp.debian.org/debian/ sid main\" > sid.list
 echo \"deb-src ftp://ftp.debian.org/debian/ sid main\" >> sid.list
-echo \'APT::Default-Release "stable";\' > /etc/apt/apt.conf.d/local
+echo \"APT::Default-Release \\"\"stable\\"\";\" > /etc/apt/apt.conf.d/local
 "
 exit
 
