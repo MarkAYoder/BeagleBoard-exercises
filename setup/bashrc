@@ -26,24 +26,11 @@ export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pins
 export PINMUX=/sys/kernel/debug/pinctrl/44e10800.pinmux/pinmux-pins
 export PINGROUPS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pingroups
 
-# For cross compiling, but on the Bone
+# For cross compiling
 if [[ ! -e /etc/dogtag ]]
 then
     export ARCH=arm
     export CROSS_COMPILE=arm-linux-gnueabihf-
-# else
-   # export LD_LIBRARY_PATH=/usr/local/lib/
-# This is for fast numerical computations
-# From: http://www.eliteraspberries.com/blog/2013/09/cflags-for-numerical-computing-on-the-beaglebone-black.html
-   # CC=gcc
-   # export CC
-
-   # CFLAGS="-march=armv7-a -mtune=cortex-a8"
-   # CFLAGS="$CFLAGS -mfloat-abi=hard -mfpu=neon -ffast-math -O3"
-   # export CFLAGS
-
-   # CXXFLAGS="$CFLAGS"
-   # export CXXFLAGS
 fi
 
 # don't put duplicate lines in the history. See bash(1) for more options
