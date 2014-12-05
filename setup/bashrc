@@ -31,19 +31,19 @@ if [[ ! -e /etc/dogtag ]]
 then
     export ARCH=arm
     export CROSS_COMPILE=arm-linux-gnueabihf-
-else
-    export LD_LIBRARY_PATH=/usr/local/lib/
+# else
+   # export LD_LIBRARY_PATH=/usr/local/lib/
 # This is for fast numerical computations
 # From: http://www.eliteraspberries.com/blog/2013/09/cflags-for-numerical-computing-on-the-beaglebone-black.html
-   CC=gcc
-   export CC
+   # CC=gcc
+   # export CC
 
-   CFLAGS="-march=armv7-a -mtune=cortex-a8"
-   CFLAGS="$CFLAGS -mfloat-abi=hard -mfpu=neon -ffast-math -O3"
-   export CFLAGS
+   # CFLAGS="-march=armv7-a -mtune=cortex-a8"
+   # CFLAGS="$CFLAGS -mfloat-abi=hard -mfpu=neon -ffast-math -O3"
+   # export CFLAGS
 
-   CXXFLAGS="$CFLAGS"
-   export CXXFLAGS
+   # CXXFLAGS="$CFLAGS"
+   # export CXXFLAGS
 fi
 
 # don't put duplicate lines in the history. See bash(1) for more options
