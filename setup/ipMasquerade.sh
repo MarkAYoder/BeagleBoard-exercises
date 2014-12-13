@@ -17,7 +17,7 @@ ip_forward=/proc/sys/net/ipv4/ip_forward
 if [ `cat $ip_forward` == 0 ]
   then
     echo "You need to set IP forwarding. Edit /etc/sysctl.conf using:"
-    echo "$ sudo gedit /etc/sysctl.conf"
+    echo "$ sudo nano /etc/sysctl.conf"
     echo "and uncomment the line   \"net.ipv4.ip_forward=1\""
     echo "to enable forwarding of packets. Then run the following:"
     echo "$ sudo sysctl -p"
