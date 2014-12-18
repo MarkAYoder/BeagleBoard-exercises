@@ -2,6 +2,7 @@
 # This sets things up for runing the LEDstring
 # 1. enables SPI0 via device tree
 # 2. inserts the lpd8806 kernel module
+# 3. See http://elinux.org/ECE497_SPI_Project for wiring.
 
 export STRING_LEN=320
 
