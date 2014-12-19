@@ -23,13 +23,6 @@ time rsync -azq ../../cookbook-atlas root@bone:.
 # time rsync -azq ../../libsoc root@bone:.
 
 ssh root@$BONE "
-# Set up firewall to reject all but 317.112.*.* and 192.168.7.*
-iptables --policy INPUT DROP
-iptables -A INPUT -s 137.112.0.0/12 -j ACCEPT
-iptables -A INPUT -s 192.168.7.0/6 -j ACCEPT
-# Switch -A to -D to delete rule
-# iptables -D INPUT -s 192.168.7.0/6 -j ACCEPT
-
 # Set the network name of the board
 echo $BONE_NAME > /etc/hostname
 
