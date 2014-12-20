@@ -78,6 +78,8 @@ mv apache2 hide
 # Add Wheezy backport, Jessie and Sid to apt-get
 # Make Whzzey the default
 cd /etc/apt/sources.list.d
+mkdir hide
+cd hide
 echo \"deb ftp://ftp.debian.org/debian/ wheezy-backports main\" > wheezy-backports.list
 echo \"deb-src ftp://ftp.debian.org/debian/ wheezy-backports main\" >> wheezy-backports.list
 echo \"deb ftp://ftp.debian.org/debian/ jessie main\" > jessie.list
