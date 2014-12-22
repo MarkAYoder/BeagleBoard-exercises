@@ -26,4 +26,4 @@ if [ `cat $ip_forward` == 0 ]
     echo "IP forwarding is set on host."
 fi
 # Setup  IP masquerading on the host so the bone can reach the outside world
-sudo iptables -t nat -A POSTROUTING -s 192.168.0.0/16 -o $interface -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -s $beagleAddr -o $interface -j MASQUERADE
