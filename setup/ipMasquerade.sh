@@ -1,7 +1,7 @@
 #!/bin/bash
 # These are the commands to run on the host to setup IP masquerading so the Beagle
 #  can access the Internet through the USB connection.
-# This configures the host, run ./setDNS.sh to configure the bone.
+# This configures the host, run ./setDNS.sh to configure the Bone.
 # Inspired by http://thoughtshubham.blogspot.com/2010/03/internet-over-usb-otg-on-beagleboard.html
 
 if [ $# -eq 0 ] ; then
