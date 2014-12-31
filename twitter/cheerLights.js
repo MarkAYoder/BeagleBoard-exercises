@@ -8,11 +8,16 @@ var fs = require('fs');
 var lastColor = '';
 var newColor;
 var color = require('color-name');
-var colors = ['red', 'blue', 'red', 'green', 'blue', 'cyan', 'white', 
-            'purple', 'magenta', 'yellow', 'orange', 'pink'];
+var colors = Object.keys(color);        // Look for all colors
 var LEDpath = '/sys/firmware/lpd8806/device/rgb';
 // var LEDpath = 'test.rgb';
 var string_len = process.env.STRING_LEN;
+
+console.log("STRING_LEN = " + string_len);
+
+colors.sort(function(a,b) {     // Soft colors so longer names will be found.
+    return b.length - a.length;
+});
 
 var client = new Twitter({
     consumer_key: process.env.API_KEY,
@@ -47,10 +52,9 @@ function getTweet() {
         // console.log(params.statuses[0]);  // Tweet body
         // console.log(params.statuses[0].created_at);   // Text only
         // console.log(params.statuses[0].text);   // Text only
-        text = params.statuses[0].text;
         
-        text = text.toLowerCase();
-    
+        text = params.statuses[0].text.toLowerCase();
+
         for(i=0; i<colors.length ; i++) {
             // console.log(i);
             if(text.indexOf(colors[i]) != -1) {
