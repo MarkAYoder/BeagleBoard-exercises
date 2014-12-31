@@ -5,6 +5,8 @@
 
 var Twitter = require('twitter');
 var fs = require('fs');
+var lastColor = '';
+var newColor;
 var color = require('color-name');
 var colors = ['red', 'blue', 'red', 'green', 'blue', 'cyan', 'white', 
             'purple', 'magenta', 'yellow', 'orange', 'pink'];
@@ -18,19 +20,34 @@ var client = new Twitter({
     access_token_key: process.env.TOKEN,
     access_token_secret: process.env.TOKEN_SECRET,
     });
+    
+function clear(color) {
+    var i;
+    for (i=0; i<string_len; i++) {
+        fs.appendFile(LEDpath, 
+            Math.floor(color[0]/2) + ' ' +  // Red
+            Math.floor(color[1]/2) + ' ' +  // Green
+            Math.floor(color[2]/2) + ' ' +  // Blue
+            i + ' ');                       // Index
+    }
+}
+
+function display() {
+    fs.appendFile(LEDpath, "0 0 0 -1\n");
+}
 
 function getTweet() {
     // Get timeline for a given user
-    var opts = {screen_name: 'MarkAYoder', count: 1};
-    client.get('statuses/user_timeline', opts,  function(error, params, response) {
+    var opts = {screen_name: 'MarkAYoder', q: '#CheerLights', count: 1};
+    client.get('search/tweets', opts,  function(error, params, response) {
         var text;
         var i;
         // console.log(error);
         if(error) throw error;
-        // console.log(params);  // Tweet body
-        console.log(params[0].created_at);   // Text only
-        console.log(params[0].text);   // Text only
-        text = params[0].text;
+        // console.log(params.statuses[0]);  // Tweet body
+        // console.log(params.statuses[0].created_at);   // Text only
+        // console.log(params.statuses[0].text);   // Text only
+        text = params.statuses[0].text;
         
         text = text.toLowerCase();
     
@@ -41,26 +58,17 @@ function getTweet() {
                 break;
             }
         }
+        newColor = color[colors[i]];
+        console.log(newColor);
         
-        console.log(color[colors[i]]);
-        
-        function clear(red, green, blue) {
-          var i;
-          for (i=0; i<string_len; i++) {
-              fs.appendFile(LEDpath, Math.floor(red  /2) + ' ' + 
-                                     Math.floor(green/2) + ' ' + 
-                                     Math.floor(blue /2) + ' ' + 
-                                     i + ' ');
-          }
+        if(newColor !== lastColor) {
+            clear(newColor);
+            display();
+            lastColor = newColor;
+            console.log('Updating');
         }
-        
-        function display() {
-            fs.appendFile(LEDpath, "0 0 0 -1\n");
-        }
-        
-        clear(color[colors[i]][0], color[colors[i]][1], color[colors[i]][2]);
-        display();
     });
 }
+
 getTweet();
 setInterval(getTweet, 10*1000);
