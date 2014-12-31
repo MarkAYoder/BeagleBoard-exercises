@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import json
 import requests
 import urllib
@@ -30,8 +32,8 @@ def speakDestinationText(phrase):
     subprocess.call(["mplayer",googleSpeechURL], shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 args = {
-        'client_id': '',#your client id here
-        'client_secret': '',#your azure secret here
+        'client_id': 'yoder-translate', #your client id here
+        'client_secret': 'OfZDgv0SXjg5x45hip/PCsyg9wYAXxgE9LtDxiwMYkE', #your azure secret here
         'scope': 'http://api.microsofttranslator.com',
         'grant_type': 'client_credentials'
     }
