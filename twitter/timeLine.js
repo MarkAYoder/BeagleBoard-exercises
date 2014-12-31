@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 // From https://www.npmjs.com/package/twitter
+// See hhttps://dev.twitter.com/rest/public
+// to see what you can request
 
 var Twitter = require('twitter');
 
@@ -19,16 +21,20 @@ var client = new Twitter({
 //     console.log(response);  // Raw response object.
 // });
 
-client.get('statuses/home_timeline', function(error, params, response) {
-    // console.log(error);
-    if(error) throw error;
-    console.log(params);  // The favorites.
-    // console.log(response);  // Raw response object.
-});
-
-// client.post('statuses/updates', {status: 'TYBG for twitter'},  function(error, params, response) {
-//   console.log(error);
+// Get my timeline
+// client.get('statuses/home_timeline', function(error, params, response) {
+//     // console.log(error);
 //     if(error) throw error;
-//     console.log(params);  // Tweet body.
+//     console.log(params);  // The favorites.
 //     // console.log(response);  // Raw response object.
 // });
+
+// Get timeline for a given user
+var opts = {screen_name: 'MarkAYoder', count: 1};
+client.get('statuses/user_timeline', opts,  function(error, params, response) {
+    // console.log(error);
+    if(error) throw error;
+    // console.log(params);  // Tweet body
+    console.log(params[0].created_at);   // Text only
+    console.log(params[0].text);   // Text only
+});
