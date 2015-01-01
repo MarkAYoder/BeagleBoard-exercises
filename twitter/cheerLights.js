@@ -26,9 +26,12 @@ var client = new Twitter({
     access_token_secret: process.env.TOKEN_SECRET,
     });
     
-function clear(color) {
+function clear(color, skip) {
     var i;
-    for (i=0; i<string_len; i++) {
+    if(typeof skip === 'undefined') {
+        skip = 1;
+    }
+    for (i=0; i<string_len; i+=skip) {
         fs.appendFile(LEDpath, 
             Math.floor(color[0]/2) + ' ' +  // Red
             Math.floor(color[1]/2) + ' ' +  // Green
@@ -47,30 +50,40 @@ function getTweet() {
     client.get('search/tweets', opts,  function(error, params, response) {
         var text;
         var i;
+        var skip;       // Number of LEDs to skip
         // console.log(error);
-        if(error) throw error;
-        // console.log(params.statuses[0]);  // Tweet body
-        // console.log(params.statuses[0].created_at);   // Text only
-        // console.log(params.statuses[0].text);   // Text only
-        
-        text = params.statuses[0].text.toLowerCase();
-
-        for(i=0; i<colors.length ; i++) {
-            // console.log(i);
-            if(text.indexOf(colors[i]) != -1) {
-                console.log("Found: " + colors[i]);
-                break;
+        if(error) {
+            console.log("Error: " + error);
+            } else {
+            // console.log(params.statuses[0]);  // Tweet body
+            // console.log(params.statuses[0].created_at);   // Text only
+            // console.log(params.statuses[0].text);   // Text only
+            
+            text = params.statuses[0].text.toLowerCase();
+    
+            for(i=0; i<colors.length ; i++) {
+                // console.log(i);
+                if(text.indexOf(colors[i]) != -1) {
+                    console.log("Found: " + colors[i]);
+                    break;
+                }
             }
-        }
-        newColor = color[colors[i]];
-        console.log(newColor);
-        
-        if(newColor !== lastColor) {
-            clear(newColor);
-            display();
-            lastColor = newColor;
-            console.log('Updating');
-        }
+            if(i === colors.length) {
+                newColor = [10, 10, 10];
+                skip = 1;
+            } else {
+                newColor = color[colors[i]];
+                skip = 1;
+            }
+            console.log(newColor);
+            
+            if(newColor !== lastColor) {
+                clear(newColor, skip);
+                display();
+                lastColor = newColor;
+                console.log('Updating');
+                }
+            }
     });
 }
 
