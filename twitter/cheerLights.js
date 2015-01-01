@@ -88,4 +88,4 @@ function getTweet() {
 }
 
 getTweet();
-setInterval(getTweet, 10*1000);
+setInterval(getTweet, 5*60*1000);
