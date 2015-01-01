@@ -1,1 +1,1 @@
-npm install -g twitter
+npm install -g twitter color-name
