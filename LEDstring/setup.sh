@@ -7,7 +7,7 @@
 export STRING_LEN=320
 
 # Enable SPI0
-echo BB-SPIDEV0 > /sys/devices/bone_capemgr.*/slots
+echo BB-SPIDEV1 > /sys/devices/bone_capemgr.*/slots
 
 # Insert module
 
