@@ -7,13 +7,13 @@ if [ "$USER" != "root" ]
 then
   sudo modprobe fuse
   cd /mnt
-  sudo mkdir BeagleBone
+  sudo mkdir -p BeagleBone
   sudo chown $USER:$USER BeagleBone
   chmod 777 BeagleBone
   sshfs root@$BONE:/ BeagleBone
 else		# On the Bone
   cd
-  mkdir host
+  mkdir -p host
   sshfs $NAME@$HOST:. host
 fi
 
