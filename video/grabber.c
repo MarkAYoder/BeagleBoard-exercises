@@ -28,7 +28,7 @@
 
 #define CLEAR(x) memset(&(x), 0, sizeof(x))
 
-#define numFrames 2
+#define numFrames 1
 
 struct buffer {
         void   *start;
@@ -143,6 +143,7 @@ int main(int argc, char **argv)
                 buf.memory = V4L2_MEMORY_MMAP;
                 xioctl(fd, VIDIOC_DQBUF, &buf);
 
+                printf("i=%d\n", i);
                 sprintf(out_name, "grabber%03d.ppm", i);
                 fout = fopen(out_name, "w");
                 if (!fout) {

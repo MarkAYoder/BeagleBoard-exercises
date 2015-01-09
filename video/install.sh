@@ -5,3 +5,6 @@ apt-get install libv4l-dev
 gcc -lv4l2 -o grabber grabber.c
 apt-get install graphicsmagick
 
+npm install -g v4l2camera
+npm install -g gm
+
