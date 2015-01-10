@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+// Posts a tweet
+// Run setup.sh first
+
 // From https://www.npmjs.com/package/twitter
 // See hhttps://dev.twitter.com/rest/public
 // to see what you can request
@@ -23,7 +26,7 @@ var client = new Twitter({
 
 // console.log(client);
 
-// Get timeline for a given user
+// Post message
 var opts = {status: message, trim_user: true };
 client.post('statuses/update', opts,  function(error, params, response) {
     if(error) {
