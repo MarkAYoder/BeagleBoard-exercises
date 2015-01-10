@@ -4,16 +4,18 @@
 REF=ref.ppm
 OBJ=obj.ppm
 OUT=out.ppm
+DIF=dif.ppm
 GRAB=grabber000.ppm
-./grabber
-mv $GRAB $REF
-read -p "Press [Enter] key to grab next image ..."
-./grabber
-mv $GRAB $OBJ
-gm composite -compose Difference $REF $OBJ - \
-| convert ppm:- -threshold 1% \
+# ./grabber
+# mv $GRAB $REF
+# read -p "Press [Enter] key to grab next image ..."
+# ./grabber
+# mv $GRAB $OBJ
+composite -compose Difference $REF $OBJ $DIF
+convert $DIF \
+    -auto-level \
+    -threshold 1% \
 	-morphology Erode Octagon:1 \
-	-trim \
 	$OUT
 display $OUT
 
@@ -21,3 +23,8 @@ display $OUT
 #	-morphology Thicken:-1 ConvexHull \
 #	-morphology Close Diamond \
 #	-connected-components 4 -auto-level -depth 8 \
+#   	-trim \
+
+convert obj.ppm  thresh.ppm \
+          -alpha off -compose CopyOpacity -composite \
+          both.ppm
