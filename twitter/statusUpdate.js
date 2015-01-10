@@ -5,6 +5,15 @@
 
 var Twitter = require('twitter');
 
+// The message
+var message="This is a test message.";
+
+// Use the command line as the message if given.
+if(process.argv.length > 2) {
+    message = process.argv.slice(2).join(" ");
+    console.log(message);
+}
+
 var client = new Twitter({
     consumer_key: process.env.API_KEY,
     consumer_secret: process.env.API_SECRET,
@@ -15,11 +24,12 @@ var client = new Twitter({
 // console.log(client);
 
 // Get timeline for a given user
-var opts = {status: "Testing API 2", trim_user: true};
+var opts = {status: message, trim_user: true };
 client.post('statuses/update', opts,  function(error, params, response) {
     if(error) {
         console.log(error);
     } else {
-        console.log(params);  // Tweet body
+        //console.log(params);  // Tweet body
+        console.log("Posted");
     }
 });
