@@ -4,7 +4,7 @@
 
 // Twilio Credentials 
 var accountSid = 'AC407ab27aab63fa995dbc24c43a18d204'; 
-var authToken = '99e44f31bc8c7981c4ae6d6cf9c65ed'; 
+var authToken = '99e44f31bc8c7981c4ae6d6cf9c65eda'; 
 
 // The message
 var message="This is a test message.";
@@ -19,9 +19,16 @@ if(process.argv.length > 2) {
 var client = require('twilio')(accountSid, authToken); 
  
 client.messages.create({ 
-	to: "8122333219", 
-	from: "+18122333826", 
+	// to: "812-233-3219", 
+	to: "812-221-2291", 
+	from: "+1-812-233-3826", 
 	body: message,
+	// https://www.twilio.com/blog/2014/09/getting-started-with-twilio-mms.html
+	// mediaUrl: 'http://137.112.41.36/test.jpg',
 }, function(err, message) { 
-	console.log(message.sid); 
+	if(err) {
+		console.log(err);
+	} else {
+		console.log(message.sid);
+	}
 });
