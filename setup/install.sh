@@ -18,8 +18,8 @@ scp -r ssh root@$BONE:.ssh
 echo rsyncing exercises, this will take about 40 seconds
 time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises root@bone:.
 
-echo rsyncing cookbook-atlas, this will take about 2 seconds
-time rsync -azq ../../cookbook-atlas root@bone:.
+echo rsyncing beaglebone-cookbook, this will take about 2 seconds
+time rsync -azq ../../beaglebone-cookbook root@bone:.
 # time rsync -azq ../../libsoc root@bone:.
 
 ssh root@$BONE "
@@ -34,7 +34,7 @@ git config --global user.name \"Mark A. Yoder\"
 git config --global user.email Mark.A.Yoder@Rose-Hulman.edu
 git config --global color.ui true
 # Fix postBuffer size
-cd cookbook-atlas/.git
+cd beaglebone-cookbook/.git
 mv config config.orig
 sed 's/	postBuffer = 524288000//' config.orig > config
 cd
