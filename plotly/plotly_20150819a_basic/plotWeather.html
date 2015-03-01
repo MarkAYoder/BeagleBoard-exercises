@@ -91,6 +91,7 @@ layout = {                     // all "layout" attributes: #layout
         overlaying: 'y',
         side: 'right'
     },
+/*
     annotations: [            // all "annotation" attributes: #layout-annotations
         {
             text: 'Rain',     // #layout-annotations-text
@@ -115,6 +116,7 @@ layout = {                     // all "layout" attributes: #layout
         }
 
     ]
+*/
 }
 
 var server = 'http://14.139.34.32:8080/';
@@ -125,7 +127,7 @@ var public_key = 'v02NOaq1KKhpYLJqJ9EWFq1N8QqE';
 var jsonData = $.ajax({
   // url: 'http://14.139.34.32:8080/output/' + public_key + '.json' + timezone,
   url: server + 'output/' + public_key + '.json',
-  data: {page: 1},
+   data: {page: 1},
   dataType: 'jsonp',
 }).done(function (results) {
     // console.log(results);
@@ -145,7 +147,7 @@ var jsonData = $.ajax({
         }
     });
     data[1].y = _.map(results, function(item) { // Copy pressure data
-        if(item.pressure > 890 && item.pressure < 920) {
+        if(item.pressure > 880 && item.pressure < 920) {
             return item.pressure;
         } else {
             return NaN;

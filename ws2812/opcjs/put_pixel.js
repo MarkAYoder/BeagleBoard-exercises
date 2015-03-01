@@ -7,7 +7,7 @@ var client = new opc_client({
   port: 7890
 });
 
-client.on('connected', function(){
+client.on('connected', function() {
   var strip = client.add_strip({
     length: 100
   });
