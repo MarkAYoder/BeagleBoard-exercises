@@ -67,7 +67,7 @@ var barometer = new BMP085();
 
 setInterval(readWeather, ms);
 
-readWeather();
+b.pinMode(POWER, b.OUTPUT, 7, '', '', readWeather);
 
 function readWeather() {
     barometer.read(postTemp);
