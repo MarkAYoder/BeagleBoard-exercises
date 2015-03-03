@@ -36,7 +36,7 @@ var BMP085        = require('bmp085');
 var util          = require('util');
 var fs            = require('fs');
 var b             = require('bonescript');
-var ms = 5*60*1000;               // Repeat time
+var ms = 1*60*1000;               // Repeat time
 
 // console.log(util.inspect(request));
 // request.debug = true;
