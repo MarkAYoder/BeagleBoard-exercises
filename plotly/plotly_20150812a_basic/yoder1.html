@@ -21,6 +21,20 @@
 <div id="tester" style="width:600px;height:400px;"></div>
 
 <p>You can use this page as a playground by opening the console and typing:</p>
+<pre style="margin:20px;">
+// try out any data and layout objects - see demo.html for examples
+Plotly.newPlot(TESTER,[
+    {x:[1,3,5,7,9],y:[2,5,7,3,8],type:'bar'},
+    {x:[1,3,5,7],y:[4,6,3,1],type:'bar'}
+    ],{plot_bgcolor:'#EEE'});
+// check out the data and layout objects
+TESTER.data
+TESTER.layout
+// modify them
+Plotly.relayout(TESTER,{'xaxis.range[1]':15, 'barmode':'group'})
+Plotly.restyle(TESTER,{bardir:'h'});
+</pre>
+
 
 <!--
     Include these javascript files.
@@ -50,6 +64,12 @@ data = [
         "marker": {         // marker is an object, valid marker keys: #scatter-marker
             "color": "rgb(16, 32, 77)" // more about "marker.color": #scatter-marker-color
         }
+    },
+    {
+        "type": "bar",      // all "bar" chart attributes: #bar
+        "x": [1, 2, 3],     // more about "x": #bar-x
+        "y": [3, 1, 6],     // #bar-y
+        "name": "bar chart example" // #bar-name
     }
 ];
 
@@ -68,36 +88,8 @@ layout = {                     // all "layout" attributes: #layout
         }
     ]
 }
-
-var public_key = 'v02NOaq1KKhpYLJqJ9EWFq1N8QqE';
-
-// JSONP request
-var jsonData = $.ajax({
-  url: 'http://14.139.34.32:8080/output/' + public_key + '.json',
-  data: {page: 1},
-  dataType: 'jsonp',
-}).done(function (results) {
-    // console.log(results);
-    // var i;
-    // for(i=0; i<5; i++) {
-    //     console.log(results[i]);
-    // }
-    data[0].x = _.map(results, function(item) {
-            return item.timestamp.replace('T', ' ').replace('Z', '');
-        });
-    data[0].y = _.map(results, function(item) {
-        if(item.temp < 60) {
-            return item.temp;
-        } else {
-            return NaN;
-        }
-        });
-    console.log(data[0].x);
-    
-    Plotly.plot(TESTER, data, layout);
-});
+Plotly.plot(TESTER,data, layout);
 
 </script>
-<script type="text/javascript" src="demo_dependencies/underscore.min.js"></script>
 </body>
 </html>
