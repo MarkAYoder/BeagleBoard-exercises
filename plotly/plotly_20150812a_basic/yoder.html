@@ -4,6 +4,8 @@
 <title>plotly.js yoder example</title>
 
 <!--
+    https://plot.ly/javascript/reference
+
     Plotly prefers Open Sans, which can be included via the link below. But if
     you cannot or do not want to access external resources, we fall back on
     Verdana or Arial. You can specify any other font via layout.font.family.
@@ -18,9 +20,8 @@
     Plots go in blank <div> elements. You can size them in the plot layout,
     or give the div a size as shown here.
 -->
-<div id="tester" style="width:600px;height:400px;"></div>
-
-<p>You can use this page as a playground by opening the console and typing:</p>
+<!--<div id="tester" style="width:600px;height:400px;"></div>-->
+<div id="tester"></div>
 
 <!--
     Include these javascript files.
@@ -48,8 +49,11 @@ data = [
         "x": [1, 2, 3],     // more about "x": #scatter-x
         "y": [3, 1, 6],     // #scatter-y
         "marker": {         // marker is an object, valid marker keys: #scatter-marker
-            "color": "rgb(16, 32, 77)" // more about "marker.color": #scatter-marker-color
-        }
+            "color": "rgb(16, 32, 77)", // more about "marker.color": #scatter-marker-color
+            size: 2
+        },
+        connectgaps: false,
+        mode:   'markers'
     }
 ];
 
@@ -83,7 +87,7 @@ var jsonData = $.ajax({
     //     console.log(results[i]);
     // }
     data[0].x = _.map(results, function(item) {
-            return item.timestamp.replace('T', ' ').replace('Z', '');
+            return item.timestamp.replace('T', ' ').replace('Z', ''); // Convert to Plotly time format
         });
     data[0].y = _.map(results, function(item) {
         if(item.temp < 60) {
@@ -92,7 +96,7 @@ var jsonData = $.ajax({
             return NaN;
         }
         });
-    console.log(data[0].x);
+    // console.log(data[0].x);
     
     Plotly.plot(TESTER, data, layout);
 });
