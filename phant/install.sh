@@ -16,3 +16,8 @@ wget https://www.google.com/jsapi
 
 # Log some data
 wget http://14.139.34.32:8080/input/$phant_PUBLIC?private_key=$ylDNWDNO7yFGDwORErVjCN84lmz\&amplitude=23.29\&timestamp=25.94
+
+# Make html visible to default web server
+dir=$PWD
+cd /var/lib/cloud9
+ln -s $dir .

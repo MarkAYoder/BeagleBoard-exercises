@@ -38,10 +38,10 @@ var BMP085        = require('bmp085');
 var util          = require('util');
 var fs            = require('fs');
 var b             = require('bonescript');
-var humidPin = 'P9_40';     // Attach HIH-4030 here
+// var humidPin = 'P9_40';     // Attach HIH-4030 here
 var ms = 60*1000;               // Repeat time
 
-var filename = "/home/yoder/exercises/phant/keys_weather.json";
+// var filename = "/home/yoder/exercises/phant/keys_weather.json";
 var filename = "/root/exercises/phant/keys_weather.json";
 // logger.debug("process.argv.length: " + process.argv.length);
 if(process.argv.length === 3) {
@@ -56,9 +56,9 @@ var urlBase = keys.inputUrl + "/?private_key=" + keys.privateKey + "&humidity=%s
 
 // Read 
 
-// var temp     = 'NaN', 
-//     pressure = 'NaN', 
-//     humidity = 'NaN';
+var temp, 
+    pressure, 
+    humidity;
 // postWeather();      // Make first positing NaN so plot will have a gap.
 
 var barometer = new BMP085();
@@ -69,25 +69,25 @@ readWeather();
 
 function readWeather() {
     barometer.read(postTemp);
-    b.analogRead(humidPin, postHumidity);
+    // b.analogRead(humidPin, postHumidity);
 }
 
-function postHumidity(x) {
-    humidity = x.value.toFixed(4);
-    if(x.err) {
-        logger.error('x.err = ' + x.err);
-        logger.error('x.value = ' + x.value);
-        logger.error("url: " + url);
-    }
+// function postHumidity(x) {
+//     humidity = x.value.toFixed(4);
+//     if(x.err) {
+//         logger.error('x.err = ' + x.err);
+//         logger.error('x.value = ' + x.value);
+//         logger.error("url: " + url);
+//     }
 
-    // logger.info("humidity: " + humidity);
+//     // logger.info("humidity: " + humidity);
     
-    if(temp) {      // Wait until both the humidity and temp have reported back.
-        postWeather();
-    } else {
-        logger.info("Waiting for temp");
-    }
-}
+//     if(temp) {      // Wait until both the humidity and temp have reported back.
+//         postWeather();
+//     } else {
+//         logger.info("Waiting for temp");
+//     }
+// }
 
 function postTemp(data) {
     // logger.debug("data: " + util.inspect(data));
@@ -97,16 +97,17 @@ function postTemp(data) {
     // logger.debug("temp: " + temp);
     // logger.debug("pressure: " + pressure);
     
-    if(humidity) {      // Wait until both the humidity and temp have reported back.
+    // if(humidity) {      // Wait until both the humidity and temp have reported back.
         postWeather();
-    } else {
-        logger.info("Waiting for humidity");
-    }
+    // } else {
+    //     logger.info("Waiting for humidity");
+    // }
 }
 
 function postWeather() {
     // Both temp and humidity have replied
-    var url = util.format(urlBase, humidity, pressure, temp);
+    // var url = util.format(urlBase, humidity, pressure, temp);
+    var url = util.format(urlBase, 0, pressure, temp);
     // logger.debug("url: ", url);
     request(url, function (error, response, body) {
         if (!error && response.statusCode == 200) {
@@ -118,5 +119,5 @@ function postWeather() {
     // Reset variables for next time.
     temp = '';
     pressure = '';
-    humidity = '';
+    // humidity = '';
 }
