@@ -49,34 +49,62 @@ data = [
         "x": [1, 2, 3],     // more about "x": #scatter-x
         "y": [3, 1, 6],     // #scatter-y
         "marker": {         // marker is an object, valid marker keys: #scatter-marker
-            "color": "rgb(16, 32, 77)", // more about "marker.color": #scatter-marker-color
+            "color": "rgb(255, 32, 77)", // more about "marker.color": #scatter-marker-color
             size: 2
         },
         connectgaps: false,
-        mode:   'markers'
+        mode:   'markers',
+        name:   'Temp'
+    },
+        {
+        "type": "scatter",  // all "scatter" attributes: https://plot.ly/javascript/reference/#scatter
+        "x": [1, 2, 3],     // more about "x": #scatter-x
+        "y": [3, 1, 6],     // #scatter-y
+        "marker": {         // marker is an object, valid marker keys: #scatter-marker
+            "color": "rgb(16, 255, 77)", // more about "marker.color": #scatter-marker-color
+            size: 2
+        },
+        connectgaps: false,
+        mode:   'markers',
+        name:   'Pressure',
+        yaxis: 'y2'
     }
+
 ];
 
 layout = {                     // all "layout" attributes: #layout
-    "title": "simple example",  // more about "layout.title": #layout-title
+    "title": "",  // more about "layout.title": #layout-title
     "xaxis": {                  // all "layout.xaxis" attributes: #layout-xaxis
         "title": "time"         // more about "layout.xaxis.title": #layout-xaxis-title
     },
+    yaxis: {
+        title: 'Temperature (C)',
+        titlefont: {color: 'rgb(255, 32, 77)'},
+    },
+    yaxis2: {
+        title: 'pressure',
+        titlefont: {color: 'rgb(16, 255, 77)'},
+        tickfont: {color: 'rgb(148, 103, 189)'},
+        overlaying: 'y',
+        side: 'right'
+    },
     "annotations": [            // all "annotation" attributes: #layout-annotations
         {
-            "text": "simple annotation",    // #layout-annotations-text
-            "x": 0,                         // #layout-annotations-x
-            "xref": "paper",                // #layout-annotations-xref
-            "y": 0,                         // #layout-annotations-y
-            "yref": "paper"                 // #layout-annotations-yref
+            "text": "Rain",    // #layout-annotations-text
+            "x": '2015-09-16 12:09',                         // #layout-annotations-x
+            // "xref": "paper",                // #layout-annotations-xref
+            "y": 26.5,                         // #layout-annotations-y
+            // "yref": "paper"                 // #layout-annotations-yref
         }
     ]
 }
 
 var public_key = 'v02NOaq1KKhpYLJqJ9EWFq1N8QqE';
+var timezone = '?timezone=Asia/Calcutta';
 
 // JSONP request
 var jsonData = $.ajax({
+  // url: 'http://14.139.34.32:8080/output/' + public_key + '.json' + timezone,
   url: 'http://14.139.34.32:8080/output/' + public_key + '.json',
   data: {page: 1},
   dataType: 'jsonp',
@@ -89,9 +117,17 @@ var jsonData = $.ajax({
     data[0].x = _.map(results, function(item) {
             return item.timestamp.replace('T', ' ').replace('Z', ''); // Convert to Plotly time format
         });
+    data[1].x = data[0].x;
     data[0].y = _.map(results, function(item) {
         if(item.temp < 60) {
             return item.temp;
+        } else {
+            return NaN;
+        }
+        });
+    data[1].y = _.map(results, function(item) {
+        if(item.pressure < 950) {
+            return item.pressure;
         } else {
             return NaN;
         }
