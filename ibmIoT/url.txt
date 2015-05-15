@@ -1,1 +1,0 @@
-https://developer.ibm.com/iot/recipes/ti-beaglebone-sensortag/
