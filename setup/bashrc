@@ -6,6 +6,9 @@
 [ -z "$PS1" ] && return
 
 # My Stuff
+# Make caps lock strl
+setxkbmap -option ctrl:nocaps
+
 # Correct the date, if it's in the wrong year
 if [[ `date +%Y` < 2013 ]]
 then
