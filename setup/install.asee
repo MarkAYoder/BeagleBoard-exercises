@@ -2,18 +2,16 @@
 # Here are the extra things I install on the bone for the ASEE workshop.
 # Run this on the host computer with the Black Bone attached via USB
 # --Mark
-# 27-May-2015
+# 3-June-2015
 set -e
 BONE=192.168.7.2
 BONE_NAME=yoder-debian-bone
 
 # Set the date to that of the host computer
-# DATE=`date`
-# ssh root@$BONE "date -s \"$DATE\""
 ./setDNS.sh
 ./doDate.sh
 
-# Copy local copy of exercises to bone and then pull
+# Copy local copy of exercises to bone
 # echo rsyncing exercises, this will take about 40 seconds
 # time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises root@bone:.
 
