@@ -2,6 +2,7 @@
 var request = require('request');
 var qs = require('querystring');
 var event = 'my_test';
+// var event = 'tweet';
 var key = 'yycMlao6V0SbGCk2iAhl9';
 var string = {value1: 'My', value2: 'Test', value3: 'BeagleBone'};
 
