@@ -16,4 +16,3 @@ else		# On the Bone
   mkdir -p host
   sshfs $NAME@$HOST:. host
 fi
-

@@ -2,23 +2,30 @@
 # Here are the extra things I install on the bone for the ASEE workshop.
 # Run this on the host computer with the Black Bone attached via USB
 # --Mark
-# 27-May-2015
+# 3-June-2015
 set -e
 BONE=192.168.7.2
 BONE_NAME=yoder-debian-bone
 
 # Set the date to that of the host computer
-DATE=`date`
-ssh root@$BONE "date -s \"$DATE\""
+./setDNS.sh
+./doDate.sh
 
-# Copy local copy of exercises to bone and then pull
-echo rsyncing exercises, this will take about 40 seconds
-time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises root@bone:.
+# Copy local copy of exercises to bone
+# echo rsyncing exercises, this will take about 40 seconds
+# time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises root@bone:.
 
 # Include workshop material
+rsync -azq ../../ASEE\ 2015\ Workshop bone:/media/BEAGLEBONE
+rsync -azq ../../ASEE\ 2015\ Workshop/servo.js bone:/var/lib/cloud9/examples
 rsync -azq ../../iot-beaglebone root@bone:.
 
 ssh root@$BONE "
+# Install the IBM SensorTag things
+apt-get update
+cd iot-beaglebone/samples/nodejs/
+./setup.sh
+
 # Set up boneServer to run at boot time
 # cp ~/exercises/realtime/boneServer.service /lib/systemd/system
 # systemctl start boneServer.service
@@ -28,7 +35,6 @@ ssh root@$BONE "
 # mv custom.conf custom.conf.orig
 # sed s/TimedLoginEnable=true/TimedLoginEnable=false/ custom.conf.orig > custom.conf
 
-apt-get update
 "
 exit
 

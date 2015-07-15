@@ -32,6 +32,7 @@ mv /etc/issue.net /etc/issue.net.orig
 # Set up github
 git config --global user.name \"Mark A. Yoder\"
 git config --global user.email Mark.A.Yoder@Rose-Hulman.edu
+git config --global push.default simple
 git config --global color.ui true
 # Fix postBuffer size
 cd beaglebone-cookbook/.git
