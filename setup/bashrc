@@ -9,6 +9,10 @@
 # Make caps lock strl
 # setxkbmap -option ctrl:nocaps
 
+# Mandi proxy
+export http_proxy="http://10.8.0.1:8080"
+export https_proxy="https://10.8.0.1:8080"
+
 # Correct the date, if it's in the wrong year
 if [[ `date +%Y` < 2013 ]]
 then
@@ -34,6 +38,7 @@ if [[ ! -e /etc/dogtag ]]
 then
     export ARCH=arm
     export CROSS_COMPILE=arm-linux-gnueabihf-
+    export GIT_SSL_NO_VERIFY=1
 fi
 
 # don't put duplicate lines in the history. See bash(1) for more options
