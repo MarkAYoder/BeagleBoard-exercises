@@ -40,6 +40,11 @@ mv config config.orig
 sed 's/	postBuffer = 524288000//' config.orig > config
 cd
 
+# IIT Mandi Proxy
+# npm
+npm config set proxy http://10.8.0.1:8080
+npm config set https-proxy http://10.8.0.1:8080
+
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
 ln -s --backup=numbered exercises/setup/bashrc .bashrc
 # ln -s --backup=numbered exercises/setup/x11vncrc .x11vncrc
