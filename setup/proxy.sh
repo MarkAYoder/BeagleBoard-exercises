@@ -1,4 +1,5 @@
 # Set proxy for IIT Mandi
+# Install with apt-get install dconf-tools
 for proxy in ftp http https socks 
 do
     echo $proxy 
