@@ -1,31 +1,23 @@
 #!/usr/bin/env node
 
-// var http = require('http');
-// var fs = require('fs');
-// var server = http.createServer(function(req, res) {
-//     fs.createReadStream('httpServer.js').pipe(res);
-// });
-// server.listen(process.argv[2]);
-
-    // var http = require('http');
-    // var fs = require('fs');
-    // console.log("Starting...");
-    
-    // var server = http.createServer(function (req, res) {
-    //     console.log("Got request");
-    //     if (req.method === 'POST') {
-    //         req.pipe(res);
-    //     }
-    //     res.end('beep boop\n');
-    // });
-    // server.listen(process.argv[2]);
-
     var http = require('http');
-    var fs = require('fs');
-    var server = http.createServer(function (req, res) {
+    var through = require('through2');
+
+    console.log("Starting...");
+
+    var server = http.createServer(function(req, res) {
+        console.log("Got request " + req.method);
         if (req.method === 'POST') {
-            req.pipe(fs.createWriteStream('post.txt'));
+            console.log("It's a POST");
+            req.pipe(through(function(buffer, _, next) {
+                this.push(buffer.toString().toUpperCase());
+                console.log(buffer.toString());
+                next();
+            })).pipe(res);
         }
-        res.end('beep boop\n');
+        else {
+            res.end('beep boop\n');
+        }
     });
-    server.listen(process.argv[2]);
+    server.listen(parseInt(process.argv[2]));
+    
