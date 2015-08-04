@@ -1,0 +1,9 @@
+{
+  "title": "Test 3",
+  "outputUrl": "http://14.139.34.32:8080/output/4X9aed2JXgUlEV1m1bBvu0JBmY0",
+  "inputUrl": "http://14.139.34.32:8080/input/4X9aed2JXgUlEV1m1bBvu0JBmY0",
+  "manageUrl": "http://14.139.34.32:8080/streams/4X9aed2JXgUlEV1m1bBvu0JBmY0",
+  "publicKey": "4X9aed2JXgUlEV1m1bBvu0JBmY0",
+  "privateKey": "qmLBjGrEmXCl3M7x7XPBc78zLR7",
+  "deleteKey": "yqvelNGxqPhPv8g6gkOwcVNa2rV"
+}
