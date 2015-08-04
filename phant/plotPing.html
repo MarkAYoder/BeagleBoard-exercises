@@ -11,33 +11,31 @@
       // onload callback
       function drawChart() {
 
-        var public_key = 'dZ4EVmE8yGCRGx5XRX1W';
+        var public_key = '4X9aed2JXgUlEV1m1bBvu0JBmY0';
 
         // JSONP request
         var jsonData = $.ajax({
-          url: 'https://data.sparkfun.com/output/' + public_key + '.json',
-          data: {page: 1},
+          url: 'http://14.139.34.32:8080/output/' + public_key + '.json',
+          // data: {page: 1},
           dataType: 'jsonp',
         }).done(function (results) {
 
           var data = new google.visualization.DataTable();
 
           data.addColumn('datetime', 'Time');
-          data.addColumn('number', 'Temp');
-          data.addColumn('number', 'Wind Speed MPH');
+          data.addColumn('number', 'Time (ms)');
 
           $.each(results, function (i, row) {
             data.addRow([
               (new Date(row.timestamp)),
-              parseFloat(row.tempf),
-              parseFloat(row.windspeedmph)
+              parseFloat(row.time)
             ]);
           });
 
           var chart = new google.visualization.LineChart($('#chart').get(0));
 
           chart.draw(data, {
-            title: 'Wimp Weather Station'
+            title: 'Ping Return Times'
           });
 
         });
