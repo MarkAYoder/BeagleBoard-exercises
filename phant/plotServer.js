@@ -14,9 +14,13 @@ server = http.createServer(function (req, res) {
         path = '/plotPing.html';
     }
 
+    // console.log("path: " + __dirname + path);
     fs.readFile(__dirname + path, function (err, data) {
-        if (err) {return send404(res); }
-//            console.log("path2: " + path);
+        if (err) {
+            console.log(err);
+            return send404(res);
+        }
+        // console.log("path2: " + path);
         res.write(data, 'utf8');
         res.end();
     });
