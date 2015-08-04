@@ -7,7 +7,7 @@
 
 # My Stuff
 # Make caps lock strl
-setxkbmap -option ctrl:nocaps
+# setxkbmap -option ctrl:nocaps
 
 # Correct the date, if it's in the wrong year
 if [[ `date +%Y` < 2013 ]]
@@ -23,6 +23,9 @@ alias ls='ls -F'
 alias gedit="gedit $1 >& /dev/null"
 alias go=gnome-open
 
+# DSP First
+export PATH=$PATH:~/cdrom/support/scripts
+
 # For Device Tree Overlays
 export SLOTS=/sys/devices/bone_capemgr.*/slots
 export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pins
@@ -34,6 +37,7 @@ if [[ ! -e /etc/dogtag ]]
 then
     export ARCH=arm
     export CROSS_COMPILE=arm-linux-gnueabihf-
+    export GIT_SSL_NO_VERIFY=1
 fi
 
 # don't put duplicate lines in the history. See bash(1) for more options
