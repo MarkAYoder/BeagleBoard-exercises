@@ -19,6 +19,8 @@
           data: {page: 1},
           dataType: 'jsonp',
         }).done(function (results) {
+          
+          // console.log(results);
 
           var data = new google.visualization.DataTable();
 
@@ -26,10 +28,12 @@
           data.addColumn('number', 'Time (ms)');
 
           $.each(results, function (i, row) {
+            if(i<100) {
             data.addRow([
               (new Date(row.timestamp)),
               parseFloat(row.time)
             ]);
+            }
           });
 
           var chart = new google.visualization.LineChart($('#chart').get(0));
