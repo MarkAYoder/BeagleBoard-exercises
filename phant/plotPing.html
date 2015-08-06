@@ -28,7 +28,7 @@
           data.addColumn('number', 'Time (ms)');
 
           $.each(results, function (i, row) {
-            if(i<100) {
+            if(i<3*24*60) {
             data.addRow([
               (new Date(row.timestamp)),
               parseFloat(row.time)
