@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // Pings google until it gets a response and then beeps.
+// apt-get install flite
 
 var child_process = require('child_process');
 var ms = 1000;  // Repeat time.
