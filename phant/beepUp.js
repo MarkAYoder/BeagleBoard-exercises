@@ -5,7 +5,7 @@ var child_process = require('child_process');
 var ms = 1000;  // Repeat time.
 
 var pingCmd = "ping -c1 -i1 google.com";
-console.log("process.argv.length: " + process.argv.length);
+// console.log("process.argv.length: " + process.argv.length);
 if(process.argv.length === 3) {
     pingCmd = process.argv[2];
 }
@@ -21,9 +21,20 @@ function ping  () {
                 console.log('error: ' + error); 
                 console.log('stderr: ' + stderr); 
             } else {
-                console.log("ping returned");
                 clearInterval(timer);
+                console.log("ping returned");
+                speakForSelf("Bark, bark!");
             }
         }
     )
 }
+
+function speakForSelf(phrase) {
+//	exec(__dirname + '/speak.sh ' + phrase, function (error, stdout, stderr) {
+	child_process.exec('flite -t "' + phrase + '"', function (error, stdout, stderr) {
+        console.log(stdout);
+        if(error) { console.log('error: ' + error); }
+        if(stderr) {console.log('stderr: ' + stderr); }
+    });
+}
+
