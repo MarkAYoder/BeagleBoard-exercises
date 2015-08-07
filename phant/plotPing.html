@@ -28,7 +28,7 @@
           data.addColumn('number', 'Time (ms)');
 
           $.each(results, function (i, row) {
-            if(i<3*24*60) {
+            if(i<2*24*60) {
             data.addRow([
               (new Date(row.timestamp)),
               parseFloat(row.time)
@@ -36,9 +36,14 @@
             }
           });
 
-          var chart = new google.visualization.LineChart($('#chart').get(0));
+          var chart =  new google.visualization.LineChart($('#chart').get(0));
+          var chart2 = new google.visualization.LineChart($('#chart2').get(0));
 
           chart.draw(data, {
+            title: 'Ping Return Times'
+          });
+
+          chart2.draw(data, {
             title: 'Ping Return Times'
           });
 
@@ -59,5 +64,6 @@
   </head>
   <body>
     <div id="chart" style="width: 100%;"></div>
+    <div id="chart2" style="width: 100%;"></div>
   </body>
 </html>
