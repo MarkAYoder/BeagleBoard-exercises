@@ -40,6 +40,11 @@ mv config config.orig
 sed 's/	postBuffer = 524288000//' config.orig > config
 cd
 
+# IIT Mandi Proxy
+# npm
+npm config set proxy http://10.8.0.1:8080
+npm config set https-proxy http://10.8.0.1:8080
+
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
 ln -s --backup=numbered exercises/setup/bashrc .bashrc
 # ln -s --backup=numbered exercises/setup/x11vncrc .x11vncrc
@@ -47,9 +52,10 @@ ln -s --backup=numbered exercises/setup/bashrc .bashrc
 # Set the default sound card to NOT be HDMI
 ln -s --backup=numbered exercises/setup/asoundrc .asoundrc
 
-# Set the time zone to Indiana
+# Set the time zone to India
 rm /etc/localtime
-ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
+# ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
+ln -s /usr/share/zoneinfo/Asia/Calcutta /etc/localtime
 
 # Turn off cape-bone-proto
 # sed -i -e 's:CAPE=cape-bone-proto:#CAPE=cape-bone-proto:g' /etc/default/capemgr

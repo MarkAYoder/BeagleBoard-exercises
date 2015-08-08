@@ -9,7 +9,7 @@ BONE_NAME=yoder-debian-bone
 
 # Set the date to that of the host computer
 ./setDNS.sh
-./doDate.sh
+./setDate.sh
 
 # Copy local copy of exercises to bone
 # echo rsyncing exercises, this will take about 40 seconds
