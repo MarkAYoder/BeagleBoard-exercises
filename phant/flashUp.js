@@ -6,8 +6,8 @@ var child = require('child_process');
 var b = require('bonescript');
 
 var pingCmd = "ping -w1 google.com";
-var ms = 1500;  // Repeat time in ms.
-var thresh = 16.0;  // If time is above this, turn on warning light
+var ms = 1500;          // Repeat time in ms.
+var thresh = 16.0;      // If time is above this, turn on warning light
 var hist = new Array(10);
 var current = 0;        // Insert next value here 
 var red   = 'P9_11';
@@ -53,11 +53,11 @@ function ping  () {
                 average /= hist.length;
                 hist[current] = time[0];
                 current++;
-                if(current >= hist.length) {
-                    current=0;
+                if(current >= hist.length) {    // Keep a circular buffer of
+                    current=0;                  // most recent values
                 }
 
-                console.log('ping: time=' + time[0] + ' average=' + average);
+                console.log('ping: time = %d, average = %d', time[0].toFixed(2), average.toFixed(2));
                 if(time[0] > 1.1*average) {  // Turn on warning
                     b.digitalWrite(red,   1);
                     b.digitalWrite(green, 1);
@@ -70,4 +70,17 @@ function ping  () {
             }
         }
     )
+}
+
+process.on('SIGINT', function() {
+    console.log('Got SIGINT');
+    clearInterval(timer);
+    setTimeout(allOff, 1000);
+});
+
+function allOff() {
+    console.log("allOff");
+    b.digitalWrite(red,   0);
+    b.digitalWrite(green, 0);
+    b.digitalWrite(blue,  0);
 }
