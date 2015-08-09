@@ -10,7 +10,7 @@ var util          = require('util');
 var fs            = require('fs');
 
 var ping = "ping -c1 -i0.25 rose-hulman.edu";
-var filename = "keys.json";
+var filename = "/home/yoder/BeagleBoard/exercises/phant/keys.json";
 var keys = JSON.parse(fs.readFileSync(filename));
 // console.log(util.inspect(keys));
 
