@@ -6,7 +6,7 @@ var child = require('child_process');
 var b = require('bonescript');
 
 var pingCmd = "ping -w1 google.com";
-var ms = 1500;          // Repeat time in ms.
+var ms = 15000;          // Repeat time in ms.
 var thresh = 16.0;      // If time is above this, turn on warning light
 var hist = new Array(10);
 var current = 0;        // Insert next value here 
