@@ -34,6 +34,7 @@ git config --global user.name \"Mark A. Yoder\"
 git config --global user.email Mark.A.Yoder@Rose-Hulman.edu
 git config --global push.default simple
 git config --global color.ui true
+git config --global credential.helper \"cache --timeout=7200\"
 # Fix postBuffer size
 cd beaglebone-cookbook/.git
 mv config config.orig
@@ -93,7 +94,7 @@ echo \"deb ftp://ftp.debian.org/debian/ jessie main\" > jessie.list
 echo \"deb-src ftp://ftp.debian.org/debian/ jessie main\" >> jessie.list
 echo \"deb ftp://ftp.debian.org/debian/ sid main\" > sid.list
 echo \"deb-src ftp://ftp.debian.org/debian/ sid main\" >> sid.list
-echo \"APT::Default-Release \\"\"stable\\"\";\" > /etc/apt/apt.conf.d/local
+# echo \"APT::Default-Release \\"\"stable\\"\";\" > /etc/apt/apt.conf.d/local
 "
 exit
 
