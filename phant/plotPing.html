@@ -23,17 +23,25 @@
           // console.log(results);
 
           var data = new google.visualization.DataTable();
+          var data2 = new google.visualization.DataTable();
 
           data.addColumn('datetime', 'Time');
           data.addColumn('number', 'Time (ms)');
 
+          data2.addColumn('datetime', 'Time');
+          data2.addColumn('number', 'Time (ms)');
+
           $.each(results, function (i, row) {
-            if(i<2*24*60) {
-            data.addRow([
+            if(i<1*24*60) {
+            data2.addRow([
               (new Date(row.timestamp)),
               parseFloat(row.time)
             ]);
             }
+            data.addRow([
+              (new Date(row.timestamp)),
+              parseFloat(row.time)
+            ]);
           });
 
           var chart =  new google.visualization.LineChart($('#chart').get(0));
@@ -43,8 +51,8 @@
             title: 'Ping Return Times'
           });
 
-          chart2.draw(data, {
-            title: 'Ping Return Times'
+          chart2.draw(data2, {
+            title: 'Ping Return Times Last 24 Hours'
           });
 
         });
