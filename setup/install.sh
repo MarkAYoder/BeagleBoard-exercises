@@ -18,8 +18,8 @@ scp -r ssh root@$BONE:.ssh
 echo rsyncing exercises, this will take about 40 seconds
 time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises root@bone:.
 
-echo rsyncing beaglebone-cookbook, this will take about 2 seconds
-time rsync -azq ../../beaglebone-cookbook root@bone:.
+# echo rsyncing beaglebone-cookbook, this will take about 2 seconds
+# time rsync -azq ../../beaglebone-cookbook root@bone:.
 # time rsync -azq ../../libsoc root@bone:.
 
 ssh root@$BONE "
@@ -32,13 +32,14 @@ mv /etc/issue.net /etc/issue.net.orig
 # Set up github
 git config --global user.name \"Mark A. Yoder\"
 git config --global user.email Mark.A.Yoder@Rose-Hulman.edu
-git config --global push.default simple
+# git config --global push.default simple
 git config --global color.ui true
+git config --global credential.helper \"cache --timeout=7200\"
 # Fix postBuffer size
-cd beaglebone-cookbook/.git
-mv config config.orig
-sed 's/	postBuffer = 524288000//' config.orig > config
-cd
+# cd beaglebone-cookbook/.git
+# mv config config.orig
+# sed 's/	postBuffer = 524288000//' config.orig > config
+# cd
 
 # IIT Mandi Proxy
 # npm
@@ -93,7 +94,7 @@ echo \"deb ftp://ftp.debian.org/debian/ jessie main\" > jessie.list
 echo \"deb-src ftp://ftp.debian.org/debian/ jessie main\" >> jessie.list
 echo \"deb ftp://ftp.debian.org/debian/ sid main\" > sid.list
 echo \"deb-src ftp://ftp.debian.org/debian/ sid main\" >> sid.list
-echo \"APT::Default-Release \\"\"stable\\"\";\" > /etc/apt/apt.conf.d/local
+# echo \"APT::Default-Release \\"\"stable\\"\";\" > /etc/apt/apt.conf.d/local
 "
 exit
 

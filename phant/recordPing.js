@@ -9,8 +9,8 @@ var request       = require('request');
 var util          = require('util');
 var fs            = require('fs');
 
+var filename = "/home/yoder/BeagleBoard/exercises/phant/keys.json";
 var ping = "ping -c1 -i1 rose-hulman.edu";
-var filename = "/root/exercises/phant/keys.json";
 console.log("process.argv.length: " + process.argv.length);
 if(process.argv.length === 3) {
     filename = process.argv[2];

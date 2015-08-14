@@ -4,8 +4,6 @@ var http = require('http');
 var url  = require('url');
 var fs   = require('fs');
 
-var boneURL = '192.168.7.2';
-
 server = http.createServer(function (req, res) {
 // server code
     var path = url.parse(req.url).pathname;
@@ -24,7 +22,7 @@ server = http.createServer(function (req, res) {
         res.write(data, 'utf8');
         res.end();
     });
-}).listen(8082, boneURL);
+}).listen(8082);
 
 console.log("Listening on 8082");
 
