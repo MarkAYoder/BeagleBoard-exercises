@@ -15,8 +15,9 @@ console.log("process.argv.length: " + process.argv.length);
 if(process.argv.length === 3) {
     filename = process.argv[2];
 }
-console.log("Using: " + filename);
 var keys = JSON.parse(fs.readFileSync(filename));
+console.log("Using: " + filename);
+console.log("Title: " + keys.title);
 // console.log(util.inspect(keys));
 
 var url = keys.inputUrl + "/?private_key=" + keys.privateKey + "&time=";
@@ -41,6 +42,7 @@ child_process.exec(ping,
         
         // Send the time to the phant server.
         request(url+time[0], function (error, response, body) {
+            console.log("request");
           if (!error && response.statusCode == 200) {
             console.log(body); 
           } else {
