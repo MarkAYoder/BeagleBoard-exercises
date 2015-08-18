@@ -1,0 +1,9 @@
+{
+  "title": "Humidity",
+  "outputUrl": "http://14.139.34.32:8080/output/D3YeO8oX9OCJ0kmEqkleSgwZojWm",
+  "inputUrl": "http://14.139.34.32:8080/input/D3YeO8oX9OCJ0kmEqkleSgwZojWm",
+  "manageUrl": "http://14.139.34.32:8080/streams/D3YeO8oX9OCJ0kmEqkleSgwZojWm",
+  "publicKey": "D3YeO8oX9OCJ0kmEqkleSgwZojWm",
+  "privateKey": "zGBnL8WygLiglxpGVxQDI7A48Xal",
+  "deleteKey": "3Jl6a2zAZacGdzyWNzpXfnm9xER8"
+}
