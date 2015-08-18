@@ -15,7 +15,7 @@ var util          = require('util');
 var fs            = require('fs');
 var b             = require('bonescript');
 var humidPin = 'P9_40';     // Attach HIH-4030 here
-var ms = 5*60*1000;               // Repeat time
+var ms = 60*1000;               // Repeat time
 
 var filename = "/home/yoder/exercises/phant/keys_weather.json";
 var filename = "/root/exercises/phant/keys_weather.json";
@@ -40,19 +40,19 @@ setInterval(readWeather, ms);
 readWeather();
 
 function readWeather() {
-    b.analogRead(humidPin, postHumidity);
     barometer.read(postTemp);
+    b.analogRead(humidPin, postHumidity);
 }
 
 function postHumidity(x) {
-    humidity = x.value;
+    humidity = x.value.toFixed(4);
     if(x.err) {
         console.log('x.err = ' + x.err);
         console.log('x.value = ' + x.value);
         console.log("url: " + url);
     }
 
-    console.log("humidity: " + humidity);
+    // console.log("humidity: " + humidity);
     
     if(temp) {      // Wait until both the humidity and temp have reported back.
         postWeather();
@@ -62,17 +62,12 @@ function postHumidity(x) {
 }
 
 function postTemp(data) {
-    console.log("data: " + util.inspect(data));
+    // console.log("data: " + util.inspect(data));
     temp = data.temperature;
-    pressure = data.pressure;
-    if(data.err) {
-        console.log('x.err = ' + x.err);
-        console.log('x.value = ' + x.value);
-        console.log("url: " + url);
-    }
+    pressure = data.pressure.toFixed(1);
 
-    console.log("temp: " + temp);
-    console.log("pressure: " + pressure);
+    // console.log("temp: " + temp);
+    // console.log("pressure: " + pressure);
     
     if(humidity) {      // Wait until both the humidity and temp have reported back.
         postWeather();
@@ -84,7 +79,7 @@ function postTemp(data) {
 function postWeather() {
     // Both temp and humidity have replied
     var url = util.format(urlBase, humidity, pressure, temp);
-    console.log("url: ", url);
+    // console.log("url: ", url);
     request(url, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(body); 
