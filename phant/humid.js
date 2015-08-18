@@ -10,7 +10,7 @@ var util          = require('util');
 var fs            = require('fs');
 var b             = require('bonescript');
 var humidPin = 'P9_40';     // Attach HIH-4030 here
-var ms = 100000;               // Repeat time
+var ms = 5*60*1000;               // Repeat time
 
 var filename = "/home/yoder/exercises/phant/keys_humid.json";
 var filename = "/root/exercises/phant/keys_humid.json";
@@ -43,11 +43,10 @@ function postHumidity(x) {
         console.log("url: " + url);
     }
 
-    console.log("url: " + url);
+    console.log("value: " + x.value.toFixed(4));
 
     // Send the time to the phant server.
     request(url, function (error, response, body) {
-        console.log("request");
         if (!error && response.statusCode == 200) {
             console.log(body); 
         } else {
