@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- EXTERNAL LIBS-->
+    <!--<script src="jquery.min.js"></script>-->
+    <!--<script src="jsapi"></script>-->
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://www.google.com/jsapi"></script>
+
+    <!-- EXAMPLE SCRIPT From: http://phant.io/graphing/google/2014/07/07/graphing-data/ -->
+    <script>
+
+      // onload callback
+      function drawChart() {
+
+        var public_key = 'v02NOaq1KKhpYLJqJ9EWFq1N8QqE';
+
+        // JSONP request
+        var jsonData = $.ajax({
+          url: 'http://14.139.34.32:8080/output/' + public_key + '.json',
+          data: {page: 1},
+          dataType: 'jsonp',
+        }).done(function (results) {
+          
+          // console.log(results);
+
+          var temp     = new google.visualization.DataTable();
+          var pressure = new google.visualization.DataTable();
+          var humidity = new google.visualization.DataTable();
+
+          temp.addColumn('datetime', 'Time');
+          temp.addColumn('number', 'Time');
+
+          pressure.addColumn('datetime', 'Time');
+          pressure.addColumn('number', 'Time');
+
+          humidity.addColumn('datetime', 'Time');
+          humidity.addColumn('number', 'Time');
+
+          $.each(results, function (i, row) {
+            temp.addRow([
+              (new Date(row.timestamp)),
+              parseFloat(row.temp)
+            ]);
+          });
+
+          $.each(results, function (i, row) {
+            pressure.addRow([
+              (new Date(row.timestamp)),
+              parseFloat(row.pressure)
+            ]);
+          });
+
+          $.each(results, function (i, row) {
+            humidity.addRow([
+              (new Date(row.timestamp)),
+              parseFloat(row.humidity)
+            ]);
+          });
+
+          var chart =  new google.visualization.LineChart($('#chart').get(0));
+          var chart2 = new google.visualization.LineChart($('#chart2').get(0));
+          var chart3 = new google.visualization.LineChart($('#chart3').get(0));
+
+          chart.draw(temp, {
+            title: 'Temperature (C)'
+          });
+
+          chart2.draw(pressure, {
+            title: 'Pressure'
+          });
+
+          chart3.draw(humidity, {
+            title: 'Humidity'
+          });
+
+        });
+
+      }
+
+      // load chart lib
+      google.load('visualization', '1', {
+        packages: ['corechart']
+      });
+
+      // call drawChart once google charts is loaded
+      google.setOnLoadCallback(drawChart);
+
+    </script>
+
+  </head>
+  <body>
+    <div id="chart" style="width: 100%;"></div>
+    <div id="chart2" style="width: 100%;"></div>
+    <div id="chart3" style="width: 100%;"></div>
+  </body>
+</html>
