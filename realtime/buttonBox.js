@@ -1,7 +1,5 @@
     var socket;
     var firstconnect = true,
-        fs = 8000,
-        Ts = 1/fs*1000,
         samples = 100,
         plotTop,
         plotBot,
