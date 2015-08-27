@@ -32,7 +32,11 @@ var urlBase = keys.inputUrl + "/?private_key=" + keys.privateKey + "&humidity=%s
 
 // Read 
 
-var temp, pressure, humidity;
+var temp     = 'NaN', 
+    pressure = 'NaN', 
+    humidity = 'NaN';
+postWeather();      // Make first positing NaN so plot will have a gap.
+
 var barometer = new BMP085();
 
 setInterval(readWeather, ms);
