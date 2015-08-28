@@ -3,8 +3,11 @@
 # so this code can use them.
 
 c9=/var/lib/cloud9
-jq=`pwd`/../realtime/js
-mkdir -p $c9/static2
-cd $c9/static2
+here=`pwd`
+jq=$here/../realtime/js
+cd $c9
+ln -s $here/jsfiddleDemoI.js $here/jsfiddleDemo.html $here/../realtime/layout.css .
+mkdir -p static2
+cd static2
 ln -s $jq/jquery-ui.css $jq/jquery-ui.min.js $jq/jquery.min.js .
 ln -s ../static/images .
