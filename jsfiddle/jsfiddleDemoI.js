@@ -6,16 +6,27 @@ setTargetAddress('192.168.7.2', {
     initialized: run
 });
 
+var SLIDER = 'P9_36';
+var BUTTON = 'P9_42';
+var LED   = 'P9_14';
+var toggle = true;          // State of LED
+
+var ms     = 200;           // Polling interval in ms
+
+function led(x) {
+    console.log("led called with: %d, toggle: ", x, toggle);
+    b.digitalWrite(LED, toggle);
+    toggle = !toggle;
+}
+
 function run() {
     b = require('bonescript');
-    var SLIDER = 'P9_36';
-    var BUTTON = 'P9_42';
-    var ms     = 200;           // Polling interval in ms
-    b.pinMode(BUTTON, b.INPUT);
+    b.pinMode(BUTTON, b.INPUT );
+    b.pinMode(LED,    b.OUTPUT);
 
-     setInterval(getSliderStatus, ms);
-     b.detachInterrupt(BUTTON);         // The detaches the interrupt from the previous run
-     b.attachInterrupt(BUTTON, true, b.CHANGE, getButtonStatus);
+    setInterval(getSliderStatus, ms);
+    b.detachInterrupt(BUTTON);         // The detaches the interrupt from the previous run
+    b.attachInterrupt(BUTTON, true, b.CHANGE, getButtonStatus);
 
     function getSliderStatus() {
         b.analogRead(SLIDER, onSliderRead);     // <5>
@@ -35,15 +46,5 @@ function run() {
         if (!x.err) {                           // <9>
             $('#buttonStatus').html(x.value);
         }
-        setTimeout(getSliderStatus, 200);        // <10>
     }
-}
-
-var LED = 'P9_14';
-var toggle = 1;
-
-function led(x) {
-    console.log("led called with: %d", x);
-    b.digitalWrite(LED, toggle);
-    toggle = !toggle;
 }
