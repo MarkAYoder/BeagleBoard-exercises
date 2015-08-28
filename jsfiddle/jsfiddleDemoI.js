@@ -21,7 +21,7 @@ function led(x) {
 }
 
 function fade(x) {
-    console.log("fade: %s", JSON.stringify(x))
+    // console.log("fade: %s", JSON.stringify(x))
     b.analogWrite(FADE, x);
 }
 
@@ -29,7 +29,7 @@ function run() {
     b = require('bonescript');
     b.pinMode(BUTTON, b.INPUT );
     b.pinMode(LED,    b.OUTPUT);
-    b.pinMode(FADE,   b.OUTPUT);
+    b.pinMode(FADE,   b.ANALOG_OUTPUT);
     
     initFade = 0.5;
     b.analogWrite(FADE, initFade);
