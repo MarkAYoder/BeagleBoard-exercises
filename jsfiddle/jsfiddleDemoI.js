@@ -6,44 +6,62 @@ setTargetAddress('192.168.7.2', {
     initialized: run
 });
 
+var SLIDER = 'P9_36';
+var BUTTON = 'P9_42';
+var LED    = 'P9_14';
+var FADE   = 'P9_16';
+var toggle = true;          // State of LED
+
+var ms     = 200;           // Polling interval in ms
+
+function led(x) {
+    console.log("led called with: %d, toggle: ", x, toggle);
+    b.digitalWrite(LED, toggle);
+    toggle = !toggle;
+}
+
+function fade(x) {
+    // console.log("fade: %s", JSON.stringify(x))
+    b.analogWrite(FADE, x);
+}
+
 function run() {
     b = require('bonescript');
-    var SLIDER = 'P9_36';
-    var BUTTON = 'P9_42';
-    var ms     = 200;           // Polling interval in ms
-    b.pinMode(BUTTON, b.INPUT);
+    b.pinMode(BUTTON, b.INPUT );
+    b.pinMode(LED,    b.OUTPUT);
+    b.pinMode(FADE,   b.ANALOG_OUTPUT);
+    
+    initFade = 0.5;
+    b.analogWrite(FADE, initFade);
 
-     setInterval(getSliderStatus, ms);
-     b.detachInterrupt(BUTTON);         // The detaches the interrupt from the previous run
-     b.attachInterrupt(BUTTON, true, b.CHANGE, getButtonStatus);
+    setInterval(getSliderStatus, ms);
+    b.detachInterrupt(BUTTON);         // The detaches the interrupt from the previous run
+    b.attachInterrupt(BUTTON, true, b.CHANGE, getButtonStatus);
 
     function getSliderStatus() {
-        b.analogRead(SLIDER, onSliderRead);     // <5>
+        b.analogRead(SLIDER, onSliderRead);
     }
 
     function onSliderRead(x) {
-        if (!x.err) {                           // <6>
+        if (!x.err) {
             $('#sliderStatus').html(x.value.toFixed(3));
         }
     }
 
     function getButtonStatus() {
-        b.digitalRead(BUTTON, onButtonRead);    // <8>
+        b.digitalRead(BUTTON, onButtonRead);
     }
 
     function onButtonRead(x) {
-        if (!x.err) {                           // <9>
+        if (!x.err) {
             $('#buttonStatus').html(x.value);
         }
-        setTimeout(getSliderStatus, 200);        // <10>
     }
-}
 
-var LED = 'P9_14';
-var toggle = 1;
-
-function led(x) {
-    console.log("led called with: %d", x);
-    b.digitalWrite(LED, toggle);
-    toggle = !toggle;
+    $(function () {
+        $("#slider1").slider({min:0, max:100, value: 100*initFade, slide: function(event, ui) {
+    	   // console.log("slider: %d",  ui.value);
+    	    fade(ui.value/100);
+        }});
+    });
 }
