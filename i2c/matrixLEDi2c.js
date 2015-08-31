@@ -41,13 +41,23 @@ setTimeout(doSmile, 2*time);
 function doSmile() {
 	b.i2cWriteBytes(port, 0x00, smile);
 }
+
 // Fade the display
-var fade;
-for(fade = 0xef; fade >= 0xe0; fade--) {
+setTimeout(doFadeDown, 3*time);
+var fade = 0xef;
+function doFadeDown() {
     b.i2cWriteByte(port,  fade);
-    // sleep.usleep(time/10);
+	fade--;
+	if(fade >= 0xe0) {
+		setTimeout(doFadeDown, time/10);
+	} else {
+		setTimeout(doFadeUp);
+	}
 }
-for(fade = 0xe1; fade <= 0xef; fade++) {
+function doFadeUp() {
     b.i2cWriteByte(port,  fade);
-    // sleep.usleep(time/10);
+	fade++;
+	if(fade <= 0xef) {
+		setTimeout(doFadeUp, time/10);
+	}
 }
