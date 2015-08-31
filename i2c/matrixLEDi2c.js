@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+# Code for drving an 8 by 8 LED Matrix
+# http://www.adafruit.com/products/902
+# BoneScript API: https://github.com/jadonk/bonescript
+# Mark A. Yoder, 31-Aug-2015
 
 var b = require('bonescript');
 var port = '/dev/i2c-2'
