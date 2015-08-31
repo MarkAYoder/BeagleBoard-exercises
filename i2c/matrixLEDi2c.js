@@ -1,8 +1,6 @@
 #!/usr/bin/env node
-// npm install -g sleep
 
 var b = require('bonescript');
-// var sleep = require('sleep');
 var port = '/dev/i2c-2'
 var matrix = 0x70;
 var time = 1000; // Delay between images in ms
@@ -29,13 +27,11 @@ doFrown();
 function doFrown() {
 	b.i2cWriteBytes(port, 0x00, frown);
 }
-// sleep.usleep(time);
 
 setTimeout(doNeutral, 1*time);
 function doNeutral() {
 	b.i2cWriteBytes(port, 0x00, neutral);
 }
-// sleep.usleep(time);
 
 setTimeout(doSmile, 2*time);
 function doSmile() {
