@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// Based on code from the BeagleBone Cookbook: http://shop.oreilly.com/product/0636920033899.do
 
 // This is an example of reading HC-SR04 Ultrasonic Range Finder
 // This version measures from the fall of the Trigger pulse 
