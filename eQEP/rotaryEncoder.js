@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // This uses the eQEP hardware to read a rotary encoder
+// export SLOTS=/sys/devices/bone_capemgr.*/slots
 // echo PyBBIO-eqep2b >  > $SLOTS
 // Wire encoder to P8_11 and P8_12 when using eQEP2.
 
