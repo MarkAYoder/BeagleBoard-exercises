@@ -2,6 +2,7 @@
 // Code for drving an 8 by 8 LED Matrix
 // http://www.adafruit.com/products/902
 // BoneScript API: https://github.com/jadonk/bonescript
+// Based on code from the BeagleBone Cookbook: http://shop.oreilly.com/product/0636920033899.do
 // Mark A. Yoder, 31-Aug-2015
 
 var b = require('bonescript');
