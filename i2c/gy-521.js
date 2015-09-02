@@ -26,21 +26,17 @@ function displayReading(x) {
 	if(x.event === 'return') {
 		gy = {
 			accel: {
-				x: x.return[0]<<8 | x.return[1],
-				y: x.return[2]<<8 | x.return[3],
-				z: x.return[4]<<8 | x.return[5]
+				x: ((x.return[0]<<8 | x.return[1])<<16)>>16,
+				y: ((x.return[2]<<8 | x.return[3])<<16)>>16,
+				z: ((x.return[4]<<8 | x.return[5])<<16)>>16
 			},
-			temp:  (x.return[6]<<8 | x.return[7])/340+36.53,
+			temp:  (((x.return[6]<<8 | x.return[7])<<16)>>16)/340+36.53,
 			gyro: {
-				x: x.return[8]<<8 | x.return[9],
-				y: x.return[10]<<8 | x.return[11],
-				z: x.return[12]<<8 | x.return[13]
+				x: ((x.return[ 8]<<8 | x.return[ 9])<<16)>>16,
+				y: ((x.return[10]<<8 | x.return[11])<<16)>>16,
+				z: ((x.return[12]<<8 | x.return[13])<<16)>>16 
 			}
 		};
 		console.log(gy);
-		console.log("%s, %s, %s", 
-			gy.accel.x.toString(16),
-			gy.accel.y.toString(16), 
-			gy.accel.z.toString(16));
 	}
 }
