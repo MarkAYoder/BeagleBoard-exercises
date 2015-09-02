@@ -97,7 +97,8 @@
     }
 
     function status_update(txt){
-      document.getElementById('status').innerHTML = txt;
+    //   document.getElementById('status').innerHTML = txt
+    $('#status').html(txt);
     }
 
     function send(){
@@ -214,7 +215,7 @@ $(function () {
     updateTop();
 
     function updateBot() {
-        socket.emit("i2c",  i2cNum);
+        // socket.emit("i2c",  i2cNum);
         setTimeout(updateBot, updateBotInterval);
     }
     updateBot();
