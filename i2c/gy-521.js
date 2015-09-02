@@ -22,7 +22,25 @@ b.i2cReadBytes(port, 0x3b, 14, displayReading);
 
 function displayReading(x) {
 	// console.log("x: " + util.inspect(x));
+	var gy;
 	if(x.event === 'return') {
-		console.log(x.return);
+		gy = {
+			accel: {
+				x: x.return[0]<<8 | x.return[1],
+				y: x.return[2]<<8 | x.return[3],
+				z: x.return[4]<<8 | x.return[5]
+			},
+			temp:  (x.return[6]<<8 | x.return[7])/340+36.53,
+			gyro: {
+				x: x.return[8]<<8 | x.return[9],
+				y: x.return[10]<<8 | x.return[11],
+				z: x.return[12]<<8 | x.return[13]
+			}
+		};
+		console.log(gy);
+		console.log("%s, %s, %s", 
+			gy.accel.x.toString(16),
+			gy.accel.y.toString(16), 
+			gy.accel.z.toString(16));
 	}
 }
