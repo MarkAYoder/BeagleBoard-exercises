@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // Simple command line etch-a-sketch framework.
 
 var util = require('util');
