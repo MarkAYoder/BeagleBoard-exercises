@@ -9,14 +9,30 @@ function run() {
         // plotBot,
         ainData = [],  iain = 0, 
         gpioData = [], igpio = 0,
-        gpioNum = ["P9_42"],   // GPIO pins to plot
-        ainNum  = ["P9_36"];   // Analog ins to plot
-    // var ainData[samples] = 0;
-    // var gpioData[samples] = 0;
+        gpioNum = "P9_42",   // GPIO pins to plot
+        ainNum  = "P9_36";   // Analog ins to plot
+    ainData [samples] = 0;
+    gpioData[samples] = 0;
+    
+    b.pinMode(gpioNum, b.INPUT);
 
     // When new data arrived, convert it and plot it.
     
-    function gpio(data) {
+    // Request data every updateInterval ms
+    function updateTop() {
+        b.analogRead (ainNum,  ainPlot);
+        b.digitalRead(gpioNum, gpioPlot);
+        setTimeout(updateTop, updateTopInterval);
+    }
+    updateTop();
+
+    // function updateBot() {
+    //     // socket.emit("i2c",  i2cNum);
+    //     setTimeout(updateBot, updateBotInterval);
+    // }
+    // updateBot();    
+    
+    function gpioPlot(data) {
         gpioData[igpio] = [igpio, data.value];
         igpio++;
         if(igpio >= samples) {
@@ -27,8 +43,8 @@ function run() {
         plotTop.draw();
     }
 
-function ain(data) {
-//        status_update("ain: " + data.value);
+    function ainPlot(data) {
+        // status_update("ainPlot: " + data.value);
         ainData[iain] = [iain, data.value];
         iain++;
         if(iain >= samples) {
@@ -44,10 +60,6 @@ function ain(data) {
     $('#status').html(txt);
     }
 
-
-//    connect();
-
-// $(function () {
     function initPlotData() {
         // zip the generated y values with the x values
         var result = [];
@@ -140,25 +152,5 @@ function ain(data) {
     //         label: "i2c"}
     //     ],
     //         optionsBot);
-
-    // Request data every updateInterval ms
-    function updateTop() {
-        // socket.emit("ain",  ainNum[0]);
-        // socket.emit("gpio", gpioNum[0]);
-        
-        
-        b.analogRead ('P9_36', ain);
-        b.digitalRead('P9_42', gpio);
-        // ain(data);
-        setTimeout(updateTop, updateTopInterval);
-    }
-    updateTop();
-
-    // function updateBot() {
-    //     // socket.emit("i2c",  i2cNum);
-    //     setTimeout(updateBot, updateBotInterval);
-    // }
-    // updateBot();
-// });
 
 }
