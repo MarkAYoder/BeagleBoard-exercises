@@ -16,7 +16,18 @@ function run() {
 
     // When new data arrived, convert it and plot it.
     
-    function ain(data) {
+    function gpio(data) {
+        gpioData[igpio] = [igpio, data.value];
+        igpio++;
+        if(igpio >= samples) {
+            igpio = 0;
+            gpioData = [];
+        }
+        plotTop.setData([ ainData, gpioData ]);
+        plotTop.draw();
+    }
+
+function ain(data) {
 //        status_update("ain: " + data.value);
         ainData[iain] = [iain, data.value];
         iain++;
@@ -136,7 +147,8 @@ function run() {
         // socket.emit("gpio", gpioNum[0]);
         
         
-        b.analogRead('P9_36', ain);
+        b.analogRead ('P9_36', ain);
+        b.digitalRead('P9_42', gpio);
         // ain(data);
         setTimeout(updateTop, updateTopInterval);
     }
