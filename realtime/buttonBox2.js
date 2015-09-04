@@ -154,3 +154,23 @@ function run() {
     //         optionsBot);
 
 }
+
+var fs = require('fs');
+function doTrigger(arg) {
+    var ledPath = "/sys/class/leds/beaglebone:green:usr";
+console.log("trigger: " + arg);
+    arg = arg.split(" ");
+    for(var i=0; i<4; i++) {
+    console.log(" trigger: ", arg[i]);
+        fs.writeFile(ledPath + i + "/trigger", arg[i]);
+    }
+}
+
+function trigger(trig) {
+console.log('trigger: ' + trig);
+    if(trig) {
+        doTrigger("heartbeat mmc0 cpu0 none");
+    } else {
+        doTrigger("none none none none");
+    }
+}
