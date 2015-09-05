@@ -1,6 +1,7 @@
 # To run .js scripts on bone be sure to update request
 npm install -g request
 npm install -g bmp085
+npm install -g winston
 
 # From: http://phant.io/beaglebone/install/2014/07/03/beaglebone-black-install/
 
