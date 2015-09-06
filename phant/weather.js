@@ -17,7 +17,7 @@ var logger = new winston.Logger({
     transports: [
         new winston.transports.File({
             level: 'debug',
-            filename: 'weather.log',
+            filename: '/var/run/log/weather.log',
             handleExceptions: true,
             json: true,
             maxsize: 1024000, //5MB
