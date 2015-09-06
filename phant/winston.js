@@ -2,11 +2,26 @@
 // Testing winston for logging
 var winston = require('winston');
 
-winston.add(winston.transports.File, { 
-    filename: 'somefile.log',
-    handleExceptions: true,
+var logger = new winston.Logger({
+    transports: [
+        new winston.transports.File({
+            level: 'debug',
+            filename: 'weather.log',
+            handleExceptions: true,
+            json: true,
+            maxsize: 1024000, //5MB
+            maxFiles: 5
+        }),
+        new winston.transports.Console({
+            level: 'info',
+            handleExceptions: true,
+            json: false,
+            colorize: true
+        })
+    ],
     exitOnError: false
 });
 
-winston.log('info', 'Hello distributed log files!');
-winston.info('Hello again distributed logs');
+logger.log('info', 'Hello distributed log files!');
+logger.info('Hello again distributed logs');
+logger.debug('Hello again and again');
