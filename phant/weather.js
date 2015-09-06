@@ -20,7 +20,7 @@ var logger = new winston.Logger({
             filename: '/var/run/log/weather.log',
             handleExceptions: true,
             json: true,
-            maxsize: 1024000, //5MB
+            maxsize: 1024000, // 1MB
             maxFiles: 5
         }),
         new winston.transports.Console({
