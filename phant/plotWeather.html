@@ -27,16 +27,16 @@
 
           var temp     = new google.visualization.DataTable();
           var pressure = new google.visualization.DataTable();
-          var humidity = new google.visualization.DataTable();
+          // var humidity = new google.visualization.DataTable();
 
-          temp.addColumn('datetime', 'Time');
-          temp.addColumn('number', 'Time');
+          temp.addColumn('datetime', 'Temp');
+          temp.addColumn('number', 'Temp');
 
-          pressure.addColumn('datetime', 'Time');
-          pressure.addColumn('number', 'Time');
+          pressure.addColumn('datetime', 'Pressure');
+          pressure.addColumn('number', 'Pressure');
 
-          humidity.addColumn('datetime', 'Time');
-          humidity.addColumn('number', 'Time');
+          // humidity.addColumn('datetime', 'Humidity');
+          // humidity.addColumn('number', 'Time');
 
           $.each(results, function (i, row) {
             temp.addRow([
@@ -52,28 +52,31 @@
             ]);
           });
 
-          $.each(results, function (i, row) {
-            humidity.addRow([
-              (new Date(row.timestamp)),
-              parseFloat(row.humidity)
-            ]);
-          });
+          // $.each(results, function (i, row) {
+          //   humidity.addRow([
+          //     (new Date(row.timestamp)),
+          //     parseFloat(row.humidity)
+          //   ]);
+          // });
 
-          var chart =  new google.visualization.LineChart($('#chart').get(0));
-          var chart2 = new google.visualization.LineChart($('#chart2').get(0));
-          var chart3 = new google.visualization.LineChart($('#chart3').get(0));
+          var chart =  new google.visualization.ScatterChart($('#chart').get(0));
+          var chart2 = new google.visualization.ScatterChart($('#chart2').get(0));
+          // var chart3 = new google.visualization.ScatterChart($('#chart3').get(0));
 
           chart.draw(temp, {
-            title: 'Temperature (C)'
+            title: 'Temperature (C)',
+            pointSize: 0.5,
           });
 
           chart2.draw(pressure, {
-            title: 'Pressure'
+            title: 'Pressure',
+            pointSize: 0.5
           });
 
-          chart3.draw(humidity, {
-            title: 'Humidity'
-          });
+          // chart3.draw(humidity, {
+          //   title: 'Humidity',
+          //   pointSize: 0.5
+          // });
 
         });
 
@@ -93,6 +96,6 @@
   <body>
     <div id="chart" style="width: 100%;"></div>
     <div id="chart2" style="width: 100%;"></div>
-    <div id="chart3" style="width: 100%;"></div>
+    <!--<div id="chart3" style="width: 100%;"></div>-->
   </body>
 </html>
