@@ -9,6 +9,30 @@
 // Save the keys json file and copy to keys.json
 // Run this script
 
+// Logging 
+// https://www.npmjs.com/package/winston
+var winston = require('winston');
+
+var logger = new winston.Logger({
+    transports: [
+        new winston.transports.File({
+            level: 'debug',
+            filename: '/var/run/log/weather.log',
+            handleExceptions: true,
+            json: true,
+            maxsize: 1024000, // 1MB
+            maxFiles: 5
+        }),
+        new winston.transports.Console({
+            level: 'info',
+            handleExceptions: true,
+            json: false,
+            colorize: true
+        })
+    ],
+    exitOnError: false
+});
+
 var request       = require('request');
 var BMP085        = require('bmp085');
 var util          = require('util');
@@ -19,14 +43,14 @@ var ms = 60*1000;               // Repeat time
 
 var filename = "/home/yoder/exercises/phant/keys_weather.json";
 var filename = "/root/exercises/phant/keys_weather.json";
-// console.log("process.argv.length: " + process.argv.length);
+// logger.debug("process.argv.length: " + process.argv.length);
 if(process.argv.length === 3) {
     filename = process.argv[2];
 }
 var keys = JSON.parse(fs.readFileSync(filename));
-console.log("Using: " + filename);
-console.log("Title: " + keys.title);
-// console.log(util.inspect(keys));
+// logger.info("Using: " + filename);
+logger.info("Title: " + keys.title);
+// logger.debug(util.inspect(keys));
 
 var urlBase = keys.inputUrl + "/?private_key=" + keys.privateKey + "&humidity=%s&pressure=%s&temp=%s";
 
@@ -51,44 +75,44 @@ function readWeather() {
 function postHumidity(x) {
     humidity = x.value.toFixed(4);
     if(x.err) {
-        console.log('x.err = ' + x.err);
-        console.log('x.value = ' + x.value);
-        console.log("url: " + url);
+        logger.error('x.err = ' + x.err);
+        logger.error('x.value = ' + x.value);
+        logger.error("url: " + url);
     }
 
-    // console.log("humidity: " + humidity);
+    // logger.info("humidity: " + humidity);
     
     if(temp) {      // Wait until both the humidity and temp have reported back.
         postWeather();
     } else {
-        console.log("Waiting for temp");
+        logger.info("Waiting for temp");
     }
 }
 
 function postTemp(data) {
-    // console.log("data: " + util.inspect(data));
+    // logger.debug("data: " + util.inspect(data));
     temp = data.temperature;
     pressure = data.pressure.toFixed(1);
 
-    // console.log("temp: " + temp);
-    // console.log("pressure: " + pressure);
+    // logger.debug("temp: " + temp);
+    // logger.debug("pressure: " + pressure);
     
     if(humidity) {      // Wait until both the humidity and temp have reported back.
         postWeather();
     } else {
-        console.log("Waiting for humidity");
+        logger.info("Waiting for humidity");
     }
 }
 
 function postWeather() {
     // Both temp and humidity have replied
     var url = util.format(urlBase, humidity, pressure, temp);
-    // console.log("url: ", url);
+    // logger.debug("url: ", url);
     request(url, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.log(body); 
+            logger.info(body); 
         } else {
-            console.log("error=" + error + " response=" + JSON.stringify(response));
+            logger.error("error=" + error + " response=" + JSON.stringify(response));
         }
     })
     // Reset variables for next time.

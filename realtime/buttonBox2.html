@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Button Box Demo</title>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <link href="layout.css" rel="stylesheet" type="text/css"/>
+    <link  href="static/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="static/jquery.js"></script>
+    <script src="/static/bonescript.js"></script>
+    <script src="fs.js"></script>
+    <script src="static/jquery-ui.min.js"></script>
+    <script src="static/flot/jquery.flot.min.js"></script>
+    <script src="buttonBox2.js"></script>
+  </head>
+  <body>
+    <h1>Button Box Demo <a href="http://Rose-Hulman.edu" target="_blank">
+        <img src="images/RoseLogo96.png" width=200 style="float:right"></a></h1>
+    <button id="connect" onClick='connect()'/>Connect</button>
+    <button id="disconnect" onClick='disconnect()'>Disconnect</button>
+    <span style="position:relative; left:35px">
+    Analog: <input id="ainNum" type="text" value="" style="text-align: right; width:6em">
+    gpio: <input id="gpioNum" type="text" value="" style="text-align: right; width:6em">
+    </span>
+<table>
+<tr>
+    <td><div id="plotTop" style="width:550px;height:150px;"></div>
+<center>samples</center></td>
+<td>
+    Update: <input id="updateTopInterval" type="text" value="" style="text-align: right; width:3em"> ms
+</td>
+</tr>
+</table>
+<div id="leds">
+<button id="led0" onClick='led(0)'/>LED 0</button>
+<button id="led1" onClick='led(1)'/>LED 1</button>
+<button id="led2" onClick='led(2)'/>LED 2</button>
+<button id="led3" onClick='led(3)'/>LED 3</button>
+<button id="trigger" onClick='trigger(0)'/>Triggers Off</button>
+<button id="trigger" onClick='trigger(1)'/>Triggers Default</button>
+</div>
+<div id="slider1">LED Brightness</div>
+<p>
+
+<b>Button Box demo from the <a href="http://elinux.org/index.php?title=Category:ECE497" target="_blank">32-bit Embedded Linux Class</a>.</b>
+Try pushing the button and turning the pot on the the breadboard.
+Try double-clicking to zoom and click and dragging to pan.
+</p>
+    <a href="http://beagleboard.org" target="_blank">
+        <img src="images/beagle-hd-logo.gif" width=200 align="right"></a>
+    <div><p id="status">Waiting for input</p></div>
+    <a href="http://www.ti.com/sitara" target="_blank">
+        <img src="images/hdr_ti_logo.gif" width=200 align="right"></a>
+    <div><p id="message">message</p></div> 
+By <i>Mark A. Yoder</i>
+<br/>
+<p/>
+<div id="setup">
+<b>Setup</b>:
+<ol>
+<li><i>Analog In</i>: Attach the wiper of a 10k&Omega; potentiometer to AIN6 (P9_36).  Attach the other ends to VDD_ACD (P9_32) and GNDA_ADC (P9_34).
+</li>
+<li><i>gpio</i>: Attach a switch between gpio0_7 (P9_42) and GND (P9_1).
+</li>
+<li><i>i2c</i>: Attach a TMP101 temperature sensor. Pin 1 (SCL) goes to P9_19 (i2c2_scl), Pin 2 (GND) to P9_2 (DGND), Pin 3 (ALERT) no connection, Pin 4 ((SDA) to P9_20 (i2c2_sda), Pin 5 (ADD0) to Pin P9_2 (GND) so address will be 0x48, Pin 6 (V+) to P9_3 (VDD_3V3).
+</li>
+<li><i>LED Brightnes</i>: Attach an LED in series with a 220&Omega; resistor between P9_1 (DGND) and P9_14 (ehrpwm1A).
+</li>
+</ol>
+</div>
+
+  </body>
+</html>
