@@ -84,7 +84,7 @@ mv apache2 hide
 # sed s/TimedLoginEnable=true/TimedLoginEnable=false/ custom.conf.orig > custom.conf
 
 # Add Wheezy backport, Jessie and Sid to apt-get
-# Make Whzzey the default
+# Make Wheezy the default
 cd /etc/apt/sources.list.d
 mkdir hide
 cd hide
