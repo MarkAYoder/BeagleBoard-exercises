@@ -10,7 +10,7 @@ setTargetAddress('10.8.7.185', {
     initialized: run
 });
 
-var SLIDER = 'P9_36';
+var POT    = 'P9_36';
 var BUTTON = 'P9_42';
 var LED    = 'P9_14';
 var FADE   = 'P9_16';
@@ -38,17 +38,17 @@ function run() {
     initFade = 0.5;
     b.analogWrite(FADE, initFade);
 
-    setInterval(getSliderStatus, ms);
+    setInterval(getPotStatus, ms);
     b.detachInterrupt(BUTTON);         // The detaches the interrupt from the previous run
     b.attachInterrupt(BUTTON, true, b.CHANGE, getButtonStatus);
 
-    function getSliderStatus() {
-        b.analogRead(SLIDER, onSliderRead);
+    function getPotStatus() {
+        b.analogRead(POT, onPotRead);
     }
 
-    function onSliderRead(x) {
+    function onPotRead(x) {
         if (!x.err) {
-            $('#sliderStatus').html(x.value.toFixed(3));
+            $('#potStatus').html(x.value.toFixed(3));
         }
     }
 
