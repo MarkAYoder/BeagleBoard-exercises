@@ -1,9 +1,9 @@
-# The jQuery files in /var/lib/cloud9/static are old and have a big with sliders.
+# The jQuery files in /var/lib/cloud9/static are old and have a bug with sliders.
 # This links  the newer files from exercises/realtime to /var/lib/cloud9/static2
 # so this code can use them.
 
 c9=/var/lib/cloud9
-here=`pwd`
+here=$PWD
 jq=$here/../realtime/js
 cd $c9
 ln -s $here .
