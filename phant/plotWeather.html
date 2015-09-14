@@ -19,7 +19,7 @@
         // JSONP request
         var jsonData = $.ajax({
           url: 'http://14.139.34.32:8080/output/' + public_key + '.json',
-          data: {page: 1},
+          <!-- data: {page: 1}, -->
           dataType: 'jsonp',
         }).done(function (results) {
           
@@ -39,17 +39,21 @@
           // humidity.addColumn('number', 'Time');
 
           $.each(results, function (i, row) {
-            temp.addRow([
-              (new Date(row.timestamp)),
-              parseFloat(row.temp)
-            ]);
+            if(row.temp < 60) {
+              temp.addRow([
+                (new Date(row.timestamp)),
+                parseFloat(row.temp)
+              ]);
+            }
           });
 
           $.each(results, function (i, row) {
-            pressure.addRow([
-              (new Date(row.timestamp)),
-              parseFloat(row.pressure)
-            ]);
+            if(row.pressure < 990) {
+              pressure.addRow([
+                (new Date(row.timestamp)),
+                parseFloat(row.pressure)
+              ]);
+            }
           });
 
           // $.each(results, function (i, row) {
