@@ -6,7 +6,7 @@ c9=/var/lib/cloud9
 here=`pwd`
 jq=$here/../realtime/js
 cd $c9
-ln -s $here/jsfiddleDemoI.js $here/jsfiddleDemo.html $here/../realtime/layout.css .
+ln -s $here .
 mkdir -p static2
 cd static2
 ln -s $jq/jquery-ui.css $jq/jquery-ui.min.js $jq/jquery.min.js .

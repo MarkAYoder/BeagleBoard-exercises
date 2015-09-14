@@ -6,6 +6,9 @@ setTargetAddress('192.168.7.2', {               // <1>
     initialized: run
 });
 
+setTargetAddress('10.8.7.185', {
+    initialized: run
+});
 
 function run() {
     b = require('bonescript');              // <2>

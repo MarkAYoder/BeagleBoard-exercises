@@ -6,6 +6,10 @@ setTargetAddress('192.168.7.2', {
     initialized: run
 });
 
+setTargetAddress('10.8.7.185', {
+    initialized: run
+});
+
 var SLIDER = 'P9_36';
 var BUTTON = 'P9_42';
 var LED    = 'P9_14';
