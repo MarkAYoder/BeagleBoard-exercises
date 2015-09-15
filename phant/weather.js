@@ -36,7 +36,10 @@ var BMP085        = require('bmp085');
 var util          = require('util');
 var fs            = require('fs');
 var b             = require('bonescript');
-var ms = 10*1000;               // Repeat time
+// var ms = 10*1000;               // Repeat time
+
+// console.log(util.inspect(request));
+// request.debug = true;
 
 // var filename = "/home/yoder/exercises/phant/keys_weather.json";
 var filename = "/root/exercises/phant/keys_weather.json";
@@ -52,7 +55,7 @@ logger.info("Title: " + keys.title);
 var urlBase = keys.inputUrl + "/?private_key=" + keys.privateKey + "&humidity=%s&pressure=%s&temp=%s";
 var barometer = new BMP085();
 
-setInterval(readWeather, ms);
+// setInterval(readWeather, ms);
 
 readWeather();
 
@@ -70,7 +73,7 @@ function postTemp(data) {
     
     var url = util.format(urlBase, 0, pressure, temp);
     // logger.debug("url: ", url);
-    request(url, function (error, response, body) {
+    request(url, {timeout: 10000}, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             logger.info(body); 
         } else {
