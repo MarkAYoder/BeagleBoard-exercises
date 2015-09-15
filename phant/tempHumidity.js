@@ -105,8 +105,8 @@ function postTemp(data) {
 
 function postWeather() {
     // Both temp and humidity have replied
-    // var url = util.format(urlBase, humidity, pressure, temp);
-    var url = util.format(urlBase, 0, pressure, temp);
+    var url = util.format(urlBase, humidity, pressure, temp);
+    // var url = util.format(urlBase, 0, pressure, temp);
     // logger.debug("url: ", url);
     request(url, function (error, response, body) {
         if (!error && response.statusCode == 200) {
