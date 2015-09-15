@@ -21,3 +21,7 @@ wget http://14.139.34.32:8080/input/$phant_PUBLIC?private_key=$ylDNWDNO7yFGDwORE
 dir=$PWD
 cd /var/lib/cloud9
 ln -s $dir .
+
+echo "# My Stuff" >> /etc/crontab
+echo "* * * * * root /root/exercises/phant/weather.js 2>&1 | logger" >> /etc/crontab 
+# Look in /var/log/message for logger messages
