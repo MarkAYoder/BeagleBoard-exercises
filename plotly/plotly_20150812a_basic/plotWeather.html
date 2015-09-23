@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="splash">
 <head>
-<title>plotly.js yoder example</title>
+<title>Office Weather</title>
 
 <!--
     https://plot.ly/javascript/reference
@@ -13,15 +13,14 @@
 <!--<link href="https://fonts.googleapis.com/css?family=Open+Sans:600,400,300" rel="stylesheet" type="text/css">-->
 </head>
 <body>
-<p>Here's a simple Plotly plot.</p>
-
-
+<h2>Weather in Mark's Office</h2>
 <!--
     Plots go in blank <div> elements. You can size them in the plot layout,
     or give the div a size as shown here.
 -->
-<!--<div id="tester" style="width:600px;height:400px;"></div>-->
-<div id="tester"></div>
+<!--<div id="plot" style="width:600px;height:400px;"></div>-->
+<div id="summary">Getting latest conditions</div>
+<div id="plot"></div>
 
 <!--
     Include these javascript files.
@@ -40,7 +39,7 @@
     And then you are ready to make plots!
 -->
 <script>
-    window.TESTER = document.getElementById('tester');
+    window.WEATHER = document.getElementById('plot');
 
 // These are placeholders until we get the data from the server.
 data = [
@@ -98,13 +97,14 @@ layout = {                     // all "layout" attributes: #layout
     ]
 }
 
+var server = 'http://14.139.34.32:8080/';
 var public_key = 'v02NOaq1KKhpYLJqJ9EWFq1N8QqE';
-var timezone = '?timezone=Asia/Calcutta';
+// var timezone = '?timezone=Asia/Calcutta';
 
 // JSONP request
 var jsonData = $.ajax({
   // url: 'http://14.139.34.32:8080/output/' + public_key + '.json' + timezone,
-  url: 'http://14.139.34.32:8080/output/' + public_key + '.json',
+  url: server + 'output/' + public_key + '.json',
   data: {page: 1},
   dataType: 'jsonp',
 }).done(function (results) {
@@ -116,7 +116,7 @@ var jsonData = $.ajax({
     data[0].x = _.map(results, function(item) {
             return item.timestamp.replace('T', ' ').replace('Z', ''); // Convert to Plotly time format
         });
-    data[1].x = data[0].x;
+    data[1].x = data[0].x;      // Both plots have same time scale
     data[0].y = _.map(results, function(item) {
         if(item.temp < 60) {
             return item.temp;
@@ -131,9 +131,11 @@ var jsonData = $.ajax({
             return NaN;
         }
         });
-    // console.log(data[0].x);
+    console.log(data[0].x.length);
     
-    Plotly.plot(TESTER, data, layout);
+    Plotly.plot(WEATHER, data, layout);
+    $('#summary').html('Temp: ' + data[0].y[0] + '(C), Pressure: ' + data[1].y[0] +
+        ' at ' + data[0].x[0]);
 });
 
 </script>
