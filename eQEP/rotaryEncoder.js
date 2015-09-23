@@ -13,7 +13,7 @@ var eQEP0 = "/sys/devices/ocp.3/48300000.epwmss/48300180.eqep",
     eQEP = eQEP2;
 	
 var oldData,			// pervious data read
-    period = 100;	// in ms
+    period = 10;	// in ms
 
 // Set the eEQP period, convert to ns.
 fs.writeFile(eQEP+'/period', period*1000000, function(err) {
