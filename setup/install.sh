@@ -29,6 +29,9 @@ echo $BONE_NAME > /etc/hostname
 # Turn off messages that appeard when you login
 mv /etc/issue.net /etc/issue.net.orig
 
+# vi settings
+echo 'syntax on' >>~/.vimrc
+
 # Set up github
 git config --global user.name \"Mark A. Yoder\"
 git config --global user.email Mark.A.Yoder@Rose-Hulman.edu
