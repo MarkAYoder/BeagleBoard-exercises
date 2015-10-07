@@ -6,7 +6,7 @@
 # Inspired by http://thoughtshubham.blogspot.com/2010/03/internet-over-usb-otg-on-beagleboard.html
 
 hostAddr=192.168.7.1
-beagleAddr=192.168.7.2
+beagleAddr=${1:-192.168.7.2}
 
 # Save the /etc/resolv.conf on the Beagle in case we mess things up.
 ssh root@$beagleAddr "mv -n /etc/resolv.conf /etc/resolv.conf.orig"
