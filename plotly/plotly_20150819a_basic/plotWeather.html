@@ -98,7 +98,15 @@ layout = {                     // all "layout" attributes: #layout
             xref: 'x',        // #layout-annotations-xref
             y:    898.2,      // #layout-annotations-y
             yref: 'y2'        // #layout-annotations-yref
+        },
+        {
+            text: 'Moved Outside',     // #layout-annotations-text
+            x:    '2015-10-07 11:15',    // #layout-annotations-x
+            xref: 'x',        // #layout-annotations-xref
+            y:    29.3,      // #layout-annotations-y
+            yref: ''        // #layout-annotations-yref
         }
+
     ]
 }
 
@@ -123,7 +131,7 @@ var jsonData = $.ajax({
         });
     data[1].x = data[0].x;      // Both plots have same time scale
     data[0].y = _.map(results, function(item) {  // Copy temp data
-        if(item.temp < 60) {
+        if(item.temp < 50) {
             return item.temp;
         } else {
             return NaN;
