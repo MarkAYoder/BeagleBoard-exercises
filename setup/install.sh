@@ -5,7 +5,7 @@
 # --Mark
 # 20-Aug-2013
 set -e
-BONE=192.168.7.2
+BONE=${1:-192.168.7.2}
 BONE_NAME=yoder-debian-bone
 
 # Set the date to that of the host computer
@@ -16,11 +16,12 @@ scp -r ssh root@$BONE:.ssh
 
 # Copy local copy of exercises to bone and then pull
 echo rsyncing exercises, this will take about 40 seconds
-time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises root@bone:.
+time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises root@$BONE:.
 
 # echo rsyncing beaglebone-cookbook, this will take about 2 seconds
-# time rsync -azq ../../beaglebone-cookbook root@bone:.
-# time rsync -azq ../../libsoc root@bone:.
+time rsync -azq ../../beaglebone-cookbook root@$BONE:.
+time rsync -azq ../../exploringBB root@$BONE:.
+# time rsync -azq ../../libsoc root@$BONE:.
 
 ssh root@$BONE "
 # Set the network name of the board
