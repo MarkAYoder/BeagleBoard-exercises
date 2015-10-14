@@ -145,7 +145,7 @@ var jsonData = $.ajax({
         }
     });
     data[1].y = _.map(results, function(item) { // Copy pressure data
-        if(item.pressure < 950) {
+        if(item.pressure > 890 && item.pressure < 920) {
             return item.pressure;
         } else {
             return NaN;
