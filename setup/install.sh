@@ -92,12 +92,11 @@ mv apache2 hide
 cd /etc/apt/sources.list.d
 mkdir hide
 cd hide
-echo \"deb ftp://ftp.debian.org/debian/ wheezy-backports main\" > wheezy-backports.list
-echo \"deb-src ftp://ftp.debian.org/debian/ wheezy-backports main\" >> wheezy-backports.list
-echo \"deb ftp://ftp.debian.org/debian/ jessie main\" > jessie.list
-echo \"deb-src ftp://ftp.debian.org/debian/ jessie main\" >> jessie.list
-echo \"deb ftp://ftp.debian.org/debian/ sid main\" > sid.list
-echo \"deb-src ftp://ftp.debian.org/debian/ sid main\" >> sid.list
+echo \"deb http://ftp.us.debian.org/debian/ wheezy-backports main\" > wheezy-backports.list
+echo \"deb http://ftp.us.debian.org/debian/ jessie main contrib non-free\" > jessie.list
+echo \"deb http://ftp.us.debian.org/debian/ stretch main contrib non-free\" > stretch.list
+echo \"#deb-src http://ftp.us.debian.org/debian/ stretch main contrib non-free\" >> stretch.list
+echo \"deb http://ftp.us.debian.org/debian/ sid main contrib non-free\" > sid.list
 # echo \"APT::Default-Release \\"\"stable\\"\";\" > /etc/apt/apt.conf.d/local
 "
 exit

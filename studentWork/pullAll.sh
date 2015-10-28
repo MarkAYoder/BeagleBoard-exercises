@@ -1,0 +1,1 @@
+/root/studentWork/pullAll.sh
