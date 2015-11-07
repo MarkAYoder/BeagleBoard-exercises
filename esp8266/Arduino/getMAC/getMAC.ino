@@ -88,7 +88,7 @@ void loop()
   }
   else
   {
-    s += "Invalid Request.<br> Try /led/1, /led/0, or /read.";
+    s +=  req +": Invalid Request.<br> Try /led/1, /led/0, or /read.";
   }
   s += "</html>\n";
 
