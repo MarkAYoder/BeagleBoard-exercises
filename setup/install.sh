@@ -62,6 +62,9 @@ rm /etc/localtime
 # ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
 ln -s /usr/share/zoneinfo/Asia/Calcutta /etc/localtime
 
+# Set language
+export LANG=en_US.UTF-8
+
 # Turn off cape-bone-proto
 # sed -i -e 's:CAPE=cape-bone-proto:#CAPE=cape-bone-proto:g' /etc/default/capemgr
 
