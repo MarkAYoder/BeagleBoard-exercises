@@ -11,7 +11,7 @@ node pinmap.js
 # I see channel 0 on P9_22
 # Start the opc_server
 cd ..
-./opc_server --config ws281x-may.json &
+./opc_server --config ../ws281x-may.json &
 
 # Start a pattern
 cd openpixelcontrol/python_clients
