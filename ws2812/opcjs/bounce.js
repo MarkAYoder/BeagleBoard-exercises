@@ -7,12 +7,12 @@ var b = require('bonescript');
 var xlen = 30,    // Size of virtual grid
     xlenR= 10,    // Size of real grid
     ylen = 10,
-    xdir = 1,     // Direction ball is traveling
-    ydir = -1,
+    xstep = 1,     // Direction ball is traveling
+    ystep = 1,
     colorL = [127, 0, 0],  // Color of ball (RGB)
     colorR = [0, 0, 127],  // Color of ball (RGB)
     color  = colorL,
-    bgnd = [0, 40, 0],     // Color of background
+    bgnd = [0, 20, 0],     // Color of background
     grid = new Array(xlen*ylen),  // Playing field
     ms   = 100;   // Time (in ms) between moves
 
@@ -38,23 +38,25 @@ client.on('connected', function() {   // Do this connected
 
 // This maps the virtual address to the location in grid
   function gi(x, y) {
-    var tmp = y*ylen + Math.floor(x/xlenR)*xlenR*ylen+x%xlenR;
+    var tmp = Math.floor(y*ylen) + Math.floor(x/xlenR)*xlenR*ylen+Math.floor(x%xlenR);
     // console.log("x=%d, y=%d, ret=%d", x, y, tmp);
     return tmp;
   }
   
 // Here's how you move the ball
   function moveBall() {
-    grid[gi(x,y)] = bgnd;    // Turn off ball in present location
-    x += xdir;                // Move in the current direction
-    y += ydir;
+    grid[gi(x,y)] = [0, 40, 0];    // Turn off ball in present location
+    x += xstep;                // Move in the current direction
+    y += ystep;
     if(x<0 || x>xlen-1) {
-      xdir = -xdir;
-      x += xdir;
+      xstep = -xstep;
+      x += xstep;
+      color = color == colorL ? colorR : colorL;
     }
     if(y<0 || y>ylen-1) {
-      ydir = -ydir;
-      y += ydir;
+      ystep = -ystep;
+      y += ystep;
+      color = color == colorL ? colorR : colorL;
     }
 
     grid[gi(x,y)] = color;   // Draw ball in new location
