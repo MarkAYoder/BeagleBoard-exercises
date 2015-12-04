@@ -1,5 +1,5 @@
 #!/bin/bash
-cd ~/exercises/phant
+cd ~/exercises/iot/phant
 
 tmux new-session -d -s weather
  
