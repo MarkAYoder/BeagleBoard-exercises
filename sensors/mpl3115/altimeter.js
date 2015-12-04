@@ -43,8 +43,8 @@ var ms = 1*60*1000;           // Repeat time
 // console.log(util.inspect(request));
 // request.debug = true;
 
-// var filename = "/home/yoder/exercises/phant/keys_many.json";
-var filename = "/root/exercises/phant/keys_many.json";
+// var filename = "/home/yoder/exercises/iot/phant/keys_many.json";
+var filename = "/root/exercises/iot/phant/keys_many.json";
 // logger.debug("process.argv.length: " + process.argv.length);
 if(process.argv.length === 3) {
     filename = process.argv[2];
