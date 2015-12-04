@@ -41,8 +41,8 @@ var b             = require('bonescript');
 var humidPin = 'P9_40';     // Attach HIH-4030 here
 var ms = 60*1000;               // Repeat time
 
-// var filename = "/home/yoder/exercises/phant/keys_weather.json";
-var filename = "/root/exercises/phant/keys_weather.json";
+// var filename = "/home/yoder/exercises/iot/phant/keys_weather.json";
+var filename = "/root/exercises/iot/phant/keys_weather.json";
 // logger.debug("process.argv.length: " + process.argv.length);
 if(process.argv.length === 3) {
     filename = process.argv[2];
