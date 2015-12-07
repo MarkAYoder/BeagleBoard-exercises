@@ -1,0 +1,9 @@
+{
+  "title": "Thing",
+  "outputUrl": "http://14.139.34.32:8080/output/14xjwDXGE6FAyEer6okaCyyzp8yM",
+  "inputUrl": "http://14.139.34.32:8080/input/14xjwDXGE6FAyEer6okaCyyzp8yM",
+  "manageUrl": "http://14.139.34.32:8080/streams/14xjwDXGE6FAyEer6okaCyyzp8yM",
+  "publicKey": "14xjwDXGE6FAyEer6okaCyyzp8yM",
+  "privateKey": "aQ9qj75vDOHwN250WLzdc224lE2N",
+  "deleteKey": "4om4R09yOVuwdlZJByY6unnPXkn2"
+}
