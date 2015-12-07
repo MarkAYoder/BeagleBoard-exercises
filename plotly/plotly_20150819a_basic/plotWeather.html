@@ -90,31 +90,8 @@ layout = {                     // all "layout" attributes: #layout
         tickfont: {color: 'rgb(148, 103, 189)'},
         overlaying: 'y',
         side: 'right'
-    },
-    annotations: [            // all "annotation" attributes: #layout-annotations
-        {
-            text: 'Rain',     // #layout-annotations-text
-            x:    '2015-09-16 12:09',    // #layout-annotations-x
-            xref: 'x',        // #layout-annotations-xref
-            y:    898.2,      // #layout-annotations-y
-            yref: 'y2'        // #layout-annotations-yref
-        },
-        {
-            text: 'Moved Outside',     // #layout-annotations-text
-            x:    '2015-10-07 11:15',    // #layout-annotations-x
-            xref: 'x',        // #layout-annotations-xref
-            y:    29.3,      // #layout-annotations-y
-            yref: ''        // #layout-annotations-yref
-        },
-        {
-            text: 'Fixed wiring',     // #layout-annotations-text
-            x:    '2015-10-14 3:28',    // #layout-annotations-x
-            xref: 'x',        // #layout-annotations-xref
-            y:    904.1,      // #layout-annotations-y
-            yref: 'y2'        // #layout-annotations-yref
-        }
+    }
 
-    ]
 }
 
 var server = 'http://14.139.34.32:8080/';
@@ -145,7 +122,7 @@ var jsonData = $.ajax({
         }
     });
     data[1].y = _.map(results, function(item) { // Copy pressure data
-        if(item.pressure < 950) {
+        if(item.pressure > 880 && item.pressure < 920) {
             return item.pressure;
         } else {
             return NaN;
