@@ -11,7 +11,10 @@ var fd = fs.openSync(LEDs, 'w');
 console.log("fd=%d", fd);
 
 for(var i = 0; i < LEDcount; i++) {
-    fs.writeSync(fd, util.format("150 50 50 %d", i));
+    // fs.writeSync(fd, util.format("150 50 50 %d", i));
+    fs.write(fd, util.format("150 150 50 %d", i), 0, 'utf8', function(err, written, string) {
+        // console.log("written = %d", written);
+    });
 }
 
 
