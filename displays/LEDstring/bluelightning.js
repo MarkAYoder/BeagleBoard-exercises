@@ -15,11 +15,6 @@ console.log("LEDcount = %d", LEDcount);
 var fd = fs.openSync(LEDs, 'w');
 console.log("fd=%d", fd);
 
-// for(var i = 0; i < LEDcount; i++) {
-//     // fs.writeSync(fd, util.format("150 0 0 %d", i));
-//     fs.write(fd, util.format("0 50 0 %d", i));
-// }
-
 for(var i = 0; i<30*10; i+=30) {
     console.log("i=%d", i);
     setTimeout(updateLED, i*ms, 0, 1, 0, LEDcount, colorUp, colorUpOff);
@@ -28,9 +23,6 @@ setInterval(updateString, ms);
 
 function updateLED(pos, dir, start, stop, color, colorOff) {
     fs.write(fd, util.format("%s %d", colorOff, pos));
-    // console.log("fd=%d", fd);
-    // fs.writeSync(fd, util.format("0 0 0 %d", pos));
-    // console.log("pos=%d, dir=%d, start=%d, stop=%d", pos, dir, start, stop);
     pos += dir;
     if(pos >= stop || pos < start) {
         dir = -dir;
@@ -49,7 +41,14 @@ function updateLED(pos, dir, start, stop, color, colorOff) {
     setTimeout(updateLED, ms, pos, dir, start, stop, color, colorOff);
 }
 
+// Send \n to cause the string data to be written out.
 function updateString() {
     fs.write(fd, "\n");
 }
-// fs.closeSync(fd);
+
+// Clean up with ^C is hit.
+process.on('SIGINT', function() {
+    console.log('\nGot SIGINT');
+    process.exit();
+    fs.closeSync(fd);
+});
