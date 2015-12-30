@@ -6,8 +6,9 @@ var LEDs = "/sys/firmware/lpd8806/device/rgb";
 var LEDcount = process.env.STRING_LEN;
 var ms = 50;
 var colorUp = "50 0 0";
-var colorDown = "0 0 50";
-var colorOff = "0 0 0";
+var colorDown = "0 50 50";
+var colorUpOff = "0 0 0";
+var colorDownOff= "0 0 25";
 
 console.log("LEDcount = %d", LEDcount);
 
@@ -19,12 +20,13 @@ console.log("fd=%d", fd);
 //     fs.write(fd, util.format("0 50 0 %d", i));
 // }
 
-for(var i = 0; i<100; i+=10) {
+for(var i = 0; i<30*10; i+=30) {
     console.log("i=%d", i);
-    setTimeout(updateLED, i*ms, 0, 1, 0, LEDcount, colorUp);
+    setTimeout(updateLED, i*ms, 0, 1, 0, LEDcount, colorUp, colorUpOff);
 }
+setInterval(updateString, ms);
 
-function updateLED(pos, dir, start, stop, color) {
+function updateLED(pos, dir, start, stop, color, colorOff) {
     fs.write(fd, util.format("%s %d", colorOff, pos));
     // console.log("fd=%d", fd);
     // fs.writeSync(fd, util.format("0 0 0 %d", pos));
@@ -35,15 +37,19 @@ function updateLED(pos, dir, start, stop, color) {
         pos += dir;
         if(dir>0) {
             color=colorUp;
+            colorOff=colorUpOff;
         } else {
             color = colorDown;
+            colorOff=colorDownOff;
         }
         console.log("dir = %d", dir);
     }
-  fs.write(fd, util.format("%s %d\n", color, pos), 0, 'utf8', function(err, written, string) {});
+  fs.write(fd, util.format("%s %d", color, pos), 0, 'utf8', function(err, written, string) {});
     // fs.writeSync(fd, util.format("0 150 0 %d\n", pos));
-    setTimeout(updateLED, ms, pos, dir, start, stop, color);
+    setTimeout(updateLED, ms, pos, dir, start, stop, color, colorOff);
 }
 
-// fs.writeSync(fd, "\n");
+function updateString() {
+    fs.write(fd, "\n");
+}
 // fs.closeSync(fd);
