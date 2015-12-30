@@ -36,8 +36,7 @@ function updateLED(pos, dir, start, stop, color, colorOff) {
         }
         console.log("dir = %d", dir);
     }
-  fs.write(fd, util.format("%s %d", color, pos), 0, 'utf8', function(err, written, string) {});
-    // fs.writeSync(fd, util.format("0 150 0 %d\n", pos));
+    fs.write(fd, util.format("%s %d", color, pos), 0, 'utf8', function(err, written, string) {});
     setTimeout(updateLED, ms, pos, dir, start, stop, color, colorOff);
 }
 
