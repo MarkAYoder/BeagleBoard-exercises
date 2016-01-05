@@ -230,11 +230,14 @@ static ssize_t lpd8806_store(struct lpd8806_obj *obj, struct lpd8806_attr *attr,
 /*
  * These structs link the attributes with their files and sysfs
  * functions.
+ *
+ * Got an error under Jessie (https://github.com/notro/fbtft/issues/165)
+ * Switched from 0666 to 0660.
  */
 static struct lpd8806_attr grb_attr =
-			__ATTR(rgb, 0666, lpd8806_show, lpd8806_store);
+			__ATTR(rgb, 0660, lpd8806_show, lpd8806_store);
 static struct lpd8806_attr data_attr =
-			__ATTR(data, 0666, lpd8806_show, lpd8806_store);
+			__ATTR(data, 0660, lpd8806_show, lpd8806_store);
 
 /*
  * This struct stores all of the attributes for our kobject.
