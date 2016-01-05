@@ -19,8 +19,8 @@ echo rsyncing exercises, this will take about 40 seconds
 time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises root@$BONE:.
 
 # echo rsyncing beaglebone-cookbook, this will take about 2 seconds
-time rsync -azq ../../beaglebone-cookbook root@$BONE:.
-time rsync -azq ../../exploringBB root@$BONE:.
+# time rsync -azq ../../beaglebone-cookbook root@$BONE:.
+# time rsync -azq ../../exploringBB root@$BONE:.
 # time rsync -azq ../../libsoc root@$BONE:.
 
 ssh root@$BONE "
@@ -45,11 +45,6 @@ git config --global credential.helper \"cache --timeout=14400\"
 # sed 's/	postBuffer = 524288000//' config.orig > config
 # cd
 
-# IIT Mandi Proxy
-# npm
-npm config set proxy http://10.8.0.1:8080
-npm config set https-proxy http://10.8.0.1:8080
-
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
 ln -s --backup=numbered exercises/setup/bashrc .bashrc
 # ln -s --backup=numbered exercises/setup/x11vncrc .x11vncrc
@@ -57,10 +52,10 @@ ln -s --backup=numbered exercises/setup/bashrc .bashrc
 # Set the default sound card to NOT be HDMI
 ln -s --backup=numbered exercises/setup/asoundrc .asoundrc
 
-# Set the time zone to India
+# Set the time zone to Indiana
 rm /etc/localtime
-# ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
-ln -s /usr/share/zoneinfo/Asia/Calcutta /etc/localtime
+ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
+# ln -s /usr/share/zoneinfo/Asia/Calcutta /etc/localtime
 
 # Set language
 export LANG=en_US.UTF-8
