@@ -15,9 +15,9 @@ console.log("LEDcount = %d", LEDcount);
 var fd = fs.openSync(LEDs, 'w');
 console.log("fd=%d", fd);
 
-for(var i = 0; i<30*10; i+=30) {
+for(var i = 0; i<10; i++) {
     console.log("i=%d", i);
-    setTimeout(updateLED, i*ms, {pos: 0, dir: 1, start: 0, stop: LEDcount, color: colorUp, colorOff: colorUpOff});
+    setTimeout(updateLED, 30*i*ms, {pos: 0, dir: 1, start: 0, stop: LEDcount, color: colorUp, colorOff: colorUpOff});
 }
 setInterval(updateString, ms);
 
