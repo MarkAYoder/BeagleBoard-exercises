@@ -1,0 +1,201 @@
+{
+	"version": 1,
+	"header_image": "",
+	"allow_edit": true,
+	"plugins": [],
+	"panes": [
+		{
+			"title": "Wind",
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 2
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "pointer",
+					"settings": {
+						"direction": "datasources[\"Weather\"].wind.deg",
+						"value_text": "var dir = datasources[\"Weather\"].wind.deg;\n\nif(dir <= 22.5)\nreturn \"N\";\nelse if(dir <= 67.5)\nreturn \"NE\";\nelse if(dir <= 112.5)\nreturn \"E\";\nelse if(dir <= 157.5)\nreturn \"SE\";\nelse if(dir <= 202.5)\nreturn \"S\";\nelse if(dir <= 247.5)\nreturn \"SW\";\nelse if(dir <= 292.5)\nreturn \"W\";\nelse if(dir <= 337.5)\nreturn \"NW\";\nelse if(dir <= 360)\nreturn \"N\";"
+					}
+				},
+				{
+					"type": "text_widget",
+					"settings": {
+						"size": "regular",
+						"value": "datasources[\"Weather\"].wind.speed",
+						"sparkline": true,
+						"animate": true,
+						"units": "MPH"
+					}
+				}
+			]
+		},
+		{
+			"title": "Info",
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 1
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "City",
+						"size": "regular",
+						"value": "datasources[\"Weather\"].name",
+						"animate": true
+					}
+				},
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "Conditions",
+						"size": "regular",
+						"value": "datasources[\"Weather\"].weather[0].description",
+						"animate": true
+					}
+				}
+			]
+		},
+		{
+			"title": "Humidity",
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 3
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "gauge",
+					"settings": {
+						"value": "datasources[\"Weather\"].main.humidity",
+						"units": "%",
+						"min_value": 0,
+						"max_value": 100
+					}
+				}
+			]
+		},
+		{
+			"title": "Temperature",
+			"width": 1,
+			"row": {
+				"3": 7
+			},
+			"col": {
+				"3": 1
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "Current",
+						"size": "big",
+						"value": "datasources[\"Weather\"].main.temp",
+						"sparkline": true,
+						"animate": true,
+						"units": "&deg;F"
+					}
+				},
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "High",
+						"size": "regular",
+						"value": "datasources[\"Weather\"].main.temp_max",
+						"animate": true,
+						"units": "&deg;F"
+					}
+				},
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "Low",
+						"size": "regular",
+						"value": "datasources[\"Weather\"].main.temp_min",
+						"animate": true,
+						"units": "&deg;F"
+					}
+				}
+			]
+		},
+		{
+			"width": 1,
+			"row": {
+				"3": 9
+			},
+			"col": {
+				"3": 3
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "Sunrise",
+						"size": "regular",
+						"value": "datasources[\"Weather\"].sys.sunrise",
+						"animate": true
+					}
+				},
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "Sunset",
+						"size": "regular",
+						"value": "datasources[\"Weather\"].sys.sunset",
+						"animate": true
+					}
+				}
+			]
+		},
+		{
+			"title": "Pressure",
+			"width": 1,
+			"row": {
+				"3": 15
+			},
+			"col": {
+				"3": 2
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "text_widget",
+					"settings": {
+						"size": "regular",
+						"value": "datasources[\"Weather\"].main.pressure",
+						"sparkline": true,
+						"animate": true,
+						"units": "mb"
+					}
+				}
+			]
+		}
+	],
+	"datasources": [
+		{
+			"name": "Weather",
+			"type": "JSON",
+			"settings": {
+				"url": "http://api.openweathermap.org/data/2.5/weather?q=Brazil,IN&units=imperial&APPID=6a2db5c8171494bce131dc69af6f34b9",
+				"use_thingproxy": true,
+				"refresh": 5,
+				"method": "GET"
+			}
+		}
+	],
+	"columns": null
+}
