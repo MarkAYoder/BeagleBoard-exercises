@@ -8,4 +8,7 @@ cp brazil.js freeboard
 
 here=$PWD/freeboard
 cd /var/lib/cloud9
-ln - $here .
+ln -s $here .
+
+# Then browse to
+http://bone/freeboard/index.html#source=brazil.json
