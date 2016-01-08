@@ -50,7 +50,7 @@
 			"title": "Info",
 			"width": 1,
 			"row": {
-				"3": 1
+				"3": 11
 			},
 			"col": {
 				"3": 2
@@ -73,6 +73,13 @@
 						"size": "regular",
 						"value": "datasources[\"Weather\"].weather[0].description",
 						"animate": true
+					}
+				},
+				{
+					"type": "google_map",
+					"settings": {
+						"lat": "datasources[\"Weather\"].coord.lat",
+						"lon": "datasources[\"Weather\"].coord.lon"
 					}
 				}
 			]
@@ -103,7 +110,7 @@
 			"title": "Temperature",
 			"width": 1,
 			"row": {
-				"3": 7
+				"3": 1
 			},
 			"col": {
 				"3": 2
@@ -200,10 +207,10 @@
 			"title": "Current Time",
 			"width": 1,
 			"row": {
-				"3": 17
+				"3": 19
 			},
 			"col": {
-				"3": 2
+				"3": 1
 			},
 			"col_width": 1,
 			"widgets": [
