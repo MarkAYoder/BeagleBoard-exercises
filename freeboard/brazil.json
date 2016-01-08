@@ -204,7 +204,7 @@
 			]
 		},
 		{
-			"title": "Current Time",
+			"title": "Data Time",
 			"width": 1,
 			"row": {
 				"3": 19
@@ -218,7 +218,7 @@
 					"type": "text_widget",
 					"settings": {
 						"size": "regular",
-						"value": "datasources[\"Time\"][\"time_string_value\"]",
+						"value": "var date=new Date(1000*datasources[\"Weather\"].dt);\n\nvar zero = \"\";\nif(date.getMinutes()<10)\n    zero = \"0\";\nreturn date.getHours() + ':' + zero + date.getMinutes();",
 						"animate": true
 					}
 				}
@@ -234,13 +234,6 @@
 				"use_thingproxy": true,
 				"refresh": 300,
 				"method": "GET"
-			}
-		},
-		{
-			"name": "Time",
-			"type": "clock",
-			"settings": {
-				"refresh": 1
 			}
 		}
 	],
