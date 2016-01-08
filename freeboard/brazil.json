@@ -195,6 +195,27 @@
 					}
 				}
 			]
+		},
+		{
+			"title": "Current Time",
+			"width": 1,
+			"row": {
+				"3": 17
+			},
+			"col": {
+				"3": 2
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "text_widget",
+					"settings": {
+						"size": "regular",
+						"value": "datasources[\"Time\"][\"time_string_value\"]",
+						"animate": true
+					}
+				}
+			]
 		}
 	],
 	"datasources": [
@@ -206,6 +227,13 @@
 				"use_thingproxy": true,
 				"refresh": 300,
 				"method": "GET"
+			}
+		},
+		{
+			"name": "Time",
+			"type": "clock",
+			"settings": {
+				"refresh": 1
 			}
 		}
 	],
