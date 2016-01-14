@@ -15,29 +15,29 @@ console.log("LEDcount = %d", LEDcount);
 var fd = fs.openSync(LEDs, 'w');
 console.log("fd=%d", fd);
 
-for(var i = 0; i<30*10; i+=30) {
+for(var i = 0; i<10; i++) {
     console.log("i=%d", i);
-    setTimeout(updateLED, i*ms, 0, 1, 0, LEDcount, colorUp, colorUpOff);
+    setTimeout(updateLED, 30*i*ms, {pos: 0, dir: 1, start: 0, stop: LEDcount, color: colorUp, colorOff: colorUpOff});
 }
 setInterval(updateString, ms);
 
-function updateLED(pos, dir, start, stop, color, colorOff) {
-    fs.write(fd, util.format("%s %d", colorOff, pos));
-    pos += dir;
-    if(pos >= stop || pos < start) {
-        dir = -dir;
-        pos += dir;
-        if(dir>0) {
-            color=colorUp;
-            colorOff=colorUpOff;
+function updateLED(x) {
+    fs.write(fd, util.format("%s %d", x.colorOff, x.pos));
+    x.pos += x.dir;
+    if(x.pos >= x.stop || x.pos < x.start) {
+        x.dir = -x.dir;
+        x.pos += x.dir;
+        if(x.dir>0) {
+            x.color=colorUp;
+            x.colorOff=colorUpOff;
         } else {
-            color = colorDown;
-            colorOff=colorDownOff;
+            x.color = colorDown;
+            x.colorOff=colorDownOff;
         }
-        console.log("dir = %d", dir);
+        console.log("dir = %d", x.dir);
     }
-    fs.write(fd, util.format("%s %d", color, pos), 0, 'utf8', function(err, written, string) {});
-    setTimeout(updateLED, ms, pos, dir, start, stop, color, colorOff);
+    fs.write(fd, util.format("%s %d", x.color, x.pos));
+    setTimeout(updateLED, ms, x);
 }
 
 // Send \n to cause the string data to be written out.
