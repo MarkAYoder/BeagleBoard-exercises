@@ -3,13 +3,12 @@ var request = require('request');
 var util    = require('util');
 
 var key = 'ec7eb641373d9256';
-var feature = 'forecast10day';  // See http://www.wunderground.com/weather/api/d/docs?d=data/forecast
+// See http://www.wunderground.com/weather/api/d/docs?d=data/forecast for features
+// try 'forcast', 'forecast10day', 'conditions'
+var feature = 'conditions/forecast';
 
-var url = 'http://api.wunderground.com/api/' + key + 
-            '/' + feature + '/q/IN/Brazil.json';
-            
 var url = util.format('http://api.wunderground.com/api/%s/%s/q/IN/Brazil.json',
-    key, feature);
+                        key, feature);
 
 console.log(url);
 
