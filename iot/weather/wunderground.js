@@ -4,7 +4,7 @@ var util    = require('util');
 
 var key = 'ec7eb641373d9256';
 // See http://www.wunderground.com/weather/api/d/docs?d=data/forecast for features
-// try 'forcast', 'forecast10day', 'conditions'
+// try 'forcast', 'forecast10day', 'conditions', 'astronomy'
 var feature = 'conditions/forecast';
 
 var url = util.format('http://api.wunderground.com/api/%s/%s/q/IN/Brazil.json',
