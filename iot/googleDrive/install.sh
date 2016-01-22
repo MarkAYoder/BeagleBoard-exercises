@@ -1,3 +1,4 @@
+# See also setup/googleDrive.txt
 # http://www.howtogeek.com/196635/an-official-google-drive-for-linux-is-here-sort-of-maybe-this-is-all-well-ever-get/
 
 # These are out of date
