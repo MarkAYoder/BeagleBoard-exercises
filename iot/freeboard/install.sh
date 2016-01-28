@@ -2,7 +2,7 @@
 git clone https://github.com/Freeboard/freeboard.git
 
 # Copy Brazil weather dashboard
-cp brazil.js freeboard
+cp brazil.json freeboard
 
 # Make it so the web server can see it
 
