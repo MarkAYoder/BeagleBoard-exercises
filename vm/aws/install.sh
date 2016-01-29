@@ -32,7 +32,8 @@ aws iot attach-principal-policy \
 aws iot attach-thing-principal --thing-name "myLightBulb" \
     --principal "arn:aws:iot:us-east-1:387934991171:cert/c8ac35fedaafca8a74a27e555fda30ebb5f0b18b21d64a331a922c8b8b7d40fe"
 
-apt-get install mosquitto-clients
+# Need version 1.4.7, so install a newer mosquitto
+apt-get install mosquitto-clients/stretch
 
 # This tells you the host address to use
 aws iot describe-endpoint
