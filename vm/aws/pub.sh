@@ -1,8 +1,6 @@
 #!/bin/bash
-# Usage"  pub.sh "Message" [Channel]
-SUB=${2:-hello/world}
-
-echo $SUB
+# Usage"  pub.sh "Message" [topic]
+TOPIC=${2:-hello/world}
 
 mosquitto_pub -d \
     --cafile CA.pem \
@@ -11,5 +9,5 @@ mosquitto_pub -d \
     --tls-version tlsv1.2 \
     -h A3L43PS2R481G5.iot.us-east-1.amazonaws.com \
     -p 8883 \
-    -t "$SUB" \
+    -t "$TOPIC" \
     -m "$1"
