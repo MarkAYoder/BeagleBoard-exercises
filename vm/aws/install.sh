@@ -39,3 +39,7 @@ aws iot describe-endpoint
 
 # This tests the connection, but I'm not sure what it should return.
 openssl s_client -connect iot.us-east-1.amazonaws.com:443 -CAfile CA.pem -cert cert.pem -key privateKey.pem
+
+# This might be a better starting point
+# http://blog.getflint.io/get-started-with-aws-iot-and-raspberry-pi
+https://gist.githubusercontent.com/shweta-nerake1/8684968ebacb5522c86a/raw/8d1e2dbcd523b5915f92603aee3f5794a5a13ead/iot-mqtt-subscriber.py
