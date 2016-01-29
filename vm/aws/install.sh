@@ -27,10 +27,14 @@ aws iot create-policy --policy-name "PubSubToAnyTopic" --policy-document file://
 # Note the "certificateArn": string in cert.json that was created above
 # Paste it in for the --principal below
 aws iot attach-principal-policy \
-    --principal "arn:aws:iot:us-east-1:387934991171:cert/c8ac35fedaafca8a74a27e555fda30ebb5f0b18b21d64a331a922c8b8b7d40fe" \
+    --principal "arn:aws:iot:us-east-1:387934991171:cert/3edec1dca04cdddc6557da473848404e449f704598221df9df5fa302649e02c5" \
     --policy-name "PubSubToAnyTopic"
 aws iot attach-thing-principal --thing-name "myLightBulb" \
-    --principal "arn:aws:iot:us-east-1:387934991171:cert/c8ac35fedaafca8a74a27e555fda30ebb5f0b18b21d64a331a922c8b8b7d40fe"
+    --principal "arn:aws:iot:us-east-1:387934991171:cert/3edec1dca04cdddc6557da473848404e449f704598221df9df5fa302649e02c5"
+
+# Get
+wget https://www.symantec.com/content/en/us/enterprise/verisign/roots/VeriSign-Class%203-Public-Primary-Certification-Authority-G5.pem
+mv VeriSign-Class%203-Public-Primary-Certification-Authority-G5.pem CA.pem
 
 # Need version 1.4.7, so install a newer mosquitto
 apt-get install mosquitto-clients/stretch
@@ -41,6 +45,6 @@ aws iot describe-endpoint
 # This tests the connection, but I'm not sure what it should return.
 openssl s_client -connect iot.us-east-1.amazonaws.com:443 -CAfile CA.pem -cert cert.pem -key privateKey.pem
 
-# This might be a better starting point
+# This might be a better starting point, but you need python3
 # http://blog.getflint.io/get-started-with-aws-iot-and-raspberry-pi
-https://gist.githubusercontent.com/shweta-nerake1/8684968ebacb5522c86a/raw/8d1e2dbcd523b5915f92603aee3f5794a5a13ead/iot-mqtt-subscriber.py
+wget https://gist.githubusercontent.com/shweta-nerake1/8684968ebacb5522c86a/raw/8d1e2dbcd523b5915f92603aee3f5794a5a13ead/iot-mqtt-subscriber.py
