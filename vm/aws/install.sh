@@ -36,3 +36,6 @@ apt-get install mosquitto-clients
 
 # This tells you the host address to use
 aws iot describe-endpoint
+
+# This tests the connection, but I'm not sure what it should return.
+openssl s_client -connect iot.us-east-1.amazonaws.com:443 -CAfile CA.pem -cert cert.pem -key privateKey.pem
