@@ -1,0 +1,22 @@
+{
+    "Role": {
+        "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17", 
+            "Statement": [
+                {
+                    "Action": "sts:AssumeRole", 
+                    "Principal": {
+                        "Service": "iot.amazonaws.com"
+                    }, 
+                    "Effect": "Allow", 
+                    "Sid": ""
+                }
+            ]
+        }, 
+        "RoleId": "AROAIOHE5CWKQ2ZIYDJ6G", 
+        "CreateDate": "2016-01-29T21:47:31.847Z", 
+        "RoleName": "iot-actions-role", 
+        "Path": "/", 
+        "Arn": "arn:aws:iam::387934991171:role/iot-actions-role"
+    }
+}

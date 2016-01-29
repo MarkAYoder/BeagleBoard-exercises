@@ -45,6 +45,25 @@ aws iot describe-endpoint
 # This tests the connection, but I'm not sure what it should return.
 openssl s_client -connect iot.us-east-1.amazonaws.com:443 -CAfile CA.pem -cert cert.pem -key privateKey.pem
 
-# This might be a better starting point, but you need python3
-# http://blog.getflint.io/get-started-with-aws-iot-and-raspberry-pi
-wget https://gist.githubusercontent.com/shweta-nerake1/8684968ebacb5522c86a/raw/8d1e2dbcd523b5915f92603aee3f5794a5a13ead/iot-mqtt-subscriber.py
+(
+    # This might be a better starting point, but you need python3
+    # http://blog.getflint.io/get-started-with-aws-iot-and-raspberry-pi
+    wget https://gist.githubusercontent.com/shweta-nerake1/8684968ebacb5522c86a/raw/8d1e2dbcd523b5915f92603aee3f5794a5a13ead/iot-mqtt-subscriber.py
+)
+
+# Create a pole policy file
+{
+"Version": "2012-10-17",  
+"Statement": [{
+      "Sid": "",     
+      "Effect": "Allow",      
+      "Principal": { 
+            "Service": "iot.amazonaws.com"
+       },
+      "Action": "sts:AssumeRole"
+  }]
+}
+
+aws iam create-role --role-name iot-actions-role --assume-role-policy-document file://role.policy > role.json
+
+aws iot create-topic-rule --rule-name saveToDynamoDB --topic-rule-payload file://saveDynamoDB.json
