@@ -84,4 +84,12 @@ aws lambda add-permission --function-name "myHelloWorld" --region "us-east-1" \
     --statement-id "unique_id" \
     --action "lambda:InvokeFunction"
     
+aws lambda add-permission --function-name "myHelloWorld" \
+    --principal iot.amazonaws.com \
+    --statement-id "unique_id2" \
+    --action "lambda:InvokeFunction"
+    
+# Test with
+./pub.sh '{"key1": "Hello, World 21", "key2": "Test me"}' topic/test
+
     arn:aws:lambda:us-east-1:387934991171:function:myHelloWorld
