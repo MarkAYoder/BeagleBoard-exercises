@@ -70,3 +70,18 @@ aws iam create-policy --policy-name iot-actions-policy --policy-document file://
 aws iam attach-role-policy --role-name iot-actions-role --policy-arn "arn:aws:iam::387934991171:policy/iot-actions-policy"
 
 aws iot create-topic-rule --rule-name saveToDynamoDB --topic-rule-payload file://saveDynamoDB.json
+
+# Test with
+./pub.sh '{"msg": "Hello, World 14"}' topic/test
+
+# Try lambda function
+aws iot create-topic-rule --rule-name invokeLambda --topic-rule-payload file://myHelloWorld.lambda
+
+aws lambda add-permission --function-name "myHelloWorld" --region "us-east-1" \
+    --principal iot.amazonaws.com \
+    --source-arn arn:aws:iot:us-east-1:387934991171:rule/"myHelloWorld" \
+    --source-account "387934991171" \
+    --statement-id "unique_id" \
+    --action "lambda:InvokeFunction"
+    
+    arn:aws:lambda:us-east-1:387934991171:function:myHelloWorld
