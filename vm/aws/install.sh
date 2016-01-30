@@ -91,5 +91,11 @@ aws lambda add-permission --function-name "myHelloWorld" \
     
 # Test with
 ./pub.sh '{"key1": "Hello, World 21", "key2": "Test me"}' topic/test
+# Check log here
+# https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#logStream:group=%252Faws%252Flambda%252FmyHelloWorld;streamFilter=typeLogStreamPrefix
 
     arn:aws:lambda:us-east-1:387934991171:function:myHelloWorld
+    
+# Thing javascript interface
+# https://github.com/aws/aws-iot-device-sdk-js/blob/master/README.md
+npm install -g aws-iot-device-sdk
