@@ -66,4 +66,7 @@ openssl s_client -connect iot.us-east-1.amazonaws.com:443 -CAfile CA.pem -cert c
 
 aws iam create-role --role-name iot-actions-role --assume-role-policy-document file://role.policy > role.json
 
+aws iam create-policy --policy-name iot-actions-policy --policy-document file://iam.policy
+aws iam attach-role-policy --role-name iot-actions-role --policy-arn "arn:aws:iam::387934991171:policy/iot-actions-policy"
+
 aws iot create-topic-rule --rule-name saveToDynamoDB --topic-rule-payload file://saveDynamoDB.json
