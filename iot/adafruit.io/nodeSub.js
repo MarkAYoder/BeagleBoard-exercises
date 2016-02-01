@@ -1,17 +1,27 @@
 #!/usr/bin/env node
+// Useage nodeSub.js [message] [topic]
 var mqtt = require('mqtt'),
-    util = require('util'),
     host = 'io.adafruit.com', // or localhost
+    user = process.env.AIO_USER,
+    pass = process.env.AIO_KEY,
+    feed = 'Wunderground',  // Default feed
+    mess = '100',   // Default message
   // , client = mqtt.connect();
     client = mqtt.connect({ 
     port: 1883, host: host, keepalive: 10000,
-    username: 'markyoder', password: 'e3c496b806b35ce4b3c97dd3cb7cf8af0ca2d196'
+    username: user, password: pass
   });
 
-client.subscribe('markyoder/feeds/Wunderground');
-client.publish('markyoder/feeds/Wunderground', '23');
+if(process.argv[2]) {
+  mess = process.argv[2];
+}
+if(process.argv[3]) {
+  feed = process.argv[3];
+}
+client.subscribe(user + '/feeds/'+ feed);
+client.publish  (user + '/feeds/'+ feed, mess);
 client.on('message', function (topic, message) {
   console.log(topic);
-  console.log(message.values);
+  console.log(message.toString());
 });
-client.end();
+// client.end();
