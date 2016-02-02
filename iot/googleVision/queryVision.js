@@ -11,9 +11,11 @@ var queryVision = function(path, callback){
   var json   = {
     "requests": [{
       "image":{ "content": buffer },
+      // https://cloud.google.com/vision/reference/rest/v1alpha1/images/annotate
       "features": [
         { "type": "LOGO_DETECTION",  "maxResults": 4 },
         { "type": "LABEL_DETECTION", "maxResults": 10 },
+        { "type": "TEXT_DETECTION", "maxResults": 10 },
         { "type": "FACE_DETECTION",  "maxResults": 4 }
       ]
     }]
@@ -38,4 +40,4 @@ var queryVision = function(path, callback){
   });
 };
 
-queryVision("IMG_0008.JPG");
+queryVision("20151120_150421.jpg");
