@@ -1,7 +1,7 @@
-#!/bin/env node
+#!/usr/bin/env node
 // From: https://groups.google.com/d/msg/cloud-vision-trusted-testers/cmpDD08YdEo/yA66qCS0CgAJ
 
-var key = 'XXX';
+var key = 'AIzaSyD8RAfCr0CD2QPzmfEJUtuwy7vfm0lraKE';
 var fs = require('fs');
 var request = require('request');
 
@@ -12,9 +12,9 @@ var queryVision = function(path, callback){
     "requests": [{
       "image":{ "content": buffer },
       "features": [
-        { "type": LOGO_DETECTION,  "maxResults": 4 },
-        { "type": LABEL_DETECTION, "maxResults": 4 },
-        { "type": FACE_DETECTION,  "maxResults": 4 }
+        { "type": "LOGO_DETECTION",  "maxResults": 4 },
+        { "type": "LABEL_DETECTION", "maxResults": 10 },
+        { "type": "FACE_DETECTION",  "maxResults": 4 }
       ]
     }]
   };
@@ -33,7 +33,9 @@ var queryVision = function(path, callback){
     console.log(JSON.stringify(body.responses[0], undefined, 2));
     
     var response = body.responses[0];
-    callback();
+    // callback();
 
   });
 };
+
+queryVision("IMG_0008.JPG");
