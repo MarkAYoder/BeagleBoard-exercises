@@ -1,8 +1,11 @@
-# Thi isn't built for the Bone, but it works on Ubuntu
+# This isn't built for the Bone, but it works on Ubuntu
 
 https://github.com/astrada/google-drive-ocamlfuse
 
 I followed the instructions in the README.
+
+google-drive-ocamlfuse google
+
 After installing I ran
 
 sudo add-apt-repository -r ppa:alessandro-strada/ppa
