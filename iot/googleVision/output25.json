@@ -1,0 +1,50 @@
+{
+  "labelAnnotations": [
+    {
+      "mid": "/m/09g5pq",
+      "description": "people",
+      "score": 0.84593379
+    },
+    {
+      "mid": "/m/01qls",
+      "description": "community",
+      "score": 0.69184422
+    },
+    {
+      "mid": "/m/011s0",
+      "description": "advertising",
+      "score": 0.57217032
+    },
+    {
+      "mid": "/m/07bn8z",
+      "description": "mound",
+      "score": 0.52425247
+    }
+  ],
+  "textAnnotations": [
+    {
+      "locale": "en",
+      "description": "MCCORMICK'S CREEK\nSTATE PARK\nCANYON INN\nLODGING AND FAMILY DINING\nDIVISION OF STATE PARKS\nINDIANA DEPT OF NATURAL RESOURCES\n",
+      "boundingPoly": {
+        "vertices": [
+          {
+            "x": 197,
+            "y": 243
+          },
+          {
+            "x": 745,
+            "y": 243
+          },
+          {
+            "x": 745,
+            "y": 535
+          },
+          {
+            "x": 197,
+            "y": 535
+          }
+        ]
+      }
+    }
+  ]
+}
