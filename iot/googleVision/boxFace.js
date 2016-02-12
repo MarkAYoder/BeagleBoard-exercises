@@ -14,8 +14,8 @@ for(var i in faces) {
     for(var j in vertices) {
         coord += vertices[j].x + ',' + vertices[j].y + ' ';
     }
-    coordinates += coord + "\" -annotate +" + vertices[3].x + "+" + vertices[3].y + " ";
-    coordinates += "'\nName' ";
+    coordinates += coord + "\" -pointsize 24 -annotate +" + vertices[3].x + "+" + vertices[3].y + " ";
+    coordinates += "'\njoyLikelihood: "+faces[i].joyLikelihood+"' ";
     // console.log(vertices);
     console.log(coordinates);
 }
