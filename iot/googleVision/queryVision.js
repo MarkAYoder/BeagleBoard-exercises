@@ -22,7 +22,7 @@ var queryVision = function(path, callback){
   };
   
   request({
-    'uri'     : 'https://vision.googleapis.com/v1alpha1/images:annotate?key='+key,
+    'uri'     : 'https://vision.googleapis.com/v1/images:annotate?key='+key,
     'headers' : [{ name: 'content-type', value: 'application/json' }],
     'method'  : 'POST',
     'json'    : json
@@ -40,4 +40,5 @@ var queryVision = function(path, callback){
   });
 };
 
-queryVision("20151120_150421.jpg");
+console.log(process.argv[2]);
+queryVision(process.argv[2]);
