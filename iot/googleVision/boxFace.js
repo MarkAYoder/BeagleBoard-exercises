@@ -14,9 +14,11 @@ for(var i in faces) {
     for(var j in vertices) {
         coord += vertices[j].x + ',' + vertices[j].y + ' ';
     }
-    coordinates += coord + "\" ";
+    coordinates += coord + "\" -annotate +" + vertices[3].x + "+" + vertices[3].y + " ";
+    coordinates += "'\nName' ";
     // console.log(vertices);
     console.log(coordinates);
 }
 console.log("convert %s -fill none -stroke black -strokewidth 3 "
-    + "%s tmp.jpg", process.argv[2], coordinates);
+    + "%s "
+    + "tmp.jpg", process.argv[2], coordinates);
