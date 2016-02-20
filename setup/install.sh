@@ -36,7 +36,7 @@ echo 'syntax on' >>~/.vimrc
 # Set up github
 git config --global user.name \"Mark A. Yoder\"
 git config --global user.email Mark.A.Yoder@Rose-Hulman.edu
-# git config --global push.default simple
+git config --global push.default simple
 git config --global color.ui true
 git config --global credential.helper \"cache --timeout=14400\"
 # Fix postBuffer size
