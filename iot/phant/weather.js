@@ -79,5 +79,5 @@ function postTemp(data) {
         } else {
             logger.error("error=" + error + " response=" + JSON.stringify(response));
         }
-    })
+    });
 }

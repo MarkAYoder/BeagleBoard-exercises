@@ -23,5 +23,6 @@ cd /var/lib/cloud9
 ln -s $dir .
 
 echo "# My Stuff" >> /etc/crontab
-echo "* * * * * root /root/exercises/phant/weather.js 2>&1 | logger" >> /etc/crontab 
+echo "* * * * * root /root/exercises/iot/phant/weather.js 2>&1 | logger" >> /etc/crontab 
+echo "* * * * * root /root/exercises/iot/phant/plotPing.js 2>&1 | logger" >> /etc/crontab 
 # Look in /var/log/message for logger messages

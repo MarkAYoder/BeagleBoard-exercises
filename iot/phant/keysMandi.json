@@ -1,0 +1,9 @@
+{
+  "title": "Ping Rose",
+  "outputUrl": "http://14.139.34.32:8080/output/ZBZ8xxWr0lhlNx9D0Er8tjjG0vAP",
+  "inputUrl": "http://14.139.34.32:8080/input/ZBZ8xxWr0lhlNx9D0Er8tjjG0vAP",
+  "manageUrl": "http://14.139.34.32:8080/streams/ZBZ8xxWr0lhlNx9D0Er8tjjG0vAP",
+  "publicKey": "ZBZ8xxWr0lhlNx9D0Er8tjjG0vAP",
+  "privateKey": "xGa966rm7vUvEybRep93SYYqDrVW",
+  "deleteKey": "gNl2DDvgyPCoAYw2DdrpUkkrN1Ye"
+}

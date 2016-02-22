@@ -1,9 +1,1 @@
-{
-  "title": "Ping Rose",
-  "outputUrl": "http://14.139.34.32:8080/output/ZBZ8xxWr0lhlNx9D0Er8tjjG0vAP",
-  "inputUrl": "http://14.139.34.32:8080/input/ZBZ8xxWr0lhlNx9D0Er8tjjG0vAP",
-  "manageUrl": "http://14.139.34.32:8080/streams/ZBZ8xxWr0lhlNx9D0Er8tjjG0vAP",
-  "publicKey": "ZBZ8xxWr0lhlNx9D0Er8tjjG0vAP",
-  "privateKey": "xGa966rm7vUvEybRep93SYYqDrVW",
-  "deleteKey": "gNl2DDvgyPCoAYw2DdrpUkkrN1Ye"
-}
+{"title":"Ping Rose Time","outputUrl":"http://data.sparkfun.com/output/MG40r6AdvgIKNDymOAoL","inputUrl":"http://data.sparkfun.com/input/MG40r6AdvgIKNDymOAoL","manageUrl":"http://data.sparkfun.com/streams/MG40r6AdvgIKNDymOAoL","publicKey":"MG40r6AdvgIKNDymOAoL","privateKey":"nzDGK57no9TlJKkyNWma","deleteKey":"3Z1v8RkzlbuE5dbvXgO7"}

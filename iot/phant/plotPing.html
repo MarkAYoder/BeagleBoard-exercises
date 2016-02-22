@@ -11,11 +11,11 @@
       // onload callback
       function drawChart() {
 
-        var public_key = 'ZBZ8xxWr0lhlNx9D0Er8tjjG0vAP';
+        var public_key = 'MG40r6AdvgIKNDymOAoL';
 
         // JSONP request
         var jsonData = $.ajax({
-          url: 'http://14.139.34.32:8080/output/' + public_key + '.json',
+          url: 'http://data.sparkfun.com/output/' + public_key + '.json',
           data: {page: 1},
           dataType: 'jsonp',
         }).done(function (results) {

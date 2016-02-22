@@ -9,7 +9,7 @@ var request       = require('request');
 var util          = require('util');
 var fs            = require('fs');
 
-var filename = "/home/yoder/BeagleBoard/exercises/iot/phant/keys.json";
+var filename = "/root/exercises/iot/phant/keys.json";
 var ping = "ping -c1 -i1 rose-hulman.edu";
 console.log("process.argv.length: " + process.argv.length);
 if(process.argv.length === 3) {
