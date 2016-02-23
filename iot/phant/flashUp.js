@@ -35,41 +35,47 @@ var timer = setInterval(ping, ms);
 
 // Send off the ping command.
 function ping  () {
-    child.exec(pingCmd,
-        function (error, stdout, stderr) {
-            if(error || stderr) { 
-                console.log('error: ' + error); 
-                console.log('stderr: ' + stderr); 
-                b.digitalWrite(red,   1);
-                b.digitalWrite(green, 0);
-                b.digitalWrite(blue,  0);
-            } else {
-                var time = stdout.match(/time=[0-9.]* /mg); //  Pull the time out of the return string
-                time[0] = parseFloat(time[0].substring(5));     // Strip off the leading time=
-                var average = 0;
-                for(var i=0; i<hist.length; i++) {
-                    average += hist[i];
-                }
-                average /= hist.length;
-                hist[current] = time[0];
-                current++;
-                if(current >= hist.length) {    // Keep a circular buffer of
-                    current=0;                  // most recent values
-                }
-
-                console.log('ping: time = %d, average = %d', time[0].toFixed(2), average.toFixed(2));
-                if(time[0] > 1.1*average) {  // Turn on warning
+    var hour = new Date().getHours();
+    if(hour>5 && hour<21) {
+        child.exec(pingCmd,
+            function (error, stdout, stderr) {
+                if(error || stderr) { 
+                    console.log('error: ' + error); 
+                    console.log('stderr: ' + stderr); 
                     b.digitalWrite(red,   1);
-                    b.digitalWrite(green, 1);
+                    b.digitalWrite(green, 0);
                     b.digitalWrite(blue,  0);
                 } else {
-                    b.digitalWrite(red,   0);
-                    b.digitalWrite(green, 1);
-                    b.digitalWrite(blue,  0);
+                    var time = stdout.match(/time=[0-9.]* /mg); //  Pull the time out of the return string
+                    time[0] = parseFloat(time[0].substring(5));     // Strip off the leading time=
+                    var average = 0;
+                    for(var i=0; i<hist.length; i++) {
+                        average += hist[i];
+                    }
+                    average /= hist.length;
+                    hist[current] = time[0];
+                    current++;
+                    if(current >= hist.length) {    // Keep a circular buffer of
+                        current=0;                  // most recent values
+                    }
+    
+                    console.log('ping: time = %d, average = %d', time[0].toFixed(2), average.toFixed(2));
+                    if(time[0] > 1.1*average) {  // Turn on warning
+                        b.digitalWrite(red,   1);
+                        b.digitalWrite(green, 1);
+                        b.digitalWrite(blue,  0);
+                    } else {
+                        b.digitalWrite(red,   0);
+                        b.digitalWrite(green, 1);
+                        b.digitalWrite(blue,  0);
+                    }
                 }
             }
-        }
-    )
+        )
+    } else {
+        console.log('Good night');
+        allOff();
+    }
 }
 
 process.on('SIGINT', function() {
