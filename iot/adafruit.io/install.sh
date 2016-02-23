@@ -3,3 +3,6 @@
 git clone https://github.com/adafruit/adafruit-io-basics.git
 cd adafruit-io-basics/raspberry-pi
 npm install
+
+# For mqtt
+apt-get install mosquitto-clients
