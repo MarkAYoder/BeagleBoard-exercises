@@ -1,7 +1,10 @@
 #!/bin/bash
-# Usage"  pub.sh "Message" [topic]
+# Usage"  pub.sh "Message" [feed]
 
-TOPIC=${2:-$AIO_USER/feeds/Wunderground}
+feed=${2:-Light}
+TOPIC=$AIO_USER/feeds/$feed
+
+echo Publishing $1 to $TOPIC
 
 mosquitto_pub -d \
     -u $AIO_USER \

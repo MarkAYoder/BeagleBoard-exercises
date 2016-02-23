@@ -1,6 +1,7 @@
 #!/bin/bash
-# Usage"  sub.sh [topic]
-TOPIC=${1:-$AIO_USER/feeds/Wunderground}
+# Usage"  sub.sh [feed]
+feed=${1:-Light}
+TOPIC=$AIO_USER/feeds/$feed
 
 echo Subscribing to $TOPIC
 
