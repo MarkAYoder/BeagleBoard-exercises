@@ -5,21 +5,26 @@
 // Run this script
 
 var child_process = require('child_process');
-var request       = require('request');
+var request       = require('/usr/local/lib/node_modules/request');
 var util          = require('util');
 var fs            = require('fs');
 
 var filename = "/root/exercises/iot/phant/keys.json";
-var ping = "ping -c1 -i1 rose-hulman.edu";
+var ping = 'ping -c1 -i1 ';
 console.log("process.argv.length: " + process.argv.length);
-if(process.argv.length === 3) {
-    filename = process.argv[2];
+if(process.argv.length > 2) {
+    ping += process.argv[2];
+} else {
+    ping += "rose-hulman.edu";
+}
+if(process.argv.length > 3) {
+    filename = process.argv[3];
 }
 var keys = JSON.parse(fs.readFileSync(filename));
 console.log("Using: " + filename);
 console.log("Title: " + keys.title);
 // console.log(util.inspect(keys));
-
+console.log("Ping: %s", ping);
 var url = keys.inputUrl + "/?private_key=" + keys.privateKey + "&time=";
 
 // Send off the ping command.
