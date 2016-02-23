@@ -11,12 +11,14 @@ var queryVision = function(path, callback){
   var json   = {
     "requests": [{
       "image":{ "content": buffer },
-      // https://cloud.google.com/vision/reference/rest/v1alpha1/images/annotate
+      // https://cloud.google.com/vision/reference/rest/v1/images/annotate
       "features": [
-        { "type": "LOGO_DETECTION",  "maxResults": 4 },
-        { "type": "LABEL_DETECTION", "maxResults": 10 },
-        { "type": "TEXT_DETECTION", "maxResults": 10 },
-        { "type": "FACE_DETECTION",  "maxResults": 4 }
+        { "type": "LABEL_DETECTION",  "maxResults": 10 },
+        { "type": "LANDMARK_DETECTION","maxResults": 12 },
+        { "type": "LOGO_DETECTION",   "maxResults": 4 },
+        { "type": "TEXT_DETECTION",   "maxResults": 10 },
+        { "type": "FACE_DETECTION",   "maxResults": 4 },
+        { "type": "IMAGE_PROPERTIES", "maxResults": 12 }
       ]
     }]
   };
