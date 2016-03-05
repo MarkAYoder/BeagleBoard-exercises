@@ -8,6 +8,13 @@ var samples = "5";
 
 var url = api + "?path=" + path + "&samples=" + samples + "&key=" + key;
 
-// request()
-
 console.log(url);
+request(url, function(err, response, body) {
+    if (err || response.statusCode != 200) {
+      return console.log('error', err, body.error);
+    }
+    
+    console.log(JSON.parse(body));
+    body = JSON.parse(body);
+    console.log(body.results);
+});
