@@ -16,7 +16,7 @@ var queryVision = function(path, callback){
         { "type": "LABEL_DETECTION",  "maxResults": 10 },
         { "type": "LANDMARK_DETECTION","maxResults": 12 },
         { "type": "LOGO_DETECTION",   "maxResults": 4 },
-        { "type": "TEXT_DETECTION",   "maxResults": 10 },
+        { "type": "TEXT_DETECTION",   "maxResults": 100 },
         { "type": "FACE_DETECTION",   "maxResults": 4 },
         { "type": "IMAGE_PROPERTIES", "maxResults": 12 }
       ]
