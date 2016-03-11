@@ -3,6 +3,4 @@
 
 sudo apt-get install bmap-tools
 
-sudo bmaptool copy --bmap \
-    bone-debian-7.8-console-armhf-2015-07-28-2gb.bmap \
-    bone-debian-7.8-console-armhf-2015-07-28-2gb.img.xz /dev/sdd
+sudo bmaptool copy bone-debian-7.8-console-armhf-2015-07-28-2gb.img.xz /dev/mmcblk0
