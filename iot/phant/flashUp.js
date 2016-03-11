@@ -77,6 +77,7 @@ function ping  () {
         )
     } else {
         console.log('Good night');
+        fs.writeFile(LEDtrigger, 'none');      // Turn off heartbeat LED
         allOff();
     }
 }
@@ -92,5 +93,4 @@ function allOff() {
     b.digitalWrite(red,   0);
     b.digitalWrite(green, 0);
     b.digitalWrite(blue,  0);
-    fs.writeFile(LEDtrigger, 'none');      // Turn off heartbeat LED
 }
