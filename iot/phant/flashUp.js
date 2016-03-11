@@ -3,7 +3,8 @@
 // apt-get install flite
 
 var child = require('child_process');
-var b = require('bonescript');
+var b     = require('bonescript');
+var fs    = require('fs');
 
 var pingCmd = "ping -w1 google.com";
 var ms = 15000;          // Repeat time in ms.
@@ -13,6 +14,7 @@ var current = 0;        // Insert next value here
 var red   = 'P9_11';
 var green = 'P9_15';
 var blue  = 'P9_13';
+var LEDtrigger = '/sys/class/leds/beaglebone:green:usr0/trigger';
 
 for(var i = 0; i<hist.length; i++) {    // Initialize history to threshold
     hist[i] = thresh;
@@ -36,7 +38,8 @@ var timer = setInterval(ping, ms);
 // Send off the ping command.
 function ping  () {
     var hour = new Date().getHours();
-    if(hour>5 && hour<21) {
+    if(hour>5 && hour<21) {     // Only light up during certain hours
+        fs.writeFile(LEDtrigger, 'heartbeat');      // Turn on heartbeat LED
         child.exec(pingCmd,
             function (error, stdout, stderr) {
                 if(error || stderr) { 
@@ -89,4 +92,5 @@ function allOff() {
     b.digitalWrite(red,   0);
     b.digitalWrite(green, 0);
     b.digitalWrite(blue,  0);
+    fs.writeFile(LEDtrigger, 'none');      // Turn off heartbeat LED
 }
