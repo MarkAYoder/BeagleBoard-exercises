@@ -14,7 +14,6 @@ var current = 0;        // Insert next value here
 var red   = 'P9_11';
 var green = 'P9_15';
 var blue  = 'P9_13';
-var LEDtrigger = '/sys/class/leds/beaglebone:green:usr0/trigger';
 
 for(var i = 0; i<hist.length; i++) {    // Initialize history to threshold
     hist[i] = thresh;
@@ -34,12 +33,12 @@ if(process.argv.length === 3) {
 }
 
 var timer = setInterval(ping, ms);
+ping();
 
 // Send off the ping command.
 function ping  () {
     var hour = new Date().getHours();
     if(hour>5 && hour<21) {     // Only light up during certain hours
-        fs.writeFile(LEDtrigger, 'heartbeat');      // Turn on heartbeat LED
         child.exec(pingCmd,
             function (error, stdout, stderr) {
                 if(error || stderr) { 
@@ -77,7 +76,6 @@ function ping  () {
         )
     } else {
         console.log('Good night');
-        fs.writeFile(LEDtrigger, 'none');      // Turn off heartbeat LED
         allOff();
     }
 }
