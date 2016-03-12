@@ -1,6 +1,6 @@
 # From: https://home-assistant.io/getting-started/
 
-apt-get install python3-php libyaml
+apt-get install libyaml-dev python3-pip
 pip3 install homeassistant
 hass
 
