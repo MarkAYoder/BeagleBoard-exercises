@@ -5,7 +5,7 @@
 // Run this script
 
 var child_process = require('child_process');
-var request       = require('/usr/local/lib/node_modules/request');
+var request       = require('request');
 var util          = require('util');
 var fs            = require('fs');
 
