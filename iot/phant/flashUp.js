@@ -3,7 +3,8 @@
 // apt-get install flite
 
 var child = require('child_process');
-var b = require('bonescript');
+var b     = require('bonescript');
+var fs    = require('fs');
 
 var pingCmd = "ping -w1 google.com";
 var ms = 15000;          // Repeat time in ms.
@@ -32,11 +33,12 @@ if(process.argv.length === 3) {
 }
 
 var timer = setInterval(ping, ms);
+ping();
 
 // Send off the ping command.
 function ping  () {
     var hour = new Date().getHours();
-    if(hour>5 && hour<21) {
+    if(hour>5 && hour<21) {     // Only light up during certain hours
         child.exec(pingCmd,
             function (error, stdout, stderr) {
                 if(error || stderr) { 
