@@ -7,7 +7,7 @@ var cheerio = require('cheerio');
 // var app     = express();
 
 // Let's scrape Incrediables
-url = 'http://www.imdb.com/title/tt0317705/';
+var url = 'http://www.imdb.com/title/tt0317705/';
 
 request(url, function(error, response, html){
 	if(!error){
