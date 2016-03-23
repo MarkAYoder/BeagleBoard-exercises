@@ -1,9 +1,10 @@
 #!/usr/bin/env node
+// Reads the big Ricoh printer in the workroom
 
 var request = require('request');
 var cheerio = require('cheerio');
 
-// Let's scrape Incrediables
+// Let's scrape c205
 var url = 'http://c205-ricoh.printer.rose-hulman.edu/web/guest/en/websys/webArch/topPage.cgi';
 
 request(url, function(error, response, html){
