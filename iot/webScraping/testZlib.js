@@ -12,7 +12,7 @@ zlib.gzip(input, function(err, buffer) {
 });
 
 const buffer = new Buffer('H4sIAAAAAAAAA9PTIwAAv0QEASEAAAA=', 'base64');
-zlib.gunzip(buffer, function(err, buffer) {
+zlib.unzip(buffer, function(err, buffer) {
   if (!err) {
     console.log(buffer.toString());
   } else {
