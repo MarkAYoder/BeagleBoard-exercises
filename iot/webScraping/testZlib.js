@@ -3,7 +3,7 @@
 const zlib = require('zlib');
 
 const input = '.................................';
-zlib.deflate(input, function(err, buffer) {
+zlib.gzip(input, function(err, buffer) {
   if (!err) {
     console.log(buffer.toString('base64'));
   } else {
@@ -11,8 +11,8 @@ zlib.deflate(input, function(err, buffer) {
   }
 });
 
-const buffer = new Buffer('eJzT0yMAAGTvBe8=', 'base64');
-zlib.unzip(buffer, function(err, buffer) {
+const buffer = new Buffer('H4sIAAAAAAAAA9PTIwAAv0QEASEAAAA=', 'base64');
+zlib.gunzip(buffer, function(err, buffer) {
   if (!err) {
     console.log(buffer.toString());
   } else {
