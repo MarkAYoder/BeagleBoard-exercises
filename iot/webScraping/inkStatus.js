@@ -6,21 +6,29 @@ const zlib = require('zlib');
 
 // Get ink status on hp Printer at home
 var url = 'https://hpprinter/#hId-pgInkConsumables';
+// var url = 'https://google.com';
 // http://stackoverflow.com/questions/20433287/node-js-request-cert-has-expired#answer-29397100
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-request(url, function(err, response, html) {
+// Looks like the hp Printer is sending back gzip'ed data.  I tried here to 
+// make it not gzip, but it doesn't work
+var headers = {
+      'Accept-Encoding': 'identity, gzip;q=0'
+    };
+
+request({url:url, headers: headers}, function(err, response, html) {
 	if(err) {
 		console.log("err: " + err)
 	} else {
-		console.log("response: " + JSON.stringify(response));
+		console.log("\n\nresponse: " + JSON.stringify(response));
 		// console.log(html);
-		// console.log("html: " + html);
+		console.log("html: " + html);
 		var $ = cheerio.load(html);
 
+		// Here I'm trying to gunzip the data, but it does work.
 		const buffer = new Buffer(html, 'base64');
 		console.log("buffer: " + buffer);
-		zlib.gunzip(buffer, function(err, buffer) {
+		zlib.unzip(buffer, function(err, buffer) {
 		  if (!err) {
 		    console.log("buffer: " + buffer.toString());
 		  } else {
@@ -46,6 +54,14 @@ request(url, function(err, response, html) {
 	}
 });
 
+//   request({url:'http://localhost:8000/', 'headers': headers})
+   
+//   Accept-Encoding: gzip;q=1.0, identity
+   
+// const request = http.get({ host: 'izs.me',
+//                          path: '/',
+//                          port: 80,
+//                          headers: { 'accept-encoding': 'gzip,deflate' } });
 
 
 // const input = '.................................';
