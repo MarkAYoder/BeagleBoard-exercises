@@ -2,6 +2,7 @@
 
 var request = require('request');
 var cheerio = require('cheerio');
+const zlib = require('zlib');
 
 // Get ink status on hp Printer at home
 var url = 'https://hpprinter/#hId-pgInkConsumables';
@@ -12,10 +13,20 @@ request(url, function(err, response, html) {
 	if(err) {
 		console.log("err: " + err)
 	} else {
-		// console.log("response: " + JSON.stringify(response));
-		console.log(html);
+		console.log("response: " + JSON.stringify(response));
+		// console.log(html);
 		// console.log("html: " + html);
 		var $ = cheerio.load(html);
+
+		const buffer = new Buffer(html, 'base64');
+		console.log("buffer: " + buffer);
+		zlib.gunzip(buffer, function(err, buffer) {
+		  if (!err) {
+		    console.log("buffer: " + buffer.toString());
+		  } else {
+		    console.log("err: " + err);
+		  }
+		});
 
 		$('.staticProp').filter(function(){
 	        var data = $(this);
@@ -34,4 +45,23 @@ request(url, function(err, response, html) {
         });
 	}
 });
-	
+
+
+
+// const input = '.................................';
+// zlib.deflate(input, function(err, buffer) {
+//   if (!err) {
+//     console.log(buffer.toString('base64'));
+//   } else {
+//     console.log("err: " + err);
+//   }
+// });
+
+// const buffer = new Buffer('eJzT0yMAAGTvBe8=', 'base64');
+// zlib.unzip(buffer, function(err, buffer) {
+//   if (!err) {
+//     console.log(buffer.toString());
+//   } else {
+//     console.log("err: " + err);
+//   }
+// });
