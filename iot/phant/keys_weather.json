@@ -1,9 +1,1 @@
-{
-  "title": "Local Weather",
-  "outputUrl": "http://14.139.34.32:8080/output/v02NOaq1KKhpYLJqJ9EWFq1N8QqE",
-  "inputUrl": "http://14.139.34.32:8080/input/v02NOaq1KKhpYLJqJ9EWFq1N8QqE",
-  "manageUrl": "http://14.139.34.32:8080/streams/v02NOaq1KKhpYLJqJ9EWFq1N8QqE",
-  "publicKey": "v02NOaq1KKhpYLJqJ9EWFq1N8QqE",
-  "privateKey": "rgax9mpQ44SwqjEzEgGlIY5Oy8Y9",
-  "deleteKey": "JrPz68XlppFVX4vyvlk0unOk6znR"
-}
+{"title":"Bedroom Weather","outputUrl":"http://data.sparkfun.com/output/LQJWoLv3OECrEZ2WNyj0","inputUrl":"http://data.sparkfun.com/input/LQJWoLv3OECrEZ2WNyj0","manageUrl":"http://data.sparkfun.com/streams/LQJWoLv3OECrEZ2WNyj0","publicKey":"LQJWoLv3OECrEZ2WNyj0","privateKey":"A14MjxB8PefM1ArJBwbZ","deleteKey":"AE3JlBLjvkfNkKJ3nebx"}
