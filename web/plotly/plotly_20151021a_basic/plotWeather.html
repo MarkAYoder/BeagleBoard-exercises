@@ -13,7 +13,7 @@
 </head>
 
 <body>
-<h3>Weather in Mark's Office</h3>
+<h3>Weather in Mark's Bedroom</h3>
 <!--
     Plots go in blank <div> elements. You can size them in the plot layout,
     or give the div a size as shown here.
@@ -126,7 +126,7 @@ var public_key = 'LQJWoLv3OECrEZ2WNyj0';
 var jsonData = $.ajax({
   // url: 'http://14.139.34.32:8080/output/' + public_key + '.json' + timezone,
   url: server + 'output/' + public_key + '.json',
-   data: {page: 1},
+//   data: {page: 1},
   dataType: 'jsonp',
 }).done(function (results) {
     // console.log(results);
