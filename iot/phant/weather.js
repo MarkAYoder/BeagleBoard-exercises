@@ -36,7 +36,7 @@ var BMP085        = require('bmp085');
 var util          = require('util');
 var fs            = require('fs');
 var b             = require('bonescript');
-var ms = 1*60*1000;               // Repeat time
+var ms = 15*60*1000;               // Repeat time
 
 // console.log(util.inspect(request));
 // request.debug = true;
@@ -53,7 +53,7 @@ logger.info("Title: " + keys.title);
 // logger.debug(util.inspect(keys));
 
 var urlBase = keys.inputUrl + "/?private_key=" + keys.privateKey + "&humidity=%s&pressure=%s&temp=%s";
-var barometer = new BMP085();
+var barometer = new BMP085({device: '/dev/i2c-2'});
 
 setInterval(readWeather, ms);
 
@@ -72,7 +72,7 @@ function postTemp(data) {
     // logger.debug("pressure: " + pressure);
     
     var url = util.format(urlBase, 0, pressure, temp);
-    // logger.debug("url: ", url);
+    logger.debug("url: ", url);
     request(url, {timeout: 10000}, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             logger.info(body); 
