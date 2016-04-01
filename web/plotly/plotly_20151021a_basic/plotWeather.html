@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="splash">
 <head>
-<title>Office Weather</title>
+<title>Weather</title>
 <!--
     https://plot.ly/javascript/reference
 
@@ -80,7 +80,7 @@ layout = {                     // all "layout" attributes: #layout
         "title": "Date"         // more about "layout.xaxis.title": #layout-xaxis-title
     },
     yaxis: {
-        title: 'Temperature (C)',
+        title: 'Temperature (F)',
         titlefont: {color: 'rgb(255, 32, 77)'},
     },
     yaxis2: {
@@ -140,7 +140,7 @@ var jsonData = $.ajax({
     data[1].x = data[0].x;      // Both plots have same time scale
     data[0].y = _.map(results, function(item) {  // Copy temp data
         if(item.temp < 50) {
-            return item.temp;
+            return item.temp*1.8+32;	// Convert to F
         } else {
             return NaN;
         }
@@ -155,7 +155,7 @@ var jsonData = $.ajax({
     // console.log(data[0].x.length);
     
     Plotly.plot('plot', data, layout);      // Puts plot in <div> with id='plot'
-    $('#summary').html('Temp: ' + data[0].y[0] + '(C), Pressure: ' + data[1].y[0] +
+    $('#summary').html('Temp: ' + data[0].y[0] + '(F), Pressure: ' + data[1].y[0] +
         ' at ' + data[0].x[0]);
 });
 
