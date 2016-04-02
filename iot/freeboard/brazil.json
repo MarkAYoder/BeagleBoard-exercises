@@ -26,7 +26,7 @@
 					"type": "text_widget",
 					"settings": {
 						"size": "regular",
-						"value": "datasources[\"Weather\"].current_observation.wind_degrees \n+ \"° \"\n+ datasources[\"Weather\"].current_observation.wind_mph",
+						"value": "datasources[\"Weather\"].current_observation.wind_degrees \n+ \"° \"\n+ datasources[\"Weather\"].current_observation.wind_mph\n+ \" (\"\n+ datasources[\"Weather\"].current_observation.wind_gust_mph\n+ \")\"",
 						"sparkline": false,
 						"animate": true,
 						"units": "mph"
@@ -101,24 +101,31 @@
 			]
 		},
 		{
-			"title": "Pressure",
 			"width": 1,
 			"row": {
-				"3": 13
+				"3": 9
 			},
 			"col": {
-				"3": 1
+				"3": 3
 			},
 			"col_width": 1,
 			"widgets": [
 				{
 					"type": "text_widget",
 					"settings": {
+						"title": "Sunrise",
 						"size": "regular",
-						"value": "datasources[\"Weather\"].current_observation.pressure_in + ' ' +\ndatasources[\"Weather\"].current_observation.pressure_trend",
-						"sparkline": false,
-						"animate": true,
-						"units": "in"
+						"value": "datasources[\"Weather\"].sun_phase.sunrise.hour + ':' + \ndatasources[\"Weather\"].sun_phase.sunrise.minute",
+						"animate": true
+					}
+				},
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "Sunset",
+						"size": "regular",
+						"value": "datasources[\"Weather\"].sun_phase.sunset.hour + ':' + \ndatasources[\"Weather\"].sun_phase.sunset.minute",
+						"animate": true
 					}
 				}
 			]
@@ -151,35 +158,37 @@
 						"value": "datasources[\"Weather\"].current_observation.weather",
 						"animate": true
 					}
+				},
+				{
+					"type": "text_widget",
+					"settings": {
+						"size": "regular",
+						"value": "datasources[\"SparkFun\"][\"message\"]",
+						"sparkline": true,
+						"animate": true
+					}
 				}
 			]
 		},
 		{
+			"title": "Pressure",
 			"width": 1,
 			"row": {
-				"3": 9
+				"3": 13
 			},
 			"col": {
-				"3": 3
+				"3": 1
 			},
 			"col_width": 1,
 			"widgets": [
 				{
 					"type": "text_widget",
 					"settings": {
-						"title": "Sunrise",
 						"size": "regular",
-						"value": "datasources[\"Weather\"].sun_phase.sunrise.hour + ':' + \ndatasources[\"Weather\"].sun_phase.sunrise.minute",
-						"animate": true
-					}
-				},
-				{
-					"type": "text_widget",
-					"settings": {
-						"title": "Sunset",
-						"size": "regular",
-						"value": "datasources[\"Weather\"].sun_phase.sunset.hour + ':' + \ndatasources[\"Weather\"].sun_phase.sunset.minute",
-						"animate": true
+						"value": "datasources[\"Weather\"].current_observation.pressure_in + ' ' +\ndatasources[\"Weather\"].current_observation.pressure_trend",
+						"sparkline": false,
+						"animate": true,
+						"units": "in"
 					}
 				}
 			]
@@ -214,6 +223,16 @@
 				"url": "http://api.wunderground.com/api/ec7eb641373d9256/conditions/forecast/astronomy/q/IN/Brazil.json",
 				"use_thingproxy": true,
 				"refresh": 300,
+				"method": "GET"
+			}
+		},
+		{
+			"name": "SparkFun",
+			"type": "JSON",
+			"settings": {
+				"url": "http://data.sparkfun.com/output/LQJWoLv3OEC2WNyj0.json",
+				"use_thingproxy": true,
+				"refresh": 600,
 				"method": "GET"
 			}
 		}
