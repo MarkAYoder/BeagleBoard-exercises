@@ -97,6 +97,16 @@
 						"animate": true,
 						"units": "&deg;F"
 					}
+				},
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "Bedroom",
+						"size": "regular",
+						"value": "datasources[\"SparkFun\"][0].temp *9/5 + 32.0",
+						"animate": true,
+						"units": "&deg;F"
+					}
 				}
 			]
 		},
@@ -134,7 +144,7 @@
 			"title": "Info",
 			"width": 1,
 			"row": {
-				"3": 11
+				"3": 13
 			},
 			"col": {
 				"3": 2
@@ -158,15 +168,6 @@
 						"value": "datasources[\"Weather\"].current_observation.weather",
 						"animate": true
 					}
-				},
-				{
-					"type": "text_widget",
-					"settings": {
-						"size": "regular",
-						"value": "datasources[\"SparkFun\"][\"message\"]",
-						"sparkline": true,
-						"animate": true
-					}
 				}
 			]
 		},
@@ -187,6 +188,16 @@
 						"size": "regular",
 						"value": "datasources[\"Weather\"].current_observation.pressure_in + ' ' +\ndatasources[\"Weather\"].current_observation.pressure_trend",
 						"sparkline": false,
+						"animate": true,
+						"units": "in"
+					}
+				},
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "Bedroom",
+						"size": "regular",
+						"value": "datasources[\"SparkFun\"][0].pressure * 0.0393700791974",
 						"animate": true,
 						"units": "in"
 					}
@@ -230,7 +241,7 @@
 			"name": "SparkFun",
 			"type": "JSON",
 			"settings": {
-				"url": "http://data.sparkfun.com/output/LQJWoLv3OEC2WNyj0.json",
+				"url": "http://data.sparkfun.com/output/LQJWoLv3OECrEZ2WNyj0.json",
 				"use_thingproxy": true,
 				"refresh": 600,
 				"method": "GET"
