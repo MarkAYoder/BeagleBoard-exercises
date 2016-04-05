@@ -197,7 +197,7 @@
 					"settings": {
 						"title": "Bedroom",
 						"size": "regular",
-						"value": "datasources[\"SparkFun\"][0].pressure * 0.0393700791974",
+						"value": "datasources[\"SparkFun\"][0].pressure / 33.8638866667",
 						"animate": true,
 						"units": "in"
 					}
