@@ -6,6 +6,8 @@ unzip plotlyjs_basic.zip
 
 ln -s plotly_20150812a_basic weather    # Make path easier to remember
 
+cp plotWeather.html weather
+
 # Link it where the browser can see it 
 here=$PWD/weather
 cd /var/lib/cloud9
