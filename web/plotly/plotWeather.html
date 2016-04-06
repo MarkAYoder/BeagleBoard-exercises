@@ -116,14 +116,14 @@ var layout = {                     // all "layout" attributes: #layout
 
     ]
 */
-}
+};
 
 var server = 'http://data.sparkfun.com/';
 var public_key = 'LQJWoLv3OECrEZ2WNyj0';
 // var timezone = '?timezone=Asia/Calcutta';
 
 // JSONP request
-var jsonData = $.ajax({
+$.ajax({
   // url: 'http://14.139.34.32:8080/output/' + public_key + '.json' + timezone,
   url: server + 'output/' + public_key + '.json',
 //   data: {page: 1},
