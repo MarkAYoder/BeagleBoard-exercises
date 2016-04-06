@@ -29,17 +29,17 @@
     the weird typedarray.js code is a polyfill, primarily for IE9, that does not
     natively support typed numeric arrays
 -->
-<script type="text/javascript" src="dependencies/jquery-latest.js"></script>
+<!-- Use these for local server -->
+<script type="text/javascript" src="jquery.min.js"></script>
 <script>if(typeof window.Int16Array !== 'function')document.write("<scri"+"pt src='dependencies/typedarray.js'></scr"+"ipt>");</script>
-<script type="text/javascript" src="plotly.min.js"></script>
-<script type="text/javascript" src="demo_dependencies/underscore.min.js"></script>
+<script type="text/javascript" src="plotly-latest.min.js"></script>
+<script type="text/javascript" src="underscore-min.js"></script>
 
-<!--
-    Use these for remote servers
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-<script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script>
--->
+<!-- Use these for remote servers -->
+<!--<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>-->
+<!--<script>if(typeof window.Int16Array !== 'function')document.write("<scri"+"pt src='dependencies/typedarray.js'></scr"+"ipt>");</script>-->
+<!--<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
+<!--<script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>-->
 
 <!--
     And then you are ready to make plots!
