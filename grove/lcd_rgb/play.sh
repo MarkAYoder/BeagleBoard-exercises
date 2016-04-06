@@ -1,6 +1,5 @@
 #!/bin/bash
-set -e
-# Beaglebone
+# Beaglebone - Backlight works, but display doesn't
 BUS=2
 DISPLAY_RGB_ADDR=0x62
 DISPLAY_TEXT_ADDR=0x3e
