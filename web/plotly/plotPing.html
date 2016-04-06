@@ -19,7 +19,7 @@
     or give the div a size as shown here.
 -->
 <!--<div id="plot" style="width:600px;height:400px;"></div>-->
-<div id="summary">Getting latest conditions</div>
+<div id="summary">Getting latest pings</div>
 <div id="plot"></div>
 
 <!--
@@ -78,7 +78,7 @@ var public_key = 'MG40r6AdvgIKNDymOAoL';
 // JSONP request
 var jsonData = $.ajax({
   url: server + 'output/' + public_key + '.json',
-  data: {page: 1},
+//   data: {page: 1},
   dataType: 'jsonp',
 }).done(function (results) {
     // console.log(results);
