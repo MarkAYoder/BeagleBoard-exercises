@@ -84,7 +84,7 @@ layout = {                     // all "layout" attributes: #layout
         titlefont: {color: 'rgb(255, 32, 77)'},
     },
     yaxis2: {
-        title: 'pressure',
+        title: 'Pressure (in)',
         titlefont: {color: 'rgb(16, 255, 77)'},
         tickfont: {color: 'rgb(148, 103, 189)'},
         overlaying: 'y',
@@ -146,10 +146,10 @@ var jsonData = $.ajax({
         }
     });
     data[1].y = _.map(results, function(item) { // Copy pressure data
-        if(item.pressure > 880 && item.pressure < 1000) {
-            return item.pressure;
+        if(item.pressure > 880 && item.pressure < 1200) {
+            return item.pressure / 33.8638866667;
         } else {
-            // return NaN;
+            return NaN;
         }
     });
     // console.log(data[0].x.length);
