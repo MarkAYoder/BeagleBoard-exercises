@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 // Program to test looking up information in /usr/share/bone101/static/bone.js
 // Usage:  findGPIO.js 7     # Look up info for gpio7 (internal pin number)
 //         findGPIO.js P9_12 # Look up using header pin number (external)

@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 // Lists all gpio pins with MUX UNCLAIMED and GPIO UNCLAIMED in $PINMUX
 // Usage:  freeGPIO.js    # List free GPIOs using P8 or P9 pin number
 //
