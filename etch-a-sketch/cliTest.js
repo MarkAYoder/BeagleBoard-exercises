@@ -23,13 +23,13 @@ grid[y][x] = '+';
 
 // Print the grid
 function printGrid(grid) {
-  util.print('   0 1 2 3 4 5 6 7\n');
+  process.stdout.write('   0 1 2 3 4 5 6 7\n');
   for(var i=0; i<grid.length; i++) {
-    util.print(util.format("%d: ",i));
+    process.stdout.write(util.format("%d: ",i));
     for(var j=0; j<grid[i].length; j++) {
-      util.print(util.format("%s ", grid[i][j]));
+      process.stdout.write(util.format("%s ", grid[i][j]));
     }
-  util.print("\n");
+  process.stdout.write("\n");
   }
 }
 
