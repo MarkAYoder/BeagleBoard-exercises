@@ -1,2 +1,2 @@
 apt-get update
-apt-get install sshfs htop
+apt-get install sshfs
