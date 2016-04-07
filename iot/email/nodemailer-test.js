@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // From: https://github.com/andris9/Nodemailer
+// Go to https://security.google.com/settings/security/apppasswords?pli=1 to create App password
 
 var nodemailer = require('nodemailer');
 
