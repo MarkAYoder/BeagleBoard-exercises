@@ -53,6 +53,7 @@ logger.info("Title: " + keys.title);
 // logger.debug(util.inspect(keys));
 
 var urlBase = keys.inputUrl + "/?private_key=" + keys.privateKey + "&humidity=%s&pressure=%s&temp=%s";
+var urlBaseIS = 'https://groker.initialstate.com/api/events?accessKey=RdWtHlEJV0FIH1X4REFw44OfMxxJEdne&bucketKey=QP4CAJ538NC6&Temp=%s&Pressure=%s';
 var barometer = new BMP085({device: '/dev/i2c-2', mode: '2'});
 
 setInterval(readWeather, ms);
@@ -74,6 +75,15 @@ function postTemp(data) {
     var url = util.format(urlBase, 0, pressure, temp);
     logger.debug("url: ", url);
     request(url, {timeout: 10000}, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            logger.info(body); 
+        } else {
+            logger.error("error=" + error + " response=" + JSON.stringify(response));
+        }
+    });
+    var urlIS = util.format(urlBaseIS, 0, pressure, temp);
+    logger.debug("urlIS: ", urlIS);
+    request(urlIS, {timeout: 10000}, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             logger.info(body); 
         } else {
