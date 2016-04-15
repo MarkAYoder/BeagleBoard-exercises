@@ -25,7 +25,8 @@ var slider;
 
 function setLED(x) {
   console.log('setLED: ' + x.value);
-  v4.write(x.value);
+  v4.write(255*x.value);
+  v2.write(500*x.value);
 }
 
 v0.on('write', function(param) {
@@ -39,6 +40,7 @@ v0.on('write', function(param) {
 v1.on('write', function(param) {
   slider = param[0];
   v2.write(slider);
+  v9.write(slider);
   console.log('V1:', param[0]);
 });
 
