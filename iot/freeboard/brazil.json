@@ -18,7 +18,7 @@
 				{
 					"type": "pointer",
 					"settings": {
-						"direction": "datasources[\"Weather\"].current_observation.wind_dergrees",
+						"direction": "datasources[\"Weather\"].current_observation.wind_degrees",
 						"value_text": "datasources[\"Weather\"].current_observation.wind_dir"
 					}
 				},
