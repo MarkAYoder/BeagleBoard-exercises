@@ -1,16 +1,15 @@
 #!/usr/bin/env node
 // This does everything all at once.
 
-// var util = require('util');
 var async = require('async');
 var SensorTag = require('./index');
 
 var USE_READ = false;
-var sampleTime = 1000;  // time in ms between readings
-var testTime  = 1000;  // time in ms to run each test
+var sampleTime = 5000;  // time in ms between readings
 
 SensorTag.discover(function(sensorTag) {
   console.log('discovered: ' + sensorTag);
+  var data = {tempObj:NaN, tempAmb:NaN, pressure:NaN, humidity:NaN, lux:NaN};
 
   sensorTag.on('disconnect', function() {
     console.log('disconnected!');
@@ -30,7 +29,7 @@ SensorTag.discover(function(sensorTag) {
     sensorTag.disableHumidity();
     
     console.log('unnotifyBarometricPressure');
-    sensorTag.unnotifyBarometricPressure()
+    sensorTag.unnotifyBarometricPressure();
     console.log('disableBarometricPressure');
     sensorTag.disableBarometricPressure();
     
@@ -66,8 +65,9 @@ SensorTag.discover(function(sensorTag) {
       },
       function(callback) {
           sensorTag.on('irTemperatureChange', function(objectTemperature, ambientTemperature) {
-            console.log('\tobject temperature = %d °C', objectTemperature.toFixed(1));
-            console.log('\tambient temperature = %d °C', ambientTemperature.toFixed(1))
+            data.tempAmb = ambientTemperature;
+            data.tempObj = objectTemperature;
+            checkAll();
           });
           console.log('setIrTemperaturePeriod');
           sensorTag.setIrTemperaturePeriod(sampleTime, function(error) {
@@ -76,8 +76,8 @@ SensorTag.discover(function(sensorTag) {
           });
           
           sensorTag.on('humidityChange', function(temperature, humidity) {
-            console.log('\ttemperature = %d °C', temperature.toFixed(1));
-            console.log('\thumidity = %d %', humidity.toFixed(1));
+            data.humidity = humidity;
+            checkAll();
           });
           console.log('setHumidityPeriod');
           sensorTag.setHumidityPeriod(sampleTime, function(error) {
@@ -86,7 +86,8 @@ SensorTag.discover(function(sensorTag) {
           });
 
           sensorTag.on('barometricPressureChange', function(pressure) {
-            console.log('\tpressure = %d mBar', pressure.toFixed(1));
+            data.pressure = pressure;
+            checkAll();
           });
           console.log('setBarometricPressurePeriod');
           sensorTag.setBarometricPressurePeriod(sampleTime, function(error) {
@@ -98,7 +99,8 @@ SensorTag.discover(function(sensorTag) {
 
         } else if (sensorTag.type === 'cc2650') {
                 sensorTag.on('luxometerChange', function(lux) {
-                  console.log('\tlux = %d', lux.toFixed(1));
+                  data.lux = lux;
+                  checkAll();
                 });
                 console.log('setLuxometerPeriod');
                 sensorTag.setLuxometerPeriod(sampleTime, function(error) {
@@ -115,4 +117,25 @@ SensorTag.discover(function(sensorTag) {
       }
     ]
   );
+
+  function checkAll() {
+    // console.log(data);
+    var wait = false;
+    for(var key in data) {
+      if(isNaN(data[key])) {
+        wait = true;    // All these data isn't here
+      }
+    }
+    if(!wait) {
+      console.log("All here");
+      console.log('\tobject temperature = %d °C', data.tempObj.toFixed(1));
+      console.log('\tambient temperature = %d °C', data.tempAmb.toFixed(1));
+      console.log('\thumidity = %d %', data.humidity.toFixed(1));
+      console.log('\tpressure = %d mBar', data.pressure.toFixed(1));
+      console.log('\tlux = %d', data.lux.toFixed(1));
+
+      data = {tempObj:NaN, tempAmb:NaN, pressure:NaN, humidity:NaN, lux:NaN};
+    }
+  }
+
 });
