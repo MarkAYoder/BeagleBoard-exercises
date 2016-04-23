@@ -25,9 +25,9 @@ SensorTag.discover(function(sensorTag) {
         console.log('enableIrTemperature');
         sensorTag.enableIrTemperature(callback);
       },
-      function(callback) {
-        setTimeout(callback, 2000);
-      },
+      // function(callback) {
+      //   setTimeout(callback, 2000);
+      // },
       function(callback) {
         if (USE_READ) {
           console.log('readIrTemperature');
@@ -63,9 +63,9 @@ SensorTag.discover(function(sensorTag) {
         console.log('enableHumidity');
         sensorTag.enableHumidity(callback);
       },
-      function(callback) {
-        setTimeout(callback, 2000);
-      },
+      // function(callback) {
+      //   setTimeout(callback, 2000);
+      // },
       function(callback) {
         if (USE_READ) {
           console.log('readHumidity');
@@ -101,9 +101,9 @@ SensorTag.discover(function(sensorTag) {
         console.log('enableBarometricPressure');
         sensorTag.enableBarometricPressure(callback);
       },
-      function(callback) {
-        setTimeout(callback, 2000);
-      },
+      // function(callback) {
+      //   setTimeout(callback, 2000);
+      // },
       function(callback) {
         if (USE_READ) {
           console.log('readBarometricPressure');
@@ -142,9 +142,9 @@ SensorTag.discover(function(sensorTag) {
               console.log('enableLuxometer');
               sensorTag.enableLuxometer(callback);
             },
-            function(callback) {
-              setTimeout(callback, 2000);
-            },
+            // function(callback) {
+            //   setTimeout(callback, 2000);
+            // },
             function(callback) {
               if (USE_READ) {
                 console.log('readLuxometer');
