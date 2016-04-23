@@ -3,9 +3,17 @@
 
 var async = require('async');
 var SensorTag = require('./index');
+var request   = require('request');
+var fs        = require('fs');
+var util      = require('util');
+
+var filename = "/root/exercises/sensors/sensorTag/keys_sensorTag.json";
+var keys = JSON.parse(fs.readFileSync(filename));
+var urlBase = keys.inputUrl + "/?private_key=" + keys.privateKey 
+      + "&humidity=%s&pressure=%s&tempobj=%s&tempamb=%s&lux=%s";
 
 var USE_READ = false;
-var sampleTime = 5000;  // time in ms between readings
+var sampleTime = 5*1000;  // time in ms between readings
 
 SensorTag.discover(function(sensorTag) {
   console.log('discovered: ' + sensorTag);
@@ -64,16 +72,17 @@ SensorTag.discover(function(sensorTag) {
         callback();
       },
       function(callback) {
-          sensorTag.on('irTemperatureChange', function(objectTemperature, ambientTemperature) {
-            data.tempAmb = ambientTemperature;
-            data.tempObj = objectTemperature;
-            checkAll();
-          });
-          console.log('setIrTemperaturePeriod');
-          sensorTag.setIrTemperaturePeriod(sampleTime, function(error) {
-            console.log('notifyIrTemperature');
-            sensorTag.notifyIrTemperature();
-          });
+          setInterval(function () {
+              sensorTag.readIrTemperature( function(err, objectTemperature, ambientTemperature) {
+              data.tempAmb = ambientTemperature;
+              data.tempObj = objectTemperature;
+              checkAll();
+            })}, sampleTime);
+          // console.log('setIrTemperaturePeriod');
+          // sensorTag.setIrTemperaturePeriod(sampleTime, function(error) {
+          //   console.log('notifyIrTemperature');
+          //   sensorTag.notifyIrTemperature();
+          // });
           
           sensorTag.on('humidityChange', function(temperature, humidity) {
             data.humidity = humidity;
@@ -119,7 +128,7 @@ SensorTag.discover(function(sensorTag) {
   );
 
   function checkAll() {
-    // console.log(data);
+    console.log(data);
     var wait = false;
     for(var key in data) {
       if(isNaN(data[key])) {
@@ -134,6 +143,17 @@ SensorTag.discover(function(sensorTag) {
       console.log('\tpressure = %d mBar', data.pressure.toFixed(1));
       console.log('\tlux = %d', data.lux.toFixed(1));
 
+      // var url = util.format(urlBase, data.humidity, data.pressure, // Fill in data
+      //     data.tempObj, data.tempAmb, data.lux);
+      // console.log("url: ", url);
+      // request(url, {timeout: 10000}, function (error, response, body) {
+      //     if (!error && response.statusCode == 200) {
+      //         console.log(body); 
+      //     } else {
+      //         console.log("error=" + error + " response=" + JSON.stringify(response));
+      //     }
+      // });
+    
       data = {tempObj:NaN, tempAmb:NaN, pressure:NaN, humidity:NaN, lux:NaN};
     }
   }
