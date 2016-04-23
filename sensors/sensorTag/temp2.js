@@ -13,7 +13,7 @@ var urlBase = keys.inputUrl + "/?private_key=" + keys.privateKey
       + "&humidity=%s&pressure=%s&tempobj=%s&tempamb=%s&lux=%s";
 
 var USE_READ = false;
-var sampleTime = 5*1000;  // time in ms between readings
+var sampleTime = 15*60*1000;  // time in ms between readings
 
 SensorTag.discover(function(sensorTag) {
   console.log('discovered: ' + sensorTag);
@@ -72,50 +72,38 @@ SensorTag.discover(function(sensorTag) {
         callback();
       },
       function(callback) {
+          console.log('readIrTemperature');
           setInterval(function () {
-              sensorTag.readIrTemperature( function(err, objectTemperature, ambientTemperature) {
+            sensorTag.readIrTemperature( function(err, objectTemperature, ambientTemperature) {
               data.tempAmb = ambientTemperature;
               data.tempObj = objectTemperature;
               checkAll();
             })}, sampleTime);
-          // console.log('setIrTemperaturePeriod');
-          // sensorTag.setIrTemperaturePeriod(sampleTime, function(error) {
-          //   console.log('notifyIrTemperature');
-          //   sensorTag.notifyIrTemperature();
-          // });
-          
-          sensorTag.on('humidityChange', function(temperature, humidity) {
-            data.humidity = humidity;
-            checkAll();
-          });
-          console.log('setHumidityPeriod');
-          sensorTag.setHumidityPeriod(sampleTime, function(error) {
-            console.log('notifyHumidity');
-            sensorTag.notifyHumidity();
-          });
 
-          sensorTag.on('barometricPressureChange', function(pressure) {
-            data.pressure = pressure;
-            checkAll();
-          });
-          console.log('setBarometricPressurePeriod');
-          sensorTag.setBarometricPressurePeriod(sampleTime, function(error) {
-            console.log('notifyBarometricPressure');
-            sensorTag.notifyBarometricPressure();
-          });
+          console.log('readHumidity');
+          setInterval(function () {
+            sensorTag.readHumidity( function(err, temperature, humidity) {
+              data.humidity = humidity;
+              checkAll();
+            })}, sampleTime);
+
+          console.log('readBarometricPressure');
+          setInterval(function () {
+            sensorTag.readBarometricPressure( function(err, pressure) {
+              data.pressure = pressure;
+              checkAll();
+            })}, sampleTime);
 
         if (sensorTag.type === 'cc2540') {
 
         } else if (sensorTag.type === 'cc2650') {
-                sensorTag.on('luxometerChange', function(lux) {
-                  data.lux = lux;
-                  checkAll();
-                });
-                console.log('setLuxometerPeriod');
-                sensorTag.setLuxometerPeriod(sampleTime, function(error) {
-                  console.log('notifyLuxometer');
-                  sensorTag.notifyLuxometer();
-                });
+          console.log('readLuxometer');
+          setInterval(function () {
+            sensorTag.readLuxometer( function(err, lux) {
+              data.lux = lux;
+              checkAll();
+            })}, sampleTime);
+
         } else {
           callback();
         }
@@ -127,8 +115,10 @@ SensorTag.discover(function(sensorTag) {
     ]
   );
 
+// Call this each time a new value is reported.  Once all are reported,
+// it's sent to SparkFun
   function checkAll() {
-    console.log(data);
+    // console.log(data);
     var wait = false;
     for(var key in data) {
       if(isNaN(data[key])) {
@@ -143,16 +133,16 @@ SensorTag.discover(function(sensorTag) {
       console.log('\tpressure = %d mBar', data.pressure.toFixed(1));
       console.log('\tlux = %d', data.lux.toFixed(1));
 
-      // var url = util.format(urlBase, data.humidity, data.pressure, // Fill in data
-      //     data.tempObj, data.tempAmb, data.lux);
-      // console.log("url: ", url);
-      // request(url, {timeout: 10000}, function (error, response, body) {
-      //     if (!error && response.statusCode == 200) {
-      //         console.log(body); 
-      //     } else {
-      //         console.log("error=" + error + " response=" + JSON.stringify(response));
-      //     }
-      // });
+      var url = util.format(urlBase, data.humidity, data.pressure, // Fill in data
+          data.tempObj, data.tempAmb, data.lux);
+      console.log("url: ", url);
+      request(url, {timeout: 10000}, function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+              console.log(body); 
+          } else {
+              console.log("error=" + error + " response=" + JSON.stringify(response));
+          }
+      });
     
       data = {tempObj:NaN, tempAmb:NaN, pressure:NaN, humidity:NaN, lux:NaN};
     }
