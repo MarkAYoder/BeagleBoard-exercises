@@ -133,7 +133,7 @@ console.log(data);
     // console.log(data[0].x.length);
     
     Plotly.plot('plot', data, layout);      // Puts plot in <div> with id='plot'
-    $('#summary').html('Temp: ' + data[0].y[0].toFixed(2) + '(F), Pressure: ' + data[1].y[0].toFixed(2) +
+    $('#summary').html('Temp: ' + data[0].y[0]+ '(F), Pressure: ' + data[1].y[0] +
         ' at ' + data[0].x[0]);
 });
 
