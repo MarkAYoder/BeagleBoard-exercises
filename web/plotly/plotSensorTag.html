@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html class="splash">
+<head>
+<title>Weather</title>
+<!--
+    https://plot.ly/javascript/reference
+
+    Plotly prefers Open Sans, which can be included via the link below. But if
+    you cannot or do not want to access external resources, we fall back on
+    Verdana or Arial. You can specify any other font via layout.font.family.
+-->
+<!--<link href="https://fonts.googleapis.com/css?family=Open+Sans:600,400,300" rel="stylesheet" type="text/css">-->
+</head>
+
+<body>
+<h3>Weather in Mark's Bedroom</h3>
+<!--
+    Plots go in blank <div> elements. You can size them in the plot layout,
+    or give the div a size as shown here.
+-->
+<!--<div id="plot" style="width:600px;height:400px;"></div>-->
+<div id="summary">Getting latest conditions</div>
+<div id="plot"></div>
+
+<!--
+    Include these javascript files.
+    d3: v3 is recommended
+    jQuery: plotly.js ships with v1.8 but supports v1.7 through v1.10
+    the weird typedarray.js code is a polyfill, primarily for IE9, that does not
+    natively support typed numeric arrays
+-->
+<!-- Use these for local server -->
+<script type="text/javascript" src="jquery.min.js"></script>
+<script>if(typeof window.Int16Array !== 'function')document.write("<scri"+"pt src='dependencies/typedarray.js'></scr"+"ipt>");</script>
+<script type="text/javascript" src="plotly-latest.min.js"></script>
+<script type="text/javascript" src="underscore-min.js"></script>
+
+<!-- Use these for remote servers -->
+<!--<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>-->
+<!--<script>if(typeof window.Int16Array !== 'function')document.write("<scri"+"pt src='dependencies/typedarray.js'></scr"+"ipt>");</script>-->
+<!--<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
+<!--<script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>-->
+
+<!--
+    And then you are ready to make plots!
+-->
+<script>
+// These are placeholders until we get the data from the server.
+var data = [
+    {   // Temperture axis
+        "type": "scatter",  // all "scatter" attributes: https://plot.ly/javascript/reference/#scatter
+        "x": [1, 2, 3],
+        "y": [3, 1, 6],
+        "marker": {
+            "color": "rgb(200, 32, 77)",
+            size: 3
+        },
+        connectgaps: false,
+        mode:   'markers',
+        name:   'Temp'
+    },
+    {   // Pressure axis
+        "type": "scatter",
+        "x": [1, 2, 3],
+        "y": [3, 1, 6],
+        "marker": {
+            "color": "rgb(16, 200, 77)",
+            size: 3
+        },
+        connectgaps: false,
+        mode:   'markers',
+        name:   'Pressure',
+        yaxis: 'y2'
+    }
+];
+
+var layout = {                     // all "layout" attributes: #layout
+    "title": "Weather",
+    "xaxis": {                  // all "layout.xaxis" attributes: #layout-xaxis
+        "title": "Date"         // more about "layout.xaxis.title": #layout-xaxis-title
+    },
+    yaxis: {
+        title: 'Temperature (F)',
+        titlefont: {color: 'rgb(255, 32, 77)'},
+    },
+    yaxis2: {
+        title: 'Pressure (in)',
+        titlefont: {color: 'rgb(16, 255, 77)'},
+        tickfont: {color: 'rgb(148, 103, 189)'},
+        overlaying: 'y',
+        side: 'right'
+    },
+};
+
+var server = 'http://data.sparkfun.com/';
+var public_key = 'LQJWoLv3OECrEZ2WNyj0';
+// var timezone = '?timezone=Asia/Calcutta';
+
+// JSONP request
+$.ajax({
+  // url: 'http://14.139.34.32:8080/output/' + public_key + '.json' + timezone,
+  url: server + 'output/' + public_key + '.json',
+  data: {page: 1},
+  dataType: 'jsonp',
+}).done(function (results) {
+    // console.log(results);
+    // var i;
+    // for(i=0; i<5; i++) {
+    //     console.log(results[i]);
+    // }
+    
+var timestamp = _.map(results, function(item) {
+            return item.timestamp.replace('T', ' ').replace('Z', ''); // Convert to Plotly time format
+        });
+
+var data = [];
+console.log("TimeStamps: %s", timestamp);
+
+var i = 0;
+for(var key in results[0]) {
+    if(key !== 'timestamp') {
+        // console.log("Key: %s, Value: %s", key, results[0][key]);
+        data[i] = {};
+        data[i].x = timestamp;
+        data[i].y = _.map(results, function(item) {  // Copy temp data
+                return item[key];	// 
+                });
+    }
+    i++;
+}
+
+console.log(data);
+    // console.log(data[0].x.length);
+    
+    Plotly.plot('plot', data, layout);      // Puts plot in <div> with id='plot'
+    $('#summary').html('Temp: ' + data[0].y[0].toFixed(2) + '(F), Pressure: ' + data[1].y[0].toFixed(2) +
+        ' at ' + data[0].x[0]);
+});
+
+</script>
+</body>
+</html>
