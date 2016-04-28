@@ -13,18 +13,17 @@
 </head>
 
 <body>
-<h3>Weather in Mark's Bedroom</h3>
+<h3>Weather in Mark's Room</h3>
 <!--
     Plots go in blank <div> elements. You can size them in the plot layout,
     or give the div a size as shown here.
 -->
 <!--<div id="plot" style="width:600px;height:400px;"></div>-->
-<div id="summary">Getting latest conditions</div>
+<div id="summary">Fetching data from Phant</div>
 <div id="plot"></div>
 
 <!--
     Include these javascript files.
-    d3: v3 is recommended
     jQuery: plotly.js ships with v1.8 but supports v1.7 through v1.10
     the weird typedarray.js code is a polyfill, primarily for IE9, that does not
     natively support typed numeric arrays
@@ -45,26 +44,11 @@
     And then you are ready to make plots!
 -->
 <script>
-// These are placeholders until we get the data from the server.
-var data = [
-    {   // Temperture axis
-        "type": "scatter",  // all "scatter" attributes: https://plot.ly/javascript/reference/#scatter
-        "x": [1, 2, 3],
-        "y": [3, 1, 6],
-        "marker": {
-            "color": "rgb(200, 32, 77)",
-            size: 3
-        },
-        connectgaps: false,
-        mode:   'markers',
-        name:   'Temp'
-    }
-];
 
-var layout = {                     // all "layout" attributes: #layout
-    "title": "Weather",
-    "xaxis": {                  // all "layout.xaxis" attributes: #layout-xaxis
-        "title": "Date"         // more about "layout.xaxis.title": #layout-xaxis-title
+var layout = {              // all "layout" attributes: #layout
+    title: "Weather",
+    xaxis: {                // all "layout.xaxis" attributes: #layout-xaxis
+        "title": "Date"     // more about "layout.xaxis.title": #layout-xaxis-title
     },
     yaxis: {
         title: 'Temperature (F)',
@@ -95,31 +79,33 @@ var keys = Object.keys(results[0]);
 // console.log(keys);
 for(var i=0; i<keys.length; i++) {
     var key = keys[i];
-    console.log("key: %s", key);
+    // console.log("key: %s", key);
     if(key !== 'timestamp') {
         // console.log("Key: %s, Value: %s", key, results[0][key]);
         data[i] = {};
         data[i].x = timestamp;
-        data[i].y = _.map(results, function(item) {  // Copy temp data
-                return item[key];	// 
+        data[i].y = _.map(results, function(item) {  // Copy data
+                    return item[key];
                 });
         data[i].type = 'scatter';        
         data[i].marker = {
             // "color": "rgb(200, 32, 77)",
-            size: 3
+            size: 4
         };
         data[i].connectgaps = false;
         data[i].mode = 'markers';
         data[i].name = key;
     }
 }
+String.prototype.capitalizeFirstLetter = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
 
-console.log(data);
-    // console.log(data[0].x.length);
-    
+keys = _.map(keys, function(item) { return item.capitalizeFirstLetter()});
+layout.yaxis.title = keys.join(', ');
+
     Plotly.plot('plot', data, layout);      // Puts plot in <div> with id='plot'
-    $('#summary').html('Temp: ' + data[0].y[0]+ '(F), Pressure: ' + data[1].y[0] +
-        ' at ' + data[0].x[0]);
+    $('#summary').html(keys.join(', '));
 });
 
 </script>
