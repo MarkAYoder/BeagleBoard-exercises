@@ -101,7 +101,7 @@ String.prototype.capitalizeFirstLetter = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
-keys = _.map(keys, function(item) { return item.capitalizeFirstLetter()});
+keys = _.map(keys, function(item) { return item.capitalizeFirstLetter() });
 layout.yaxis.title = keys.join(', ');
 
     Plotly.plot('plot', data, layout);      // Puts plot in <div> with id='plot'
