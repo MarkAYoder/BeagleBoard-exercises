@@ -93,7 +93,7 @@ var layout = {                     // all "layout" attributes: #layout
 };
 
 var server = 'http://data.sparkfun.com/';
-var public_key = 'LQJWoLv3OECrEZ2WNyj0';
+var public_key = '3JwVR29lYAuaoZJ5LNY6';
 // var timezone = '?timezone=Asia/Calcutta';
 
 // JSONP request
@@ -114,10 +114,13 @@ var timestamp = _.map(results, function(item) {
         });
 
 var data = [];
-console.log("TimeStamps: %s", timestamp);
+// console.log("TimeStamps: %s", timestamp);
 
-var i = 0;
-for(var key in results[0]) {
+var keys = Object.keys(results[0]);
+// console.log(keys);
+for(var i=0; i<keys.length; i++) {
+    var key = keys[i];
+    console.log("key: %s", key);
     if(key !== 'timestamp') {
         // console.log("Key: %s, Value: %s", key, results[0][key]);
         data[i] = {};
@@ -126,7 +129,6 @@ for(var key in results[0]) {
                 return item[key];	// 
                 });
     }
-    i++;
 }
 
 console.log(data);
