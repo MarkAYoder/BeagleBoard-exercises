@@ -2,7 +2,7 @@
 # From https://plot.ly/javascript/
 wget https://cdn.plot.ly/plotly-latest.min.js
 
-# Load these to server them locally
+# Load these to serve them locally
 wget https://code.jquery.com/jquery-2.2.3.min.js
 mv jquery-2.2.3.min.js jquery.min.js
 wget http://underscorejs.org/underscore-min.js
