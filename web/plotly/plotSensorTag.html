@@ -58,19 +58,6 @@ var data = [
         connectgaps: false,
         mode:   'markers',
         name:   'Temp'
-    },
-    {   // Pressure axis
-        "type": "scatter",
-        "x": [1, 2, 3],
-        "y": [3, 1, 6],
-        "marker": {
-            "color": "rgb(16, 200, 77)",
-            size: 3
-        },
-        connectgaps: false,
-        mode:   'markers',
-        name:   'Pressure',
-        yaxis: 'y2'
     }
 ];
 
@@ -82,14 +69,7 @@ var layout = {                     // all "layout" attributes: #layout
     yaxis: {
         title: 'Temperature (F)',
         titlefont: {color: 'rgb(255, 32, 77)'},
-    },
-    yaxis2: {
-        title: 'Pressure (in)',
-        titlefont: {color: 'rgb(16, 255, 77)'},
-        tickfont: {color: 'rgb(148, 103, 189)'},
-        overlaying: 'y',
-        side: 'right'
-    },
+    }
 };
 
 var server = 'http://data.sparkfun.com/';
