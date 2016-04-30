@@ -77,8 +77,8 @@ var public_key = 'MG40r6AdvgIKNDymOAoL';
 
 // JSONP request
 $.ajax({
-  url: server + 'output/' + public_key + '.json',
-  data: {page: 1},   // Other options https://github.com/sparkfun/phant/pull/85
+  url: server + 'output/' + public_key + '.json?limit=' + 60*24*7 ,
+//   data: {page: 1},   // Other options https://github.com/sparkfun/phant/pull/85
   dataType: 'jsonp',
 }).done(function (results) {
     // console.log(results);
