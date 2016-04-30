@@ -242,7 +242,7 @@
 			"name": "SparkFun",
 			"type": "JSON",
 			"settings": {
-				"url": "http://data.sparkfun.com/output/LQJWoLv3OECrEZ2WNyj0.json",
+				"url": "http://data.sparkfun.com/output/LQJWoLv3OECrEZ2WNyj0/latest.json",
 				"use_thingproxy": true,
 				"refresh": 600,
 				"method": "GET"
