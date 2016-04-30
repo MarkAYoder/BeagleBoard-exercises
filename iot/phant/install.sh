@@ -24,7 +24,6 @@ ln -s $dir .
 
 echo "# Record ping times
 NODE_PATH=/usr/local/lib/node_modules
-* * * * * root /root/exercises/iot/phant/weather.js 2>&1 | logger
 * * * * * root /root/exercises/iot/phant/recordPing.js 2>&1 | logger
 " >> /etc/crontab 
 # Look in /var/log/message for logger messages
