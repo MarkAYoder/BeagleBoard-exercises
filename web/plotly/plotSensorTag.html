@@ -62,8 +62,10 @@ var public_key = '3JwVR29lYAuaoZJ5LNY6';
 
 // JSONP request
 $.ajax({
-  // url: 'http://14.139.34.32:8080/output/' + public_key + '.json' + timezone,
-  url: server + 'output/' + public_key + '.json' + "?limit=" + 4*60*24*7,
+ // url: 'http://14.139.34.32:8080/output/' + public_key + '.json' + timezone,
+ //   url: server + 'output/' + public_key + '.json' + "?limit=" + 4*60*24*7,
+ //  http://phant.io/docs/output/http/
+  url: server + 'output/' + public_key + '.json' + "?gt[timestamp]=now-7days",
 //   data: {page: 1},
   dataType: 'jsonp',
 }).done(function (results) {
