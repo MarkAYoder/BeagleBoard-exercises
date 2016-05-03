@@ -58,6 +58,9 @@ var layout = {              // all "layout" attributes: #layout
 
 var server = 'http://data.sparkfun.com/';
 var public_key = '3JwVR29lYAuaoZJ5LNY6';
+// public_key = 'MG4b4XnlZ9cLxrXMD75m';
+var timeSpan = '?gt[timestamp]=now-7days';
+// timeSpan = '?gt[timestamp]=now-1day';
 // var timezone = '?timezone=Asia/Calcutta';
 
 // JSONP request
@@ -65,7 +68,7 @@ $.ajax({
  // url: 'http://14.139.34.32:8080/output/' + public_key + '.json' + timezone,
  //   url: server + 'output/' + public_key + '.json' + "?limit=" + 4*60*24*7,
  //  http://phant.io/docs/output/http/
-  url: server + 'output/' + public_key + '.json' + "?gt[timestamp]=now-7days",
+  url: server + 'output/' + public_key + '.json' + timeSpan,
 //   data: {page: 1},
   dataType: 'jsonp',
 }).done(function (results) {
