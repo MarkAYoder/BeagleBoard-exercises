@@ -13,7 +13,7 @@ var urlBase = keys.inputUrl + "/?private_key=" + keys.privateKey
       + "&humidity=%s&pressure=%s&tempobj=%s&tempamb=%s&lux=%s";
 
 var USE_READ = false;
-var sampleTime = 15*60*1000;  // time in ms between readings
+var sampleTime = 10*1000;  // time in ms between readings
 
 SensorTag.discover(function(sensorTag) {
   console.log('discovered: ' + sensorTag);
@@ -72,41 +72,8 @@ SensorTag.discover(function(sensorTag) {
         callback();
       },
       function(callback) {
-          console.log('readIrTemperature');
-          setInterval(function () {
-            sensorTag.readIrTemperature( function(err, objectTemperature, ambientTemperature) {
-              data.tempAmb = ambientTemperature;
-              data.tempObj = objectTemperature;
-              checkAll();
-            })}, sampleTime);
-
-          console.log('readHumidity');
-          setInterval(function () {
-            sensorTag.readHumidity( function(err, temperature, humidity) {
-              data.humidity = humidity;
-              checkAll();
-            })}, sampleTime);
-
-          console.log('readBarometricPressure');
-          setInterval(function () {
-            sensorTag.readBarometricPressure( function(err, pressure) {
-              data.pressure = pressure;
-              checkAll();
-            })}, sampleTime);
-
-        if (sensorTag.type === 'cc2540') {
-
-        } else if (sensorTag.type === 'cc2650') {
-          console.log('readLuxometer');
-          setInterval(function () {
-            sensorTag.readLuxometer( function(err, lux) {
-              data.lux = lux;
-              checkAll();
-            })}, sampleTime);
-
-        } else {
-          callback();
-        }
+          readAll();
+          setInterval(readAll, sampleTime ,callback);
       },
       function(callback) {
         console.log('disconnect');
@@ -115,6 +82,42 @@ SensorTag.discover(function(sensorTag) {
     ]
   );
 
+  function readAll (callback) {
+    console.log('readIrTemperature');
+    sensorTag.readIrTemperature( function(err, objectTemperature, ambientTemperature) {
+      data.tempAmb = ambientTemperature;
+      data.tempObj = objectTemperature;
+      checkAll();
+    });
+
+    console.log('readHumidity');
+    sensorTag.readHumidity( function(err, temperature, humidity) {
+        data.humidity = humidity;
+        checkAll();
+      });
+  
+    console.log('readBarometricPressure');
+      sensorTag.readBarometricPressure( function(err, pressure) {
+        data.pressure = pressure;
+        checkAll();
+      });
+            
+    if (sensorTag.type === 'cc2540') {
+  
+      } else if (sensorTag.type === 'cc2650') {
+        console.log('readLuxometer');
+          sensorTag.readLuxometer( function(err, lux) {
+            data.lux = lux;
+            checkAll();
+          });
+  
+      } else {
+        if(callback) {
+          callback();
+        }
+      }
+    }
+          
 // Call this each time a new value is reported.  Once all are reported,
 // it's sent to SparkFun
   function checkAll() {
