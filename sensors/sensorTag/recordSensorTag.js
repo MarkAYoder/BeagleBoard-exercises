@@ -13,7 +13,9 @@ var urlBase = keys.inputUrl + "/?private_key=" + keys.privateKey
       + "&humidity=%s&pressure=%s&tempobj=%s&tempamb=%s&lux=%s";
 
 var USE_READ = false;
-var sampleTime = 10*1000;  // time in ms between readings
+var sampleTime = 15*60*1000;  // time in ms between readings
+
+console.log("Be sure the SensorTag is on");
 
 SensorTag.discover(function(sensorTag) {
   console.log('discovered: ' + sensorTag);
@@ -66,14 +68,17 @@ SensorTag.discover(function(sensorTag) {
         sensorTag.enableBarometricPressure();
         
         if (sensorTag.type === 'cc2650') {
-              console.log('enableLuxometer');
-              sensorTag.enableLuxometer();
-            }
+          console.log('enableLuxometer');
+          sensorTag.enableLuxometer();
+        }
         callback();
       },
+      function(callback) {    // Wait for sensors to be ready
+        setTimeout(callback, 1000);
+      },
       function(callback) {
-          readAll();
-          setInterval(readAll, sampleTime ,callback);
+        readAll();
+        setInterval(readAll, sampleTime, callback);
       },
       function(callback) {
         console.log('disconnect');
