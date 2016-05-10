@@ -197,7 +197,7 @@
 					"settings": {
 						"title": "Bedroom",
 						"size": "regular",
-						"value": "(datasources[\"SparkFun\"][0].pressure / 33.8638866667).toFixed(2)",
+						"value": "(datasources[\"SparkFun\"][0].pressure / 33.8638866667 + 0.7).toFixed(2)",
 						"sparkline": false,
 						"animate": true,
 						"units": "in"
