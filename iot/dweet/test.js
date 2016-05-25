@@ -29,16 +29,28 @@ dweetio.dweet_for(name, {some:"data"}, function(err, dweet) {
     }
 });
 
-dweetio.get_latest_dweet_for(name, function(err, dweet) {
-    if(err) {
-        console.log("get_latest_dweet_for err: " + err);
-    } else {
-        var dweet = dweet[0]; // Dweet is always an array of 1 
+// I get an error if I do both of these at once.
+
+// dweetio.get_latest_dweet_for(name, function(err, dweet) {
+//     if(err) {
+//         console.log("get_latest_dweet_for err: " + err);
+//     } else {
+//         var dweet = dweet[0]; // Dweet is always an array of 1 
         
-        console.log("dweet: " + util.inspect(dweet));
+//         console.log("dweet: " + util.inspect(dweet));
  
-        console.log(dweet.thing); // The generated name 
-        console.log(dweet.content); // The content of the dweet 
-        console.log(dweet.created); // The create date of the dweet 
+//         console.log(dweet.thing); // The generated name 
+//         console.log(dweet.content); // The content of the dweet 
+//         console.log(dweet.created); // The create date of the dweet 
+//     }
+// });
+
+// Last 5 dweets are held for 24 hours.
+dweetio.get_all_dweets_for(name, function(err, dweets) {
+    if(err) {
+        console.log("get_all_dweets_for err: " + err);
+    } else {
+        console.log("Found %d dweets", dweets.length);
+        console.log("dweet: " + util.inspect(dweets));
     }
 });
