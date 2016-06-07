@@ -58,73 +58,83 @@ var layout = {              // all "layout" attributes: #layout
 
 var server = 'http://powermon.org/';
 var dataSet = 'jarTest03/';
-var day = 'La.2016.06.06.json';
+var day = 'La.2016.06.06.csv';
 
 console.log("Fetching from: " + server + dataSet + day );
 
 // JSONP request
-$.ajax({
-  url: server + dataSet + day,
-//   dataType: 'jsonp'
-}).done(function (results, err) {
-if(err) {
-    console.log("err: " + err);
-}
-// var results = "
-// 1465185601, 00:00, 1.254, 1.130, 1.004, 0.879, 0.753, 0.627, 0.501, 0.376, 1.245, 1.249, 2.008, 1.883, 1.756, 1.632, 1.507, 1.379, 302.139
-// 1465185661, 00:01, 1.254, 1.130, 1.004, 0.880, 0.754, 0.628, 0.501, 0.375, 1.245, 1.249, 2.008, 1.882, 1.757, 1.632, 1.507, 1.380, 302.139
-// 1465185721, 00:02, 1.254, 1.130, 1.004, 0.880, 0.753, 0.627, 0.501, 0.377, 1.245, 1.248, 2.008, 1.883, 1.757, 1.632, 1.507, 1.380, 302.139
-// 1465185781, 00:03, 1.254, 1.130, 1.004, 0.880, 0.754, 0.628, 0.501, 0.376, 1.245, 1.246, 2.008, 1.882, 1.757, 1.632, 1.507, 1.380, 302.139
-// 1465185841, 00:04, 1.254, 1.130, 1.004, 0.880, 0.753, 0.628, 0.502, 0.376, 1.245, 1.250, 2.008, 1.882, 1.756, 1.632, 1.507, 1.380, 302.139
-// 1465185902, 00:05, 1.254, 1.130, 1.004, 0.880, 0.753, 0.627, 0.501, 0.376, 1.245, 1.249, 2.009, 1.882, 1.756, 1.632, 1.507, 1.379, 302.139
-// 1465185961, 00:06, 1.254, 1.130, 1.004, 0.880, 0.753, 0.628, 0.501, 0.376, 1.245, 1.248, 2.008, 1.882, 1.757, 1.632, 1.507, 1.380, 302.139
-// 1465186021, 00:07, 1.254, 1.129, 1.004, 0.880, 0.753, 0.628, 0.501, 0.376, 1.245, 1.247, 2.008, 1.883, 1.757, 1.632, 1.507, 1.380, 302.341
-// 1465186081, 00:08, 1.254, 1.130, 1.004, 0.880, 0.753, 0.628, 0.501, 0.376, 1.245, 1.249, 2.009, 1.883, 1.756, 1.632, 1.507, 1.380, 302.139
-// 1465186141, 00:09, 1.254, 1.130, 1.004, 0.880, 0.753, 0.628, 0.501, 0.376, 1.245, 1.249, 2.008, 1.882, 1.757, 1.632, 1.508, 1.379, 302.139";
+// $.ajax({
+//   url: server + dataSet + day,
+// //   dataType: 'jsonp'
+// }).done(function (results, err) {
+// if(err) {
+//     console.log("err: " + err);
+// }
+var results = `1465185601, 00:00, 1.254, 1.130, 1.004, 0.879, 0.753, 0.627, 0.501, 0.376, 1.245, 1.249, 2.008, 1.883, 1.756, 1.632, 1.507, 1.379, 302.139
+1465185661, 00:01, 1.254, 1.130, 1.004, 0.880, 0.754, 0.628, 0.501, 0.375, 1.245, 1.249, 2.008, 1.882, 1.757, 1.632, 1.507, 1.380, 302.139
+1465185721, 00:02, 1.254, 1.130, 1.004, 0.880, 0.753, 0.627, 0.501, 0.377, 1.245, 1.248, 2.008, 1.883, 1.757, 1.632, 1.507, 1.380, 302.139
+1465185781, 00:03, 1.254, 1.130, 1.004, 0.880, 0.754, 0.628, 0.501, 0.376, 1.245, 1.246, 2.008, 1.882, 1.757, 1.632, 1.507, 1.380, 302.139
+1465185841, 00:04, 1.254, 1.130, 1.004, 0.880, 0.753, 0.628, 0.502, 0.376, 1.245, 1.250, 2.008, 1.882, 1.756, 1.632, 1.507, 1.380, 302.139
+1465185902, 00:05, 1.254, 1.130, 1.004, 0.880, 0.753, 0.627, 0.501, 0.376, 1.245, 1.249, 2.009, 1.882, 1.756, 1.632, 1.507, 1.379, 302.139
+1465185961, 00:06, 1.254, 1.130, 1.004, 0.880, 0.753, 0.628, 0.501, 0.376, 1.245, 1.248, 2.008, 1.882, 1.757, 1.632, 1.507, 1.380, 302.139
+1465186021, 00:07, 1.254, 1.129, 1.004, 0.880, 0.753, 0.628, 0.501, 0.376, 1.245, 1.247, 2.008, 1.883, 1.757, 1.632, 1.507, 1.380, 302.341
+1465186081, 00:08, 1.254, 1.130, 1.004, 0.880, 0.753, 0.628, 0.501, 0.376, 1.245, 1.249, 2.009, 1.883, 1.756, 1.632, 1.507, 1.380, 302.139
+1465186141, 00:09, 2.254, 1.130, 1.004, 0.880, 0.753, 0.628, 0.501, 0.376, 1.245, 1.249, 2.008, 1.882, 1.757, 1.632, 1.508, 1.379, 302.139
+`;
 
 console.log("Got it!");
-console.log(results);
+// console.log(results);
+
+var results = results.split("\n").map(function(row){return row.split(",");});
+
+// console.log(results);
 
 var timestamp = _.map(results, function(item) {
-            return item.timestamp.replace('T', ' ').replace('Z', ''); // Convert to Plotly time format
+            return item[1]; // Convert to Plotly time format
         });
 
 var data = [];
-// console.log("TimeStamps: %s", timestamp);
+console.log("TimeStamps: %s", timestamp);
 
-var keys = Object.keys(results[0]);
-// console.log(keys);
+var keys = ['EIO0', 'EIO1', 'EIO2', 'EIO3', 'EIO4', 'EIO5', 'EIO6', 'EIO7',
+    'FIO0', 'FIO1',	'FIO2',	'Virtual', 'FIO3', 'FIO4', 'FIO5', 'FIO6',
+    'FIO7', 'Temp Sensor'];
+
+console.log(keys);
 for(var i=0; i<keys.length; i++) {
     var key = keys[i];
-    // console.log("key: %s", key);
-    if(key !== 'timestamp') {
-        // console.log("Key: %s, Value: %s", key, results[0][key]);
-        data[i] = {};
-        data[i].x = timestamp;
-        data[i].y = _.map(results, function(item) {  // Copy data
-                    return item[key];
-                });
-        data[i].type = 'scatter';        
-        data[i].marker = {
-            // "color": "rgb(200, 32, 77)",
-            size: 4
-        };
-        data[i].connectgaps = false;
-        data[i].mode = 'markers';
-        data[i].name = key;
-    }
-}
-String.prototype.capitalizeFirstLetter = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-}
+    console.log("key: %s", key);
+    
+    console.log("Key: %s, Value: %s", key, results[1][i+2]);
+    data[i] = {};
+    data[i].x = timestamp;
+    data[i].y = _.map(results, function(item) {  // Copy data
+                return item[i+2];
+            });
+    data[i].type = 'scatter';        
+    data[i].marker = {
+        // "color": "rgb(200, 32, 77)",
+        size: 4
+    };
+    data[i].connectgaps = false;
+    data[i].mode = 'markers';
+    data[i].name = key;
 
-keys = _.map(keys, function(item) { return item.capitalizeFirstLetter() });
-layout.yaxis.title = keys.join(', ');
+    // console.log(data[i]);
+}
+// String.prototype.capitalizeFirstLetter = function() {
+//     return this.charAt(0).toUpperCase() + this.slice(1);
+// }
+
+// keys = _.map(keys, function(item) { return item.capitalizeFirstLetter() });
+// layout.yaxis.title = keys.join(', ');
 
     Plotly.plot('plot', data, layout);      // Puts plot in <div> with id='plot'
     $('#summary').html(keys.join(', '));
     
-});  // ajax
+// });  // ajax
+
+console.log("After ajax");
 
 </script>
 </body>
