@@ -1,15 +1,8 @@
 <!DOCTYPE html>
 <html class="splash">
+    
 <head>
 <title>Jaars</title>
-<!--
-    https://plot.ly/javascript/reference
-
-    Plotly prefers Open Sans, which can be included via the link below. But if
-    you cannot or do not want to access external resources, we fall back on
-    Verdana or Arial. You can specify any other font via layout.font.family.
--->
-<!--<link href="https://fonts.googleapis.com/css?family=Open+Sans:600,400,300" rel="stylesheet" type="text/css">-->
 </head>
 
 <body>
@@ -18,7 +11,7 @@
     Plots go in blank <div> elements. You can size them in the plot layout,
     or give the div a size as shown here.
 -->
-<div id="summary">Fetching data from Powermon</div>
+<div id="summary">Plotting Demo</div>
 <div id="plot" style="width:600px;height:400px;"></div>
 <!--<div id="plot"></div>-->
 
@@ -63,8 +56,8 @@ layout = {                     // all "layout" attributes: #layout
     ]
 };
 
-   Plotly.plot('plot', data, layout);      // Puts plot in <div> with id='plot'
-    $('#summary').html("Done");
+Plotly.plot('plot', data, layout);      // Puts plot in <div> with id='plot'
+$('#summary').html("Done");
 
 </script>
 </body>
