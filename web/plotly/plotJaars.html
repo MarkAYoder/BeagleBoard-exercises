@@ -45,46 +45,38 @@
 -->
 <script>
 
-var layout = {              // all "layout" attributes: #layout
-    title: "Weather",
-    xaxis: {                // all "layout.xaxis" attributes: #layout-xaxis
-        "title": "Date"     // more about "layout.xaxis.title": #layout-xaxis-title
-    },
-    yaxis: {
-        title: 'Temperature (F)',
-        titlefont: {color: 'rgb(255, 32, 77)'},
-    }
-};
-
 var server = 'http://powermon.org/';
 var dataSet = 'jarTest03/';
 var day = 'La.2016.06.06.csv';
 
-console.log("Fetching from: " + server + dataSet + day );
+var layout = {              // all "layout" attributes: #layout
+    title: dataSet+day,
+    xaxis: {                // all "layout.xaxis" attributes: #layout-xaxis
+        "title": "Date"     // more about "layout.xaxis.title": #layout-xaxis-title
+    },
+    yaxis: {
+        title: 'Volts',
+        titlefont: {color: 'rgb(255, 32, 77)'},
+    }
+};
+
+// console.log("Fetching from: " + day );
 
 // JSONP request
-// $.ajax({
+$.ajax({
 //   url: server + dataSet + day,
-// //   dataType: 'jsonp'
-// }).done(function (results, err) {
-// if(err) {
-//     console.log("err: " + err);
-// }
-var results = `1465185601, 00:00, 1.254, 1.130, 1.004, 0.879, 0.753, 0.627, 0.501, 0.376, 1.245, 1.249, 2.008, 1.883, 1.756, 1.632, 1.507, 1.379, 302.139
-1465185661, 00:01, 1.254, 1.130, 1.004, 0.880, 0.754, 0.628, 0.501, 0.375, 1.245, 1.249, 2.008, 1.882, 1.757, 1.632, 1.507, 1.380, 302.139
-1465185721, 00:02, 1.254, 1.130, 1.004, 0.880, 0.753, 0.627, 0.501, 0.377, 1.245, 1.248, 2.008, 1.883, 1.757, 1.632, 1.507, 1.380, 302.139
-1465185781, 00:03, 1.254, 1.130, 1.004, 0.880, 0.754, 0.628, 0.501, 0.376, 1.245, 1.246, 2.008, 1.882, 1.757, 1.632, 1.507, 1.380, 302.139
-1465185841, 00:04, 1.254, 1.130, 1.004, 0.880, 0.753, 0.628, 0.502, 0.376, 1.245, 1.250, 2.008, 1.882, 1.756, 1.632, 1.507, 1.380, 302.139
-1465185902, 00:05, 1.254, 1.130, 1.004, 0.880, 0.753, 0.627, 0.501, 0.376, 1.245, 1.249, 2.009, 1.882, 1.756, 1.632, 1.507, 1.379, 302.139
-1465185961, 00:06, 1.254, 1.130, 1.004, 0.880, 0.753, 0.628, 0.501, 0.376, 1.245, 1.248, 2.008, 1.882, 1.757, 1.632, 1.507, 1.380, 302.139
-1465186021, 00:07, 1.254, 1.129, 1.004, 0.880, 0.753, 0.628, 0.501, 0.376, 1.245, 1.247, 2.008, 1.883, 1.757, 1.632, 1.507, 1.380, 302.341
-1465186081, 00:08, 1.254, 1.130, 1.004, 0.880, 0.753, 0.628, 0.501, 0.376, 1.245, 1.249, 2.009, 1.883, 1.756, 1.632, 1.507, 1.380, 302.139
-1465186141, 00:09, 2.254, 1.130, 1.004, 0.880, 0.753, 0.628, 0.501, 0.376, 1.245, 1.249, 2.008, 1.882, 1.757, 1.632, 1.508, 1.379, 302.139
-`;
+  url: day,
+//   dataType: 'jsonp'
+}).done(function (results, err) {
+if(err) {
+    console.log("err: " + err);
+}
 
-console.log("Got it!");
+// console.log("Got it!");
+$('#summary').html("Formatting data");
 // console.log(results);
 
+// Convert to 2D array
 var results = results.split("\n").map(function(row){return row.split(",");});
 
 // console.log(results);
@@ -96,16 +88,19 @@ var timestamp = _.map(results, function(item) {
 var data = [];
 console.log("TimeStamps: %s", timestamp);
 
-var keys = ['EIO0', 'EIO1', 'EIO2', 'EIO3', 'EIO4', 'EIO5', 'EIO6', 'EIO7',
+var keys = [
+    'EIO0', 'EIO1', 'EIO2', 'EIO3', 'EIO4', 'EIO5', 'EIO6', 'EIO7',
     'FIO0', 'FIO1',	'FIO2',	'Virtual', 'FIO3', 'FIO4', 'FIO5', 'FIO6',
-    'FIO7', 'Temp Sensor'];
+    // 'FIO7', 
+    // 'Temp Sensor'
+    ];
 
 console.log(keys);
 for(var i=0; i<keys.length; i++) {
     var key = keys[i];
-    console.log("key: %s", key);
+    // console.log("key: %s", key);
     
-    console.log("Key: %s, Value: %s", key, results[1][i+2]);
+    // console.log("Key: %s, Value: %s", key, results[1][i+2]);
     data[i] = {};
     data[i].x = timestamp;
     data[i].y = _.map(results, function(item) {  // Copy data
@@ -130,11 +125,11 @@ for(var i=0; i<keys.length; i++) {
 // layout.yaxis.title = keys.join(', ');
 
     Plotly.plot('plot', data, layout);      // Puts plot in <div> with id='plot'
-    $('#summary').html(keys.join(', '));
+    $('#summary').html(day);
     
-// });  // ajax
+});  // ajax
 
-console.log("After ajax");
+// console.log("After ajax");
 
 </script>
 </body>
