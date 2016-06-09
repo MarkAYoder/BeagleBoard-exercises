@@ -64,7 +64,7 @@ int main (void)
 	
 	/* Set up a monitor to monitor hidraw devices */
 	mon = udev_monitor_new_from_netlink(udev, "udev");
-	udev_monitor_filter_add_match_subsystem_devtype(mon, "hidraw", NULL);
+	udev_monitor_filter_add_match_subsystem_devtype(mon, "block", NULL);
 	udev_monitor_enable_receiving(mon);
 	/* Get the file descriptor (fd) for the monitor.
 	   This fd will get passed to select() */
