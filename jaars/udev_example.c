@@ -155,7 +155,7 @@ int main (void)
 		
 		FD_ZERO(&fds);
 		FD_SET(fd, &fds);
-		tv.tv_sec = 0;
+		tv.tv_sec = 100;
 		tv.tv_usec = 0;
 		
 		ret = select(fd+1, &fds, NULL, NULL, &tv);
