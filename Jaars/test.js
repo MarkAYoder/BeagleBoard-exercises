@@ -42,6 +42,7 @@ for(var k=0; k<100; k++) {
             }
     }
     // console.log(" " + value);
+    process.stdout.write(k + ", ");
     for(ll=0; ll<value.length; ll++) {
         process.stdout.write(value[ll].toFixed(2) + ", ");
     }
