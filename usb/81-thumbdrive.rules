@@ -1,0 +1,1 @@
+KERNEL=="sd?1", SYMLINK+="thumbdrive", RUN+="/root/exercises/jaars/run-on-insert.sh"
