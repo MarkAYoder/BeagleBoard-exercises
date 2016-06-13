@@ -2,6 +2,9 @@
 # apt-get install libudev-dev
 # wget http://www.signal11.us/oss/udev/udev_example.c
 
+# Enable automount when usb drive is inserted
+apt-get install usbmount
+
 here=$PWD/81-thumbdrive.rules
 cd /etc/udev/rules.d
 ln -s $here .

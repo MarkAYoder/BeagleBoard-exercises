@@ -79,6 +79,7 @@ $('#summary').html("Formatting data");
 // Convert to 2D array
 var results = results.split("\n").map(function(row){return row.split(",");});
 
+$('#summary').html("2D array created");
 // console.log(results);
 
 var timestamp = _.map(results, function(item) {
