@@ -1,15 +1,21 @@
 #!/usr/bin/env node
+// Extracts the Problem and Solution sections from the BeagleBone Cookbook
+// Mark A. Yoder
 // From:  https://nodejs.org/api/readline.html#readline_example_read_file_stream_line_by_line
+// Usage:  extrac.js inputFile outputFile
 const readline = require('readline');
 const fs = require('fs');
 
-var file = 'test.asciidoc';
-fs.writeFileSync(file, '');
+console.log(process.argv);
+
+var inputFile  = process.argv[2];
+var outputFile = process.argv[3];
+fs.writeFileSync(outputFile, '');
 var save = false;
 var state = 'start';
 
 const rl = readline.createInterface({
-    input: fs.createReadStream('/home/yoder/BeagleBoard/beaglebone-cookbook/ch02_sensors.asciidoc')
+    input: fs.createReadStream(inputFile)
 });
 
 rl.on('line', function (line) {
@@ -59,7 +65,7 @@ rl.on('line', function (line) {
     }
     if(save) {
         // console.log("Saving: " +line);
-        fs.appendFileSync(file, line+'\n');
+        fs.appendFileSync(outputFile, line+'\n');
     }
     // console.log('Line from file:', line);
 });
