@@ -10,7 +10,7 @@ mkdir -p $target
 
 mkdir -p $target/02-sensors
 cp -r $source/sensors/*.js  $target/02-sensors
-rm $target/{i2c-scan.js,i2c-test.js}
+rm $target/02-sensors/{encoder.js,i2c-scan.js,i2c-test.js,i2cTemp.js}
 
 mkdir -p $target/03-displays
 cp -r $source/displays/*.js $target/03-displays
@@ -22,7 +22,7 @@ mkdir -p $target/05-beyond
 cp -r $source/tips/*.{c,py,sh}     $target/05-beyond
 
 mkdir -p $target/06-iot
-cp -r $source/networking/*.js   $target/06-iot
+cp -r $source/networking/*.{js,html}   $target/06-iot
 
 mkdir -p $target/07-kernel
 cp -r $source/kernel/*.{c,patch}   $target/07-kernel
