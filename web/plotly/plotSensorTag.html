@@ -2,14 +2,7 @@
 <html class="splash">
 <head>
 <title>SensorTag Weather</title>
-<!--
-    https://plot.ly/javascript/reference
-
-    Plotly prefers Open Sans, which can be included via the link below. But if
-    you cannot or do not want to access external resources, we fall back on
-    Verdana or Arial. You can specify any other font via layout.font.family.
--->
-<!--<link href="https://fonts.googleapis.com/css?family=Open+Sans:600,400,300" rel="stylesheet" type="text/css">-->
+<!-- https://plot.ly/javascript/reference -->
 </head>
 
 <body>
@@ -34,15 +27,18 @@
 <script type="text/javascript" src="plotly-latest.min.js"></script>
 <script type="text/javascript" src="underscore-min.js"></script>
 
+<script src="moment.min.js"></script>
+<script src="moment-timezone.min.js"></script>
+
 <!-- Use these for remote servers -->
 <!--<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>-->
 <!--<script>if(typeof window.Int16Array !== 'function')document.write("<scri"+"pt src='dependencies/typedarray.js'></scr"+"ipt>");</script>-->
 <!--<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
 <!--<script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>-->
 
-<!--
-    And then you are ready to make plots!
--->
+<!--<script src="http://momentjs.com/downloads/moment.min.js"></script>-->
+<!--<script src="http://momentjs.com/downloads/moment-timezone-with-data-2010-2020.min.js"></script>-->
+
 <script>
 
 var layout = {              // all "layout" attributes: #layout
@@ -62,7 +58,9 @@ var public_key = '3JwVR29lYAuaoZJ5LNY6';
 var timeSpan = '?gt[timestamp]=now-7days';
 // timeSpan = '?gt[timestamp]=now-1day';
 timeSpan = '';
-// var timezone = '?timezone=Asia/Calcutta';
+
+var zone = 'America/New_York';
+var format = 'YYYY-MM-DD HH:mm:ss';
 
 // JSONP request
 $.ajax({
@@ -75,7 +73,7 @@ $.ajax({
 }).done(function (results) {
     
 var timestamp = _.map(results, function(item) {
-            return item.timestamp.replace('T', ' ').replace('Z', ''); // Convert to Plotly time format
+            return moment.tz(item.timestamp, zone).format(format); // Convert to Plotly time format and ET
         });
 
 var data = [];
