@@ -15,12 +15,13 @@
 
 		<div id="container">
 
-
 		</div>
 
 	</body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-	<script src="js/Three.js"></script>
+	<script src="../js/three.min.js"></script>
+	<script src="../js/CanvasRenderer.js"></script>
+	<script src="../js/Projector.js"></script>
 
 	<script type="text/javascript">
 
@@ -63,7 +64,7 @@
 	});
 
 	// set up the sphere vars
-	var radius = 50, segments = 16, rings = 16;
+	var radius = 50, segments = 32, rings = 16;
 
 	// create a new mesh with sphere geometry -
 	// we will cover the sphereMaterial next!
