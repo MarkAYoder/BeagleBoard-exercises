@@ -5,6 +5,9 @@ iptables --policy INPUT ACCEPT
 iptables -D INPUT -s 137.112.41.0/24 -j ACCEPT
 iptables -D INPUT -s 192.168.7.0/24 -j ACCEPT
 iptables -D INPUT -s 10.0.4.0/24 -j ACCEPT
+
+iptables -D INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
 # Open web server to all addresses
 iptables -D INPUT -p tcp -m tcp --dport 80 -j ACCEPT
 iptables -D INPUT -p tcp -m tcp --dport 443 -j ACCEPT

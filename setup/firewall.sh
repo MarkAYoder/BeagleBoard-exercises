@@ -5,6 +5,10 @@ iptables --policy INPUT DROP
 iptables -A INPUT -s 137.112.41.0/24 -j ACCEPT
 iptables -A INPUT -s 192.168.7.0/24 -j ACCEPT
 iptables -A INPUT -s 10.0.4.0/24 -j ACCEPT
+
+# Allow outgoing things to come back
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
 # Open web server to all addresses
 iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
