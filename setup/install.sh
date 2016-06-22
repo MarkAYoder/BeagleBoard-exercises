@@ -53,9 +53,7 @@ ln -s --backup=numbered exercises/setup/bashrc .bashrc
 ln -s --backup=numbered exercises/setup/asoundrc .asoundrc
 
 # Set the time zone to Indiana
-rm /etc/localtime
-ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
-# ln -s /usr/share/zoneinfo/Asia/Calcutta /etc/localtime
+timedatectl set-timezone America/Indiana/Indianapolis
 
 # Set language
 export LANG=en_US.UTF-8
