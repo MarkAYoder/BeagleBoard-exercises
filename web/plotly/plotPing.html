@@ -2,14 +2,7 @@
 <html class="splash">
 <head>
 <title>Ping Google return times</title>
-<!--
-    https://plot.ly/javascript/reference
-
-    Plotly prefers Open Sans, which can be included via the link below. But if
-    you cannot or do not want to access external resources, we fall back on
-    Verdana or Arial. You can specify any other font via layout.font.family.
--->
-<!--<link href="https://fonts.googleapis.com/css?family=Open+Sans:600,400,300" rel="stylesheet" type="text/css">-->
+<!-- https://plot.ly/javascript/reference -->
 </head>
 
 <body>
@@ -22,18 +15,14 @@
 <div id="summary">Getting latest pings</div>
 <div id="plot"></div>
 
-<!--
-    Include these javascript files.
-    d3: v3 is recommended
-    jQuery: plotly.js ships with v1.8 but supports v1.7 through v1.10
-    the weird typedarray.js code is a polyfill, primarily for IE9, that does not
-    natively support typed numeric arrays
--->
 <!-- Use these for local server -->
 <script type="text/javascript" src="jquery.min.js"></script>
 <script>if(typeof window.Int16Array !== 'function')document.write("<scri"+"pt src='dependencies/typedarray.js'></scr"+"ipt>");</script>
 <script type="text/javascript" src="plotly-latest.min.js"></script>
 <script type="text/javascript" src="underscore-min.js"></script>
+
+<script src="moment.min.js"></script>
+<script src="moment-timezone.min.js"></script>
 
 <!-- Use these for remote servers -->
 <!--<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>-->
@@ -41,9 +30,9 @@
 <!--<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
 <!--<script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>-->
 
-<!--
-    And then you are ready to make plots!
--->
+<!--<script src="http://momentjs.com/downloads/moment.min.js"></script>-->
+<!--<script src="http://momentjs.com/downloads/moment-timezone-with-data-2010-2020.min.js"></script>-->
+
 <script>
 // These are placeholders until we get the data from the server.
 var data = [
@@ -74,10 +63,15 @@ var layout = {                     // all "layout" attributes: #layout
 
 var server = 'http://data.sparkfun.com/';
 var public_key = 'MG40r6AdvgIKNDymOAoL';
+var timeSpan = '?gt[timestamp]=now-1days';
+
+var zone = 'America/New_York';
+var format = 'YYYY-MM-DD HH:mm:ss';
 
 // JSONP request
 $.ajax({
-  url: server + 'output/' + public_key + '.json?limit=' + 60*24*7 ,
+  url: server + 'output/' + public_key + '.json?limit=' + 60*24*2 ,
+//   url: server + 'output/' + public_key + '.json' + timeSpan ,
 //   data: {page: 1},   // Other options https://github.com/sparkfun/phant/pull/85
   dataType: 'jsonp',
 }).done(function (results) {
@@ -85,14 +79,17 @@ $.ajax({
     // var i;
     // for(i=0; i<5; i++) {
     //     console.log(results[i]);
-    // }
+    // 
+    
+    $('#summary').html("Formatting data");
+
     data[0].x = _.map(results, function(item) {
-            return item.timestamp.replace('T', ' ').replace('Z', ''); // Convert to Plotly time format
+            return moment.tz(item.timestamp, zone).format(format); // Convert to Plotly time format and ET
         });    
     data[0].y = _.map(results, function(item) {  // Copy time data
-        return item.time;	// Convert to F
+        return item.time;
     });
-    // console.log(data[0].y[0]);
+    // console.log(data[0].x[0]);
     
     Plotly.plot('plot', data, layout);      // Puts plot in <div> with id='plot'
     $('#summary').html('Time: ' + data[0].y[0] + ' (ms) at ' + data[0].x[0]);

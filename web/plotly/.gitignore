@@ -1,3 +1,5 @@
 jquery.min.js
 plotly-latest.min.js
 underscore-min.js
+moment-timezone.min.js
+moment.min.js
