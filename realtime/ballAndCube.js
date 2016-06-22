@@ -152,11 +152,12 @@ function animate() {
     // note: three.js includes requestAnimationFrame shim
     requestAnimationFrame(animate);
 
-    if(ainValue[1] > 0.05) {
-        cube.position.y = 300*ainValue[1] - 50;
-    }
-    cube.rotation.y = 3*ainValue[0];
-    cube.rotation.x = 3.14159/6;
+    // if(ainValue[1] > 0.05) {
+    //     cube.position.y = 300*ainValue[1] - 50;
+    // }
+    cube.rotation.y = 6*ainValue[0];
+    cube.rotation.x = 6*ainValue[1];
+    // cube.rotation.x = 3.14159/6;
 
 /*
     if(ball.position.y > 100) {
