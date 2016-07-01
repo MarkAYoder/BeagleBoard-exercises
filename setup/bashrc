@@ -41,6 +41,8 @@ then
     export CROSS_COMPILE=arm-linux-gnueabihf-
     export GIT_SSL_NO_VERIFY=1
 fi
+# PRU compiler
+export PRU_CGT=/usr/share/ti/cgt-pru
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
