@@ -33,21 +33,23 @@ make
 make devicetree
 make firmware
 
-# This may be a better lead:
+# This may be a better lead. Works with 4.4.11-ti-r29
 https://zeekhuge.github.io/
 https://zeekhuge.github.io/post/a_handfull_of_commands_and_scripts_to_get_started_with_beagleboneblack/#working_with_prus:01d25bfd2399ec47b9c04f156786eab8
 
 git clone https://github.com/ZeekHuge/BeagleScope.git
 
 # Then add
-here=$PWD
-cd /usr/share/ti/cgt-pru
+export PRU_CGT=/usr/share/ti/cgt-pru
+cd $PRU_CGT
 mkdir bin
 cd bin
-ln -s /usr/bin/clpru .
-export PRU_CGT=/usr/share/ti/cgt-pru
+ln -s `which clpru`  .
+ln -s `which lnkpru` .
 
 cd BeagleScope/examples/firmware_exmples/pru_blinky
 ./deploy
 # Wire and LED to P8_45 and it should be blinking.
 # You might have to disable HDMI for this to work.
+
+# Now on to the Labs at: http://processors.wiki.ti.com/index.php/PRU_Training:_Hands-on_Labs
