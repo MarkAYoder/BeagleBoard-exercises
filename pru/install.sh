@@ -53,3 +53,7 @@ cd BeagleScope/examples/firmware_exmples/pru_blinky
 # You might have to disable HDMI for this to work.
 
 # Now on to the Labs at: http://processors.wiki.ti.com/index.php/PRU_Training:_Hands-on_Labs
+git clone git://git.ti.com/pru-software-support-package/pru-software-support-package.git
+
+cd pru-software-support-package/labs
+
