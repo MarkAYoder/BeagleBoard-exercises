@@ -11,7 +11,7 @@ var options = {
   hostname: 'api.artik.cloud',
   path: '/v1.1/users/self',
   port: 443,
-  method: 'POST',
+  method: 'GET',
   headers: header
 };
 
