@@ -4,16 +4,26 @@ var https = require('https');
 var util  = require('util');
 var querystring = require('querystring');
 
+var id = 'cd98e36c092345c89974f06decfa4540';
+var deviceID = '271e863bf1f04c95aa3735f9055f2781';  // My GearFit Device - simulated
+deviceID = '96fc439d2af94d2fa9d9cf5720a58ae6';      // weather2 - From Beagle
+
 var postData = JSON.stringify({
     "data": {
-        "state": 0,
-        "stepCount": 1,
-        "heartRate": 2,
-        "activity": 30
+        pressure: 31,
+        temp: 60
     },
-    "sdid": "271e863bf1f04c95aa3735f9055f2781",
+    "sdid": deviceID,
     "type": "message"
   });
+
+// I tried to use the simpler MQTT, but didn't get it to work.
+// var postData = JSON.stringify({
+//     "state": 0,
+//     "stepCount": 1,
+//     "heartRate": 20,
+//     "activity": 30
+//   });
 
 console.log('postData: ' + postData);
 
@@ -23,14 +33,13 @@ var header = {
     "Content-Length": postData.length
     };
     
-var id = 'cd98e36c092345c89974f06decfa4540';
-var deviceID = '271e863bf1f04c95aa3735f9055f2781';
-    
-var paths = [
+var paths = [  // Doesn't like sending several at once.
     // '/users/self',
     // '/users/' + id + '/devices?count=100&includeProperties=true',
-    // '/devices/' + deviceID + '?properties=true',
-    '/messages'
+    // '/devices/' + deviceID + '?properties=true',   // Use GET
+    '/messages',    // Use GET or POST
+    // '/messages/last?count=1&sdids=' + deviceID   // GET use to learn valid fields
+    // '/messages/' + deviceID      // This should work with MQTT, but didn't
     ];
 
 
