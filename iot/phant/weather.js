@@ -35,7 +35,6 @@ var request       = require('request');
 var BMP085        = require('bmp085');
 var util          = require('util');
 var fs            = require('fs');
-var b             = require('bonescript');
 var ms = 15*60*1000;               // Repeat time
 
 // console.log(util.inspect(request));
@@ -81,6 +80,7 @@ function postTemp(data) {
             logger.error("error=" + error + " response=" + JSON.stringify(response));
         }
     });
+    
     var urlIS = util.format(urlBaseIS, temp, pressure);
     logger.debug("urlIS: ", urlIS);
     request(urlIS, {timeout: 10000}, function (error, response, body) {

@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 // Playing with Artik
 var https = require('https');
-var util  = require('util');
-var querystring = require('querystring');
 
 var id = 'cd98e36c092345c89974f06decfa4540';
 var deviceID = '271e863bf1f04c95aa3735f9055f2781';  // My GearFit Device - simulated
