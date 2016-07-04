@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Measure the weather
+// Measure the weather and post on Artik
 //      Barometric presure and temperature with BMP085
 //          https://www.sparkfun.com/products/retired/11282
 
@@ -10,14 +10,11 @@
 var https         = require('https');
 var BMP085        = require('bmp085');
 var util          = require('util');
-// var fs            = require('fs');
-// var b             = require('bonescript');
-var ms = 15*1000;               // Repeat time
+var ms = 15*60*1000;               // Repeat time
 
+// Go to https://artik.cloud/my/devices and click on the gear
+// for the device you are posting to.  Use the "DEVICE ID
 var deviceID = '96fc439d2af94d2fa9d9cf5720a58ae6';      // weather
-
-// console.log(util.inspect(request));
-// request.debug = true;
 
 var barometer = new BMP085({device: '/dev/i2c-2', mode: '2'});
 
@@ -30,24 +27,19 @@ function readWeather() {
 }
 
 function postTemp(data) {
-    // logger.debug("data: " + util.inspect(data));
-    var temp = data.temperature;
-    var pressure = data.pressure.toFixed(1);
-
-    // logger.debug("temp: " + temp);
-    // logger.debug("pressure: " + pressure);
-    
     var postData = JSON.stringify({
         "data": {
-            pressure: pressure,
-            temp: temp
+            pressure:   data.pressure.toFixed(1),
+            temp:       data.temperature
         },
         "sdid": deviceID,
         "type": "message"
       });
       
-    console.log('postData: ' + postData);
+    // console.log('postData: ' + postData);
     
+    // Go to https://developer.artik.cloud/api-console/ and click
+    // on "Get Current User Profile" then click on "TRY IT!"
     var header = {
         "Content-Type": "application/json",
         "Authorization": "Bearer 40a617e4e83e45ccb5167ef50a8e0246",
