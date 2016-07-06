@@ -54,6 +54,15 @@ cd BeagleScope/examples/firmware_exmples/pru_blinky
 
 # Now on to the Labs at: http://processors.wiki.ti.com/index.php/PRU_Training:_Hands-on_Labs
 git clone git://git.ti.com/pru-software-support-package/pru-software-support-package.git
+# This is already on the Bone in /opt/source
+
+cd ~/exercises/pru
+ln -s /opt/source/pru-software-support-package .
 
 cd pru-software-support-package/labs
 
+# http://processors.wiki.ti.com/index.php/PRU-ICSS
+
+# Copy resource_table_empty.h from BeagleScope
+cp ~/BeagleScope/examples/firmware_exmples/pru_blinky/PRU_gpioToggle/resource_table_empty.h lab_1/solution/toggle_led
+# Add #include "resource_table_empty.h" to main.c
