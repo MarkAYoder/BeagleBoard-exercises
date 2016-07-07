@@ -360,7 +360,7 @@ int main(int argc, char *argv[])
 						last_cmd = LAST_CMD_D;
 					}
 					last_offset = offset;
-					last_addr = addr + len;
+					last_addr = addr + 4*len;
 					last_len = len;
 					printf ("Absolute addr = 0x%04x, offset = 0x%04x, Len = %u\n", addr + offset, addr, len);
 					cmd_d(offset, addr, len);
@@ -391,7 +391,7 @@ int main(int argc, char *argv[])
 					last_cmd = LAST_CMD_DIS;
 
 					last_offset = offset;
-					last_addr = addr + len;
+					last_addr = addr + 4*len;
 					last_len = len;
 					printf ("Absolute addr = 0x%04x, offset = 0x%04x, Len = %u\n", addr + offset, addr, len);
 					cmd_dis(offset, addr, len);
@@ -536,7 +536,7 @@ int main(int argc, char *argv[])
 						offset = 0;
 					}
 					printf("Write to absolute address 0x%04x\n", offset+addr);
-					for (i=1; i<numargs; i++) pru[offset+addr+i-1] = (unsigned int) (strtoll(&cmdargs[argptrs[i]], NULL, 0) & 0xFFFFFFFF);
+					for (i=1; i<numargs; i++) pru[offset+addr/4+i-1] = (unsigned int) (strtoll(&cmdargs[argptrs[i]], NULL, 0) & 0xFFFFFFFF);
 				}
 			}
 		}
@@ -551,7 +551,7 @@ int main(int argc, char *argv[])
 				case LAST_CMD_DI:
 					printf ("Absolute addr = 0x%04x, offset = 0x%04x, Len = %u\n", last_addr + last_offset, last_addr, last_len);
 					cmd_d(last_offset, last_addr, last_len);
-					last_addr += last_len;
+					last_addr += 4*last_len;
 					break;
 
 				case LAST_CMD_SS:

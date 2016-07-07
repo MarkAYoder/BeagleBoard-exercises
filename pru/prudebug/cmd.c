@@ -54,8 +54,8 @@ int cmd_d (int offset, int addr, int len)
 	int			i, j;
 
 	for (i=0; i<len; ) {
-		printf ("[0x%04x] ", addr+i);
-		for (j=0;(i<len)&&(j<4); i++,j++) printf ("0x%08x ", pru[offset+addr+i]);
+		printf ("[0x%04x] ", addr+4*i);
+		for (j=0;(i<len)&&(j<4); i++,j++) printf ("0x%08x ", pru[offset+addr/4+i]);
 		printf ("\n");
 	}
 	printf("\n");
@@ -74,8 +74,8 @@ int cmd_dis (int offset, int addr, int len)
 
 	for (i=0; i<len; i++) {
 		if (status_reg == (addr + i)) pc_on = 1; else pc_on = 0;
-		disassemble(inst_str, pru[offset+addr+i]);
-		printf ("[0x%04x] 0x%08x %s %s\n", addr+i, pru[offset+addr+i], pc[pc_on], inst_str);
+		disassemble(inst_str, pru[offset+addr/4+i]);
+		printf ("[0x%04x] 0x%08x %s %s\n", addr+i, pru[offset+addr/4+i], pc[pc_on], inst_str);
 	}
 	printf("\n");
 }
@@ -303,7 +303,7 @@ void cmd_set_watch_any (unsigned int wanum, unsigned int addr)
 {
 	wa[pru_num][wanum].state = WA_PRINT_ON_ANY;
 	wa[pru_num][wanum].address = addr;
-	wa[pru_num][wanum].old_value = pru[pru_data_base[pru_num] + addr];
+	wa[pru_num][wanum].old_value = pru[pru_data_base[pru_num] + addr/4];
 }
 
 // set a watch for a specific value and halt
