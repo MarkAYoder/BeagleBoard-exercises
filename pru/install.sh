@@ -66,3 +66,9 @@ cd pru-software-support-package/labs
 # Copy resource_table_empty.h from BeagleScope
 cp ~/BeagleScope/examples/firmware_exmples/pru_blinky/PRU_gpioToggle/resource_table_empty.h lab_1/solution/toggle_led
 # Add #include "resource_table_empty.h" to main.c
+
+# Debug
+https://sourceforge.net/projects/prudebug/files/latest/download
+mv download download.tar
+tar xvf download.tar
+cd prudebug-0.25
