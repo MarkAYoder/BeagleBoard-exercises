@@ -1,0 +1,12 @@
+{
+    "web": {
+        "client_id": "928905503512-h7fjogehq5sg1edefnfvdh6kvq1midr8.apps.googleusercontent.com",
+        "project_id": "trim-approach-136823",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://accounts.google.com/o/oauth2/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_secret": "W3xqToRNTe72_xVO40EkGC-J",
+        "redirect_uris": ["https://developers.google.com/oauthplayground"],
+        "javascript_origins": ["https://developers.google.com"]
+    }
+}

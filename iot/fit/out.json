@@ -1,0 +1,473 @@
+{
+ "dataSource": [
+  {
+   "dataStreamId": "derived:com.google.activity.samples:com.google.android.gms:samsung:GT-I9300I:685a28b4:detailed",
+   "dataStreamName": "detailed",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.activity.samples",
+    "field": [
+     {
+      "name": "activity_confidence",
+      "format": "map"
+     }
+    ]
+   },
+   "device": {
+    "uid": "685a28b4",
+    "type": "phone",
+    "version": "",
+    "model": "GT-I9300I",
+    "manufacturer": "samsung"
+   },
+   "application": {
+    "packageName": "com.google.android.gms"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.activity.sample:com.google.android.gms:samsung:GT-I9300I:685a28b4:detailed",
+   "dataStreamName": "detailed",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.activity.sample",
+    "field": [
+     {
+      "name": "activity",
+      "format": "integer"
+     },
+     {
+      "name": "confidence",
+      "format": "floatPoint"
+     }
+    ]
+   },
+   "device": {
+    "uid": "685a28b4",
+    "type": "phone",
+    "version": "",
+    "model": "GT-I9300I",
+    "manufacturer": "samsung"
+   },
+   "application": {
+    "packageName": "com.google.android.gms"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.activity.segment:com.google.android.apps.fitness:session_activity_segment",
+   "dataStreamName": "session_activity_segment",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.activity.segment",
+    "field": [
+     {
+      "name": "activity",
+      "format": "integer"
+     }
+    ]
+   },
+   "application": {
+    "packageName": "com.google.android.apps.fitness"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.activity.segment:com.google.android.gms:merge_activity_segments",
+   "dataStreamName": "merge_activity_segments",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.activity.segment",
+    "field": [
+     {
+      "name": "activity",
+      "format": "integer"
+     }
+    ]
+   },
+   "application": {
+    "packageName": "com.google.android.gms",
+    "version": "1"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.activity.segment:com.google.android.gms:platform_activity_segments",
+   "dataStreamName": "platform_activity_segments",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.activity.segment",
+    "field": [
+     {
+      "name": "activity",
+      "format": "integer"
+     }
+    ]
+   },
+   "application": {
+    "packageName": "com.google.android.gms"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.activity.segment:com.google.android.gms:samsung:GT-I9300I:685a28b4:activity_from_steps",
+   "dataStreamName": "activity_from_steps",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.activity.segment",
+    "field": [
+     {
+      "name": "activity",
+      "format": "integer"
+     }
+    ]
+   },
+   "device": {
+    "uid": "685a28b4",
+    "type": "phone",
+    "version": "",
+    "model": "GT-I9300I",
+    "manufacturer": "samsung"
+   },
+   "application": {
+    "packageName": "com.google.android.gms"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.activity.segment:com.google.android.gms:samsung:GT-I9300I:685a28b4:from_activity_samples\u003c-derived:com.google.activity.samples:com.google.android.gms:samsung:GT-I9300I:685a28b4:detailed",
+   "dataStreamName": "from_activity_samples\u003c-derived:com.google.activity.samples:com.google.android.gms:samsung:GT-I9300I:685a28b4:detailed",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.activity.segment",
+    "field": [
+     {
+      "name": "activity",
+      "format": "integer"
+     }
+    ]
+   },
+   "device": {
+    "uid": "685a28b4",
+    "type": "phone",
+    "version": "",
+    "model": "GT-I9300I",
+    "manufacturer": "samsung"
+   },
+   "application": {
+    "packageName": "com.google.android.gms",
+    "version": "1"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.activity.segment:com.google.android.gms:samsung:GT-I9300I:685a28b4:from_sample\u003c-derived:com.google.activity.sample:com.google.android.gms:samsung:GT-I9300I:685a28b4:detailed",
+   "dataStreamName": "from_sample\u003c-derived:com.google.activity.sample:com.google.android.gms:samsung:GT-I9300I:685a28b4:detailed",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.activity.segment",
+    "field": [
+     {
+      "name": "activity",
+      "format": "integer"
+     }
+    ]
+   },
+   "device": {
+    "uid": "685a28b4",
+    "type": "phone",
+    "version": "",
+    "model": "GT-I9300I",
+    "manufacturer": "samsung"
+   },
+   "application": {
+    "packageName": "com.google.android.gms",
+    "version": "1"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.activity.segment:com.google.android.gms:session_activity_segment",
+   "dataStreamName": "session_activity_segment",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.activity.segment",
+    "field": [
+     {
+      "name": "activity",
+      "format": "integer"
+     }
+    ]
+   },
+   "application": {
+    "packageName": "com.google.android.gms"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.calories.expended:com.google.android.gms:from_activities",
+   "dataStreamName": "from_activities",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.calories.expended",
+    "field": [
+     {
+      "name": "calories",
+      "format": "floatPoint"
+     }
+    ]
+   },
+   "application": {
+    "packageName": "com.google.android.gms"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.calories.expended:com.google.android.gms:from_bmr",
+   "dataStreamName": "from_bmr",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.calories.expended",
+    "field": [
+     {
+      "name": "calories",
+      "format": "floatPoint"
+     }
+    ]
+   },
+   "application": {
+    "packageName": "com.google.android.gms"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.calories.expended:com.google.android.gms:merge_calories_expended",
+   "dataStreamName": "merge_calories_expended",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.calories.expended",
+    "field": [
+     {
+      "name": "calories",
+      "format": "floatPoint"
+     }
+    ]
+   },
+   "application": {
+    "packageName": "com.google.android.gms",
+    "version": "1"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.calories.expended:com.google.android.gms:platform_calories_expended",
+   "dataStreamName": "platform_calories_expended",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.calories.expended",
+    "field": [
+     {
+      "name": "calories",
+      "format": "floatPoint"
+     }
+    ]
+   },
+   "application": {
+    "packageName": "com.google.android.gms"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.step_count.cadence:com.google.android.gms:samsung:GT-I9300I:685a28b4:derive_step_cadence\u003c-derived:com.google.step_count.cumulative:com.google.android.gms:samsung:GT-I9300I:685a28b4:soft_step_counter",
+   "dataStreamName": "derive_step_cadence\u003c-derived:com.google.step_count.cumulative:com.google.android.gms:samsung:GT-I9300I:685a28b4:soft_step_counter",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.step_count.cadence",
+    "field": [
+     {
+      "name": "rpm",
+      "format": "floatPoint"
+     }
+    ]
+   },
+   "device": {
+    "uid": "685a28b4",
+    "type": "phone",
+    "version": "",
+    "model": "GT-I9300I",
+    "manufacturer": "samsung"
+   },
+   "application": {
+    "packageName": "com.google.android.gms",
+    "version": "1"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.step_count.cumulative:com.google.android.gms:samsung:GT-I9300I:685a28b4:soft_step_counter",
+   "dataStreamName": "soft_step_counter",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.step_count.cumulative",
+    "field": [
+     {
+      "name": "steps",
+      "format": "integer"
+     }
+    ]
+   },
+   "device": {
+    "uid": "685a28b4",
+    "type": "phone",
+    "version": "",
+    "model": "GT-I9300I",
+    "manufacturer": "samsung"
+   },
+   "application": {
+    "packageName": "com.google.android.gms"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.step_count.delta:928905503512:Example Manufacturer:ExampleTablet:1000001:MyDataSource",
+   "dataStreamName": "MyDataSource",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.step_count.delta",
+    "field": [
+     {
+      "name": "steps",
+      "format": "integer"
+     }
+    ]
+   },
+   "device": {
+    "uid": "1000001",
+    "type": "tablet",
+    "version": "1",
+    "model": "ExampleTablet",
+    "manufacturer": "Example Manufacturer"
+   },
+   "application": {
+    "version": "1",
+    "detailsUrl": "http://example.com",
+    "name": "Foo Example App"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.step_count.delta:com.google.android.gms:estimated_steps",
+   "dataStreamName": "estimated_steps",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.step_count.delta",
+    "field": [
+     {
+      "name": "steps",
+      "format": "integer"
+     }
+    ]
+   },
+   "application": {
+    "packageName": "com.google.android.gms"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.step_count.delta:com.google.android.gms:merge_step_deltas",
+   "dataStreamName": "merge_step_deltas",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.step_count.delta",
+    "field": [
+     {
+      "name": "steps",
+      "format": "integer"
+     }
+    ]
+   },
+   "application": {
+    "packageName": "com.google.android.gms",
+    "version": "1"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.step_count.delta:com.google.android.gms:samsung:GT-I9300I:685a28b4:derive_step_deltas\u003c-derived:com.google.step_count.cumulative:com.google.android.gms:samsung:GT-I9300I:685a28b4:soft_step_counter",
+   "dataStreamName": "derive_step_deltas\u003c-derived:com.google.step_count.cumulative:com.google.android.gms:samsung:GT-I9300I:685a28b4:soft_step_counter",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.step_count.delta",
+    "field": [
+     {
+      "name": "steps",
+      "format": "integer"
+     }
+    ]
+   },
+   "device": {
+    "uid": "685a28b4",
+    "type": "phone",
+    "version": "",
+    "model": "GT-I9300I",
+    "manufacturer": "samsung"
+   },
+   "application": {
+    "packageName": "com.google.android.gms",
+    "version": "1"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.stride_model:com.google.android.gms:running_stride_model\u003c-derived:com.google.distance.delta:com.google.android.gms:merge_distance_delta",
+   "dataStreamName": "running_stride_model\u003c-derived:com.google.distance.delta:com.google.android.gms:merge_distance_delta",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.stride_model",
+    "field": [
+     {
+      "name": "google.android.fitness.StrideModel",
+      "format": "blob"
+     }
+    ]
+   },
+   "application": {
+    "packageName": "com.google.android.gms",
+    "version": "1"
+   }
+  },
+  {
+   "dataStreamId": "derived:com.google.stride_model:com.google.android.gms:walking_stride_model\u003c-derived:com.google.distance.delta:com.google.android.gms:merge_distance_delta",
+   "dataStreamName": "walking_stride_model\u003c-derived:com.google.distance.delta:com.google.android.gms:merge_distance_delta",
+   "type": "derived",
+   "dataType": {
+    "name": "com.google.stride_model",
+    "field": [
+     {
+      "name": "google.android.fitness.StrideModel",
+      "format": "blob"
+     }
+    ]
+   },
+   "application": {
+    "packageName": "com.google.android.gms",
+    "version": "1"
+   }
+  },
+  {
+   "dataStreamId": "raw:com.google.activity.segment:com.google.android.apps.fitness:user_input",
+   "dataStreamName": "user_input",
+   "type": "raw",
+   "dataType": {
+    "name": "com.google.activity.segment",
+    "field": [
+     {
+      "name": "activity",
+      "format": "integer"
+     }
+    ]
+   },
+   "application": {
+    "packageName": "com.google.android.apps.fitness"
+   }
+  },
+  {
+   "dataStreamId": "raw:com.google.step_count.delta:com.google.android.apps.fitness:user_input",
+   "dataStreamName": "user_input",
+   "type": "raw",
+   "dataType": {
+    "name": "com.google.step_count.delta",
+    "field": [
+     {
+      "name": "steps",
+      "format": "integer"
+     }
+    ]
+   },
+   "application": {
+    "packageName": "com.google.android.apps.fitness"
+   }
+  }
+ ]
+}
