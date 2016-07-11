@@ -274,7 +274,7 @@ int main(int argc, char *argv[])
 	printf("Processor type		%s\n", pdb[pi].processor);
 	printf("PRUSS memory address	0x%08x\n", opt_pruss_addr);
 	printf("PRUSS memory length	0x%08x\n\n", pdb[pi].pruss_len);
-	printf("         offsets below are in 32-bit word addresses (not ARM byte addresses)\n");
+	printf("         offsets below are in 32-bit byte addresses (not ARM byte addresses)\n");
 	printf("         PRU            Instruction    Data         Ctrl\n");
 	for (i=0; i<pdb[pi].num_of_pruss; i++) {
 		printf("         %-15d0x%08x     0x%08x   0x%08x\n", i, pdb[pi].offsets[i].pruss_inst, pdb[pi].offsets[i].pruss_data, pdb[pi].offsets[i].pruss_ctrl);
