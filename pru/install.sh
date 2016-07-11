@@ -72,3 +72,8 @@ https://sourceforge.net/projects/prudebug/files/latest/download
 mv download download.tar
 tar xvf download.tar
 cd prudebug-0.25
+
+# Robotics Cape
+git clone https://github.com/StrawsonDesign/Robotics_Cape_Installer.git
+
+# RPMsg: pru_rpmsg.c  pru_virtqueue.c are in /pru-software-support-package/lib/src/rpmsg_lib
