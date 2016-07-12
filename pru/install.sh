@@ -77,3 +77,15 @@ cd prudebug-0.25
 git clone https://github.com/StrawsonDesign/Robotics_Cape_Installer.git
 
 # RPMsg: pru_rpmsg.c  pru_virtqueue.c are in /pru-software-support-package/lib/src/rpmsg_lib
+
+# https://github.com/RobertCNelson/linux-stable-rcn-ee/blob/4.4.11-ti-r29/drivers/rpmsg/rpmsg_pru.c
+wget https://raw.githubusercontent.com/RobertCNelson/linux-stable-rcn-ee/4.4.11-ti-r29/drivers/rpmsg/rpmsg_pru.c
+wget https://raw.githubusercontent.com/RobertCNelson/linux-stable-rcn-ee/4.4.14-ti-r34/include/linux/rpmsg.h
+wget https://raw.githubusercontent.com/RobertCNelson/linux-stable-rcn-ee/4.4.14-ti-r34/include/linux/rpmsg_rpc.h
+
+readelf -S *.out
+
+# Compiler: http://www.ti.com/lit/ug/spruhv7a/spruhv7a.pdf
+# Assembler: http://www.ti.com/lit/ug/spruhv6a/spruhv6a.pdf
+
+--c_src_interlist 
