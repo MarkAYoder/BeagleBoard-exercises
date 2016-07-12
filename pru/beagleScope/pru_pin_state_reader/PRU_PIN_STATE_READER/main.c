@@ -111,6 +111,7 @@ void main(void)
 
 	/* Create the RPMsg channel between the PRU and ARM user space using the transport structure. */
 	while (pru_rpmsg_channel(RPMSG_NS_CREATE, &transport, CHAN_NAME, CHAN_DESC, CHAN_PORT) != PRU_RPMSG_SUCCESS);
+	
 	while (1) {
 		/* Check bit 30 of register R31 to see if the ARM has kicked us */
 		if (__R31 & HOST_INT) {
@@ -118,12 +119,20 @@ void main(void)
 			CT_INTC.SICR_bit.STS_CLR_IDX = FROM_ARM_HOST;
 			/* Receive all available messages, multiple messages can be sent per kick */
 			while (pru_rpmsg_receive(&transport, &src, &dst, payload, &len) == PRU_RPMSG_SUCCESS) {	
+				// Start counter
+				PRU1_CTRL.CTRL_bit.CTR_EN = 1;
 				while(1)
 					if ((__R31 ^ prev_gpio_state) & CHECK_BIT) {
 						prev_gpio_state = __R31 & CHECK_BIT;
-						snprintf(str, MAXPRINT, "payload: %s, len: %d, cycle: %d\n", 
-							payload, len, PRU1_CTRL.CYCLE);
+						snprintf(str, MAXPRINT, "payload: %s, len: %d, cycle: %d, stall: %d, enable: %d\n", 
+							payload, len, PRU1_CTRL.CYCLE, PRU1_CTRL.STALL, PRU1_CTRL.CTRL_bit.CTR_EN);
 						pru_rpmsg_send(&transport, dst, src, str, sizeof(str));
+						if(PRU1_CTRL.CYCLE == 0xffffffff) {  // Counter doesn't wrap.  Reset when at max.
+							snprintf(str, MAXPRINT, "Max counter, enable: %d\n", PRU1_CTRL.CTRL_bit.CTR_EN );
+							pru_rpmsg_send(&transport, dst, src, str, sizeof(str));
+							PRU1_CTRL.CYCLE = 0;
+							PRU1_CTRL.CTRL_bit.CTR_EN = 1;
+						}
 						// pru_rpmsg_send(&transport, dst, src, "CHANGED\n", sizeof("CHANGED\n"));
 					}		
 			}
