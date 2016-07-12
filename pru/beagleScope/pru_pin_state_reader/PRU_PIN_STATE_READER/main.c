@@ -46,6 +46,7 @@
 #include "resource_table_1.h"
 
 
+volatile register uint32_t __R30;
 volatile register uint32_t __R31;
 
 /* Host-1 Interrupt sets bit 31 in register R31 */
@@ -90,6 +91,8 @@ void main(void)
 	uint16_t src, dst, len;
 	uint32_t prev_gpio_state;
 	volatile uint8_t *status;
+	
+	volatile uint32_t gpio_on = 1<<3;		// Pin P8_44
 
 #define MAXPRINT	80
 	char str[MAXPRINT];		// Used in snprintf
@@ -125,16 +128,18 @@ void main(void)
 				while(1) {
 					if ((__R31 ^ prev_gpio_state) & CHECK_BIT) {
 						prev_gpio_state = __R31 & CHECK_BIT;
-						snprintf(str, MAXPRINT, "len: %d, cycle: %lu, stall: %lu, enable: %d, payload: %s\n", 
-							len, PRU1_CTRL.CYCLE, PRU1_CTRL.STALL, PRU1_CTRL.CTRL_bit.CTR_EN,
+						snprintf(str, MAXPRINT, "cycle: %lu, stall: %lu, enable: %d, payload: %s\n", 
+							PRU1_CTRL.CYCLE, PRU1_CTRL.STALL, PRU1_CTRL.CTRL_bit.CTR_EN,
 							&payload[1]);
 						pru_rpmsg_send(&transport, dst, src, str, strlen(str));
+						__R30 ^= gpio_on;
 					}
 					if(PRU1_CTRL.CYCLE == 0xffffffff) {  // Counter doesn't wrap.  Reset when at max.
 						snprintf(str, MAXPRINT, "Wrap counter, stall: %lu\n", PRU1_CTRL.STALL);
 						pru_rpmsg_send(&transport, dst, src, str, strlen(str));
 						PRU1_CTRL.CYCLE = 0;
 						PRU1_CTRL.CTRL_bit.CTR_EN = 1;
+						__R30 ^= gpio_on;
 					}
 				}
 			}
