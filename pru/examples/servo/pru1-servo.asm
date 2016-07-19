@@ -47,13 +47,13 @@ start:
 	.asg    C28,    CONST_PRUSHAREDRAM   
  
 ; 	.asg PRU0_CTRL            0x22000
-	.asg    0x24000,    PRU1_CTRL            
- 
-	.asg    0x28,       CTPPR0               
+	.asg    0x24000,    PRU1_CTRL       ; page 19
+	.asg    0x28,       CTPPR0          ; page 75
  
 ; 	.asg OWN_RAM              0x000
 ; 	.asg OTHER_RAM            0x020
-	.asg    0x100,     SHARED_RAM           
+; 	.asg    0x100,     SHARED_RAM           
+	.asg    0x10,     SHARED_RAM       ; This is so prudebug can find it.
 	
 ;     LBCO	&r0, CONST_SYSCFG, 4, 4		; Enable OCP master port
 ; 	CLR 	r0, r0, 4					; Clear SYSCFG[STANDBY_INIT] to enable OCP master port
@@ -61,7 +61,7 @@ start:
 	LDI     r0, 0x00000120				; Configure the programmable pointer register for PRU0 by setting c28_pointer[15:0]
 	LDI     r0, SHARED_RAM              ; Set C28 to point to shared RAM
 	LDI32   r1, PRU1_CTRL + CTPPR0		; Note we use beginning of shared ram unlike example which
-	SBBO    &r0, r1, 0, 4				; has arbitrary 2048 offset
+	SBBO    &r0, r1, 0, 4				; has arbitrary 2048 offset, page 25
 	
 	LDI		r9, 0x00000000				; erase r9 to use to use later
 	
@@ -76,8 +76,12 @@ start:
 	LDI 	r30, 0x00000000				; turn off GPIO outputs
 	
 	LDI     r10, SHARED_RAM
-; 	ldi32   r12, 0xdeadbeef
+	ldi32   r12, 0xdeadbeef
+	ldi     r12, 0x200
 ; 	sbbo    &r12, r10, 0, 4
+    sbco	&r12, CONST_PRUSHAREDRAM, 0, 4
+    
+    ; halt
 	
 ; Beginning of loop, should always take 48 instructions to complete
 CH1:			
@@ -97,7 +101,7 @@ CLR1:
 	CLR		r30, CH1BIT						; turn off the corresponding channel
 	CLR 	r30, LED
 	DELAY 	10000
-; 	LBCO	&r0, CONST_PRUSHAREDRAM, 0, 4	; Load new timer register
-	LBBO	&r0, r10, 0, 4       	        ; Load new timer register
+	LBCO	&r0, CONST_PRUSHAREDRAM, 0, 4	; Load new timer register
+; 	LBBO	&r0, r10, 0, 4       	        ; Load new timer register
 ; 	LDI32    r0, 0x100
 	QBA		CH1								; go back to check next channel
