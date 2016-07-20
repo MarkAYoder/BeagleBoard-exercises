@@ -537,8 +537,10 @@ int main(int argc, char *argv[])
 					} else {
 						offset = 0;
 					}
+					offset *= 4;	// cmd_d expects BYTE addresses, so convert to BYTEs
 					printf("Write to absolute address 0x%04x\n", offset+addr);
-					for (i=1; i<numargs; i++) pru[offset+addr/4+i-1] = (unsigned int) (strtoll(&cmdargs[argptrs[i]], NULL, 0) & 0xFFFFFFFF);
+					for (i=1; i<numargs; i++) 
+						pru[(offset+addr)/4+i-1] = (unsigned int) (strtoll(&cmdargs[argptrs[i]], NULL, 0) & 0xFFFFFFFF);
 				}
 			}
 		}
