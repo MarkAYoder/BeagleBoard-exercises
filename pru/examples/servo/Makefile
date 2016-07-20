@@ -58,8 +58,8 @@ TARGETS		=$(PRU1_FW)
 # required linking files for PRU1
 # LINK_PRU1_FW = (GEN_DIR)/pru1-inline-asm.object (GEN_DIR)/code2_pru1.object
 # LINK_PRU1_FW= $(GEN_DIR)/pru1-asm-blinky.object
-# LINK_PRU1_FW= $(GEN_DIR)/pru1-servo.object
-LINK_PRU1_FW= $(GEN_DIR)/pru1-test.object
+LINK_PRU1_FW= $(GEN_DIR)/pru1-servo.object
+# LINK_PRU1_FW= $(GEN_DIR)/pru1-test.object
 
 # required linking files for PRU1
 # LINK_PRU0_FW = (GEN_DIR)/pru0-inline-asm.object (GEN_DIR)/code2_pru1.object
