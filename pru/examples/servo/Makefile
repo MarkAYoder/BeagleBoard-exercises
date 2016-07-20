@@ -58,7 +58,8 @@ TARGETS		=$(PRU1_FW)
 # required linking files for PRU1
 # LINK_PRU1_FW = (GEN_DIR)/pru1-inline-asm.object (GEN_DIR)/code2_pru1.object
 # LINK_PRU1_FW= $(GEN_DIR)/pru1-asm-blinky.object
-LINK_PRU1_FW= $(GEN_DIR)/pru1-servo.object
+# LINK_PRU1_FW= $(GEN_DIR)/pru1-servo.object
+LINK_PRU1_FW= $(GEN_DIR)/pru1-test.object
 
 # required linking files for PRU1
 # LINK_PRU0_FW = (GEN_DIR)/pru0-inline-asm.object (GEN_DIR)/code2_pru1.object
@@ -101,6 +102,11 @@ $(GEN_DIR)/pru1-asm-blinky.object: pru1-asm-blinky.asm
 	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
 $(GEN_DIR)/pru1-servo.object: pru1-servo.asm
+	@mkdir -p $(GEN_DIR)
+	@echo 'CC	$<'
+	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
+
+$(GEN_DIR)/pru1-test.object: pru1-test.asm
 	@mkdir -p $(GEN_DIR)
 	@echo 'CC	$<'
 	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
