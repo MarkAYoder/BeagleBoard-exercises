@@ -24,7 +24,8 @@
 #define MAX_CMDARGS_LEN		200
 #define MAX_COMMAND_LINE	(MAX_CMD_LEN + MAX_CMDARGS_LEN + 1)
 #define MAX_ARGS		10
-#define MAX_PRU_MEM		0xFFFF
+// #define MAX_PRU_MEM		0xFFFF
+#define MAX_PRU_MEM		(0x20000-1)			// Shared RAM goes to 0x20000, p19
 #define NUM_OF_PRU		2
 #define MAX_NUM_OF_PRUS		16					// maximum number of PRUs to expect in any processor
 #define MAX_BREAKPOINTS		5

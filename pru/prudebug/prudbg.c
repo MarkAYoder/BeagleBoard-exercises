@@ -73,8 +73,8 @@ struct pdb_tag {
 		.num_of_pruss	= 2,
 		.offsets	= {
 			{
-				.pruss_inst	= 0x2000,
-				.pruss_data	= 0x0000,
+				.pruss_inst	= 0x2000,		// These may be out of date since
+				.pruss_data	= 0x0000,		// I've switched to byte addressing
 				.pruss_ctrl	= 0x1C00
 			},
 			{
@@ -85,21 +85,21 @@ struct pdb_tag {
 		}
 	},
 	{
-		.processor 	= "AM335x",
+		.processor 		= "AM335x",
 		.short_name 	= "AM335X",
-		.pruss_address 	= 0x4A300000,
-		.pruss_len 	= 0x40000,
+		.pruss_address 	= 0x4A300000,		// Page 184 am335x TRM
+		.pruss_len		= 0x80000,
 		.num_of_pruss	= 2,
 		.offsets	= {
 			{
-				.pruss_inst	= 0xD000,
-				.pruss_data	= 0x0000,
-				.pruss_ctrl	= 0x8800
+				.pruss_inst	= 0x34000,		// Byte addresses, page 20 of PRU Guide
+				.pruss_data	= 0x00000,
+				.pruss_ctrl	= 0x22000
 			},
 			{
-				.pruss_inst	= 0xE000,
-				.pruss_data	= 0x0800,
-				.pruss_ctrl	= 0x9000
+				.pruss_inst	= 0x38000,
+				.pruss_data	= 0x02000,
+				.pruss_ctrl	= 0x24000
 			}
 		}
 	},
@@ -196,10 +196,11 @@ int main(int argc, char *argv[])
 	}
 	
 	// setup PRU memory offsets
+	// These are all WORD offsets.
 	for (i=0; i<pdb[pi].num_of_pruss ;i++) {
-		pru_inst_base[i] = pdb[pi].offsets[i].pruss_inst;
-		pru_data_base[i] = pdb[pi].offsets[i].pruss_data;
-		pru_ctrl_base[i] = pdb[pi].offsets[i].pruss_ctrl;
+		pru_inst_base[i] = pdb[pi].offsets[i].pruss_inst/4;
+		pru_data_base[i] = pdb[pi].offsets[i].pruss_data/4;
+		pru_ctrl_base[i] = pdb[pi].offsets[i].pruss_ctrl/4;
 	}
 	
 	// if user hasn't requested a different PRU base address on the CLI, then use the PRU DB address
@@ -359,10 +360,11 @@ int main(int argc, char *argv[])
 						offset = 0;
 						last_cmd = LAST_CMD_D;
 					}
+					offset *= 4;	// cmd_d expects BYTE addresses, so convert to BYTEs
 					last_offset = offset;
 					last_addr = addr + 4*len;
 					last_len = len;
-					printf ("Absolute addr = 0x%04x, offset = 0x%04x, Len = %u\n", addr + offset, addr, len);
+					printf ("Absolute addr = 0x%04x, offset = 0x%04x, Len = %u\n", addr + offset, offset, len);
 					cmd_d(offset, addr, len);
 				}
 			}
@@ -549,7 +551,7 @@ int main(int argc, char *argv[])
 				case LAST_CMD_D:
 				case LAST_CMD_DD:
 				case LAST_CMD_DI:
-					printf ("Absolute addr = 0x%04x, offset = 0x%04x, Len = %u\n", last_addr + last_offset, last_addr, last_len);
+					printf ("Absolute addr = 0x%04x, offset = 0x%04x, Len = %u\n", last_addr + last_offset, last_offset, last_len);
 					cmd_d(last_offset, last_addr, last_len);
 					last_addr += 4*last_len;
 					break;
