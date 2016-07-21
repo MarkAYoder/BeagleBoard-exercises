@@ -35,6 +35,13 @@ if [[ -e /etc/dogtag ]]
     alias pboot1='echo 4a338000.pru1  > /sys/bus/platform/drivers/pru-rproc/bind && echo “Core 1 is on”'
     alias pboot0='echo 4a334000.pru0 > /sys/bus/platform/drivers/pru-rproc/bind && echo “Core 0 is on”'
     alias preboot='pshut1 && pboot1 && pshut0 && pboot0'
+    
+    alias presume1='echo 0 > /sys/kernel/debug/remoteproc/remoteproc1/single_step'
+    alias presume0='echo 0 > /sys/kernel/debug/remoteproc/remoteproc0/single_step'
+    alias   pnext1='echo 1 > /sys/kernel/debug/remoteproc/remoteproc1/single_step'
+    alias   pnext0='echo 1 > /sys/kernel/debug/remoteproc/remoteproc0/single_step'
+    alias   pregs1='cat /sys/kernel/debug/remoteproc/remoteproc1/regs'
+    alias   pregs0='cat /sys/kernel/debug/remoteproc/remoteproc0/regs'
 
 else        # Desktop
     alias go=gnome-open
