@@ -76,7 +76,7 @@ int cmd_dis (int offset, int addr, int len)
 
 	for (i=0; i<len; i++) {
 		if (status_reg == (addr + i)) pc_on = 1; else pc_on = 0;
-		disassemble(inst_str, pru[offset+addr/4+i]);
+		disassemble(inst_str, pru[(offset+addr)/4+i]);
 		printf ("[0x%04x] 0x%08x %s %s\n", addr+4*i, pru[(offset+addr)/4+i], pc[pc_on], inst_str);
 	}
 	printf("\n");

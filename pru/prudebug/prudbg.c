@@ -390,6 +390,7 @@ int main(int argc, char *argv[])
 					printf("ERROR: Incorrect format.  Please use help command to get command details.\n");
 				} else {
 					offset = pru_inst_base[pru_num];
+					offset *= 4;
 					last_cmd = LAST_CMD_DIS;
 
 					last_offset = offset;
@@ -428,7 +429,7 @@ int main(int argc, char *argv[])
 			}
 		}
 
-		else if (!strcmp(cmd, "HALT")) {					// HALT - Halt PRU
+		else if (!strcmp(cmd, "HALT") || !strcmp(cmd, "H")) {	// HALT - Halt PRU
 			last_cmd = LAST_CMD_NONE;
 			if (numargs > 0) {
 				printf("ERROR: too many arguments\n");
