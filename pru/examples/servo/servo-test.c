@@ -42,18 +42,18 @@ int main(int argc, char *argv[])
 	
 	printf("Addr %x contains %lx\n", addr, pru[addr/4]);
 	
-	// int i;
-	// for(i=0; i<10000; i++) {
-	// 	printf("Updating...");
-	// 	fflush(stdout);
-	// 	pru[addr/4] = 0x10000;
-	// 	usleep(1000000);
+	int i;
+	for(i=0; i<10000; i++) {
+		printf("Updating...");
+		fflush(stdout);
+		pru[addr/4] = 0x10000;
+		usleep(1000000);
 		
-	// 	printf("Updating2...");
-	// 	fflush(stdout);
-	// 	pru[addr/4] = 0x1000;
-	// 	usleep(1000000);
-	// }
+		printf("Updating2...");
+		fflush(stdout);
+		pru[addr/4] = 0x1000;
+		usleep(1000000);
+	}
 	
 	if(munmap(pru, pruss_len)) {
 		printf("munmap failed\n");

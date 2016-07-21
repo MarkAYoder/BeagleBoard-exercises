@@ -89,3 +89,6 @@ readelf -S *.out
 # Assembler: http://www.ti.com/lit/ug/spruhv6a/spruhv6a.pdf
 
 --c_src_interlist 
+
+Assembler:
+    MOV is for registers.  Use LDI for constants
