@@ -9,40 +9,42 @@
 # Make caps lock strl
 # setxkbmap -option ctrl:nocaps
 
-# Correct the date, if it's in the wrong year
-if [[ `date +%Y` < 2016 ]]
-then
-	ntpdate ntp.org
-fi
 # This is so node.js can find it's libraries
 # export NODE_PATH=/usr/local/lib/node_modules
 
-alias syn='synergyc yoder-9.dhcp.rose-hulman.edu'
+# alias syn='synergyc yoder-9.dhcp.rose-hulman.edu'
 alias d=pushd
 alias ls='ls -F'
 # alias gedit="gedit $1 >& /dev/null"
-alias go=gnome-open
-
-# DSP First
-export PATH=$PATH:~/cdrom/support/scripts
-
-# For Device Tree Overlays
-export SLOTS=/sys/devices/bone_capemgr/slots
-# This is the Jessie path
-export SLOTS=/sys/devices/platform/bone_capemgr/slots
-export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pins
-export PINMUX=/sys/kernel/debug/pinctrl/44e10800.pinmux/pinmux-pins
-export PINGROUPS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pingroups
 
 # For cross compiling
-if [[ ! -e /etc/dogtag ]]
-then
+if [[ -e /etc/dogtag ]]
+    then    # Beagle
+    # For Device Tree Overlays
+    export SLOTS=/sys/devices/bone_capemgr/slots
+    # This is the Jessie path
+    export SLOTS=/sys/devices/platform/bone_capemgr/slots
+    export PINS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pins
+    export PINMUX=/sys/kernel/debug/pinctrl/44e10800.pinmux/pinmux-pins
+    export PINGROUPS=/sys/kernel/debug/pinctrl/44e10800.pinmux/pingroups
+    
+    # PRU compiler
+    export PRU_CGT=/usr/share/ti/cgt-pru
+    alias pshut1='echo 4a338000.pru1 > /sys/bus/platform/drivers/pru-rproc/unbind && echo “Core 1 is off”'
+    alias pshut0='echo 4a334000.pru0 > /sys/bus/platform/drivers/pru-rproc/unbind && echo “Core 0 is off”'
+    alias pboot1='echo 4a338000.pru1  > /sys/bus/platform/drivers/pru-rproc/bind && echo “Core 1 is on”'
+    alias pboot0='echo 4a334000.pru0 > /sys/bus/platform/drivers/pru-rproc/bind && echo “Core 0 is on”'
+    alias preboot='pshut1 && pboot1 && pshut0 && pboot0'
+
+else        # Desktop
+    alias go=gnome-open
+    # DSP First
+    export PATH=$PATH:~/cdrom/support/scripts
+
     export ARCH=arm
     export CROSS_COMPILE=arm-linux-gnueabihf-
     export GIT_SSL_NO_VERIFY=1
 fi
-# PRU compiler
-export PRU_CGT=/usr/share/ti/cgt-pru
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
@@ -122,9 +124,9 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+# alias ll='ls -alF'
+# alias la='ls -A'
+# alias l='ls -CF'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
