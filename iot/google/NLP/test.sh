@@ -3,6 +3,6 @@
 export GOOGLE_APPLICATION_CREDENTIALS=NLP-test-e281274f4df1.json
     
 curl -s -k -H "Content-Type: application/json" \
-    -H "Authorization: Bearer ya29.Ci8nA0_tswnQzDz2O4Mr6RpvR9eWb2_wC4PTA6QaAdFk5ifeyIRCR6Nrd1bN2mdWcw" \
+    -H "Authorization: Bearer ya29.Ci8nA3s3SNO5wmGxXh-_YWJcb7PNYz6O8zH9aLvWq4-Z39ZFeAP3PaanwPcWDqHoHQ" \
     https://language.googleapis.com/v1beta1/documents:annotateText \
-    -d @entity2.json
+    -d @request.json

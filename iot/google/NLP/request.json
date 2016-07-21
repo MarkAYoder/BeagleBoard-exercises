@@ -1,0 +1,12 @@
+{
+  "document":{
+    "type":"PLAIN_TEXT",
+    "content":"I think this will be a nice set up."
+  },
+  "features":{
+    "extractSyntax":true,
+    "extractEntities":true,
+    "extractDocumentSentiment":true
+  },
+  "encodingType":"UTF8"
+}
