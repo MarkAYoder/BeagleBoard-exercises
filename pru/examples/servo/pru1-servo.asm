@@ -63,7 +63,7 @@ start:
 	LDI32   r1, PRU1_CTRL + CTPPR0		; Note we use beginning of shared ram unlike example which
 	SBBO    &r0, r1, 0, 4				;  page 25
 	
-	LDI		r9, 0x100				; erase r9 to use to use later
+	LDI		r9, 0x0				; erase r9 to use to use later
 	
 	LDI 	r0, 0x0				; clear internal counters
 	LDI 	r1, 0x0	
@@ -72,28 +72,30 @@ start:
 	LDI 	r4, 0x0
 	LDI 	r5, 0x0
 	LDI 	r6, 0x0
-	LDI 	r7, 0x0
+	LDI32 	r7, 0x0
 	LDI 	r30, 0x0				; turn off GPIO outputs
 	
+	; halt
+	LDI32 	r7, 0x12341234
 
 ; Beginning of loop, should always take 48 instructions to complete
 CH1:			
-	SET 	r30, LED
+	; SET 	r30, LED
 	; SET     r30, CH1BIT
-	DELAY 	100, r11
+	; DELAY 	100, r11
 	QBEQ	CLR1, r0, 0						; If timer is 0, jump to clear channel
 	SET		r30, CH1BIT						; If non-zero turn on the corresponding channel
 	SUB		r0, r0, 1						; Subtract one from timer
 	CLR		r9, r9.t1						; waste a cycle for timing
-	; SBCO	&r9, CONST_PRUSHAREDRAM, 0, 4	; write 0 to shared memory
+	SBCO	&r9, CONST_PRUSHAREDRAM, 0, 4	; write 0 to shared memory
 
 	QBA		CH1								; go back to check next channel
 	
 		
 CLR1:
 	CLR		r30, CH1BIT						; turn off the corresponding channel
-	CLR 	r30, LED
-	DELAY 	10, r11
+	; CLR 	r30, LED
+	; DELAY 	10, r11
 	LBCO	&r0, CONST_PRUSHAREDRAM, 0, 4	; Load new timer register
 	; LDI		r0, 100
 	

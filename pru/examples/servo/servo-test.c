@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 	int	fd;
 	unsigned long	pruss_addr = 0x4A300000;		// Page 184 am335x TRM
 	int pruss_len = 0x80000;
-	
+
 	printf("Servo tester\n");
 	
 	// Use  /dev/mem
@@ -38,21 +38,30 @@ int main(int argc, char *argv[])
 	
 	printf("Addr %x contains %lx\n", addr, pru[addr/4]);
 	
-	pru[addr/4] = 0xfeedbeef;
+	// pru[addr/4] = 0xfeedbeef;
 	
-	printf("Addr %x contains %lx\n", addr, pru[addr/4]);
+	// printf("Addr %x contains %lx\n", addr, pru[addr/4]);
 	
-	int i;
-	for(i=0; i<10000; i++) {
-		printf("Updating...");
-		fflush(stdout);
-		pru[addr/4] = 0x10000;
-		usleep(1000000);
+	// int value;
+	// while(1) {
+	// 	printf("value to store: ");
+	// 	scanf("%d", &value);
+	// 	printf("Storing: %d in %lx\n", value, addr);
+	// 	pru[addr/4] = value;
+	// }
+	
+	// int i;
+	// for(i=0; i<10000; i++) {
+	while(1) {
+		// printf("Updating...");
+		// fflush(stdout);
+		pru[addr/4] = 0x1;
+		usleep(1);
 		
-		printf("Updating2...");
-		fflush(stdout);
-		pru[addr/4] = 0x1000;
-		usleep(1000000);
+		// printf("Updating2...");
+		// fflush(stdout);
+		// pru[addr/4] = 0x10000;
+		// usleep(1000000);
 	}
 	
 	if(munmap(pru, pruss_len)) {
