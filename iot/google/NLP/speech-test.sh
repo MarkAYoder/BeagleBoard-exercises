@@ -1,6 +1,6 @@
 # From: https://cloud.google.com/speech/docs/getting-started
 
-apikey=ya29.CjAoA2aUdGUdxz3qTKcRPLrcfyMs3JjxdAVCly5NFDb6ElGupCwlWqKrN-aHE2WZfbE
+apikey=ya29.CjAoA8di0H8kooSv14Z1ypKetJDKMGOcI6OVunZk3f6Ts_ueVKyYpsowVa3l9_oxkSo
 
 # curl -s -k -H "Content-Type: application/json" \
 #     -H "Authorization: Bearer $apikey" \
