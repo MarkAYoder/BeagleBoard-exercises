@@ -1,0 +1,9 @@
+{
+  "config": {
+      "encoding":"FLAC",
+      "sample_rate": 16000
+  },
+  "audio": {
+      "uri":"gs://cloud-samples-tests/speech/brooklyn.flac"
+  }
+}

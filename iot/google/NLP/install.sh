@@ -13,3 +13,12 @@ sudo apt-get update && sudo apt-get install google-cloud-sdk
 
 # Run gcloud init to get started
 gcloud init
+
+# To use ffmgeg
+echo "deb http://ftp.us.debian.org/debian/ jessie-backports main contrib non-free" > /etc/apt/sources.list.d/jessie-backports
+apt-get update
+atp-get install ffmpeg
+ffmpeg -i test.m4a -f s16le -acodec pcm_s16le test.raw
+# Convert to flac, 1 channel, 16000 samples/sec
+# From: http://stefaanlippens.net/audio_conversion_cheat_sheet
+ffmpeg -i test.m4a -f flac -ac 1 -ar 16000 test.flac
