@@ -479,7 +479,7 @@ int main(int argc, char *argv[])
 			}
 		}
 
-		else if (!strcmp(cmd, "SS")) {					// SS - Single step
+		else if (!strcmp(cmd, "S") || !strcmp(cmd, "SS")) {					// SS - Single step
 			last_cmd = LAST_CMD_SS;
 			if (numargs > 0) {
 				printf("ERROR: too many arguments\n");
