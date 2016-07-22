@@ -28,3 +28,4 @@ apt-get install sox
 sox test.wav --rate 16k --bits 16 --channels 1 test2.flac trim 00:01 00:05
 
 wget http://storage.googleapis.com/cloud-samples-tests/speech/brooklyn.flac
+wget http://storage.googleapis.com/speech-demo/shwazil_hoful.flac
