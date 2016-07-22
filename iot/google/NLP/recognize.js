@@ -55,6 +55,7 @@ function prepareRequest (inputFile, callback) {
     var encoded = new Buffer(audioFile).toString('base64');
     var payload = {
       config: {
+        // See for options: https://cloud.google.com/speech/docs/best-practices
         encoding: 'FLAC',
         sampleRate: 16000
       },
