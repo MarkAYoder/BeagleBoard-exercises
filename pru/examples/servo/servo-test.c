@@ -10,7 +10,6 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 
-
 int main(int argc, char *argv[])
 {
 	unsigned int	*pru;
@@ -20,7 +19,6 @@ int main(int argc, char *argv[])
 
 	printf("Servo tester\n");
 	
-	// Use  /dev/mem
 	fd = open ("/dev/mem", O_RDWR | O_SYNC);
 	if (fd == -1) {
 		printf ("ERROR: could not open /dev/mem.\n\n");
@@ -32,17 +30,12 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 	close(fd);
-	printf ("Using /dev/mem device.\n");
+	printf ("Using /dev/mem.\n");
 	
 	int addr = 0x10000;
 	
-	printf("Addr %x contains %lx\n", addr, pru[addr/4]);
-	
-	// pru[addr/4] = 0xfeedbeef;
-	
-	// printf("Addr %x contains %lx\n", addr, pru[addr/4]);
-	
-	// int value;
+	printf("Addr %x contains 0x%lx\n", addr, pru[addr/4]);
+
 	// while(1) {
 	// 	printf("value to store: ");
 	// 	scanf("%d", &value);
@@ -50,18 +43,11 @@ int main(int argc, char *argv[])
 	// 	pru[addr/4] = value;
 	// }
 	
-	// int i;
-	// for(i=0; i<10000; i++) {
 	while(1) {
 		// printf("Updating...");
 		// fflush(stdout);
-		pru[addr/4] = 0x1;
-		usleep(1);
-		
-		// printf("Updating2...");
-		// fflush(stdout);
-		// pru[addr/4] = 0x10000;
-		// usleep(1000000);
+		pru[addr/4] = 0x100;
+		usleep(100);
 	}
 	
 	if(munmap(pru, pruss_len)) {
