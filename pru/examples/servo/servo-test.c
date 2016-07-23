@@ -9,14 +9,41 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <sys/mman.h>
+#include "robotics_cape_defs.h"
+
+#define PRU_ADDR		0x4A300000		// Start of PRU memory Page 184 am335x TRM
+#define PRU_LEN			0x80000			// Length of PRU memory
+#define PRU_SHAREDMEM	0x10000			// Offset to shared memory
+
+unsigned int	*prusharedMem_32int_ptr;
+
+/*******************************************************************************
+* int send_servo_pulse_us(int ch, int us)
+* 
+* Sends a single pulse of duration us (microseconds) to a single channel (ch)
+* This must be called regularly (>40hz) to keep servo or ESC awake.
+*******************************************************************************/
+int send_servo_pulse_us(int ch, int us) {
+	// Sanity Checks
+	if(ch<1 || ch>SERVO_CHANNELS){
+		printf("ERROR: Servo Channel must be between 1&%d\n", SERVO_CHANNELS);
+		return -1;
+	} if(prusharedMem_32int_ptr == NULL){
+		printf("ERROR: PRU servo Controller not initialized\n");
+		return -1;
+	}
+	// PRU runs at 200Mhz. find #loops needed
+	unsigned int num_loops = ((us*200.0)/PRU_SERVO_LOOP_INSTRUCTIONS); 
+	// printf("num_loops: %d\n", num_loops);
+	// write to PRU shared memory
+	prusharedMem_32int_ptr[ch-1] = num_loops;
+	return 0;
+}
 
 int main(int argc, char *argv[])
 {
-	unsigned int	*pru;
+	unsigned int	*pru;		// Points to start of PRU memory.
 	int	fd;
-	unsigned long	pruss_addr = 0x4A300000;		// Page 184 am335x TRM
-	int pruss_len = 0x80000;
-
 	printf("Servo tester\n");
 	
 	fd = open ("/dev/mem", O_RDWR | O_SYNC);
@@ -24,7 +51,7 @@ int main(int argc, char *argv[])
 		printf ("ERROR: could not open /dev/mem.\n\n");
 		return 1;
 	}
-	pru = mmap (0, pruss_len, PROT_READ | PROT_WRITE, MAP_SHARED, fd, pruss_addr);
+	pru = mmap (0, PRU_LEN, PROT_READ | PROT_WRITE, MAP_SHARED, fd, PRU_ADDR);
 	if (pru == MAP_FAILED) {
 		printf ("ERROR: could not map memory.\n\n");
 		return 1;
@@ -32,9 +59,11 @@ int main(int argc, char *argv[])
 	close(fd);
 	printf ("Using /dev/mem.\n");
 	
-	int addr = 0x10000;
+	prusharedMem_32int_ptr = pru + PRU_SHAREDMEM/4;	// Points to start of shared memory
 	
-	printf("Addr %x contains 0x%lx\n", addr, pru[addr/4]);
+	int addr = 0;
+	
+	printf("Addr %x contains 0x%lx\n", addr, prusharedMem_32int_ptr[addr]);
 
 	// while(1) {
 	// 	printf("value to store: ");
@@ -44,13 +73,11 @@ int main(int argc, char *argv[])
 	// }
 	
 	while(1) {
-		// printf("Updating...");
-		// fflush(stdout);
-		pru[addr/4] = 0x100;
-		usleep(25);
+		send_servo_pulse_us(1, 50);
+		usleep(100);
 	}
 	
-	if(munmap(pru, pruss_len)) {
+	if(munmap(pru, PRU_LEN)) {
 		printf("munmap failed\n");
 	} else {
 		printf("munmap succeeded\n");
