@@ -70,7 +70,7 @@ LINK_PRU0_FW=
 
 
 .PHONY: all
-all: $(TARGETS)
+all: $(TARGETS) servo-test
 	@echo '-	Generated firmwares are : $^'
 
 
@@ -111,6 +111,8 @@ $(GEN_DIR)/pru1-test.object: pru1-test.asm
 	@echo 'CC	$<'
 	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
+servo-test:	servo-test.c
+	gcc $< -o $@
 
 
 .PHONY: install install-pru1 install-pru0 copy_pru0_fw copy_pru1_fw reboot_pru_1 reboot_pru_0

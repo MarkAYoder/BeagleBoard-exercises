@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 		// printf("Updating...");
 		// fflush(stdout);
 		pru[addr/4] = 0x100;
-		usleep(100);
+		usleep(25);
 	}
 	
 	if(munmap(pru, pruss_len)) {

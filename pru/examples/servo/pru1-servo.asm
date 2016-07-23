@@ -75,14 +75,9 @@ start:
 	LDI32 	r7, 0x0
 	LDI 	r30, 0x0				; turn off GPIO outputs
 	
-	; halt
-	LDI32 	r7, 0x12341234
 
 ; Beginning of loop, should always take 48 instructions to complete
 CH1:			
-	; SET 	r30, LED
-	; SET     r30, CH1BIT
-	; DELAY 	100, r11
 	QBEQ	CLR1, r0, 0						; If timer is 0, jump to clear channel
 	SET		r30, CH1BIT						; If non-zero turn on the corresponding channel
 	SUB		r0, r0, 1						; Subtract one from timer
@@ -94,9 +89,6 @@ CH1:
 		
 CLR1:
 	CLR		r30, CH1BIT						; turn off the corresponding channel
-	; CLR 	r30, LED
-	; DELAY 	10, r11
 	LBCO	&r0, CONST_PRUSHAREDRAM, 0, 4	; Load new timer register
-	; LDI		r0, 100
-	
+
 	QBA		CH1								; go back to check next channel
