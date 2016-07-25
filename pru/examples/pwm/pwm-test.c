@@ -36,8 +36,8 @@ int start_pwm_us(int ch, int period, int duty_cycle) {
 	int onTime  = (period * duty_cycle)/100;
 	unsigned int num_loopsOn = ((onTime*200.0)/PRU_PWM_LOOP_INSTRUCTIONS); 
 	unsigned int num_loops   = ((period*200.0)/PRU_PWM_LOOP_INSTRUCTIONS); 
-	printf("onTime: %d, period: %d, num_loopsOn: %d, num_LoopsOff: %d\n", 
-		onTime, period, num_loopsOn, num_loops-num_loopsOn);
+	printf("onTime: %d, period: %d, loopsOn: %d, LoopsOff: %d, Loops: %d\n", 
+		onTime, period, num_loopsOn, num_loops-num_loopsOn, num_loops);
 	// write to PRU shared memory
 	prusharedMem_32int_ptr[2*(ch-1)+0] = num_loopsOn-1;			// On time
 	prusharedMem_32int_ptr[2*(ch-1)+1] = num_loops-num_loopsOn;	// Off time
@@ -65,10 +65,14 @@ int main(int argc, char *argv[])
 	
 	prusharedMem_32int_ptr = pru + PRU_SHAREDMEM/4;	// Points to start of shared memory
 
-	int i;
-	for(i=1; i<=SERVO_CHANNELS; i++) {
-		start_pwm_us(i, 10, 10*i);
-	}
+	// int i;
+	// for(i=1; i<=SERVO_CHANNELS; i++) {
+	// 	start_pwm_us(i, 100, 10*i);
+	// }
+	start_pwm_us(1, 200, 10);
+	start_pwm_us(3, 200, 10);
+	start_pwm_us(2, 100, 10);
+	start_pwm_us(4, 100, 10);
 	
 	if(munmap(pru, PRU_LEN)) {
 		printf("munmap failed\n");
