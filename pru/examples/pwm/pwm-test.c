@@ -34,14 +34,13 @@ int start_pwm_us(int ch, int period, int duty_cycle) {
 	}
 	// PRU runs at 200Mhz. find #loops needed
 	int onTime  = (period * duty_cycle)/100;
-	int offTime = (period * (100-duty_cycle))/100;
-	unsigned int num_loopsOn = ((onTime *200.0)/PRU_PWM_LOOP_INSTRUCTIONS); 
-	unsigned int num_loopsOff= ((offTime*200.0)/PRU_PWM_LOOP_INSTRUCTIONS); 
-	printf("onTime: %d, offTime: %d, num_loopsOn: %d, num_LoopsOff: %d\n", 
-		onTime, offTime, num_loopsOn, num_loopsOff);
+	unsigned int num_loopsOn = ((onTime*200.0)/PRU_PWM_LOOP_INSTRUCTIONS); 
+	unsigned int num_loops   = ((period*200.0)/PRU_PWM_LOOP_INSTRUCTIONS); 
+	printf("onTime: %d, period: %d, num_loopsOn: %d, num_LoopsOff: %d\n", 
+		onTime, period, num_loopsOn, num_loops-num_loopsOn);
 	// write to PRU shared memory
-	prusharedMem_32int_ptr[2*(ch-1)+0] = num_loopsOn;
-	prusharedMem_32int_ptr[2*(ch-1)+1] = num_loopsOff;
+	prusharedMem_32int_ptr[2*(ch-1)+0] = num_loopsOn-1;			// On time
+	prusharedMem_32int_ptr[2*(ch-1)+1] = num_loops-num_loopsOn;	// Off time
 	return 0;
 }
 
@@ -66,16 +65,9 @@ int main(int argc, char *argv[])
 	
 	prusharedMem_32int_ptr = pru + PRU_SHAREDMEM/4;	// Points to start of shared memory
 
-	// while(1) {
-	// 	printf("value to store: ");
-	// 	scanf("%d", &value);
-	// 	printf("Storing: %d in %lx\n", value, addr);
-	// 	pru[addr/4] = value;
-	// }
-	
 	int i;
 	for(i=1; i<=SERVO_CHANNELS; i++) {
-		start_pwm_us(i, 100, 10*i);
+		start_pwm_us(i, 10, 10*i);
 	}
 	
 	if(munmap(pru, PRU_LEN)) {

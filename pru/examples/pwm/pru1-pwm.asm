@@ -84,7 +84,7 @@ ch1on:
 	qbne	ch2, r0, 0
 	clr		r30, ch1bit
 	lbco	&r1, CONST_PRUSHAREDRAM, 4, 4	; Load off cycles
-	qba		ch2
+	qba		ch2on
 ch1off:
 	sub		r1, r1, 1		; decr "off" counter
 	qbne	ch2, r1, 0
@@ -92,7 +92,7 @@ ch1off:
 	nop
 	lbco	&r0, CONST_PRUSHAREDRAM, 0, 4
 
-	QBA		ch1on					; return to beginning of loop
+	qba		ch1on					; return to beginning of loop
 	; no need to waste a cycle for timing here because of the QBA above
 	
 		
@@ -100,4 +100,5 @@ ch2:
 	nop
 	nop
 	nop
+ch2on:
 	qba		ch1on
