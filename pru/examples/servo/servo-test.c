@@ -39,20 +39,6 @@ int send_servo_pulse_us(int ch, int us) {
 	return 0;
 }
 
-/*******************************************************************************
-* int send_servo_pulse_us_all(int us)
-* 
-* Sends a single pulse of duration us (microseconds) to all channels.
-* This must be called regularly (>40hz) to keep servos or ESCs awake.
-*******************************************************************************/
-int send_servo_pulse_us_all(int us){
-	int i;
-	for(i=1;i<=SERVO_CHANNELS; i++){
-		send_servo_pulse_us(i, us);
-	}
-	return 0;
-}
-
 int main(int argc, char *argv[])
 {
 	unsigned int	*pru;		// Points to start of PRU memory.
@@ -84,9 +70,9 @@ int main(int argc, char *argv[])
 	int i;
 	while(1) {
 		for(i=1; i<=SERVO_CHANNELS; i++) {
-			send_servo_pulse_us(i, i);
+			send_servo_pulse_us(i, 10*i);
 		}
-		usleep(20);
+		usleep(200);
 	}
 	
 	if(munmap(pru, PRU_LEN)) {

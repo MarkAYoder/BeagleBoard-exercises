@@ -148,3 +148,4 @@ reboot_pru0:
 clean:
 	@echo 'CLEAN	.'
 	@rm -rf $(GEN_DIR)
+	@rm main_pru1.asm file.map servo-test
