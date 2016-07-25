@@ -15,13 +15,12 @@
 #define PRU_LEN			0x80000			// Length of PRU memory
 #define PRU_SHAREDMEM	0x10000			// Offset to shared memory
 
-unsigned int	*prusharedMem_32int_ptr;
+unsigned int	*prusharedMem_32int_ptr;	// Points to the start of the shared memory
 
 /*******************************************************************************
 * int send_servo_pulse_us(int ch, int us)
 * 
 * Sends a single pulse of duration us (microseconds) to a single channel (ch)
-* This must be called regularly (>40hz) to keep servo or ESC awake.
 *******************************************************************************/
 int send_servo_pulse_us(int ch, int us) {
 	// Sanity Checks
@@ -37,6 +36,20 @@ int send_servo_pulse_us(int ch, int us) {
 	// printf("num_loops: %d\n", num_loops);
 	// write to PRU shared memory
 	prusharedMem_32int_ptr[ch-1] = num_loops;
+	return 0;
+}
+
+/*******************************************************************************
+* int send_servo_pulse_us_all(int us)
+* 
+* Sends a single pulse of duration us (microseconds) to all channels.
+* This must be called regularly (>40hz) to keep servos or ESCs awake.
+*******************************************************************************/
+int send_servo_pulse_us_all(int us){
+	int i;
+	for(i=1;i<=SERVO_CHANNELS; i++){
+		send_servo_pulse_us(i, us);
+	}
 	return 0;
 }
 
@@ -60,10 +73,6 @@ int main(int argc, char *argv[])
 	printf ("Using /dev/mem.\n");
 	
 	prusharedMem_32int_ptr = pru + PRU_SHAREDMEM/4;	// Points to start of shared memory
-	
-	int addr = 0;
-	
-	printf("Addr %x contains 0x%lx\n", addr, prusharedMem_32int_ptr[addr]);
 
 	// while(1) {
 	// 	printf("value to store: ");
@@ -72,9 +81,12 @@ int main(int argc, char *argv[])
 	// 	pru[addr/4] = value;
 	// }
 	
+	int i;
 	while(1) {
-		send_servo_pulse_us(1, 50);
-		usleep(100);
+		for(i=1; i<=SERVO_CHANNELS; i++) {
+			send_servo_pulse_us(i, i);
+		}
+		usleep(20);
 	}
 	
 	if(munmap(pru, PRU_LEN)) {
