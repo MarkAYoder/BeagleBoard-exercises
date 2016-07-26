@@ -33,10 +33,10 @@ start:
 
 
 ; these pin definitions are specific to SD-101C Robotics Cape
-    .asg    r30.t8,     ch1bit  ; P8_27
-	.asg    r30.t10,    ch2bit	; P8_28
-	.asg    r30.t9,     ch3bit	; P8_29
-	.asg	r30.t11,	ch4bit	; P8_30
+    .asg    r30.t8,     ch0bit  ; P8_27
+	.asg    r30.t10,    ch1bit	; P8_28
+	.asg    r30.t9,     ch2bit	; P8_29
+	.asg	r30.t11,	ch3bit	; P8_30
 	.asg	r30.t6,		CH5BIT	; P8_39
 	.asg	r30.t7,		CH6BIT	; P8_40
 	.asg	r30.t4,		CH7BIT	; P8_41
@@ -76,71 +76,71 @@ start:
 	ldi		r13, 0
 
 ; Beginning of loop, should always take 48 instructions to complete
+ch0:
+	nop
+	nop
+	nop
+ch0on:			
+	qbeq	ch0off, r0, 0	; If timer is 0, jump to clear channel
+	sub		r0, r0, 1		; decr "on" counter
+	qbne	ch1, r0, 0
+	clr		r30, ch0bit
+	lbco	&r10, CONST_PRUSHAREDRAM, 4, 4	; Load off cycles
+	qba		ch1on
+ch0off:
+	sub		r10, r10, 1		; decr "off" counter
+	qbne	ch1, r10, 0
+	set		r30, ch0bit
+	lbco	&r0, CONST_PRUSHAREDRAM, 0, 4
+	qba		ch1on
 ch1:
 	nop
 	nop
 	nop
-ch1on:			
-	qbeq	ch1off, r0, 0	; If timer is 0, jump to clear channel
-	sub		r0, r0, 1		; decr "on" counter
-	qbne	ch2, r0, 0
+ch1on:
+	qbeq	ch1off, r1, 0	; If timer is 0, jump to clear channel
+	sub		r1, r1, 1		; decr "on" counter
+	qbne	ch2, r1, 0
 	clr		r30, ch1bit
-	lbco	&r10, CONST_PRUSHAREDRAM, 4, 4	; Load off cycles
+	lbco	&r11, CONST_PRUSHAREDRAM, 12, 4	; Load off cycles
 	qba		ch2on
 ch1off:
-	sub		r10, r10, 1		; decr "off" counter
-	qbne	ch2, r10, 0
+	sub		r11, r11, 1		; decr "off" counter
+	qbne	ch2, r11, 0
 	set		r30, ch1bit
-	lbco	&r0, CONST_PRUSHAREDRAM, 0, 4
+	lbco	&r1, CONST_PRUSHAREDRAM, 8, 4
 	qba		ch2on
 ch2:
 	nop
 	nop
 	nop
 ch2on:
-	qbeq	ch2off, r1, 0	; If timer is 0, jump to clear channel
-	sub		r1, r1, 1		; decr "on" counter
-	qbne	ch3, r1, 0
+	qbeq	ch2off, r2, 0	; If timer is 0, jump to clear channel
+	sub		r2, r2, 1		; decr "on" counter
+	qbne	ch3, r2, 0
 	clr		r30, ch2bit
-	lbco	&r11, CONST_PRUSHAREDRAM, 12, 4	; Load off cycles
+	lbco	&r12, CONST_PRUSHAREDRAM, 20, 4	; Load off cycles
 	qba		ch3on
 ch2off:
-	sub		r11, r11, 1		; decr "off" counter
-	qbne	ch3, r11, 0
+	sub		r12, r12, 1		; decr "off" counter
+	qbne	ch3, r12, 0
 	set		r30, ch2bit
-	lbco	&r1, CONST_PRUSHAREDRAM, 8, 4
+	lbco	&r2, CONST_PRUSHAREDRAM, 16, 4
 	qba		ch3on
 ch3:
 	nop
 	nop
 	nop
 ch3on:
-	qbeq	ch3off, r2, 0	; If timer is 0, jump to clear channel
-	sub		r2, r2, 1		; decr "on" counter
-	qbne	ch4, r2, 0
-	clr		r30, ch3bit
-	lbco	&r12, CONST_PRUSHAREDRAM, 20, 4	; Load off cycles
-	qba		ch4on
-ch3off:
-	sub		r12, r12, 1		; decr "off" counter
-	qbne	ch4, r12, 0
-	set		r30, ch3bit
-	lbco	&r2, CONST_PRUSHAREDRAM, 16, 4
-	qba		ch4on
-ch4:
-	nop
-	nop
-	nop
-ch4on:
-	qbeq	ch4off, r3, 0	; If timer is 0, jump to clear channel
+	qbeq	ch3off, r3, 0	; If timer is 0, jump to clear channel
 	sub		r3, r3, 1		; decr "on" counter
-	qbne	ch1, r3, 0
-	clr		r30, ch4bit
+	qbne	ch0, r3, 0
+	clr		r30, ch3bit
 	lbco	&r13, CONST_PRUSHAREDRAM, 28, 4	; Load off cycles
-	qba		ch1on
-ch4off:
+	qba		ch0on
+ch3off:
 	sub		r13, r13, 1		; decr "off" counter
-	qbne	ch1, r13, 0
-	set		r30, ch4bit
+	qbne	ch0, r13, 0
+	set		r30, ch3bit
 	lbco	&r3, CONST_PRUSHAREDRAM, 24, 4
-	qba		ch1on
+	qba		ch0on

@@ -39,8 +39,8 @@ int start_pwm_us(int ch, int period, int duty_cycle) {
 	printf("onTime: %d, period: %d, countOn: %d, countOff: %d, count: %d\n", 
 		onTime, period, countOn, count-countOn, count);
 	// write to PRU shared memory
-	prusharedMem_32int_ptr[2*(ch-1)+0] = countOn;		// On time
-	prusharedMem_32int_ptr[2*(ch-1)+1] = count-countOn;	// Off time
+	prusharedMem_32int_ptr[2*(ch)+0] = countOn;		// On time
+	prusharedMem_32int_ptr[2*(ch)+1] = count-countOn;	// Off time
 	return 0;
 }
 
@@ -61,8 +61,8 @@ int start_pwm_count(int ch, int countOn, int countOff) {
 	printf("countOn: %d, countOff: %d, count: %d\n", 
 		countOn, countOff, countOn+countOff);
 	// write to PRU shared memory
-	prusharedMem_32int_ptr[2*(ch-1)+0] = countOn;	// On time
-	prusharedMem_32int_ptr[2*(ch-1)+1] = countOff;	// Off time
+	prusharedMem_32int_ptr[2*(ch)+0] = countOn;	// On time
+	prusharedMem_32int_ptr[2*(ch)+1] = countOff;	// Off time
 	return 0;
 }
 
@@ -92,15 +92,15 @@ int main(int argc, char *argv[])
 	// 	start_pwm_us(i, 100, 10*i);
 	// }
 
-	// start_pwm_us(1, 1000, 10);
-	// start_pwm_us(2, 2000, 10);
-	// start_pwm_us(3, 4000, 10);
-	// start_pwm_us(4, 8000, 10);
+	// start_pwm_us(0, 1000, 10);
+	// start_pwm_us(1, 2000, 10);
+	// start_pwm_us(2, 4000, 10);
+	// start_pwm_us(3, 8000, 10);
 	
-	start_pwm_count(1, 1, 1);
-	start_pwm_count(2, 10, 10);
-	start_pwm_count(3, 10, 30);
-	start_pwm_count(4, 30, 10);
+	start_pwm_count(0, 1, 1);
+	start_pwm_count(1, 10, 10);
+	start_pwm_count(2, 10, 30);
+	start_pwm_count(3, 30, 10);
 	
 	if(munmap(pru, PRU_LEN)) {
 		printf("munmap failed\n");
