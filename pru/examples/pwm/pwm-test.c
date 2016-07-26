@@ -87,20 +87,33 @@ int main(int argc, char *argv[])
 	
 	prusharedMem_32int_ptr = pru + PRU_SHAREDMEM/4;	// Points to start of shared memory
 
-	int i;
-	for(i=0; i<SERVO_CHANNELS; i++) {
-		start_pwm_us(i, 100, 10*(i+1));
-	}
+	// int i;
+	// for(i=0; i<SERVO_CHANNELS; i++) {
+	// 	start_pwm_us(i, 100, 10*(i+1));
+	// }
 
 	// start_pwm_us(0, 1000, 10);
 	// start_pwm_us(1, 2000, 10);
 	// start_pwm_us(2, 4000, 10);
 	// start_pwm_us(3, 8000, 10);
+	// start_pwm_us(4, 1000, 10);
+	// start_pwm_us(5, 2000, 10);
+	// start_pwm_us(6, 4000, 10);
+	// start_pwm_us(7, 8000, 10);
 	
-	// start_pwm_count(0, 1, 1);
-	// start_pwm_count(1, 10, 10);
+	int i;
+	for(i=0; i<SERVO_CHANNELS; i++) {
+		start_pwm_count(i, i+1, 10-(i+1));
+	}
+	
+	// start_pwm_count(0, 1, 9);
+	// start_pwm_count(1, 2, 8);
 	// start_pwm_count(2, 10, 30);
 	// start_pwm_count(3, 30, 10);
+	// start_pwm_count(4, 1, 1);
+	// start_pwm_count(5, 10, 10);
+	// start_pwm_count(6, 20, 30);
+	// start_pwm_count(7, 30, 20);
 	
 	if(munmap(pru, PRU_LEN)) {
 		printf("munmap failed\n");
