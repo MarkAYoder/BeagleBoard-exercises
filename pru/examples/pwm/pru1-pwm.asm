@@ -37,10 +37,10 @@ start:
 	.asg    r30.t10,    ch1bit	; P8_28
 	.asg    r30.t9,     ch2bit	; P8_29
 	.asg	r30.t11,	ch3bit	; P8_30
-	.asg	r30.t6,		CH5BIT	; P8_39
-	.asg	r30.t7,		CH6BIT	; P8_40
-	.asg	r30.t4,		CH7BIT	; P8_41
-	.asg	r30.t5,		CH8BIT	; P8_42
+	.asg	r30.t6,		ch4bit	; P8_39
+	.asg	r30.t7,		ch5bit	; P8_40
+	.asg	r30.t4,		ch6bit	; P8_41
+	.asg	r30.t5,		ch7bit	; P8_42
 
 	.asg    C4,     CONST_SYSCFG         
 	.asg    C28,    CONST_PRUSHAREDRAM   
@@ -74,6 +74,14 @@ start:
 	ldi		r12, 0
 	lbco	&r3, CONST_PRUSHAREDRAM, 16, 4
 	ldi		r13, 0
+	lbco	&r4, CONST_PRUSHAREDRAM, 0, 4	; Load on cycles
+	ldi		r14, 0		; Clear off cycles
+	lbco	&r5, CONST_PRUSHAREDRAM, 8, 4
+	ldi		r15, 0
+	lbco	&r6, CONST_PRUSHAREDRAM, 16, 4
+	ldi		r16, 0
+	lbco	&r7, CONST_PRUSHAREDRAM, 16, 4
+	ldi		r17, 0
 
 ; Beginning of loop, should always take 48 instructions to complete
 ch0:
@@ -134,13 +142,81 @@ ch3:
 ch3on:
 	qbeq	ch3off, r3, 0	; If timer is 0, jump to clear channel
 	sub		r3, r3, 1		; decr "on" counter
-	qbne	ch0, r3, 0
+	qbne	ch4, r3, 0
 	clr		r30, ch3bit
 	lbco	&r13, CONST_PRUSHAREDRAM, 28, 4	; Load off cycles
-	qba		ch0on
+	qba		ch4on
 ch3off:
 	sub		r13, r13, 1		; decr "off" counter
-	qbne	ch0, r13, 0
+	qbne	ch4, r13, 0
 	set		r30, ch3bit
 	lbco	&r3, CONST_PRUSHAREDRAM, 24, 4
+	qba		ch4on
+ch4:
+	nop
+	nop
+	nop
+ch4on:			
+	qbeq	ch4off, r4, 0	; If timer is 0, jump to clear channel
+	sub		r4, r4, 1		; decr "on" counter
+	qbne	ch5, r4, 0
+	clr		r30, ch4bit
+	lbco	&r14, CONST_PRUSHAREDRAM, 36, 4	; Load off cycles
+	qba		ch5on
+ch4off:
+	sub		r14, r14, 1		; decr "off" counter
+	qbne	ch5, r14, 0
+	set		r30, ch4bit
+	lbco	&r4, CONST_PRUSHAREDRAM, 32, 4
+	qba		ch5on
+ch5:
+	nop
+	nop
+	nop
+ch5on:
+	qbeq	ch5off, r5, 0	; If timer is 0, jump to clear channel
+	sub		r5, r5, 1		; decr "on" counter
+	qbne	ch6, r5, 0
+	clr		r30, ch5bit
+	lbco	&r15, CONST_PRUSHAREDRAM, 44, 4	; Load off cycles
+	qba		ch6on
+ch5off:
+	sub		r15, r15, 1		; decr "off" counter
+	qbne	ch6, r15, 0
+	set		r30, ch5bit
+	lbco	&r5, CONST_PRUSHAREDRAM, 40, 4
+	qba		ch6on
+ch6:
+	nop
+	nop
+	nop
+ch6on:
+	qbeq	ch6off, r6, 0	; If timer is 0, jump to clear channel
+	sub		r6, r6, 1		; decr "on" counter
+	qbne	ch7, r6, 0
+	clr		r30, ch6bit
+	lbco	&r16, CONST_PRUSHAREDRAM, 52, 4	; Load off cycles
+	qba		ch3on
+ch6off:
+	sub		r16, r16, 1		; decr "off" counter
+	qbne	ch7, r16, 0
+	set		r30, ch6bit
+	lbco	&r6, CONST_PRUSHAREDRAM, 48, 4
+	qba		ch7on
+ch7:
+	nop
+	nop
+	nop
+ch7on:
+	qbeq	ch7off, r7, 0	; If timer is 0, jump to clear channel
+	sub		r7, r7, 1		; decr "on" counter
+	qbne	ch0, r7, 0
+	clr		r30, ch7bit
+	lbco	&r17, CONST_PRUSHAREDRAM, 60, 4	; Load off cycles
+	qba		ch0on
+ch7off:
+	sub		r17, r17, 1		; decr "off" counter
+	qbne	ch0, r17, 0
+	set		r30, ch7bit
+	lbco	&r7, CONST_PRUSHAREDRAM, 56, 4
 	qba		ch0on

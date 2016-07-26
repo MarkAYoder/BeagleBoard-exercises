@@ -25,7 +25,7 @@ unsigned int	*prusharedMem_32int_ptr;	// Points to the start of the shared memor
 *******************************************************************************/
 int start_pwm_us(int ch, int period, int duty_cycle) {
 	// Sanity Checks
-	if(ch<1 || ch>SERVO_CHANNELS){
+	if(ch<0 || ch>=SERVO_CHANNELS){
 		printf("ERROR: Servo Channel must be between 1&%d\n", SERVO_CHANNELS);
 		return -1;
 	} if(prusharedMem_32int_ptr == NULL){
@@ -51,7 +51,7 @@ int start_pwm_us(int ch, int period, int duty_cycle) {
 *******************************************************************************/
 int start_pwm_count(int ch, int countOn, int countOff) {
 	// Sanity Checks
-	if(ch<1 || ch>SERVO_CHANNELS){
+	if(ch<0 || ch>=SERVO_CHANNELS){
 		printf("ERROR: Servo Channel must be between 1&%d\n", SERVO_CHANNELS);
 		return -1;
 	} if(prusharedMem_32int_ptr == NULL){
@@ -87,20 +87,20 @@ int main(int argc, char *argv[])
 	
 	prusharedMem_32int_ptr = pru + PRU_SHAREDMEM/4;	// Points to start of shared memory
 
-	// int i;
-	// for(i=1; i<=SERVO_CHANNELS; i++) {
-	// 	start_pwm_us(i, 100, 10*i);
-	// }
+	int i;
+	for(i=0; i<SERVO_CHANNELS; i++) {
+		start_pwm_us(i, 100, 10*(i+1));
+	}
 
 	// start_pwm_us(0, 1000, 10);
 	// start_pwm_us(1, 2000, 10);
 	// start_pwm_us(2, 4000, 10);
 	// start_pwm_us(3, 8000, 10);
 	
-	start_pwm_count(0, 1, 1);
-	start_pwm_count(1, 10, 10);
-	start_pwm_count(2, 10, 30);
-	start_pwm_count(3, 30, 10);
+	// start_pwm_count(0, 1, 1);
+	// start_pwm_count(1, 10, 10);
+	// start_pwm_count(2, 10, 30);
+	// start_pwm_count(3, 30, 10);
 	
 	if(munmap(pru, PRU_LEN)) {
 		printf("munmap failed\n");
