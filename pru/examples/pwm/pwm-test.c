@@ -34,13 +34,35 @@ int start_pwm_us(int ch, int period, int duty_cycle) {
 	}
 	// PRU runs at 200Mhz. find #loops needed
 	int onTime  = (period * duty_cycle)/100;
-	unsigned int num_loopsOn = ((onTime*200.0)/PRU_PWM_LOOP_INSTRUCTIONS); 
-	unsigned int num_loops   = ((period*200.0)/PRU_PWM_LOOP_INSTRUCTIONS); 
-	printf("onTime: %d, period: %d, loopsOn: %d, LoopsOff: %d, Loops: %d\n", 
-		onTime, period, num_loopsOn, num_loops-num_loopsOn, num_loops);
+	unsigned int countOn = ((onTime*200.0)/PRU_PWM_LOOP_INSTRUCTIONS); 
+	unsigned int count   = ((period*200.0)/PRU_PWM_LOOP_INSTRUCTIONS); 
+	printf("onTime: %d, period: %d, countOn: %d, countOff: %d, count: %d\n", 
+		onTime, period, countOn, count-countOn, count);
 	// write to PRU shared memory
-	prusharedMem_32int_ptr[2*(ch-1)+0] = num_loopsOn-1;			// On time
-	prusharedMem_32int_ptr[2*(ch-1)+1] = num_loops-num_loopsOn;	// Off time
+	prusharedMem_32int_ptr[2*(ch-1)+0] = countOn;		// On time
+	prusharedMem_32int_ptr[2*(ch-1)+1] = count-countOn;	// Off time
+	return 0;
+}
+
+/*******************************************************************************
+* int start_pwm_count(int ch, int countOn, int countOff)
+* 
+* Starts a pwm pulse on for countOn and off for countOff to a single channel (ch)
+*******************************************************************************/
+int start_pwm_count(int ch, int countOn, int countOff) {
+	// Sanity Checks
+	if(ch<1 || ch>SERVO_CHANNELS){
+		printf("ERROR: Servo Channel must be between 1&%d\n", SERVO_CHANNELS);
+		return -1;
+	} if(prusharedMem_32int_ptr == NULL){
+		printf("ERROR: PRU servo Controller not initialized\n");
+		return -1;
+	}
+	printf("countOn: %d, countOff: %d, count: %d\n", 
+		countOn, countOff, countOn+countOff);
+	// write to PRU shared memory
+	prusharedMem_32int_ptr[2*(ch-1)+0] = countOn;	// On time
+	prusharedMem_32int_ptr[2*(ch-1)+1] = countOff;	// Off time
 	return 0;
 }
 
@@ -69,10 +91,16 @@ int main(int argc, char *argv[])
 	// for(i=1; i<=SERVO_CHANNELS; i++) {
 	// 	start_pwm_us(i, 100, 10*i);
 	// }
-	start_pwm_us(1, 200, 10);
-	start_pwm_us(3, 200, 10);
-	start_pwm_us(2, 100, 10);
-	start_pwm_us(4, 100, 10);
+
+	// start_pwm_us(1, 1000, 10);
+	// start_pwm_us(2, 2000, 10);
+	// start_pwm_us(3, 4000, 10);
+	// start_pwm_us(4, 8000, 10);
+	
+	start_pwm_count(1, 1, 1);
+	start_pwm_count(2, 10, 10);
+	start_pwm_count(3, 10, 30);
+	start_pwm_count(4, 30, 10);
 	
 	if(munmap(pru, PRU_LEN)) {
 		printf("munmap failed\n");
