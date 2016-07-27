@@ -29,14 +29,15 @@ toggl.getCurrentTimeEntry( function(err, timeEntry) {
         console.log("err: " + err);
     } else {
         console.log("timeEntry: " + util.inspect(timeEntry))
-
-        toggl.getProjectData(timeEntry.pid, function(err, projectData) {
-            if(err) {
-                console.log("err: " + err);
-            } else {
-                console.log("projectData: " + util.inspect(projectData))
-            }
-        });
+        if(timeEntry) {
+            toggl.getProjectData(timeEntry.pid, function(err, projectData) {
+                if(err) {
+                    console.log("err: " + err);
+                } else {
+                    console.log("projectData: " + util.inspect(projectData))
+                }
+            });
+        }
     }
 });
 
