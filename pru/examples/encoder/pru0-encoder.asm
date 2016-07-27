@@ -34,12 +34,12 @@
 	.cdecls "robotics_cape_defs.h"
 
 ; PRU setup definitions
-	.asg    C4,     CONST_SYSCFG         
+	; .asg    C4,     CONST_SYSCFG         
 	.asg    C28,    CONST_PRUSHAREDRAM   
  
 	.asg	0x22000,	PRU0_CTRL
 	.asg    0x24000,    PRU1_CTRL       ; page 19
-	.asg    0x28,       CTPPR0          ; page 75
+	; .asg    0x28,       CTPPR0          ; page 75
  
 	.asg	0x000,	OWN_RAM
 	.asg	0x020,	OTHER_RAM
@@ -54,16 +54,6 @@
 	.asg	r1,			EXOR	; place to store the XOR of old with new AB vals
 	.asg	14,			A
 	.asg	15,			B
-	; .asg	64,			CNT_OFFSET	; counter position in shared memory
-; #define CHA r31.t14	
-; #define CHB r31.t15
-; #define OLD r0			// keep last known values of chA and B in memory
-; #define OLD_A r0.t14 
-; #define OLD_B r0.t15 
-; #define EXOR 	r1		// place to store the XOR of old with new AB vals
-; #define EXOR_A 	r1.t14
-; #define EXOR_B	r1.t15
-; #define CNT_OFFSET 32	// counter position in shared memory
 
 increment	.macro 
 	LBCO	&r2, CONST_PRUSHAREDRAM, CNT_OFFSET, 4	; load existing counter from shared memory
@@ -82,13 +72,13 @@ decrement	.macro
 	.clink
 	.global start
 start:
-	LBCO	&r0, CONST_SYSCFG, 4, 4		; Enable OCP master port
-	CLR 	r0, r0, 4					; Clear SYSCFG[STANDBY_INIT] to enable OCP master port
-	SBCO	&r0, CONST_SYSCFG, 4, 4
+; 	LBCO	&r0, CONST_SYSCFG, 4, 4		; Enable OCP master port
+; 	CLR 	r0, r0, 4					; Clear SYSCFG[STANDBY_INIT] to enable OCP master port
+; 	SBCO	&r0, CONST_SYSCFG, 4, 4
 ; Configure the programmable pointer register for PRU0 by setting c28_pointer[15:0]
-	LDI     r0, SHARED_RAM              ; Set C28 to point to shared RAM
-	LDI32   r1, PRU0_CTRL + CTPPR0		; Note we use beginning of shared ram unlike example which
-	SBBO    &r0, r1, 0, 4				; has arbitrary 2048 offset
+	; LDI     r0, SHARED_RAM              ; Set C28 to point to shared RAM
+	; LDI32   r1, PRU0_CTRL + CTPPR0		; Note we use beginning of shared ram unlike example which
+	; SBBO    &r0, r1, 0, 4				; has arbitrary 2048 offset
 	
 ; initialize by setting current state of two channels		
 	MOV 	OLD, r31				
