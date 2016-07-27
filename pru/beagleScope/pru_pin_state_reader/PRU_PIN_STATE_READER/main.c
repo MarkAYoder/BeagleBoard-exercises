@@ -96,6 +96,8 @@ void main(void)
 
 #define MAXPRINT	80
 	char str[MAXPRINT];		// Used in snprintf
+	// int channel, period, duty_cycle;
+	int count = 0;
 
 	/* allow OCP master port access by the PRU so the PRU can read external memories */
 	CT_CFG.SYSCFG_bit.STANDBY_INIT = 0;
@@ -128,19 +130,34 @@ void main(void)
 				while(1) {
 					if ((__R31 ^ prev_gpio_state) & CHECK_BIT) {
 						prev_gpio_state = __R31 & CHECK_BIT;
+						// This first character of payload appears to be a NULL rather than the character it should be.
 						snprintf(str, MAXPRINT, "cycle: %lu, stall: %lu, enable: %d, payload: %s\n", 
 							PRU1_CTRL.CYCLE, PRU1_CTRL.STALL, PRU1_CTRL.CTRL_bit.CTR_EN,
 							&payload[1]);
 						pru_rpmsg_send(&transport, dst, src, str, strlen(str));
-						__R30 ^= gpio_on;
+
+						// Not enough memory to use sscanf with --printf_support=nofloat flag
+						// sscanf((char *)&payload[1], "%d %d %d", &channel, &period, &duty_cycle);
+						// snprintf(str, MAXPRINT, "count: %d, channel: %d, period: %d, duty_cycle: %d\n",
+						// 	count, channel, period, duty_cycle);
+						// pru_rpmsg_send(&transport, dst, src, str, strlen(str));
+
+						__R30 ^= gpio_on;	// Toggle LED
+						
+						count++;		// exit loop a 3 button presses so you can read more input.
+						if(count>2) {
+							count = 0;
+							break;
+						}
 					}
-					if(PRU1_CTRL.CYCLE == 0xffffffff) {  // Counter doesn't wrap.  Reset when at max.
-						snprintf(str, MAXPRINT, "Wrap counter, stall: %lu\n", PRU1_CTRL.STALL);
-						pru_rpmsg_send(&transport, dst, src, str, strlen(str));
-						PRU1_CTRL.CYCLE = 0;
-						PRU1_CTRL.CTRL_bit.CTR_EN = 1;
-						__R30 ^= gpio_on;
-					}
+					// if(PRU1_CTRL.CYCLE == 0xffffffff) {  // Counter doesn't wrap.  Reset when at max.
+					// 	snprintf(str, MAXPRINT, "Wrap counter, stall: %lu\n", PRU1_CTRL.STALL);
+					// 	pru_rpmsg_send(&transport, dst, src, str, strlen(str));
+					// 	PRU1_CTRL.CYCLE = 0;
+					// 	PRU1_CTRL.CTRL_bit.CTR_EN = 0;
+					// 	__R30 ^= gpio_on;
+					// 	break;
+					// }
 				}
 			}
 		}
