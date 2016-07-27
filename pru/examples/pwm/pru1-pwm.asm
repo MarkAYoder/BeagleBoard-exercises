@@ -42,21 +42,21 @@ start:
 	.asg	r30.t4,		ch6bit	; P8_41
 	.asg	r30.t5,		ch7bit	; P8_42
 
-	.asg    C4,     CONST_SYSCFG         
+	; .asg    C4,     CONST_SYSCFG         
 	.asg    C28,    CONST_PRUSHAREDRAM   
  
-	.asg	0x22000,	PRU0_CTRL
-	.asg    0x24000,    PRU1_CTRL       ; page 19
-	.asg    0x28,       CTPPR0          ; page 75
+	; .asg	0x22000,	PRU0_CTRL
+	; .asg    0x24000,    PRU1_CTRL       ; page 19
+	; .asg    0x28,       CTPPR0          ; page 75
  
 	.asg	0x000,	OWN_RAM
 	.asg	0x020,	OTHER_RAM
 	.asg    0x100,	SHARED_RAM       ; This is so prudebug can find it.
 
 ; Configure the programmable pointer register for PRU0 by setting c28_pointer[15:0]
-	LDI     r0, SHARED_RAM              ; Set C28 to point to shared RAM
-	LDI32   r1, PRU1_CTRL + CTPPR0		; Note we use beginning of shared ram unlike example which
-	SBBO    &r0, r1, 0, 4				;  page 25
+	; LDI     r0, SHARED_RAM              ; Set C28 to point to shared RAM
+	; LDI32   r1, PRU1_CTRL + CTPPR0		; Note we use beginning of shared ram unlike example which
+	; SBBO    &r0, r1, 0, 4				;  page 25
 	
 	LDI 	r30, 0x0				; turn off GPIO outputs
 	
