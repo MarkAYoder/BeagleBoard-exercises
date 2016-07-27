@@ -94,3 +94,5 @@ readelf -S *.out
 
 wget https://git.ti.com/rpmsg/rpmsg/blobs/raw/rpmsg-ti-linux-4.4.y/samples/rpmsg/rpmsg_client_sample.c
 wget https://git.ti.com/rpmsg/rpmsg/blobs/raw/rpmsg-ti-linux-4.4.y/samples/rpmsg/Makefile
+
+# pasm vs. clpru: http://processors.wiki.ti.com/index.php/PRU_Assembly_Instructions#pasm_vs._clpru

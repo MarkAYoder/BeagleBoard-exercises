@@ -90,5 +90,7 @@
 #define PRU_SERVO_LOOP_INSTRUCTIONS	48	// instructions per PRU servo timer loop 
 #define PRU_PWM_LOOP_INSTRUCTIONS	48	// instructions per PRU servo timer loop 
 
+// Byte address in shared ram for encover counter
+#define CNT_OFFSET 64
 
 #endif //ROBOTICS_CAPE_DEFS

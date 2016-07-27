@@ -29,7 +29,7 @@ int get_encoder_pos(int ch){
 	}
 	// 4th channel is counted by the PRU not eQEP
 	if(ch==4){
-		return (int) prusharedMem_32int_ptr[32];
+		return (int) prusharedMem_32int_ptr[CNT_OFFSET/4];
 	}
 	
 	// first 3 channels counted by eQEP
