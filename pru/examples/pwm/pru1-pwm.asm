@@ -44,18 +44,6 @@ ch:num:off:
 	qba		ch:next:on
     .endm
 
-	.clink
-	.global start
-start:
-	LDI 	R30, 0xFFFF
-	DELAY 	10000000, r11
-	LDI		R30, 0x0000
-	DELAY 	10000000, r11
-; 	JMP	start	
-
-; 	HALT
-
-
 ; these pin definitions are specific to SD-101C Robotics Cape
     .asg    r30.t8,     ch0bit  ; P8_27
 	.asg    r30.t10,    ch1bit	; P8_28
@@ -76,12 +64,10 @@ start:
 	.asg	0x000,	OWN_RAM
 	.asg	0x020,	OTHER_RAM
 	.asg    0x100,	SHARED_RAM       ; This is so prudebug can find it.
-
-; Configure the programmable pointer register for PRU0 by setting c28_pointer[15:0]
-	; LDI     r0, SHARED_RAM              ; Set C28 to point to shared RAM
-	; LDI32   r1, PRU1_CTRL + CTPPR0		; Note we use beginning of shared ram unlike example which
-	; SBBO    &r0, r1, 0, 4				;  page 25
 	
+	.clink
+	.global start
+start:
 	LDI 	r30, 0x0				; turn off GPIO outputs
 	
 	.eval	0, i
