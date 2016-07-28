@@ -19,6 +19,30 @@ $M?:	SUB	reg, reg, 1
 $E?:	
 	.endm
 	
+; channel defines code for each pwm channel.
+;   num:    channel number being defined
+;   next:   next channel to branch to
+channel .macro  num, next
+ch:num:
+	nop     ; These keep all paths the same length.  The lbco takes 3 cycles
+	nop
+	nop
+	nop
+	nop
+ch:num:on:			
+	qbeq	ch:num:off, r:num:, 0
+	sub		r:num:, r:num:, 1
+	qbne	ch:next:, r:num:, 0
+	clr		r30, ch:num:bit
+	lbco	&r1:num:, CONST_PRUSHAREDRAM, 8*:num:+4, 4
+	qba		ch:next:on
+ch:num:off:
+	sub		r1:num:, r1:num:, 1
+	qbne	ch:next:, r1:num:, 0
+	set		r30, ch:num:bit
+	lbco	&r:num:, CONST_PRUSHAREDRAM, 8*:num:, 4
+	qba		ch:next:on
+    .endm
 
 	.clink
 	.global start
@@ -77,156 +101,13 @@ start:
 	lbco	&r7, CONST_PRUSHAREDRAM, 56, 4
 	ldi		r17, 0
 
-; Beginning of loop, should always take 48 instructions to complete
-ch0:
-	nop
-	nop
-	nop
-	nop
-	nop
-ch0on:			
-	qbeq	ch0off, r0, 0
-	sub		r0, r0, 1
-	qbne	ch1, r0, 0
-	clr		r30, ch0bit
-	lbco	&r10, CONST_PRUSHAREDRAM, 4, 4
-	qba		ch1on
-ch0off:
-	sub		r10, r10, 1
-	qbne	ch1, r10, 0
-	set		r30, ch0bit
-	lbco	&r0, CONST_PRUSHAREDRAM, 0, 4
-	qba		ch1on
-ch1:
-	nop		; This keeps the paths the same length.  The lbco takes 3 cycles.
-	nop
-	nop
-	nop
-	nop
-ch1on:
-	qbeq	ch1off, r1, 0
-	sub		r1, r1, 1
-	qbne	ch2, r1, 0
-	clr		r30, ch1bit
-	lbco	&r11, CONST_PRUSHAREDRAM, 12, 4
-	qba		ch2on
-ch1off:
-	sub		r11, r11, 1
-	qbne	ch2, r11, 0
-	set		r30, ch1bit
-	lbco	&r1, CONST_PRUSHAREDRAM, 8, 4
-	qba		ch2on
-ch2:
-	nop
-	nop
-	nop
-	nop
-	nop
-ch2on:
-	qbeq	ch2off, r2, 0
-	sub		r2, r2, 1
-	qbne	ch3, r2, 0
-	clr		r30, ch2bit
-	lbco	&r12, CONST_PRUSHAREDRAM, 20, 4
-	qba		ch3on
-ch2off:
-	sub		r12, r12, 1
-	qbne	ch3, r12, 0
-	set		r30, ch2bit
-	lbco	&r2, CONST_PRUSHAREDRAM, 16, 4
-	qba		ch3on
-ch3:
-	nop
-	nop
-	nop
-	nop
-	nop
-ch3on:
-	qbeq	ch3off, r3, 0
-	sub		r3, r3, 1
-	qbne	ch4, r3, 0
-	clr		r30, ch3bit
-	lbco	&r13, CONST_PRUSHAREDRAM, 28, 4
-	qba		ch4on
-ch3off:
-	sub		r13, r13, 1
-	qbne	ch4, r13, 0
-	set		r30, ch3bit
-	lbco	&r3, CONST_PRUSHAREDRAM, 24, 4
-	qba		ch4on
-ch4:
-	nop
-	nop
-	nop
-	nop
-	nop
-ch4on:			
-	qbeq	ch4off, r4, 0
-	sub		r4, r4, 1
-	qbne	ch5, r4, 0
-	clr		r30, ch4bit
-	lbco	&r14, CONST_PRUSHAREDRAM, 36, 4
-	qba		ch5on
-ch4off:
-	sub		r14, r14, 1
-	qbne	ch5, r14, 0
-	set		r30, ch4bit
-	lbco	&r4, CONST_PRUSHAREDRAM, 32, 4
-	qba		ch5on
-ch5:
-	nop
-	nop
-	nop
-	nop
-	nop
-ch5on:
-	qbeq	ch5off, r5, 0
-	sub		r5, r5, 1
-	qbne	ch6, r5, 0
-	clr		r30, ch5bit
-	lbco	&r15, CONST_PRUSHAREDRAM, 44, 4
-	qba		ch6on
-ch5off:
-	sub		r15, r15, 1
-	qbne	ch6, r15, 0
-	set		r30, ch5bit
-	lbco	&r5, CONST_PRUSHAREDRAM, 40, 4
-	qba		ch6on
-ch6:
-	nop
-	nop
-	nop
-	nop
-	nop
-ch6on:
-	qbeq	ch6off, r6, 0
-	sub		r6, r6, 1
-	qbne	ch7, r6, 0
-	clr		r30, ch6bit
-	lbco	&r16, CONST_PRUSHAREDRAM, 52, 4
-	qba		ch7on
-ch6off:
-	sub		r16, r16, 1
-	qbne	ch7, r16, 0
-	set		r30, ch6bit
-	lbco	&r6, CONST_PRUSHAREDRAM, 48, 4
-	qba		ch7on
-ch7:
-	nop
-	nop
-	nop
-	nop
-	nop
-ch7on:
-	qbeq	ch7off, r7, 0
-	sub		r7, r7, 1
-	qbne	ch0, r7, 0
-	clr		r30, ch7bit
-	lbco	&r17, CONST_PRUSHAREDRAM, 60, 4
-	qba		ch0on
-ch7off:
-	sub		r17, r17, 1
-	qbne	ch0, r17, 0
-	set		r30, ch7bit
-	lbco	&r7, CONST_PRUSHAREDRAM, 56, 4
-	qba		ch0on
+; Beginning of loop, should always take 64 instructions to complete
+    channel 0, 1
+    channel 1, 2
+    channel 2, 3
+    channel 3, 4
+    channel 4, 5
+    channel 5, 6
+    channel 6, 7
+    channel 7, 0
+    
