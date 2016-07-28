@@ -1,0 +1,15 @@
+{
+  "document":{
+    "type":"PLAIN_TEXT",
+    "language": "EN",
+    "content":"'Lawrence of Arabia' is a highly rated film biography about \
+                British Lieutenant T. E. Lawrence. Peter O'Toole plays \
+                Lawrence in the film."
+  },
+  "features":{
+    "extractSyntax":true,
+    "extractEntities":true,
+    "extractDocumentSentiment":true
+  },
+  "encodingType":"UTF8"
+}

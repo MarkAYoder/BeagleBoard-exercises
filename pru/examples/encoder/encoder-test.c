@@ -1,6 +1,6 @@
 /* 
  *
- *  servo tester
+ *  pwm tester
  *  (c) Copyright 2016
  *  Mark A. Yoder, 20-July-2016
  *
@@ -18,32 +18,29 @@
 unsigned int	*prusharedMem_32int_ptr;	// Points to the start of the shared memory
 
 /*******************************************************************************
-* int send_servo_pulse_us(int ch, int us)
+* int get_encoder_pos(int ch)
 * 
-* Sends a single pulse of duration us (microseconds) to a single channel (ch)
+* returns the encoder counter position
 *******************************************************************************/
-int send_servo_pulse_us(int ch, int us) {
-	// Sanity Checks
-	if(ch<1 || ch>SERVO_CHANNELS){
-		printf("ERROR: Servo Channel must be between 1&%d\n", SERVO_CHANNELS);
-		return -1;
-	} if(prusharedMem_32int_ptr == NULL){
-		printf("ERROR: PRU servo Controller not initialized\n");
+int get_encoder_pos(int ch){
+	if(ch<4 || ch>4){
+		printf("Encoder Channel must be 4\n");
 		return -1;
 	}
-	// PRU runs at 200Mhz. find #loops needed
-	unsigned int num_loops = ((us*200.0)/PRU_SERVO_LOOP_INSTRUCTIONS); 
-	// printf("num_loops: %d\n", num_loops);
-	// write to PRU shared memory
-	prusharedMem_32int_ptr[ch-1] = num_loops;
-	return 0;
+	// 4th channel is counted by the PRU not eQEP
+	if(ch==4){
+		return (int) prusharedMem_32int_ptr[CNT_OFFSET/4];
+	}
+	
+	// first 3 channels counted by eQEP
+	// return  read_eqep(ch-1);
 }
 
 int main(int argc, char *argv[])
 {
 	unsigned int	*pru;		// Points to start of PRU memory.
 	int	fd;
-	printf("Servo tester\n");
+	printf("Encoder tester\n");
 	
 	fd = open ("/dev/mem", O_RDWR | O_SYNC);
 	if (fd == -1) {
@@ -60,19 +57,18 @@ int main(int argc, char *argv[])
 	
 	prusharedMem_32int_ptr = pru + PRU_SHAREDMEM/4;	// Points to start of shared memory
 
-	// while(1) {
-	// 	printf("value to store: ");
-	// 	scanf("%d", &value);
-	// 	printf("Storing: %d in %lx\n", value, addr);
-	// 	pru[addr/4] = value;
-	// }
-	
+	printf("\nRaw encoder positions\n");
+	printf("   E4   |");
+	printf(" \n");
+
 	int i;
-	while(1) {
-		for(i=1; i<=SERVO_CHANNELS; i++) {
-			send_servo_pulse_us(i, 10*i);
-		}
-		usleep(200);
+	while(1){
+		printf("\r");
+		for(i=4;i<=4;i++){
+			printf("%6d  |", get_encoder_pos(i));
+		}			
+		fflush(stdout);
+		usleep(50000);
 	}
 	
 	if(munmap(pru, PRU_LEN)) {

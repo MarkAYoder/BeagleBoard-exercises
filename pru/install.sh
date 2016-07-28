@@ -89,3 +89,10 @@ readelf -S *.out
 # Assembler: http://www.ti.com/lit/ug/spruhv6a/spruhv6a.pdf
 
 --c_src_interlist 
+
+# --c_src_interlist 
+
+wget https://git.ti.com/rpmsg/rpmsg/blobs/raw/rpmsg-ti-linux-4.4.y/samples/rpmsg/rpmsg_client_sample.c
+wget https://git.ti.com/rpmsg/rpmsg/blobs/raw/rpmsg-ti-linux-4.4.y/samples/rpmsg/Makefile
+
+# pasm vs. clpru: http://processors.wiki.ti.com/index.php/PRU_Assembly_Instructions#pasm_vs._clpru

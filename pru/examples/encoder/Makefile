@@ -52,25 +52,26 @@ PRU0_FW		=$(GEN_DIR)/main_pru0_fw.out
 
 # add the required firmwares to TARGETS
 # TARGETS		=$(PRU1_FW) $(PRU0_FW)
-TARGETS		=$(PRU1_FW)
+TARGETS		=$(PRU0_FW)
 
 # add the required files while linkin the FW code
 # required linking files for PRU1
 # LINK_PRU1_FW = (GEN_DIR)/pru1-inline-asm.object (GEN_DIR)/code2_pru1.object
 # LINK_PRU1_FW= $(GEN_DIR)/pru1-asm-blinky.object
-LINK_PRU1_FW= $(GEN_DIR)/pru1-servo.object
+# LINK_PRU1_FW= $(GEN_DIR)/pru1-pwm.object
+LINK_PRU1_FW=
 # LINK_PRU1_FW= $(GEN_DIR)/pru1-test.object
 
-# required linking files for PRU1
+# required linking files for PRU0
 # LINK_PRU0_FW = (GEN_DIR)/pru0-inline-asm.object (GEN_DIR)/code2_pru1.object
-LINK_PRU0_FW=
+# LINK_PRU0_FW=
+LINK_PRU0_FW= $(GEN_DIR)/pru0-encoder.object
 
 #------------------------------------------------------
 
 
-
 .PHONY: all
-all: $(TARGETS) servo-test
+all: $(TARGETS) encoder-test
 	@echo '-	Generated firmwares are : $^'
 
 
@@ -101,7 +102,12 @@ $(GEN_DIR)/pru1-asm-blinky.object: pru1-asm-blinky.asm
 	@echo 'CC	$<'
 	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
-$(GEN_DIR)/pru1-servo.object: pru1-servo.asm
+$(GEN_DIR)/pru1-pwm.object: pru1-pwm.asm
+	@mkdir -p $(GEN_DIR)
+	@echo 'CC	$<'
+	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
+
+$(GEN_DIR)/pru0-encoder.object: pru0-encoder.asm
 	@mkdir -p $(GEN_DIR)
 	@echo 'CC	$<'
 	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
@@ -111,7 +117,7 @@ $(GEN_DIR)/pru1-test.object: pru1-test.asm
 	@echo 'CC	$<'
 	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
-servo-test:	servo-test.c
+encoder-test:	encoder-test.c
 	gcc $< -o $@
 
 
@@ -148,4 +154,4 @@ reboot_pru0:
 clean:
 	@echo 'CLEAN	.'
 	@rm -rf $(GEN_DIR)
-	@rm main_pru1.asm file.map servo-test
+	@rm encoder-test
