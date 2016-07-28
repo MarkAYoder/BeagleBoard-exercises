@@ -89,25 +89,26 @@ int main(int argc, char *argv[])
 
 	// int i;
 	// for(i=0; i<SERVO_CHANNELS; i++) {
-	// 	start_pwm_us(i, 100, 10*(i+1));
+	// 	start_pwm_us(i, 10, 10*(i+1));
 	// }
 
-	// start_pwm_us(0, 1000, 10);
-	// start_pwm_us(1, 2000, 10);
-	// start_pwm_us(2, 4000, 10);
-	// start_pwm_us(3, 8000, 10);
-	// start_pwm_us(4, 1000, 10);
-	// start_pwm_us(5, 2000, 10);
-	// start_pwm_us(6, 4000, 10);
-	// start_pwm_us(7, 8000, 10);
+	int period=1000;
+	start_pwm_us(0, 1*period, 10);
+	start_pwm_us(1, 2*period, 10);
+	start_pwm_us(2, 4*period, 10);
+	start_pwm_us(3, 8*period, 10);
+	start_pwm_us(4, 1*period, 10);
+	start_pwm_us(5, 2*period, 10);
+	start_pwm_us(6, 4*period, 10);
+	start_pwm_us(7, 8*period, 10);
 	
-	int i;
-	for(i=0; i<SERVO_CHANNELS; i++) {
-		start_pwm_count(i, i+1, 10-(i+1));
-	}
+	// int i;
+	// for(i=0; i<SERVO_CHANNELS; i++) {
+	// 	start_pwm_count(i, i+1, 10-(i+1));
+	// }
 	
-	// start_pwm_count(0, 1, 9);
-	// start_pwm_count(1, 2, 8);
+	// start_pwm_count(0, 1, 1);
+	// start_pwm_count(1, 2, 2);
 	// start_pwm_count(2, 10, 30);
 	// start_pwm_count(3, 30, 10);
 	// start_pwm_count(4, 1, 1);

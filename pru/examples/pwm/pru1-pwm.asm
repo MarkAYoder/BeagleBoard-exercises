@@ -82,6 +82,8 @@ ch0:
 	nop
 	nop
 	nop
+	nop
+	nop
 ch0on:			
 	qbeq	ch0off, r0, 0
 	sub		r0, r0, 1
@@ -96,6 +98,8 @@ ch0off:
 	lbco	&r0, CONST_PRUSHAREDRAM, 0, 4
 	qba		ch1on
 ch1:
+	nop		; This keeps the paths the same length.  The lbco takes 3 cycles.
+	nop
 	nop
 	nop
 	nop
@@ -116,6 +120,8 @@ ch2:
 	nop
 	nop
 	nop
+	nop
+	nop
 ch2on:
 	qbeq	ch2off, r2, 0
 	sub		r2, r2, 1
@@ -130,6 +136,8 @@ ch2off:
 	lbco	&r2, CONST_PRUSHAREDRAM, 16, 4
 	qba		ch3on
 ch3:
+	nop
+	nop
 	nop
 	nop
 	nop
@@ -150,6 +158,8 @@ ch4:
 	nop
 	nop
 	nop
+	nop
+	nop
 ch4on:			
 	qbeq	ch4off, r4, 0
 	sub		r4, r4, 1
@@ -164,6 +174,8 @@ ch4off:
 	lbco	&r4, CONST_PRUSHAREDRAM, 32, 4
 	qba		ch5on
 ch5:
+	nop
+	nop
 	nop
 	nop
 	nop
@@ -184,6 +196,8 @@ ch6:
 	nop
 	nop
 	nop
+	nop
+	nop
 ch6on:
 	qbeq	ch6off, r6, 0
 	sub		r6, r6, 1
@@ -198,6 +212,8 @@ ch6off:
 	lbco	&r6, CONST_PRUSHAREDRAM, 48, 4
 	qba		ch7on
 ch7:
+	nop
+	nop
 	nop
 	nop
 	nop
