@@ -84,22 +84,12 @@ start:
 	
 	LDI 	r30, 0x0				; turn off GPIO outputs
 	
-	lbco	&r0, CONST_PRUSHAREDRAM, 0, 4	; Load on cycles
-	ldi		r10, 0		; Clear off cycles
-	lbco	&r1, CONST_PRUSHAREDRAM, 8, 4
-	ldi		r11, 0
-	lbco	&r2, CONST_PRUSHAREDRAM, 16, 4
-	ldi		r12, 0
-	lbco	&r3, CONST_PRUSHAREDRAM, 24, 4
-	ldi		r13, 0
-	lbco	&r4, CONST_PRUSHAREDRAM, 32, 4
-	ldi		r14, 0
-	lbco	&r5, CONST_PRUSHAREDRAM, 40, 4
-	ldi		r15, 0
-	lbco	&r6, CONST_PRUSHAREDRAM, 48, 4
-	ldi		r16, 0
-	lbco	&r7, CONST_PRUSHAREDRAM, 56, 4
-	ldi		r17, 0
+	.eval	0, i
+	.loop	8
+	lbco	&r:i:, CONST_PRUSHAREDRAM, 8*i, 4	; Load on cycles
+	ldi		r1:i:, 0							; Clear off cycles
+	.eval i+1, i
+	.endloop
 
 ; Beginning of loop, should always take 64 instructions to complete
     channel 0, 1
