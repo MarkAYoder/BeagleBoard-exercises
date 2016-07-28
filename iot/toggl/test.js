@@ -1,28 +1,30 @@
 #!/usr/bin/env node
 // From: http://7eggs.github.io/node-toggl-api/
-
+if(!process.env.TOGGL_API_KEY) {
+    console.log("Set TOGGL_API_KEY. Get apiToken at https://toggl.com/app/profile");
+    process.exit();
+}
 var util = require('util');
 var TogglClient = require('toggl-api')
-// Get apiToken at https://toggl.com/app/profile
-  , toggl = new TogglClient({apiToken: 'bbf1e58094b22ca5c098ffdaf72b2beb'})
+var toggl = new TogglClient({apiToken: process.env.TOGGL_API_KEY});
 
-// toggl.startTimeEntry({
-//   description: 'Some cool work',
-//   billable:    true
-// }, function(err, timeEntry) {
-//   // handle error
+toggl.startTimeEntry({
+  description: 'Some cool work',
+  billable:    true
+}, function(err, timeEntry) {
+  // handle error
 
-//   // working now exactly 1hr
+  // working now exactly 10 seconds
 //   setTimeout(function() {
-//     // toggl.stopTimeEntry(timeEntry.id, function(err) {
-//     //   // handle error
+//     toggl.stopTimeEntry(timeEntry.id, function(err) {
+//       // handle error
 
-//     //   toggl.updateTimeEntry(timeEntry.id, {tags: ['finished']}, function(err) {
-//     //     toggl.destroy()
-//     //   })
-//     // })
-//   }, 1000)
-// })
+//       toggl.updateTimeEntry(timeEntry.id, {tags: ['finished']}, function(err) {
+//         toggl.destroy()
+//       })
+//     })
+//   }, 10000)
+})
 
 toggl.getCurrentTimeEntry( function(err, timeEntry) {
     if(err) {
