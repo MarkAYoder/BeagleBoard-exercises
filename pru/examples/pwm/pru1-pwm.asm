@@ -18,7 +18,9 @@ $M?:	SUB	reg, reg, 1
 	QBNE	$M?, reg, 0
 $E?:	
 	.endm
-	
+
+	.asg	96,	PRU_ENABLE		;  Address in shared memory for enable
+
 ; channel defines code for each pwm channel.
 ;   num:    channel number being defined
 ;   next:   next channel to branch to
@@ -29,16 +31,20 @@ channel .macro  num, next
 	.asg	r:Roff:,	Roff	; Off count register
 ch:num:
 	.if		num = 0		; Add for extra nops for channel 0
-	mov		r30, r29	; Copy shadow register to output
+	lbco	&r28, CONST_PRUSHAREDRAM, PRU_ENABLE, 4
+	and		r30, r29, r28	; And with enable bits
+	nop	;
 	nop
 	nop
 	nop
-	.endif
+	nop
+	.else
 	nop     ; These keep all paths the same length.  The lbco takes 3 cycles
 	nop
 	nop
 	nop
 	nop
+	.endif
 ch:num:on:			
 	qbeq	ch:num:off, Ron, 0
 	sub		Ron, Ron, 1

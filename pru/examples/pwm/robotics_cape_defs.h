@@ -88,7 +88,8 @@
 #define PRU_SERVO_BIN "/usr/bin/pru_1_servo.bin"
 #define PRU_ENCODER_BIN "/usr/bin/pru_0_encoder.bin"
 #define PRU_SERVO_LOOP_INSTRUCTIONS	48	// instructions per PRU servo timer loop 
-#define PRU_PWM_LOOP_INSTRUCTIONS	100	// instructions per PRU servo timer loop 
+#define PRU_PWM_LOOP_INSTRUCTIONS	100	// instructions per PRU servo timer loop
+#define PRU_ENABLE  96  // Address in shared memory for enable
 
 
 #endif //ROBOTICS_CAPE_DEFS
