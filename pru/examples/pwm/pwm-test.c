@@ -87,20 +87,24 @@ int main(int argc, char *argv[])
 	
 	prusharedMem_32int_ptr = pru + PRU_SHAREDMEM/4;	// Points to start of shared memory
 
-	// int i;
-	// for(i=0; i<SERVO_CHANNELS; i++) {
-	// 	start_pwm_us(i, 1000, 5*(i+1));
-	// }
+	int i;
+	for(i=0; i<SERVO_CHANNELS; i++) {
+		start_pwm_us(i, 1000, 5*(i+1));
+	}
 
-	int period=1000;
-	start_pwm_us(0, 1*period, 10);
-	start_pwm_us(1, 2*period, 10);
-	start_pwm_us(2, 4*period, 10);
-	start_pwm_us(3, 8*period, 10);
-	start_pwm_us(4, 1*period, 10);
-	start_pwm_us(5, 2*period, 10);
-	start_pwm_us(6, 4*period, 10);
-	start_pwm_us(7, 8*period, 10);
+	// int period=1000;
+	// start_pwm_us(0, 1*period, 10);
+	// start_pwm_us(1, 2*period, 10);
+	// start_pwm_us(2, 4*period, 10);
+	// start_pwm_us(3, 8*period, 10);
+	// start_pwm_us(4, 1*period, 10);
+	// start_pwm_us(5, 2*period, 10);
+	// start_pwm_us(6, 4*period, 10);
+	// start_pwm_us(7, 8*period, 10);
+	// start_pwm_us(8, 1*period, 10);
+	// start_pwm_us(9, 2*period, 10);
+	// start_pwm_us(10, 4*period, 10);
+	// start_pwm_us(11, 8*period, 10);
 	
 	// int i;
 	// for(i=0; i<SERVO_CHANNELS; i++) {

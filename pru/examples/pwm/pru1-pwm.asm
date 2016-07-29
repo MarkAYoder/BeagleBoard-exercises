@@ -28,6 +28,12 @@ channel .macro  num, next
 	.eval	2*:num:+1,	Roff	
 	.asg	r:Roff:,	Roff	; Off count register
 ch:num:
+	.if		num = 0		; Add for extra nops for channel 0
+	mov		r30, r29	; Copy shadow register to output
+	nop
+	nop
+	nop
+	.endif
 	nop     ; These keep all paths the same length.  The lbco takes 3 cycles
 	nop
 	nop
@@ -37,30 +43,30 @@ ch:num:on:
 	qbeq	ch:num:off, Ron, 0
 	sub		Ron, Ron, 1
 	qbne	ch:next:, Ron, 0
-	clr		r30, ch:num:bit
+	clr		r29, ch:num:bit
 	lbco	&Roff, CONST_PRUSHAREDRAM, 8*:num:+4, 4
 	qba		ch:next:on
 ch:num:off:
 	sub		Roff, Roff, 1
 	qbne	ch:next:, Roff, 0
-	set		r30, ch:num:bit
+	set		r29, ch:num:bit
 	lbco	&Ron, CONST_PRUSHAREDRAM, 8*:num:, 4
 	qba		ch:next:on
     .endm
 
 ; these pin definitions are specific to SD-101C Robotics Cape
-    .asg    r30.t8,     ch0bit  ; P8_27
-	.asg    r30.t10,    ch1bit	; P8_28
-	.asg    r30.t9,     ch2bit	; P8_29
-	.asg	r30.t11,	ch3bit	; P8_30
-	.asg	r30.t6,		ch4bit	; P8_39
-	.asg	r30.t7,		ch5bit	; P8_40
-	.asg	r30.t4,		ch6bit	; P8_41
-	.asg	r30.t5,		ch7bit	; P8_42
-	.asg	r30.t2,		ch8bit	; P8_43
-	.asg	r30.t3,		ch9bit	; P8_44
-	.asg	r30.t0,		ch10bit	; P8_45
-	.asg	r30.t1,		ch11bit	; P8_46
+    .asg    r29.t8,     ch0bit  ; P8_27
+	.asg    r29.t10,    ch1bit	; P8_28
+	.asg    r29.t9,     ch2bit	; P8_29
+	.asg	r29.t11,	ch3bit	; P8_30
+	.asg	r29.t6,		ch4bit	; P8_39
+	.asg	r29.t7,		ch5bit	; P8_40
+	.asg	r29.t4,		ch6bit	; P8_41
+	.asg	r29.t5,		ch7bit	; P8_42
+	.asg	r29.t2,		ch8bit	; P8_43
+	.asg	r29.t3,		ch9bit	; P8_44
+	.asg	r29.t0,		ch10bit	; P8_45
+	.asg	r29.t1,		ch11bit	; P8_46
 
 	; .asg    C4,     CONST_SYSCFG         
 	.asg    C28,    CONST_PRUSHAREDRAM   
@@ -76,7 +82,11 @@ ch:num:off:
 	.clink
 	.global start
 start:
-	LDI 	r30, 0x0				; turn off GPIO outputs
+	ldi 	r30, 0x0	; turn off GPIO outputs
+	mov		r29, r30	; r29 is a shadow register for r30.  We'll update r29 for
+						; each channel, them copy it to r30 to output all at the
+						; same time
+						
 	
 	; Preload all the count registers
 	lbco	&r0, CONST_PRUSHAREDRAM, 0, 80	; Load on cycles
