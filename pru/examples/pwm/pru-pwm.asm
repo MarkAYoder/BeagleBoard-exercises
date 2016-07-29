@@ -38,14 +38,7 @@ channel .macro  num, next
 	.eval	2*:num:+1,	Roff	
 	.asg	r:Roff:,	Roff	; Off count register
 ch:num:
-	.if		num = 0		; Add for extra nops for channel 0
-	
-	.if PRU_NUM = 0		; Make both PRUs the same length
-	.loop 48
-	nop
-	.endloop
-	.endif
-	
+	.if		num=0		; Add for extra nops for channel 0
 	lbco	&r28, CONST_PRUSHAREDRAM, PRU_ENABLE, 4
 	and		r30, r29, r28	; And with enable bits
 	nop	;
@@ -60,7 +53,14 @@ ch:num:
 	nop
 	nop
 	.endif
-ch:num:on:			
+ch:num:on:	
+	.if num=0
+	.if PRU_NUM=0		; Make both PRUs the same length
+	.loop 48
+	nop
+	.endloop
+	.endif
+	.endif
 	qbeq	ch:num:off, Ron, 0
 	sub		Ron, Ron, 1
 	qbne	ch:next:, Ron, 0
@@ -127,10 +127,10 @@ start:
     channel 2, 3
     channel 3, 4
     channel 4, 5
-    .if PRU_NUM = 0		; Only do 6 channels for PRU 0
+    .if PRU_NUM=0		; Only do 6 channels for PRU 0
     channel 5, 0
     .endif
-    .if PRU_NUM = 1
+    .if PRU_NUM=1
     channel 5, 6
     channel 6, 7
     channel 7, 8
