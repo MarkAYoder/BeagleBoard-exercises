@@ -53,6 +53,8 @@ ch:num:off:
 	.asg	r30.t7,		ch5bit	; P8_40
 	.asg	r30.t4,		ch6bit	; P8_41
 	.asg	r30.t5,		ch7bit	; P8_42
+	.asg	r30.t13,	ch8bit	; P8_20
+	.asg	r30.t12,	ch9bit	; P8_21
 
 	; .asg    C4,     CONST_SYSCFG         
 	.asg    C28,    CONST_PRUSHAREDRAM   
@@ -85,5 +87,7 @@ start:
     channel 4, 5
     channel 5, 6
     channel 6, 7
-    channel 7, 0
+    channel 7, 8
+    channel 8, 9
+    channel 9, 0
     
