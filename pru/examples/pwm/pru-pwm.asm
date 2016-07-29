@@ -8,6 +8,14 @@
 ;* it under the terms of the GNU General Public License version 2 as
 ;* published by the Free Software Foundation.
 
+; This is to work for both PRUs 0 and 1.  Set PRU_NUM for the one you are compiling for.
+; PRU 0 has 6 outputs, PRU 1 has 12.
+; The timing for PRU 0 seems a bit off.  The period is a bit short measuring
+;	966us when it should be 1000.
+; WARNING:  The PRUs use the same SHAREDRAM addresses for the on/off cycles.
+;	The aught to be fixed some time.
+
+;	Mark A. Yoder, 29-July-2016
 
 	.cdecls "main_pru1.c"
 
@@ -31,6 +39,13 @@ channel .macro  num, next
 	.asg	r:Roff:,	Roff	; Off count register
 ch:num:
 	.if		num = 0		; Add for extra nops for channel 0
+	
+	.if PRU_NUM = 0		; Make both PRUs the same length
+	.loop 48
+	nop
+	.endloop
+	.endif
+	
 	lbco	&r28, CONST_PRUSHAREDRAM, PRU_ENABLE, 4
 	and		r30, r29, r28	; And with enable bits
 	nop	;
@@ -61,6 +76,15 @@ ch:num:off:
     .endm
 
 ; these pin definitions are specific to SD-101C Robotics Cape
+	.if PRU_NUM = 0
+    .asg    r29.t7,     ch0bit  ; P9_25		PRU_0 only has 6 outputs
+	.asg    r29.t5,    	ch1bit	; P9_27
+	.asg    r29.t3,    	ch2bit	; P9_28
+	.asg	r29.t1,		ch3bit	; P9_29
+	.asg	r29.t2,		ch4bit	; P9_30
+	.asg	r29.t0,		ch5bit	; P9_31
+	.endif
+	.if PRU_NUM = 1
     .asg    r29.t8,     ch0bit  ; P8_27
 	.asg    r29.t10,    ch1bit	; P8_28
 	.asg    r29.t9,     ch2bit	; P8_29
@@ -73,6 +97,7 @@ ch:num:off:
 	.asg	r29.t3,		ch9bit	; P8_44
 	.asg	r29.t0,		ch10bit	; P8_45
 	.asg	r29.t1,		ch11bit	; P8_46
+	.endif
 
 	; .asg    C4,     CONST_SYSCFG         
 	.asg    C28,    CONST_PRUSHAREDRAM   
@@ -92,8 +117,7 @@ start:
 	mov		r29, r30	; r29 is a shadow register for r30.  We'll update r29 for
 						; each channel, them copy it to r30 to output all at the
 						; same time
-						
-	
+
 	; Preload all the count registers
 	lbco	&r0, CONST_PRUSHAREDRAM, 0, 80	; Load on cycles
 
@@ -103,6 +127,10 @@ start:
     channel 2, 3
     channel 3, 4
     channel 4, 5
+    .if PRU_NUM = 0		; Only do 6 channels for PRU 0
+    channel 5, 0
+    .endif
+    .if PRU_NUM = 1
     channel 5, 6
     channel 6, 7
     channel 7, 8
@@ -110,4 +138,5 @@ start:
     channel 9, 10
     channel 10, 11
     channel 11, 0
+    .endif
     

@@ -124,12 +124,14 @@ int main(int argc, char *argv[])
 	// start_pwm_count(6, 20, 30);
 	// start_pwm_count(7, 30, 20);
 	
-	for(i=0; i<100; i++) {
-		int mask = 1 << (i%12);
-		printf("Mask: %x\n", mask);
-		pwm_enable(mask);
-		usleep(500000);
-	}
+	// for(i=0; i<24; i++) {
+	// 	int mask = 1 << (i%12);
+	// 	printf("Mask: %x\n", mask);
+	// 	pwm_enable(mask);
+	// 	usleep(500000);
+	// }
+	
+	pwm_enable(0xfff);
 	
 	if(munmap(pru, PRU_LEN)) {
 		printf("munmap failed\n");
