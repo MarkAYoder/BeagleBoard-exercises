@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
 
 	// int i;
 	// for(i=0; i<SERVO_CHANNELS; i++) {
-	// 	start_pwm_us(i, 10, 10*(i+1));
+	// 	start_pwm_us(i, 1000, 5*(i+1));
 	// }
 
 	int period=1000;

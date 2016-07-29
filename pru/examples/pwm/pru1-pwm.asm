@@ -23,6 +23,10 @@ $E?:
 ;   num:    channel number being defined
 ;   next:   next channel to branch to
 channel .macro  num, next
+	.eval	2*:num:,	Ron	
+	.asg	r:Ron:,		Ron		; On count register
+	.eval	2*:num:+1,	Roff	
+	.asg	r:Roff:,	Roff	; Off count register
 ch:num:
 	nop     ; These keep all paths the same length.  The lbco takes 3 cycles
 	nop
@@ -30,17 +34,17 @@ ch:num:
 	nop
 	nop
 ch:num:on:			
-	qbeq	ch:num:off, r:num:, 0
-	sub		r:num:, r:num:, 1
-	qbne	ch:next:, r:num:, 0
+	qbeq	ch:num:off, Ron, 0
+	sub		Ron, Ron, 1
+	qbne	ch:next:, Ron, 0
 	clr		r30, ch:num:bit
-	lbco	&r1:num:, CONST_PRUSHAREDRAM, 8*:num:+4, 4
+	lbco	&Roff, CONST_PRUSHAREDRAM, 8*:num:+4, 4
 	qba		ch:next:on
 ch:num:off:
-	sub		r1:num:, r1:num:, 1
-	qbne	ch:next:, r1:num:, 0
+	sub		Roff, Roff, 1
+	qbne	ch:next:, Roff, 0
 	set		r30, ch:num:bit
-	lbco	&r:num:, CONST_PRUSHAREDRAM, 8*:num:, 4
+	lbco	&Ron, CONST_PRUSHAREDRAM, 8*:num:, 4
 	qba		ch:next:on
     .endm
 
@@ -72,12 +76,8 @@ ch:num:off:
 start:
 	LDI 	r30, 0x0				; turn off GPIO outputs
 	
-	.eval	0, i
-	.loop	8
-	lbco	&r:i:, CONST_PRUSHAREDRAM, 8*i, 4	; Load on cycles
-	ldi		r1:i:, 0							; Clear off cycles
-	.eval i+1, i
-	.endloop
+	; Preload all the count registers
+	lbco	&r0, CONST_PRUSHAREDRAM, 0, 80	; Load on cycles
 
 ; Beginning of loop, should always take 64 instructions to complete
     channel 0, 1

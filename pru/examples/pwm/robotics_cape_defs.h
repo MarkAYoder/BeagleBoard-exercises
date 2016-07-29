@@ -31,7 +31,7 @@
 #define MAV_BUF_LEN 512 
 
 //// PRU Servo Control
-#define SERVO_CHANNELS			8
+#define SERVO_CHANNELS			10
 // Most servos will keep moving out to 600-2400	
 #define SERVO_EXTENDED_RANGE	1800
 // normal range is from 900 to 2100 for 120 degree servos
