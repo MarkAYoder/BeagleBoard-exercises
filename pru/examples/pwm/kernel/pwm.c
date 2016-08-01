@@ -31,30 +31,52 @@ void *shared_mem;     // Pointer to SHAREDMEM
 
 /** @brief Displays period in ns */
 static ssize_t period_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf){
-   return sprintf(buf, "%d\n", ioread32(shared_mem+8*channel)+ioread32(shared_mem+8*channel+4));
+   return sprintf(buf, "%d\n", 
+      PRU_PWM_LOOP_ns*(ioread32(shared_mem+8*channel)+ioread32(shared_mem+8*channel+4)));
 }
 
 /** @brief Stores and sets the period in ns */
 static ssize_t period_store(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count){
-   unsigned int temp;
-   sscanf(buf, "%du", &temp);
-   // Subtract the on-time from the period to get the 
-   iowrite32(temp-ioread32(shared_mem+8*channel), shared_mem+8*channel+4);
-   printk(KERN_INFO "period: %d\n", temp);
+   int period;
+   int on, off;    // on and off times in ns
+   sscanf(buf, "%du", &period);
+   // Subtract the on-time from the period to get the off time
+   on = ioread32(shared_mem+8*channel);  // Get on time in loops
+   off = (period-PRU_PWM_LOOP_ns*on)/PRU_PWM_LOOP_ns;     // Convert back to loops
+   if(off<=0) {   // period is too small for the duty_cycle
+      off = 1;
+      iowrite32(period/PRU_PWM_LOOP_ns-1, shared_mem+8*channel);
+   }
+   iowrite32(off, shared_mem+8*channel+4);
+   printk(KERN_INFO "period: %dns\n", PRU_PWM_LOOP_ns*(on+off));
    return count;
 }
 
 /** @brief Displays duty_cycle in ns */
 static ssize_t duty_cycle_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf){
-   return sprintf(buf, "%d\n", ioread32(shared_mem+8*channel));
+   return sprintf(buf, "%d\n", PRU_PWM_LOOP_ns*ioread32(shared_mem+8*channel));
 }
 
 /** @brief Stores and sets the duty_cycle (on-time) in ns */
+// Keep the period the same
 static ssize_t duty_cycle_store(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count){
-   unsigned int temp;
-   sscanf(buf, "%du", &temp); 
-   iowrite32(temp, shared_mem+8*channel);
-   printk(KERN_INFO "duty_cycle: %d\n", temp);
+   unsigned int duty;
+   int on, off, period;
+   on  = ioread32(shared_mem+8*channel);     // Get onand off times in loops
+   off = ioread32(shared_mem+8*channel+4);
+   period = on + off;
+
+   sscanf(buf, "%du", &duty); 
+   on  = duty/PRU_PWM_LOOP_ns;
+   off = period - on;      // Keep the same number of loops for period
+   if(off<=0) {            // duty_cycle it too long for the period.  Set off time to 1.
+      off=1;
+   }
+   
+   iowrite32(on,  shared_mem+8*channel);
+   iowrite32(off, shared_mem+8*channel+4);
+   
+   printk(KERN_INFO "duty_cycle: %dns\n", duty);
    return count;
 }
 
@@ -127,7 +149,7 @@ static int __init pwm_init(void){
    sprintf(pwmName, "pwm%d", channel);           // Create the gpio115 name for /sys/ebb/gpio115
 
    // create the kobject sysfs entry at /sys/ebb -- probably not an ideal location!
-   ebb_kobj = kobject_create_and_add("pwm", kernel_kobj->parent); // kernel_kobj points to /sys/kernel
+   ebb_kobj = kobject_create_and_add("pwm", kernel_kobj); // kernel_kobj points to /sys/kernel
    if(!ebb_kobj){
       printk(KERN_ALERT "pwm: failed to create kobject mapping\n");
       return -ENOMEM;
@@ -141,7 +163,7 @@ static int __init pwm_init(void){
    }
 
    // Mapping SHARED RAM
-   shared_mem = ioremap(PRU_ADDR+PRU_SHAREDMEM, 0x3000);
+   shared_mem = ioremap(PRU_ADDR+PRU_SHAREDMEM, PRU_SHAREDMEM_LEN);
    // Each channel's period and duty_cycle is stored in shared memory as cycles on
    // and cycles off.  |ch 0 on | ch 0 off | ch 1 on | ch1 off \ etc.
    // Each is a 32 bit value.  Channel 0 starts at 0.  Channel 1 starts a 8, etc.
