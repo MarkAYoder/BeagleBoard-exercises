@@ -9,6 +9,7 @@
 
 #include <linux/module.h>
 #include <linux/kobject.h>    // Using kobjects for the sysfs bindings
+#include "../robotics_cape_defs.h"
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Mark A. Yoder");
@@ -26,7 +27,6 @@ static char   pwmName[8] = "pwmXXX";        ///< Null terminated default string 
 #define PRU_LEN			0x80000			// Length of PRU memory
 #define PRU_SHAREDMEM	0x10000			// Offset to shared memory
 #define PRU_SHAREDMEM_LEN 0x3000       // Length of shared memory
-#define ENABLE 96                      // Address of enable bits.  Bit 0 is for channel 0, etc.
 void *shared_mem;     // Pointer to SHAREDMEM
 
 /** @brief Displays period in ns */
@@ -60,7 +60,7 @@ static ssize_t duty_cycle_store(struct kobject *kobj, struct kobj_attribute *att
 
 /** @brief Displays enable */
 static ssize_t enable_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf){
-   return sprintf(buf, "%d\n", (ioread32(shared_mem+ENABLE)>>channel) & 0x1);
+   return sprintf(buf, "%d\n", (ioread32(shared_mem+PRU_ENABLE)>>channel) & 0x1);
 }
 
 /** @brief Stores and sets the duty_cycle (on-time) in ns */
@@ -68,11 +68,11 @@ static ssize_t enable_store(struct kobject *kobj, struct kobj_attribute *attr, c
    unsigned int temp;
    int enables;
    sscanf(buf, "%du", &temp);
-   enables = ioread32(shared_mem+ENABLE);
+   enables = ioread32(shared_mem+PRU_ENABLE);
    if(temp) {
-      iowrite32(enables ^  (1<<channel), shared_mem+ENABLE);
+      iowrite32(enables ^  (1<<channel), shared_mem+PRU_ENABLE);
    } else {
-      iowrite32(enables & ~(1<<channel), shared_mem+ENABLE);
+      iowrite32(enables & ~(1<<channel), shared_mem+PRU_ENABLE);
    }
    printk(KERN_INFO "enable: %d\n", temp);
    return count;
@@ -152,7 +152,7 @@ static int __init pwm_init(void){
       channel,
       ioread32(shared_mem+8*channel)+ioread32(shared_mem+8*channel+4),
       ioread32(shared_mem+8*channel),
-      (ioread32(shared_mem+ENABLE)>>channel) & 0x1);
+      (ioread32(shared_mem+PRU_ENABLE)>>channel) & 0x1);
 
    return result;
 }
