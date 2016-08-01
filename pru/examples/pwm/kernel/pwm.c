@@ -7,22 +7,16 @@
  * The sysfs entry appears at /sys/ebb/gpio115
 */
 
-#include <linux/init.h>
 #include <linux/module.h>
-#include <linux/kernel.h>
-#include <linux/gpio.h>       // Required for the GPIO functions
-#include <linux/interrupt.h>  // Required for the IRQ code
 #include <linux/kobject.h>    // Using kobjects for the sysfs bindings
-#include <linux/time.h>       // Using the clock to measure time between button presses
-#define  DEBOUNCE_TIME 200    ///< The default bounce time -- 200ms
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Mark A. Yoder");
 MODULE_DESCRIPTION("A pwm driver");
 MODULE_VERSION("0.1");
 
-static bool channel = 0;                  /// Channel number
-module_param(channel, bool, S_IRUGO);      ///< Param desc. S_IRUGO can be read/not changed
+static int channel = 0;                  /// Channel number
+module_param(channel, int, S_IRUGO);      ///< Param desc. S_IRUGO can be read/not changed
 MODULE_PARM_DESC(channel, " Channel number (default 0)");  ///< parameter description
 
 static char   pwmName[8] = "pwmXXX";        ///< Null terminated default string -- just in case
@@ -87,11 +81,11 @@ static struct attribute *ebb_attrs[] = {
 };
 
 /**  The attribute group uses the attribute array and a name, which is exposed on sysfs -- in this
- *  case it is gpio115, which is automatically defined in the ebbButton_init() function below
+ *  case it is gpio115, which is automatically defined in the pwm_init() function below
  *  using the custom kernel parameter that can be passed when the module is loaded.
  */
 static struct attribute_group attr_group = {
-      .name  = pwmName,                 ///< The name is generated in ebbButton_init()
+      .name  = pwmName,                 ///< The name is generated in pwm_init()
       .attrs = ebb_attrs,                ///< The attributes array defined just above
 };
 
@@ -104,7 +98,7 @@ static struct kobject *ebb_kobj;
  *  function sets up the GPIOs and the IRQ
  *  @return returns 0 if successful
  */
-static int __init ebbButton_init(void){
+static int __init pwm_init(void){
    int result = 0;
    printk(KERN_INFO "pwm: Initializing the pwm LKM\n");
    sprintf(pwmName, "pwm%d", channel);           // Create the gpio115 name for /sys/ebb/gpio115
@@ -125,6 +119,11 @@ static int __init ebbButton_init(void){
 
    // Mapping SHARED RAM
    shared_mem = ioremap(PRU_ADDR+PRU_SHAREDMEM, 0x3000);
+   // Each channel's period and duty_cycle is stored in shared memory as cycles on
+   // and cycles off.  |ch 0 on | ch 0 off | ch 1 on | ch1 off \ etc.
+   // Each is a 32 bit value.  Channel 0 starts at 0.  Channel 1 starts a 8, etc.
+   //  shared_mem+8*channel is the addres of 'channel' on time and
+   //  shared_mem+8*chennel+4 is the off time.
    printk(KERN_INFO "channel: %d, period: %d, duty_cycle: %d\n",
       channel,
       ioread32(shared_mem+8*channel)+ioread32(shared_mem+8*channel+4),
@@ -137,7 +136,7 @@ static int __init ebbButton_init(void){
  *  Similar to the initialization function, it is static. The __exit macro notifies that if this
  *  code is used for a built-in driver (not a LKM) that this function is not required.
  */
-static void __exit ebbButton_exit(void){
+static void __exit pwm_exit(void){
    kobject_put(ebb_kobj);                   // clean up -- remove the kobject sysfs entry
    printk(KERN_INFO "pwm: Goodbye from the EBB Button LKM!\n");
    iounmap(shared_mem);
@@ -146,5 +145,5 @@ static void __exit ebbButton_exit(void){
 
 // This next calls are  mandatory -- they identify the initialization function
 // and the cleanup function (as above).
-module_init(ebbButton_init);
-module_exit(ebbButton_exit);
+module_init(pwm_init);
+module_exit(pwm_exit);
