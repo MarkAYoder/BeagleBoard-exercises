@@ -3,9 +3,10 @@
 
 Run the programs in this order:
 
-1.  `./setup.sh`  - Runs config-pin to make set all pin muxes to pruout
+1.  Go to [http://elinux.org/EBC_Exercise_30_PRU_via_remoteproc_and_RPMsg] for instructions on how to set up your Bone for PRU development via remoteproc.
+2.  `./setup.sh`  - Runs config-pin to make set all pin muxes to pruout
 2.  `make pwm-test`   - Compile pwm-test.c
-3.  `./pwm-test`      - Writes the on/off times into chared memory
+3.  `./pwm-test`      - Writes the on/off times into shared memory
 4.  `make install`    - Compiles the PRU code and starts running it
  
 `./setup.sh` only needs to be run once per boot up.
@@ -13,3 +14,5 @@ Run the programs in this order:
 pru-pwm.asm assembles code for both PRUs.  When PRU_NUM is set to 0, code for PRU 0 is generated.  The Makefile knows to generate for both PRUs.
 
 INITC is use to synchronize both PRUs, so the pulses are start together (with 1ns).
+
+More channels could be genreated if the emmc were disabled.
