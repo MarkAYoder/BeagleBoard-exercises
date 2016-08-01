@@ -120,6 +120,20 @@ start:
 
 	; Preload all the count registers
 	lbco	&r0, CONST_PRUSHAREDRAM, 0, 80	; Load on cycles
+	
+	.if PRU_NUM = 0
+	.asg (16), PRU0_PRU1_EVT		; Tell PRU1 to start
+	ldi	r31,  (PRU0_PRU1_EVT - 16) | (1 << 5)
+	.else
+	.asg (1<<31), HOST1_MASK
+wait:								; Wait for PRU0
+	qbeq	wait, r31, 0
+	ldi		r28, 46				; I don't know why this delay is needed to
+	nop							; keep the 2 PRUs in sync
+delay:
+	sub		r28, r28, 1
+	qbne	delay, r28, 0
+	.endif
 
 ; Beginning of loop, should always take 64 instructions to complete
     channel 0, 1

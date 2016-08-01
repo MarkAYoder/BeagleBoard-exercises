@@ -38,14 +38,51 @@
 #include <pru_cfg.h>
 #include <pru_ctrl.h>
 #include "resource_table_pru1.h"
+#include <pru_intc.h>
 
 // The function is defined in pru1_asm_blinky.asm in same dir
 // We just need to add a declaration here, the defination can be
 // seperately linked
 extern void start(void);
 
+volatile register uint32_t __R30;
+volatile register uint32_t __R31;
+
+void configIntc(void)
+{
+	/* Clear any pending PRU-generated events */
+	__R31 = 0x00000000;
+
+	/* Map event 16 to channel 1 */
+	CT_INTC.CMR4_bit.CH_MAP_16 = 1;
+
+	/* Map channel 1 to host 1 */
+	CT_INTC.HMR0_bit.HINT_MAP_1 = 1;
+
+	/* Ensure event 16 is cleared */
+	CT_INTC.SICR = 16;
+
+	/* Enable event 16 */
+	CT_INTC.EISR = 16;
+
+	/* Enable Host interrupt 1 */
+	CT_INTC.HIEISR |= (1 << 0);
+
+	// Globally enable host interrupts
+	CT_INTC.GER = 1; 
+}
+
 void main(void)
 {
+	/* Configure GPI and GPO as Mode 0 (Direct Connect) */
+	CT_CFG.GPCFG0 = 0x0000;
+
+	/* Clear GPO pins */
+	__R30 &= 0xFFFF0000;
+
+	/* Configure INTC */
+	configIntc();
+
     /* Clear SYSCFG[STANDBY_INIT] to enable OCP master port */
 	CT_CFG.SYSCFG_bit.STANDBY_INIT = 0;
 
@@ -55,4 +92,3 @@ void main(void)
 
 	start();
 }
-
