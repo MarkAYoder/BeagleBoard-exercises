@@ -85,18 +85,18 @@ ch:num:off:
 	.asg	r29.t0,		ch5bit	; P9_31
 	.endif
 	.if PRU_NUM = 1
-    .asg    r29.t8,     ch0bit  ; P8_27
-	.asg    r29.t10,    ch1bit	; P8_28
-	.asg    r29.t9,     ch2bit	; P8_29
-	.asg	r29.t11,	ch3bit	; P8_30
-	.asg	r29.t6,		ch4bit	; P8_39
-	.asg	r29.t7,		ch5bit	; P8_40
-	.asg	r29.t4,		ch6bit	; P8_41
-	.asg	r29.t5,		ch7bit	; P8_42
-	.asg	r29.t2,		ch8bit	; P8_43
-	.asg	r29.t3,		ch9bit	; P8_44
-	.asg	r29.t0,		ch10bit	; P8_45
-	.asg	r29.t1,		ch11bit	; P8_46
+	.asg	r29.t0,		ch0bit  ; P8_45
+	.asg	r29.t1,		ch1bit	; P8_46
+	.asg	r29.t2,		ch2bit	; P8_43
+	.asg	r29.t3,		ch3bit	; P8_44
+	.asg	r29.t4,		ch4bit	; P8_41
+	.asg	r29.t5,		ch5bit	; P8_42
+	.asg	r29.t6,		ch6bit	; P8_39
+	.asg	r29.t7,		ch7bit	; P8_40
+    .asg    r29.t8,     ch8bit	; P8_27
+	.asg    r29.t9,     ch9bit	; P8_29
+	.asg    r29.t10,    ch10bit	; P8_28
+	.asg	r29.t11,	ch11bit	; P8_30
 	.endif
 
 	; .asg    C4,     CONST_SYSCFG         
