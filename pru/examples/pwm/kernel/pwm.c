@@ -26,6 +26,7 @@ static char   pwmName[8] = "pwmXXX";        ///< Null terminated default string 
 #define PRU_LEN			0x80000			// Length of PRU memory
 #define PRU_SHAREDMEM	0x10000			// Offset to shared memory
 #define PRU_SHAREDMEM_LEN 0x3000       // Length of shared memory
+#define ENABLE 96                      // Address of enable bits.  Bit 0 is for channel 0, etc.
 void *shared_mem;     // Pointer to SHAREDMEM
 
 /** @brief Displays period in ns */
@@ -57,6 +58,26 @@ static ssize_t duty_cycle_store(struct kobject *kobj, struct kobj_attribute *att
    return count;
 }
 
+/** @brief Displays enable */
+static ssize_t enable_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf){
+   return sprintf(buf, "%d\n", (ioread32(shared_mem+ENABLE)>>channel) & 0x1);
+}
+
+/** @brief Stores and sets the duty_cycle (on-time) in ns */
+static ssize_t enable_store(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count){
+   unsigned int temp;
+   int enables;
+   sscanf(buf, "%du", &temp);
+   enables = ioread32(shared_mem+ENABLE);
+   if(temp) {
+      iowrite32(enables ^  (1<<channel), shared_mem+ENABLE);
+   } else {
+      iowrite32(enables & ~(1<<channel), shared_mem+ENABLE);
+   }
+   printk(KERN_INFO "enable: %d\n", temp);
+   return count;
+}
+
 /**  Use these helper macros to define the name and access levels of the kobj_attributes
  *  The kobj_attribute has an attribute attr (name and mode), show and store function pointers
  *  The count variable is associated with the numberPresses variable and it is to be exposed
@@ -64,6 +85,7 @@ static ssize_t duty_cycle_store(struct kobject *kobj, struct kobj_attribute *att
  */
 static struct kobj_attribute duty_cycle_attr = __ATTR(duty_cycle, 0660, duty_cycle_show, duty_cycle_store);
 static struct kobj_attribute period_attr = __ATTR(period, 0660, period_show, period_store);
+static struct kobj_attribute enable_attr = __ATTR(enable, 0660, enable_show, enable_store);
 
 /**  The __ATTR_RO macro defines a read-only attribute. There is no need to identify that the
  *  function is called _show, but it must be present. __ATTR_WO can be  used for a write-only
@@ -77,6 +99,7 @@ static struct kobj_attribute period_attr = __ATTR(period, 0660, period_show, per
 static struct attribute *ebb_attrs[] = {
       &duty_cycle_attr.attr,
       &period_attr.attr,
+      &enable_attr.attr,
       NULL,
 };
 
@@ -86,7 +109,7 @@ static struct attribute *ebb_attrs[] = {
  */
 static struct attribute_group attr_group = {
       .name  = pwmName,                 ///< The name is generated in pwm_init()
-      .attrs = ebb_attrs,                ///< The attributes array defined just above
+      .attrs = ebb_attrs,               ///< The attributes array defined just above
 };
 
 static struct kobject *ebb_kobj;
@@ -124,10 +147,12 @@ static int __init pwm_init(void){
    // Each is a 32 bit value.  Channel 0 starts at 0.  Channel 1 starts a 8, etc.
    //  shared_mem+8*channel is the addres of 'channel' on time and
    //  shared_mem+8*chennel+4 is the off time.
-   printk(KERN_INFO "channel: %d, period: %d, duty_cycle: %d\n",
+   // Enable bits are at the end at 12*8=96.
+   printk(KERN_INFO "channel: %d, period: %d, duty_cycle: %d, enable: %d\n",
       channel,
       ioread32(shared_mem+8*channel)+ioread32(shared_mem+8*channel+4),
-      ioread32(shared_mem+8*channel));
+      ioread32(shared_mem+8*channel),
+      (ioread32(shared_mem+ENABLE)>>channel) & 0x1);
 
    return result;
 }
