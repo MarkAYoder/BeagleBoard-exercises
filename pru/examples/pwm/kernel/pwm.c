@@ -1,12 +1,10 @@
 /**
- * @file   button.c
- * @author Derek Molloy
- * @date   19 April 2015
- * @brief  A kernel module for controlling a button (or any signal) that is connected to
- * a GPIO. It has full support for interrupts and for sysfs entries so that an interface
- * can be created to the button or the button can be configured from Linux userspace.
+ * @file   pwm.c
+ * @author Mark A. Yoder, based on Derek Molloy's button.c 
+ *       (http://derekmolloy.ie/kernel-gpio-programming-buttons-and-leds/)
+ * @date   1-August-2016
+ * @brief  A kernel module for controlling software pwm running on the PRU
  * The sysfs entry appears at /sys/ebb/gpio115
- * @see http://www.derekmolloy.ie/
 */
 
 #include <linux/init.h>
@@ -19,7 +17,7 @@
 #define  DEBOUNCE_TIME 200    ///< The default bounce time -- 200ms
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Derek Molloy with changes by Mark A. Yoder");
+MODULE_AUTHOR("Mark A. Yoder");
 MODULE_DESCRIPTION("A pwm driver");
 MODULE_VERSION("0.1");
 
@@ -35,6 +33,10 @@ static unsigned int gpioLED = 49;           ///< Default GPIO is 49
 module_param(gpioLED, uint, S_IRUGO);       ///< Param desc. S_IRUGO can be read/not changed
 MODULE_PARM_DESC(gpioLED, " GPIO LED number (default=49)");         ///< parameter description
 
+static bool channel = 0;                  /// Channel number
+module_param(channel, bool, S_IRUGO);      ///< Param desc. S_IRUGO can be read/not changed
+MODULE_PARM_DESC(channel, " Channel number (default 0)");  ///< parameter description
+
 static char   gpioName[8] = "gpioXXX";      ///< Null terminated default string -- just in case
 static int    irqNumber;                    ///< Used to share the IRQ number within this file
 static int    numberPresses = 0;            ///< For information, store the number of button presses
@@ -47,8 +49,7 @@ static struct timespec ts_last, ts_current, ts_diff;  ///< timespecs from linux/
 #define PRU_LEN			0x80000			// Length of PRU memory
 #define PRU_SHAREDMEM	0x10000			// Offset to shared memory
 #define PRU_SHAREDMEM_LEN 0x3000       // Length of shared memory
-void *shared;     // Pointer to SHAREDMEM
-static int  duty_cycle;    // duty_cycle in ns
+void *shared_mem;     // Pointer to SHAREDMEM
 
 /// Function prototype for the custom IRQ handler function -- see below for the implementation
 static irq_handler_t  ebbgpio_irq_handler(unsigned int irq, void *dev_id, struct pt_regs *regs);
@@ -112,16 +113,31 @@ static ssize_t isDebounce_store(struct kobject *kobj, struct kobj_attribute *att
    return count;
 }
 
-/** @brief Displays duty_cycle in ns */
-static ssize_t duty_cycle_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf){
-   return sprintf(buf, "%d\n", ioread32(shared+4));
+/** @brief Displays period in ns */
+static ssize_t period_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf){
+   return sprintf(buf, "%d\n", ioread32(shared_mem+8*channel)+ioread32(shared_mem+8*channel+4));
 }
 
-/** @brief Stores and sets the duty_cycle in ns */
+/** @brief Stores and sets the period in ns */
+static ssize_t period_store(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count){
+   unsigned int temp;
+   sscanf(buf, "%du", &temp);
+   // Subtract the on-time from the period to get the 
+   iowrite32(temp-ioread32(shared_mem+8*channel), shared_mem+8*channel+4);
+   printk(KERN_INFO "period: %d\n", temp);
+   return count;
+}
+
+/** @brief Displays duty_cycle in ns */
+static ssize_t duty_cycle_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf){
+   return sprintf(buf, "%d\n", ioread32(shared_mem+8*channel));
+}
+
+/** @brief Stores and sets the duty_cycle (on-time) in ns */
 static ssize_t duty_cycle_store(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count){
    unsigned int temp;
    sscanf(buf, "%du", &temp); 
-   iowrite32(temp, shared+4);
+   iowrite32(temp, shared_mem+8*channel);
    printk(KERN_INFO "duty_cycle: %d\n", temp);
    return count;
 }
@@ -134,6 +150,7 @@ static ssize_t duty_cycle_store(struct kobject *kobj, struct kobj_attribute *att
 static struct kobj_attribute count_attr = __ATTR(numberPresses, 0660, numberPresses_show, numberPresses_store);
 static struct kobj_attribute debounce_attr = __ATTR(isDebounce, 0660, isDebounce_show, isDebounce_store);
 static struct kobj_attribute duty_cycle_attr = __ATTR(duty_cycle, 0660, duty_cycle_show, duty_cycle_store);
+static struct kobj_attribute period_attr = __ATTR(period, 0660, period_show, period_store);
 
 /**  The __ATTR_RO macro defines a read-only attribute. There is no need to identify that the
  *  function is called _show, but it must be present. __ATTR_WO can be  used for a write-only
@@ -153,6 +170,7 @@ static struct attribute *ebb_attrs[] = {
       &diff_attr.attr,                   ///< The difference in time between the last two presses
       &debounce_attr.attr,               ///< Is the debounce state true or false
       &duty_cycle_attr.attr,
+      &period_attr.attr,
       NULL,
 };
 
@@ -218,13 +236,10 @@ static int __init ebbButton_init(void){
    printk(KERN_INFO "EBB Button: The button is mapped to IRQ: %d\n", irqNumber);
    
    // Mapping SHARED RAM
-   shared = ioremap(PRU_ADDR+PRU_SHAREDMEM, 0x3000);
-   printk(KERN_INFO "ioremap returned %x\n", (unsigned int) shared);
-   printk(KERN_INFO "ioread32: %x\n", ioread32(shared+4));
+   shared_mem = ioremap(PRU_ADDR+PRU_SHAREDMEM, 0x3000);
+   printk(KERN_INFO "channel: %d, period: %d, duty_cycle: %d\n",
+      channel, ioread32(shared_mem+8*channel)+ioread32(shared_mem+8*channel+4), ioread32(shared_mem));
 
-   if(!isRising){                           // If the kernel parameter isRising=0 is supplied
-      IRQflags = IRQF_TRIGGER_FALLING;      // Set the interrupt to be on the falling edge
-   }
    // This next call requests an interrupt line
    result = request_irq(irqNumber,             // The interrupt number requested
                         (irq_handler_t) ebbgpio_irq_handler, // The pointer to the handler function below
@@ -248,8 +263,8 @@ static void __exit ebbButton_exit(void){
    gpio_free(gpioLED);                      // Free the LED GPIO
    gpio_free(gpioButton);                   // Free the Button GPIO
    printk(KERN_INFO "EBB Button: Goodbye from the EBB Button LKM!\n");
-   iounmap(shared);
-   printk(KERN_INFO "iounmap(shared)\n");
+   iounmap(shared_mem);
+   printk(KERN_INFO "iounmap(shared_mem)\n");
 }
 
 /** @brief The GPIO IRQ Handler function
