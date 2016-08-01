@@ -15,4 +15,6 @@ pru-pwm.asm assembles code for both PRUs.  When PRU_NUM is set to 0, code for PR
 
 INITC is use to synchronize both PRUs, so the pulses are start together (with 1ns).
 
-More channels could be genreated if the emmc were disabled.
+More channels could be generated if the emmc were disabled.
+
+Currently the PRU 0 pwm channels use the same on/off times at PRU 1.  This should be fixed.
