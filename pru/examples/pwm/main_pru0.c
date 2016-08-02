@@ -38,21 +38,39 @@
 #include <pru_cfg.h>
 #include <pru_ctrl.h>
 #include "resource_table_pru1.h"
+#include <pru_intc.h>
 
-// The function is defined in pru1_asm_blinky.asm in same dir
+// The function is defined in pru-pwm.asm in same dir
 // We just need to add a declaration here, the defination can be
 // seperately linked
 extern void start(void);
 
-void main(void)
-{
-    /* Clear SYSCFG[STANDBY_INIT] to enable OCP master port */
-	CT_CFG.SYSCFG_bit.STANDBY_INIT = 0;
+volatile register uint32_t __R30;
+volatile register uint32_t __R31;
+
+// Initialize intrupts so the PRUs can be syncronized.
+// PRU1 is started first and then waits for PRU0
+// PRU0 is then started and tells PRU1 when to start going
+void configIntc(void) {	
+	__R31 = 0x00000000;					// Clear any pending PRU-generated events
+	CT_INTC.CMR4_bit.CH_MAP_16 = 1;		// Map event 16 to channel 1
+	CT_INTC.HMR0_bit.HINT_MAP_1 = 1;	// Map channel 1 to host 1
+	CT_INTC.SICR = 16;					// Ensure event 16 is cleared
+	CT_INTC.EISR = 16;					// Enable event 16
+	CT_INTC.HIEISR |= (1 << 0);			// Enable Host interrupt 1
+	CT_INTC.GER = 1; 					// Globally enable host interrupts
+}
+
+void main(void) {
+	CT_CFG.GPCFG0 = 0x0000;				// Configure GPI and GPO as Mode 0 (Direct Connect)
+	__R30 &= 0xFFFF0000;				// Clear GPO pins
+	configIntc();						// Configure INTC
+
+	CT_CFG.SYSCFG_bit.STANDBY_INIT = 0; // Clear SYSCFG[STANDBY_INIT] to enable OCP master port
 
 	// Access PRU Shared RAM using Constant Table                    */
 	// C28 defaults to 0x00000000, we need to set bits 23:8 to 0x0100 in order to have it point to 0x00010000	 */
-	PRU1_CTRL.CTPPR0_bit.C28_BLK_POINTER = 0x0100;
-	
+	PRU0_CTRL.CTPPR0_bit.C28_BLK_POINTER = 0x0100;
+
 	start();
 }
-

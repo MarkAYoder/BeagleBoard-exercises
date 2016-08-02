@@ -51,19 +51,19 @@ PRU0_FW		=$(GEN_DIR)/main_pru0_fw.out
 # Variable to edit in the makefile
 
 # add the required firmwares to TARGETS
-# TARGETS		=$(PRU1_FW) $(PRU0_FW)
-TARGETS		=$(PRU1_FW)
+TARGETS		=$(PRU1_FW) $(PRU0_FW)
+# TARGETS		=$(PRU1_FW)
 
 # add the required files while linkin the FW code
 # required linking files for PRU1
 # LINK_PRU1_FW = (GEN_DIR)/pru1-inline-asm.object (GEN_DIR)/code2_pru1.object
 # LINK_PRU1_FW= $(GEN_DIR)/pru1-asm-blinky.object
-LINK_PRU1_FW= $(GEN_DIR)/pru1-pwm.object
 # LINK_PRU1_FW= $(GEN_DIR)/pru1-test.object
 
 # required linking files for PRU1
 # LINK_PRU0_FW = (GEN_DIR)/pru0-inline-asm.object (GEN_DIR)/code2_pru1.object
-LINK_PRU0_FW=
+LINK_PRU1_FW= $(GEN_DIR)/pru1-pwm.object
+LINK_PRU0_FW= $(GEN_DIR)/pru0-pwm.object
 
 #------------------------------------------------------
 
@@ -101,10 +101,15 @@ $(GEN_DIR)/pru1-asm-blinky.object: pru1-asm-blinky.asm
 	@echo 'CC	$<'
 	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
-$(GEN_DIR)/pru1-pwm.object: pru1-pwm.asm
+$(GEN_DIR)/pru0-pwm.object: pru-pwm.asm
 	@mkdir -p $(GEN_DIR)
 	@echo 'CC	$<'
-	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
+	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -D=PRU_NUM=0 -fe $@ $<
+
+$(GEN_DIR)/pru1-pwm.object: pru-pwm.asm
+	@mkdir -p $(GEN_DIR)
+	@echo 'CC	$<'
+	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -D=PRU_NUM=1 -fe $@ $<
 
 $(GEN_DIR)/pru1-test.object: pru1-test.asm
 	@mkdir -p $(GEN_DIR)

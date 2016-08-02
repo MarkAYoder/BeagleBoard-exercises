@@ -17,6 +17,10 @@
 
 unsigned int	*prusharedMem_32int_ptr;	// Points to the start of the shared memory
 
+int pwm_enable(int mask) {
+	prusharedMem_32int_ptr[PRU_ENABLE/4] = mask;
+}
+
 /*******************************************************************************
 * int start_pwm_us(int ch, int period, int duty_cycle)
 * 
@@ -87,20 +91,24 @@ int main(int argc, char *argv[])
 	
 	prusharedMem_32int_ptr = pru + PRU_SHAREDMEM/4;	// Points to start of shared memory
 
-	// int i;
-	// for(i=0; i<SERVO_CHANNELS; i++) {
-	// 	start_pwm_us(i, 10, 10*(i+1));
-	// }
+	int i;
+	for(i=0; i<SERVO_CHANNELS; i++) {
+		start_pwm_us(i, 1000, 5*(i+1));
+	}
 
-	int period=1000;
-	start_pwm_us(0, 1*period, 10);
-	start_pwm_us(1, 2*period, 10);
-	start_pwm_us(2, 4*period, 10);
-	start_pwm_us(3, 8*period, 10);
-	start_pwm_us(4, 1*period, 10);
-	start_pwm_us(5, 2*period, 10);
-	start_pwm_us(6, 4*period, 10);
-	start_pwm_us(7, 8*period, 10);
+	// int period=1000;
+	// start_pwm_us(0, 1*period, 10);
+	// start_pwm_us(1, 2*period, 10);
+	// start_pwm_us(2, 4*period, 10);
+	// start_pwm_us(3, 8*period, 10);
+	// start_pwm_us(4, 1*period, 10);
+	// start_pwm_us(5, 2*period, 10);
+	// start_pwm_us(6, 4*period, 10);
+	// start_pwm_us(7, 8*period, 10);
+	// start_pwm_us(8, 1*period, 10);
+	// start_pwm_us(9, 2*period, 10);
+	// start_pwm_us(10, 4*period, 10);
+	// start_pwm_us(11, 8*period, 10);
 	
 	// int i;
 	// for(i=0; i<SERVO_CHANNELS; i++) {
@@ -115,6 +123,15 @@ int main(int argc, char *argv[])
 	// start_pwm_count(5, 10, 10);
 	// start_pwm_count(6, 20, 30);
 	// start_pwm_count(7, 30, 20);
+	
+	// for(i=0; i<24; i++) {
+	// 	int mask = 1 << (i%12);
+	// 	printf("Mask: %x\n", mask);
+	// 	pwm_enable(mask);
+	// 	usleep(500000);
+	// }
+	
+	pwm_enable(0xfff);
 	
 	if(munmap(pru, PRU_LEN)) {
 		printf("munmap failed\n");
