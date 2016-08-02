@@ -35,7 +35,7 @@ var request       = require('request');
 // var BMP085        = require('bmp085');
 var util          = require('util');
 var fs            = require('fs');
-var ms = 15*1000;               // Repeat time
+var ms = 15*60*1000;               // Repeat time
 
 // console.log(util.inspect(request));
 // request.debug = true;
