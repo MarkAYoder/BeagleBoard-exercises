@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<h3>Weather in BIC/h3>
+<h3>Weather in BIC</h3>
 <!--
     Plots go in blank <div> elements. You can size them in the plot layout,
     or give the div a size as shown here.
@@ -42,29 +42,54 @@
 <script>
 // These are placeholders until we get the data from the server.
 var data = [
-    {   // Temperture axis
+    {   // Temperture Low axis
+        "type": "scatter",  // all "scatter" attributes: https://plot.ly/javascript/reference/#scatter
+        "x": [1, 2, 3],
+        "y": [3, 1, 6],
+        "marker": {
+            "color": "rgb(140, 32, 77)",
+            size: 5
+        },
+        connectgaps: false,
+        mode:   'lines+markers',
+        name:   'Temp Low'
+    },
+    {   // Temperture Mid axis
         "type": "scatter",  // all "scatter" attributes: https://plot.ly/javascript/reference/#scatter
         "x": [1, 2, 3],
         "y": [3, 1, 6],
         "marker": {
             "color": "rgb(200, 32, 77)",
-            size: 3
+            size: 5
         },
         connectgaps: false,
-        mode:   'markers',
-        name:   'Temp'
+        mode:   'lines+markers',
+        name:   'Temp Mid'
     },
-    {   // Pressure axis
+    {   // Temp High axis
+        "type": "scatter",
+        "x": [1, 2, 3],
+        "y": [3, 1, 6],
+        "marker": {
+            "color": "rgb(260, 32, 77)",
+            size: 5
+        },
+        connectgaps: false,
+        mode:   'lines+markers',
+        name:   'Temp High',
+        // yaxis: 'y2'
+    },
+    {   // Humidity
         "type": "scatter",
         "x": [1, 2, 3],
         "y": [3, 1, 6],
         "marker": {
             "color": "rgb(16, 200, 77)",
-            size: 3
+            size: 5
         },
         connectgaps: false,
-        mode:   'markers',
-        name:   'Pressure',
+        mode:   'lines+markers',
+        name:   'Humidity',
         yaxis: 'y2'
     }
 ];
@@ -79,38 +104,12 @@ var layout = {                     // all "layout" attributes: #layout
         titlefont: {color: 'rgb(255, 32, 77)'},
     },
     yaxis2: {
-        title: 'Pressure (in)',
+        title: 'Humidity (%)',
         titlefont: {color: 'rgb(16, 255, 77)'},
         tickfont: {color: 'rgb(148, 103, 189)'},
         overlaying: 'y',
         side: 'right'
     },
-/*
-    annotations: [            // all "annotation" attributes: #layout-annotations
-        {
-            text: 'Rain',     // #layout-annotations-text
-            x:    '2015-09-16 12:09',    // #layout-annotations-x
-            xref: 'x',        // #layout-annotations-xref
-            y:    898.2,      // #layout-annotations-y
-            yref: 'y2'        // #layout-annotations-yref
-        },
-        {
-            text: 'Moved Outside',     // #layout-annotations-text
-            x:    '2015-10-07 11:15',    // #layout-annotations-x
-            xref: 'x',        // #layout-annotations-xref
-            y:    29.3,      // #layout-annotations-y
-            yref: ''        // #layout-annotations-yref
-        },
-        {
-            text: 'Fixed wiring',     // #layout-annotations-text
-            x:    '2015-10-14 3:28',    // #layout-annotations-x
-            xref: 'x',        // #layout-annotations-xref
-            y:    904.1,      // #layout-annotations-y
-            yref: 'y2'        // #layout-annotations-yref
-        }
-
-    ]
-*/
 };
 
 var server = 'http://data.sparkfun.com/';
@@ -136,24 +135,24 @@ $.ajax({
             return moment.tz(item.timestamp, zone).format(format); // Convert to Plotly time format and ET
         });
     data[1].x = data[0].x;      // Both plots have same time scale
+    data[2].x = data[0].x;
+    data[3].x = data[0].x;
     data[0].y = _.map(results, function(item) {  // Copy temp data
-        if(item.temp < 50) {
-            return item.temp*1.8+32;	// Convert to F
-        } else {
-            return NaN;
-        }
-    });
-    data[1].y = _.map(results, function(item) { // Copy pressure data
-        if(item.pressure > 880 && item.pressure < 1200) {
-            return item.pressure / 33.8638866667;
-        } else {
-            return NaN;
-        }
-    });
+            return item.templow*1.8+32;	// Convert to F
+        });
+    data[1].y = _.map(results, function(item) { 
+            return item.tempmid*1.8+32;
+        });
+    data[2].y = _.map(results, function(item) { 
+            return item.temphigh*1.8+32;
+        });
+    data[3].y = _.map(results, function(item) { 
+            return item.humidity;
+        });
     // console.log(data[0].x.length);
     
     Plotly.plot('plot', data, layout);      // Puts plot in <div> with id='plot'
-    $('#summary').html('Temp: ' + data[0].y[0].toFixed(2) + '(F), Pressure: ' + data[1].y[0].toFixed(2) +
+    $('#summary').html('Temp: ' + data[0].y[0].toFixed(2) + '(F)' +
         ' at ' + data[0].x[0]);
 });
 
