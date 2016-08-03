@@ -32,7 +32,7 @@ var logger = new winston.Logger({
 });
 
 var request       = require('request');
-// var BMP085        = require('bmp085');
+var child_process = require('child_process');
 var util          = require('util');
 var fs            = require('fs');
 var ms = 5*1000;               // Repeat time
@@ -75,32 +75,32 @@ function getHumid(data) {
     return temp;
 }
 
-//     child_process.exec('i2cget -y 1 ' + i2cNum + ' 0 w',
-//         function (error, stdout, stderr) {
-// //     The TMP102 returns a 12 bit value with the digits swapped
-//             stdout = '0x' + stdout.substring(4,6) + stdout.substring(2,4);
-// //                console.log('i2cget: "' + stdout + '"');
-//             if(error) { console.log('error: ' + error); }
-//             if(stderr) {console.log('stderr: ' + stderr); }
-//             socket.emit('i2c', stdout);
-//         });
-
 function readWeather() {
-    tempLow = getTemp(fs.readFileSync(w1.low,  {encoding: 'utf8'}));
-    tempMid = getTemp(fs.readFileSync(w1.mid,  {encoding: 'utf8'}));
-    tempHigh= getTemp(fs.readFileSync(w1.high, {encoding: 'utf8'}));
+    child_process.exec('/root/exercises/sensors/bic/si7021',
+    function (error, stdout, stderr) {
+        console.log("stdout: " + stdout);
+        var humid = stdout.substring(0, 5);
 
-    logger.debug("low: " + tempLow);
-    logger.debug("mid: " + tempMid);
-    logger.debug("high:" + tempHigh);
+        if(error) { console.log('error: ' + error); }
+        if(stderr) {console.log('stderr: ' + stderr); }
+        console.log("humid: " + humid);
 
-    var url = util.format(urlBase, tempLow, tempMid, tempHigh, 0, 0, 0, 0);
-    logger.debug("url: ", url);
-    request(url, {timeout: 10000}, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            logger.info(body); 
-        } else {
-            logger.error("error=" + error + " response=" + JSON.stringify(response));
-        }
+        tempLow = getTemp(fs.readFileSync(w1.low,  {encoding: 'utf8'}));
+        tempMid = getTemp(fs.readFileSync(w1.mid,  {encoding: 'utf8'}));
+        tempHigh= getTemp(fs.readFileSync(w1.high, {encoding: 'utf8'}));
+    
+        logger.debug("low: " + tempLow);
+        logger.debug("mid: " + tempMid);
+        logger.debug("high:" + tempHigh);
+    
+        var url = util.format(urlBase, tempLow, tempMid, tempHigh, humid, 0, 0, 0);
+        logger.debug("url: ", url);
+        request(url, {timeout: 10000}, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                logger.info(body); 
+            } else {
+                logger.error("error=" + error + " response=" + JSON.stringify(response));
+            }
+        });
     });
 }

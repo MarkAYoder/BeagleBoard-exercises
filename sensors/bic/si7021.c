@@ -41,7 +41,7 @@ void main()
 		float humidity = (((data[0] * 256 + data[1]) * 125.0) / 65536.0) - 6;
 
 		// Output data to screen
-		printf("Relative Humidity : %.2f RH \n", humidity);
+		printf("%.2f, ", humidity);
 	}
 
 	// Send temperature measurement command(0xF3)
@@ -62,7 +62,10 @@ void main()
 		float fTemp = cTemp * 1.8 + 32;
 
 		// Output data to screen
+		printf("%.2f\n", cTemp);
 		printf("Temperature in Celsius : %.2f C \n", cTemp);
 		printf("Temperature in Fahrenheit : %.2f F \n", fTemp);
 	}
+	
+	exit(0);
 }
