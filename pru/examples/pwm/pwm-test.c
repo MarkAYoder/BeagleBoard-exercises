@@ -123,6 +123,10 @@ int main(int argc, char *argv[])
 	// start_pwm_count(5, 10, 10);
 	// start_pwm_count(6, 20, 30);
 	// start_pwm_count(7, 30, 20);
+	// start_pwm_count(8, 1, 3);
+	// start_pwm_count(9, 2, 2);
+	// start_pwm_count(10, 3, 1);
+	// start_pwm_count(11, 1, 7);
 	
 	// for(i=0; i<24; i++) {
 	// 	int mask = 1 << (i%12);

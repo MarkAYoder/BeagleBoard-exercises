@@ -79,6 +79,25 @@ static ssize_t duty_cycle_store(struct kobject *kobj, struct kobj_attribute *att
    printk(KERN_INFO "duty_cycle: %dns\n", duty);
    return count;
 }
+/** @brief Displays which channel is active */
+static ssize_t channel_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf){
+   return sprintf(buf, "%d\n", channel);
+}
+
+/** @brief Stores and sets the channel */
+static ssize_t channel_store(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count){
+   unsigned int new_channel;
+   
+   sscanf(buf, "%du", &new_channel); 
+
+   if((new_channel>0) && (new_channel<SERVO_CHANNELS)) {
+      channel = new_channel;
+      printk(KERN_INFO "channel: %dns\n", channel);
+   } else {
+      printk(KERN_INFO "channel must be between 0 and %d. %d was given\n", SERVO_CHANNELS, new_channel);
+   }
+   return count;
+}
 
 /** @brief Displays enable */
 static ssize_t enable_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf){
@@ -108,6 +127,7 @@ static ssize_t enable_store(struct kobject *kobj, struct kobj_attribute *attr, c
 static struct kobj_attribute duty_cycle_attr = __ATTR(duty_cycle, 0660, duty_cycle_show, duty_cycle_store);
 static struct kobj_attribute period_attr = __ATTR(period, 0660, period_show, period_store);
 static struct kobj_attribute enable_attr = __ATTR(enable, 0660, enable_show, enable_store);
+static struct kobj_attribute channel_attr = __ATTR(channel, 0660, channel_show, channel_store);
 
 /**  The __ATTR_RO macro defines a read-only attribute. There is no need to identify that the
  *  function is called _show, but it must be present. __ATTR_WO can be  used for a write-only
@@ -122,6 +142,7 @@ static struct attribute *ebb_attrs[] = {
       &duty_cycle_attr.attr,
       &period_attr.attr,
       &enable_attr.attr,
+      &channel_attr.attr,
       NULL,
 };
 
