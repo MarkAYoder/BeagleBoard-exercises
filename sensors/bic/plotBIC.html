@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="splash">
+<head>
+<title>Weather</title>
+<!-- https://plot.ly/javascript/reference -->
+</head>
+
+<body>
+<h3>Weather in BIC/h3>
+<!--
+    Plots go in blank <div> elements. You can size them in the plot layout,
+    or give the div a size as shown here.
+-->
+<!--<div id="plot" style="width:600px;height:400px;"></div>-->
+<div id="summary">Getting latest conditions</div>
+<div id="plot"></div>
+
+<!--
+    Include these javascript files.
+    jQuery: plotly.js ships with v1.8 but supports v1.7 through v1.10
+    the weird typedarray.js code is a polyfill, primarily for IE9, that does not
+    natively support typed numeric arrays
+-->
+<!-- Use these for local server -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script>if(typeof window.Int16Array !== 'function')document.write("<scri"+"pt src='dependencies/typedarray.js'></scr"+"ipt>");</script>
+<script type="text/javascript" src="js/plotly-latest.min.js"></script>
+<script type="text/javascript" src="js/underscore-min.js"></script>
+
+<script src="js/moment.min.js"></script>
+<script src="js/moment-timezone.min.js"></script>
+
+<!-- Use these for remote servers -->
+<!--<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>-->
+<!--<script>if(typeof window.Int16Array !== 'function')document.write("<scri"+"pt src='dependencies/typedarray.js'></scr"+"ipt>");</script>-->
+<!--<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
+<!--<script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>-->
+
+<!--<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
+<!--<script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>-->
+
+<script>
+// These are placeholders until we get the data from the server.
+var data = [
+    {   // Temperture axis
+        "type": "scatter",  // all "scatter" attributes: https://plot.ly/javascript/reference/#scatter
+        "x": [1, 2, 3],
+        "y": [3, 1, 6],
+        "marker": {
+            "color": "rgb(200, 32, 77)",
+            size: 3
+        },
+        connectgaps: false,
+        mode:   'markers',
+        name:   'Temp'
+    },
+    {   // Pressure axis
+        "type": "scatter",
+        "x": [1, 2, 3],
+        "y": [3, 1, 6],
+        "marker": {
+            "color": "rgb(16, 200, 77)",
+            size: 3
+        },
+        connectgaps: false,
+        mode:   'markers',
+        name:   'Pressure',
+        yaxis: 'y2'
+    }
+];
+
+var layout = {                     // all "layout" attributes: #layout
+    "title": "Weather",
+    "xaxis": {                  // all "layout.xaxis" attributes: #layout-xaxis
+        "title": "Date"         // more about "layout.xaxis.title": #layout-xaxis-title
+    },
+    yaxis: {
+        title: 'Temperature (F)',
+        titlefont: {color: 'rgb(255, 32, 77)'},
+    },
+    yaxis2: {
+        title: 'Pressure (in)',
+        titlefont: {color: 'rgb(16, 255, 77)'},
+        tickfont: {color: 'rgb(148, 103, 189)'},
+        overlaying: 'y',
+        side: 'right'
+    },
+/*
+    annotations: [            // all "annotation" attributes: #layout-annotations
+        {
+            text: 'Rain',     // #layout-annotations-text
+            x:    '2015-09-16 12:09',    // #layout-annotations-x
+            xref: 'x',        // #layout-annotations-xref
+            y:    898.2,      // #layout-annotations-y
+            yref: 'y2'        // #layout-annotations-yref
+        },
+        {
+            text: 'Moved Outside',     // #layout-annotations-text
+            x:    '2015-10-07 11:15',    // #layout-annotations-x
+            xref: 'x',        // #layout-annotations-xref
+            y:    29.3,      // #layout-annotations-y
+            yref: ''        // #layout-annotations-yref
+        },
+        {
+            text: 'Fixed wiring',     // #layout-annotations-text
+            x:    '2015-10-14 3:28',    // #layout-annotations-x
+            xref: 'x',        // #layout-annotations-xref
+            y:    904.1,      // #layout-annotations-y
+            yref: 'y2'        // #layout-annotations-yref
+        }
+
+    ]
+*/
+};
+
+var server = 'http://data.sparkfun.com/';
+var public_key = 'OGbYEaOpo6hWaow7A9aK';
+var timeSpan = '?gt[timestamp]=now-2weeks';
+
+var zone = 'America/New_York';
+var format = 'YYYY-MM-DD HH:mm:ss';
+
+// JSONP request
+$.ajax({
+  // url: 'http://14.139.34.32:8080/output/' + public_key + '.json' + timezone,
+  url: server + 'output/' + public_key + '.json' + timeSpan,
+//   data: {page: 1},
+  dataType: 'jsonp',
+}).done(function (results) {
+    // console.log(results);
+    // var i;
+    // for(i=0; i<5; i++) {
+    //     console.log(results[i]);
+    // }
+    data[0].x = _.map(results, function(item) {
+            return moment.tz(item.timestamp, zone).format(format); // Convert to Plotly time format and ET
+        });
+    data[1].x = data[0].x;      // Both plots have same time scale
+    data[0].y = _.map(results, function(item) {  // Copy temp data
+        if(item.temp < 50) {
+            return item.temp*1.8+32;	// Convert to F
+        } else {
+            return NaN;
+        }
+    });
+    data[1].y = _.map(results, function(item) { // Copy pressure data
+        if(item.pressure > 880 && item.pressure < 1200) {
+            return item.pressure / 33.8638866667;
+        } else {
+            return NaN;
+        }
+    });
+    // console.log(data[0].x.length);
+    
+    Plotly.plot('plot', data, layout);      // Puts plot in <div> with id='plot'
+    $('#summary').html('Temp: ' + data[0].y[0].toFixed(2) + '(F), Pressure: ' + data[1].y[0].toFixed(2) +
+        ' at ' + data[0].x[0]);
+});
+
+</script>
+</body>
+</html>

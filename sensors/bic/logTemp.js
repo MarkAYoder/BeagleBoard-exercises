@@ -15,7 +15,7 @@ var logger = new winston.Logger({
     transports: [
         new winston.transports.File({
             level: 'debug',
-            filename: '/var/run/log/weather.log',
+            filename: '/var/run/log/bic.log',
             handleExceptions: true,
             json: true,
             maxsize: 1024000, // 1MB
@@ -35,13 +35,13 @@ var request       = require('request');
 // var BMP085        = require('bmp085');
 var util          = require('util');
 var fs            = require('fs');
-var ms = 15*60*1000;               // Repeat time
+var ms = 5*1000;               // Repeat time
 
 // console.log(util.inspect(request));
 // request.debug = true;
 
 // var filename = "/home/yoder/exercises/iot/phant/keys_weather.json";
-var filename = "/root/exercises/iot/phant/keys_weather.json";
+var filename = "/root/exercises/sensors/bic/phantKeys.json";
 // logger.debug("process.argv.length: " + process.argv.length);
 if(process.argv.length === 3) {
     filename = process.argv[2];
@@ -51,24 +51,29 @@ var keys = JSON.parse(fs.readFileSync(filename));
 logger.info("Title: " + keys.title);
 // logger.debug(util.inspect(keys));
 
-var urlBase = keys.inputUrl + "/?private_key=" + keys.privateKey + "&humidity=%s&pressure=%s&temp=%s";
+var urlBase = keys.inputUrl + "/?private_key=" + keys.privateKey + "&temphigh=%s&tempmid=%s&templow=%s&humidity=%s&pressure=%s&ph=%s&extra=%s";
 // var barometer = new BMP085({device: '/dev/i2c-2', mode: '2'});
 
-var w1="/sys/bus/w1/devices/28-0000074b85ea/w1_slave"
+var w1={
+    low: "/sys/bus/w1/devices/28-0000075f8228/w1_slave",
+    mid: "/sys/bus/w1/devices/28-00000128197d/w1_slave",
+    high:"/sys/bus/w1/devices/28-0000074b85ea/w1_slave"
+    };
 
-setInterval(readWeather, ms);
+// setInterval(readWeather, ms);
 
 readWeather();
 
 function readWeather() {
-    fs.readFile(w1, {encoding: 'utf8'}, postTemp);
+    fs.readFile(w1.low, {encoding: 'utf8'}, postTemp);
 }
 
-function postTemp(err, data) {
+function postTemp(err, data, test) {
     if(err) {
         logger.debug("err: " + util.inspect(err));
     }
-    // logger.debug("data: " + util.inspect(data));
+    logger.debug("test: " + util.inspect(test));
+    logger.debug("data: " + util.inspect(data));
     var temp = data.slice(data.indexOf('t=')+2, -1);
     temp = temp.slice(0,2) + '.' + temp.slice(2);
     // var pressure = data.pressure.toFixed(1);

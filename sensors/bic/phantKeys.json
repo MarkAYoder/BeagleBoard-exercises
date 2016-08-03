@@ -1,0 +1,9 @@
+{
+    "title": "BIC temperature and humidity",
+    "outputUrl": "http://data.sparkfun.com/output/OGbYEaOpo6hWaow7A9aK",
+    "inputUrl": "http://data.sparkfun.com/input/OGbYEaOpo6hWaow7A9aK",
+    "manageUrl": "http://data.sparkfun.com/streams/OGbYEaOpo6hWaow7A9aK",
+    "publicKey": "OGbYEaOpo6hWaow7A9aK",
+    "privateKey": "8bEv185pAzUo6Xm4yG65",
+    "deleteKey": "v3zNbZxVyKfMBAkeaLB7"
+}
