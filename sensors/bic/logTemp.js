@@ -51,7 +51,7 @@ var keys = JSON.parse(fs.readFileSync(filename));
 logger.info("Title: " + keys.title);
 // logger.debug(util.inspect(keys));
 
-var urlBase = keys.inputUrl + "/?private_key=" + keys.privateKey + "&temphigh=%s&tempmid=%s&templow=%s&humidity=%s&pressure=%s&ph=%s&extra=%s";
+var urlBase = keys.inputUrl + "/?private_key=" + keys.privateKey + "&templow=%s&tempmid=%s&temphigh=%s&humidity=%s&pressure=%s&ph=%s&extra=%s";
 // var barometer = new BMP085({device: '/dev/i2c-2', mode: '2'});
 
 var w1={
@@ -64,24 +64,37 @@ var w1={
 
 readWeather();
 
-function readWeather() {
-    fs.readFile(w1.low, {encoding: 'utf8'}, postTemp);
+function getTemp(data) {
+    var temp = data.slice(data.indexOf('t=')+2, -1);// Pull out temp
+    temp = temp.slice(0,2) + '.' + temp.slice(2);   // Put decimal in right place
+    return temp;
 }
-
-function postTemp(err, data, test) {
-    if(err) {
-        logger.debug("err: " + util.inspect(err));
-    }
-    logger.debug("test: " + util.inspect(test));
-    logger.debug("data: " + util.inspect(data));
+function getHumid(data) {
     var temp = data.slice(data.indexOf('t=')+2, -1);
     temp = temp.slice(0,2) + '.' + temp.slice(2);
-    // var pressure = data.pressure.toFixed(1);
+    return temp;
+}
 
-    logger.debug("temp: " + temp);
-    // logger.debug("pressure: " + pressure);
-    
-    var url = util.format(urlBase, 0, 0, temp);
+//     child_process.exec('i2cget -y 1 ' + i2cNum + ' 0 w',
+//         function (error, stdout, stderr) {
+// //     The TMP102 returns a 12 bit value with the digits swapped
+//             stdout = '0x' + stdout.substring(4,6) + stdout.substring(2,4);
+// //                console.log('i2cget: "' + stdout + '"');
+//             if(error) { console.log('error: ' + error); }
+//             if(stderr) {console.log('stderr: ' + stderr); }
+//             socket.emit('i2c', stdout);
+//         });
+
+function readWeather() {
+    tempLow = getTemp(fs.readFileSync(w1.low,  {encoding: 'utf8'}));
+    tempMid = getTemp(fs.readFileSync(w1.mid,  {encoding: 'utf8'}));
+    tempHigh= getTemp(fs.readFileSync(w1.high, {encoding: 'utf8'}));
+
+    logger.debug("low: " + tempLow);
+    logger.debug("mid: " + tempMid);
+    logger.debug("high:" + tempHigh);
+
+    var url = util.format(urlBase, tempLow, tempMid, tempHigh, 0, 0, 0, 0);
     logger.debug("url: ", url);
     request(url, {timeout: 10000}, function (error, response, body) {
         if (!error && response.statusCode == 200) {
