@@ -138,22 +138,22 @@ $.ajax({
     data[2].x = data[0].x;
     data[3].x = data[0].x;
     data[0].y = _.map(results, function(item) {  // Copy temp data
-            return item.templow*1.8+32;	// Convert to F
+            return item.templow>0  ?  (item.templow*1.8+32).toFixed(2) : NaN;	// Convert to F
         });
     data[1].y = _.map(results, function(item) { 
-            return item.tempmid*1.8+32;
+            return item.tempmid>0  ?  (item.tempmid*1.8+32).toFixed(2) : NaN;	// Convert to F
         });
     data[2].y = _.map(results, function(item) { 
-            return item.temphigh*1.8+32;
+            return item.temphigh>0 ?  (item.temphigh*1.8+32).toFixed(2) : NaN;	// Convert to F
         });
     data[3].y = _.map(results, function(item) { 
-            return item.humidity;
+            return item.humidity>26 ?  item.humidity : NaN;
         });
     // console.log(data[0].x.length);
     
     Plotly.plot('plot', data, layout);      // Puts plot in <div> with id='plot'
-    $('#summary').html('Temp: ' + data[0].y[0].toFixed(2) + '(F)' +
-        ' at ' + data[0].x[0]);
+    $('#summary').html('Temp: ' + data[0].y[0] + ', ' + data[1].y[0] + ', ' + data[2].y[0] + 'F, ' +
+        'Humidity: ' + data[3].y[0] + '% at ' + data[0].x[0]);
 });
 
 </script>
