@@ -1,0 +1,9 @@
+{
+    "title": "Bedroom Temp and Humidity",
+    "outputUrl": "http://data.sparkfun.com/output/9JmYqEAYbXIzzDGDbj0G",
+    "inputUrl": "http://data.sparkfun.com/input/9JmYqEAYbXIzzDGDbj0G",
+    "manageUrl": "http://data.sparkfun.com/streams/9JmYqEAYbXIzzDGDbj0G",
+    "publicKey": "9JmYqEAYbXIzzDGDbj0G",
+    "privateKey": "xzwBP2oBvxFrrbRbPWNR",
+    "deleteKey": "n3YRVlqRxeHzzNrNdw3r"
+}

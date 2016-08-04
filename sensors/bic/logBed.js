@@ -40,7 +40,7 @@ var ms = 5*1000;               // Repeat time
 // console.log(util.inspect(request));
 // request.debug = true;
 
-var filename = "/root/exercises/sensors/bic/phantKeys.json";
+var filename = "/root/exercises/sensors/bic/bedKeys.json";
 // logger.debug("process.argv.length: " + process.argv.length);
 if(process.argv.length === 3) {
     filename = process.argv[2];
@@ -48,10 +48,9 @@ if(process.argv.length === 3) {
 var keys = JSON.parse(fs.readFileSync(filename));
 // logger.info("Using: " + filename);
 logger.info("Title: " + keys.title);
-// logger.debug(util.inspect(keys));
+logger.debug(util.inspect(keys));
 
 var urlBase = keys.inputUrl + "/?private_key=" + keys.privateKey + "&templow=%s&tempmid=%s&temphigh=%s&humidity=%s&pressure=%s&ph=%s&extra=%s";
-// var barometer = new BMP085({device: '/dev/i2c-2', mode: '2'});
 
 var w1={
     low: "/sys/bus/w1/devices/28-0000075f8228/w1_slave",
@@ -77,22 +76,24 @@ function getHumid(data) {
 function readWeather() {
     child_process.exec('/root/exercises/sensors/bic/si7021',
     function (error, stdout, stderr) {
-        console.log("stdout: " + stdout);
+        logger.debug("stdout: " + stdout);
         var humid = stdout.substring(0, 5);
+        var temp  = stdout.substring(7, 11);
 
         if(error) { console.log('error: ' + error); }
         if(stderr) {console.log('stderr: ' + stderr); }
-        console.log("humid: " + humid);
+        logger.debug("humid: " + humid);
+        logger.debug("temp:  " + temp);
 
-        tempLow = getTemp(fs.readFileSync(w1.low,  {encoding: 'utf8'}));
-        tempMid = getTemp(fs.readFileSync(w1.mid,  {encoding: 'utf8'}));
-        tempHigh= getTemp(fs.readFileSync(w1.high, {encoding: 'utf8'}));
+        // tempLow = getTemp(fs.readFileSync(w1.low,  {encoding: 'utf8'}));
+        // tempMid = getTemp(fs.readFileSync(w1.mid,  {encoding: 'utf8'}));
+        // tempHigh= getTemp(fs.readFileSync(w1.high, {encoding: 'utf8'}));
     
-        logger.debug("low: " + tempLow);
-        logger.debug("mid: " + tempMid);
-        logger.debug("high:" + tempHigh);
+        // logger.debug("low: " + tempLow);
+        // logger.debug("mid: " + tempMid);
+        // logger.debug("high:" + tempHigh);
     
-        var url = util.format(urlBase, tempLow, tempMid, tempHigh, humid, 0, 0, 0);
+        var url = util.format(urlBase, temp, temp, temp, humid, 0, 0, 0);
         logger.debug("url: ", url);
         request(url, {timeout: 10000}, function (error, response, body) {
             if (!error && response.statusCode == 200) {
