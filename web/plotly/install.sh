@@ -15,6 +15,6 @@ cd ..
 
 # Link it where the browser can see it 
 here=$PWD
-cd /var/lib/cloud9
-ln -s $here .
+cd /usr/share/bone101
+# ln -s $here .
 cd $here

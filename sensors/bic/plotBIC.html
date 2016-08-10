@@ -141,7 +141,7 @@ $.ajax({
             return (item.templow>0) && (item.templow<65)  ?  (item.templow*1.8+32).toFixed(2) : NaN;	// Convert to F
         });
     data[1].y = _.map(results, function(item) { 
-            return (item.tempmid>0) && (item.tempmid<65)  ?  (item.tempmid*1.8+32).toFixed(2) : NaN;	// Convert to F
+            return (item.tempmid>0) && (item.tempmid<65)  ?  (item.tempmid*1.8+32).toFixed(2)-1.47 : NaN;	// Convert to F
         });
     data[2].y = _.map(results, function(item) { 
             return (item.temphigh>0) && (item.temphigh<65) ?  (item.temphigh*1.8+32).toFixed(2) : NaN;	// Convert to F
