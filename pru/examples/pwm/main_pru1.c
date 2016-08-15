@@ -49,8 +49,11 @@ void main(void)
     /* Clear SYSCFG[STANDBY_INIT] to enable OCP master port */
 	CT_CFG.SYSCFG_bit.STANDBY_INIT = 0;
 
-	// Access PRU Shared RAM using Constant Table                    */
-	// C28 defaults to 0x00000000, we need to set bits 23:8 to 0x0100 in order to have it point to 0x00010000	 */
+	// Access PRU Shared RAM using Constant Table
+	// C24 defaults to 0x00000000, we need to set bits 11:8 to 0x0000 in order to access local data RAM
+	PRU1_CTRL.CTBIR0_bit.C24_BLK_IDX = 0x0000;
+	// C28 defaults to 0x00000000, we need to set bits 23:8 to 0x0100 in order to have it point to 0x00010000,
+	//		to access SHARED RAM
 	PRU1_CTRL.CTPPR0_bit.C28_BLK_POINTER = 0x0100;
 	
 	start();

@@ -3,6 +3,9 @@
  *  pwm tester
  *  (c) Copyright 2016
  *  Mark A. Yoder, 20-July-2016
+ *	The channels 0-11 are on PRU1 and channels 12-17 are on PRU0
+ *	The period and duty cycle values are stored in each PRU's Data memory
+ *	The enable bits are stored in the shared memory
  *
  */
 
@@ -13,12 +16,46 @@
 
 #define PRU_ADDR		0x4A300000		// Start of PRU memory Page 184 am335x TRM
 #define PRU_LEN			0x80000			// Length of PRU memory
+#define PRU0_DRAM		0x00000			// Offset to DRAM
+#define PRU1_DRAM		0x02000
 #define PRU_SHAREDMEM	0x10000			// Offset to shared memory
 
+unsigned int	*pru0DRAM_32int_ptr;		// Points to the start of local DRAM
+unsigned int	*pru1DRAM_32int_ptr;		// Points to the start of local DRAM
 unsigned int	*prusharedMem_32int_ptr;	// Points to the start of the shared memory
 
+/*******************************************************************************
+* int pwm_enable(int mask)
+* 
+* Sets the enable bits for each channel.  Bit 0 is channel 0, etc.
+*******************************************************************************/
 int pwm_enable(int mask) {
 	prusharedMem_32int_ptr[PRU_ENABLE/4] = mask;
+}
+
+/*******************************************************************************
+* unsigned int	*ch2DRAMaddr(int ch)
+* 
+* Maps the channel number to the correct DRAM address
+* Channels 0-11 are on PRU1, Channels 12-17 are on PRU0
+*******************************************************************************/
+unsigned int	*ch2DRAMaddr(int ch) {
+	unsigned int *pruDRAM;
+	// Sanity Checks
+	if(ch<0 || ch>=SERVO_CHANNELS){
+		printf("ERROR: Servo Channel must be 0-%d\n", SERVO_CHANNELS-1);
+		return (unsigned int *) -1;
+	}
+	if(ch<6) {	// PRU1
+		pruDRAM = pru0DRAM_32int_ptr;
+	} else {	// PRU0
+		pruDRAM = pru1DRAM_32int_ptr - 6*2;	// Maps channel 6 to index 0
+	}
+	if(pruDRAM == NULL){
+		printf("ERROR: PRU servo Controller not initialized\n");
+		return (unsigned int *) -1;
+	}
+	return pruDRAM;
 }
 
 /*******************************************************************************
@@ -28,14 +65,8 @@ int pwm_enable(int mask) {
 * duty_cycle is the percent of on time (value between 0 and 100)
 *******************************************************************************/
 int start_pwm_us(int ch, int period, int duty_cycle) {
-	// Sanity Checks
-	if(ch<0 || ch>=SERVO_CHANNELS){
-		printf("ERROR: Servo Channel must be between 1&%d\n", SERVO_CHANNELS);
-		return -1;
-	} if(prusharedMem_32int_ptr == NULL){
-		printf("ERROR: PRU servo Controller not initialized\n");
-		return -1;
-	}
+	unsigned int *pruDRAM_32int_ptr = ch2DRAMaddr(ch);
+	
 	// PRU runs at 200Mhz. find #loops needed
 	int onTime  = (period * duty_cycle)/100;
 	unsigned int countOn = ((onTime*200.0)/PRU_PWM_LOOP_INSTRUCTIONS); 
@@ -43,8 +74,8 @@ int start_pwm_us(int ch, int period, int duty_cycle) {
 	printf("onTime: %d, period: %d, countOn: %d, countOff: %d, count: %d\n", 
 		onTime, period, countOn, count-countOn, count);
 	// write to PRU shared memory
-	prusharedMem_32int_ptr[2*(ch)+0] = countOn;		// On time
-	prusharedMem_32int_ptr[2*(ch)+1] = count-countOn;	// Off time
+	pruDRAM_32int_ptr[2*(ch)+0] = countOn;		// On time
+	pruDRAM_32int_ptr[2*(ch)+1] = count-countOn;	// Off time
 	return 0;
 }
 
@@ -54,19 +85,13 @@ int start_pwm_us(int ch, int period, int duty_cycle) {
 * Starts a pwm pulse on for countOn and off for countOff to a single channel (ch)
 *******************************************************************************/
 int start_pwm_count(int ch, int countOn, int countOff) {
-	// Sanity Checks
-	if(ch<0 || ch>=SERVO_CHANNELS){
-		printf("ERROR: Servo Channel must be between 1&%d\n", SERVO_CHANNELS);
-		return -1;
-	} if(prusharedMem_32int_ptr == NULL){
-		printf("ERROR: PRU servo Controller not initialized\n");
-		return -1;
-	}
+	unsigned int *pruDRAM_32int_ptr = ch2DRAMaddr(ch);
+	
 	printf("countOn: %d, countOff: %d, count: %d\n", 
 		countOn, countOff, countOn+countOff);
 	// write to PRU shared memory
-	prusharedMem_32int_ptr[2*(ch)+0] = countOn;	// On time
-	prusharedMem_32int_ptr[2*(ch)+1] = countOff;	// Off time
+	pruDRAM_32int_ptr[2*(ch)+0] = countOn;	// On time
+	pruDRAM_32int_ptr[2*(ch)+1] = countOff;	// Off time
 	return 0;
 }
 
@@ -89,12 +114,14 @@ int main(int argc, char *argv[])
 	close(fd);
 	printf ("Using /dev/mem.\n");
 	
+	pru0DRAM_32int_ptr =     pru + PRU0_DRAM/4;	// Points to start of PRU0 memory
+	pru1DRAM_32int_ptr =     pru + PRU1_DRAM/4;	// Points to start of PRU1 memory
 	prusharedMem_32int_ptr = pru + PRU_SHAREDMEM/4;	// Points to start of shared memory
 
-	int i;
-	for(i=0; i<SERVO_CHANNELS; i++) {
-		start_pwm_us(i, 1000, 5*(i+1));
-	}
+	// int i;
+	// for(i=0; i<SERVO_CHANNELS; i++) {
+	// 	start_pwm_us(i, 1000, 5*(i+1));
+	// }
 
 	// int period=1000;
 	// start_pwm_us(0, 1*period, 10);
@@ -110,10 +137,10 @@ int main(int argc, char *argv[])
 	// start_pwm_us(10, 4*period, 10);
 	// start_pwm_us(11, 8*period, 10);
 	
-	// int i;
-	// for(i=0; i<SERVO_CHANNELS; i++) {
-	// 	start_pwm_count(i, i+1, 10-(i+1));
-	// }
+	int i;
+	for(i=0; i<SERVO_CHANNELS; i++) {
+		start_pwm_count(i, i+1, 20-(i+1));
+	}
 	
 	// start_pwm_count(0, 1, 1);
 	// start_pwm_count(1, 2, 2);
@@ -128,6 +155,13 @@ int main(int argc, char *argv[])
 	// start_pwm_count(10, 3, 1);
 	// start_pwm_count(11, 1, 7);
 	
+	// start_pwm_count(12, 1, 15);
+	// start_pwm_count(13, 2, 15);
+	// start_pwm_count(14, 3, 15);
+	// start_pwm_count(15, 4, 15);
+	// start_pwm_count(16, 5, 15);
+	// start_pwm_count(17, 6, 15);
+	
 	// for(i=0; i<24; i++) {
 	// 	int mask = 1 << (i%12);
 	// 	printf("Mask: %x\n", mask);
@@ -135,7 +169,7 @@ int main(int argc, char *argv[])
 	// 	usleep(500000);
 	// }
 	
-	pwm_enable(0xfff);
+	pwm_enable(0x3ffff);		// Enable all 18 channels
 	
 	if(munmap(pru, PRU_LEN)) {
 		printf("munmap failed\n");
