@@ -19,3 +19,15 @@ sudo apt-get install gcsfuse
 export GOOGLE_APPLICATION_CREDENTIALS=<absolute path to .json file>
 mkdir gcs
 gcsfuse bucket-yoder gcs # Here bucket-yoder is the name of your bucket
+
+# Adding a persistant disk
+# From: https://cloud.google.com/compute/docs/disks/add-persistent-disk
+# Go to the comptue engine and add the disk, but it won't be formatted.
+# Then:
+sudo mkfs.ext4 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/disk/by-id/google-[DISK_NAME]
+mkdir gpd
+sudo mount -o discard,defaults /dev/disk/by-id/google-disk-1 gpd
+sudo chown mark_a_yoder:mark_a_yoder gpd
+cd gpd
+
+# Mount on another instance
