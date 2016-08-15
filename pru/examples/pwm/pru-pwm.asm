@@ -61,6 +61,7 @@ ch:num:on:
 	.endloop
 	.endif
 	.endif
+
 	qbeq	ch:num:off, Ron, 0
 	sub		Ron, Ron, 1
 	qbne	ch:next:, Ron, 0
@@ -117,22 +118,21 @@ start:
 	mov		r29, r30	; r29 is a shadow register for r30.  We'll update r29 for
 						; each channel, them copy it to r30 to output all at the
 						; same time
+	lbco	&r0, CONST_PRUDRAM, 0, 2*12*4	; Load on/off cycles, 12ch on/off 4 bytes
 
 	; Preload all the count registers
-	lbco	&r0, CONST_PRUDRAM, 0, 2*12*4	; Load on/off cycles, 12ch on/off 4 bytes
 	
 	.if PRU_NUM = 0
 	.asg (16), PRU0_PRU1_EVT		; Tell PRU1 to start
 	ldi	r31,  (PRU0_PRU1_EVT - 16) | (1 << 5)
-	.else
-	.asg (1<<31), HOST1_MASK
-wait:								; Wait for PRU0
-	qbeq	wait, r31, 0
-	ldi		r28, 46				; I don't know why this delay is needed to
-	nop							; keep the 2 PRUs in sync
+	ldi		r28, 2				; I don't know why this delay is needed to
+	; nop							; keep the 2 PRUs in sync
 delay:
 	sub		r28, r28, 1
 	qbne	delay, r28, 0
+	.else
+wait:								; Wait for PRU0
+	qbbc	wait, r31, 31		; HOST1_MASK
 	.endif
 
 ; Beginning of loop, should always take 12*8+4 = 100 instructions to complete

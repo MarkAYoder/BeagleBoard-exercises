@@ -114,8 +114,8 @@ int main(int argc, char *argv[])
 	close(fd);
 	printf ("Using /dev/mem.\n");
 	
-	pru0DRAM_32int_ptr =     pru + PRU0_DRAM/4;	// Points to start of PRU0 memory
-	pru1DRAM_32int_ptr =     pru + PRU1_DRAM/4;	// Points to start of PRU1 memory
+	pru0DRAM_32int_ptr =     pru + PRU0_DRAM/4 + 0x200/4;	// Points to 0x200 of PRU0 memory
+	pru1DRAM_32int_ptr =     pru + PRU1_DRAM/4 + 0x200/4;	// Points to 0x200 of PRU1 memory
 	prusharedMem_32int_ptr = pru + PRU_SHAREDMEM/4;	// Points to start of shared memory
 
 	// int i;
