@@ -56,7 +56,7 @@ ch:num:
 ch:num:on:	
 	.if num=0
 	.if PRU_NUM=0		; Make both PRUs the same length
-	.loop 48
+	.loop 49			; Seems like this should be 48
 	nop
 	.endloop
 	.endif
@@ -125,11 +125,11 @@ start:
 	.asg (16), PRU0_PRU1_EVT		; Tell PRU1 to start
 	ldi	r31,  (PRU0_PRU1_EVT - 16) | (1 << 5)
 	.else
-	.asg (1<<31), HOST1_MASK
-wait:								; Wait for PRU0
-	qbeq	wait, r31, 0
-	ldi		r28, 46				; I don't know why this delay is needed to
-	nop							; keep the 2 PRUs in sync
+
+wait:							; Wait for PRU0
+	qbbc	wait, r31, 31		; HOST1_MASK
+	ldi		r28, 50				; I don't know why this delay is needed to
+	; nop							; keep the 2 PRUs in sync
 delay:
 	sub		r28, r28, 1
 	qbne	delay, r28, 0
