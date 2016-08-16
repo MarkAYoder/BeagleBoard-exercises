@@ -78,12 +78,12 @@ ch:num:off:
 
 ; these pin definitions are specific to SD-101C Robotics Cape
 	.if PRU_NUM = 0
-    .asg    r29.t7,     ch0bit  ; P9_25		PRU_0 only has 6 outputs
-	.asg    r29.t5,    	ch1bit	; P9_27
-	.asg    r29.t3,    	ch2bit	; P9_28
-	.asg	r29.t1,		ch3bit	; P9_29
-	.asg	r29.t2,		ch4bit	; P9_30
-	.asg	r29.t0,		ch5bit	; P9_31
+	.asg	r29.t0,		ch0bit	; P9_31		PRU_0 only has 6 outputs with eMMC on
+	.asg	r29.t1,		ch1bit	; P9_29
+	.asg	r29.t2,		ch2bit	; P9_30
+	.asg    r29.t3,    	ch3bit	; P9_28
+	.asg    r29.t5,    	ch4bit	; P9_27
+    .asg    r29.t7,     ch5bit  ; P9_25
 	.endif
 	.if PRU_NUM = 1
 	.asg	r29.t0,		ch0bit  ; P8_45
