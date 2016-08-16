@@ -27,12 +27,63 @@ static char   pwmName[8] = "pwmXXX";        ///< Null terminated default string 
 #define PRU_LEN			0x80000			// Length of PRU memory
 #define PRU_SHAREDMEM	0x10000			// Offset to shared memory
 #define PRU_SHAREDMEM_LEN 0x3000       // Length of shared memory
-void *shared_mem;     // Pointer to SHAREDMEM
+#define PRU0_DRAM		0x00000			// Offset to DRAM
+#define PRU1_DRAM		0x02000
+#define ON  0     // 'on' value is stored first in array
+#define OFF 1     // 'off' is second
+
+void *mem;           // Pointer to start of PRU memory
+void *shared_mem;    // Pointer to SHAREDMEM
+void *dram0_mem;     // Pointer to PRU0 DRAM
+void *dram1_mem;     // Pointer to PRU1 DRAM
+
+// pwm_read() reads the ON time and OFF time for channel, ch.
+// ON is the on time, OFF is the off time.
+static int pwm_read(int ch, int item) {
+   int value;
+   if(ch<0) {
+      printk(KERN_ALERT "pwm_read: channel=%d, must be > 0\n", ch);
+      return -1;
+   }
+   if(ch<6) {  // Use PRU 0
+      value = (int) ioread32(dram0_mem + 8*ch+4*item);
+      printk(KERN_INFO "pwm_read PRU 0: ch=%d, item=%d, value=%d\n", ch, item, value);
+      return value;
+   }
+   if(ch<SERVO_CHANNELS) { // Use PRU 1
+      value = (int) ioread32(dram1_mem + 8*(ch-6)+4*item);
+      printk(KERN_INFO "pwm_read PRU 1: ch=%d, item=%d, value=%d\n", ch, item, value);
+      return value;
+   }
+   printk(KERN_INFO "pwm_read: channel=%d, must be < %d\n", ch, SERVO_CHANNELS);
+   return -1;
+}
+// pwm_write() write the ON time or OFF time for channel, ch.
+// ON is the on time, OFF is the off time.
+static int pwm_write(int ch, int item, int value) {
+   if(ch<0) {
+      printk(KERN_ALERT "pwm_write: channel=%d, must be > 0\n", ch);
+      return -1;
+   }
+   if(ch<6) {  // Use PRU 0
+      iowrite32(value, dram0_mem + 8*ch+4*item);
+      printk(KERN_INFO "pwm_write PRU 0: ch=%d, item=%d, value=%d\n", ch, item, value);
+      return value;
+   }
+   if(ch<SERVO_CHANNELS) { // Use PRU 1
+      iowrite32(value, dram1_mem + 8*(ch-6)+4*item);
+      printk(KERN_INFO "pwm_write PRU 1: ch=%d, item=%d, value=%d\n", ch, item, value);
+      return value;
+   }
+   printk(KERN_INFO "pwm_write: channel=%d, must be < %d\n", ch, SERVO_CHANNELS);
+   return -1;
+}
 
 /** @brief Displays period in ns */
 static ssize_t period_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf){
    return sprintf(buf, "%d\n", 
-      PRU_PWM_LOOP_ns*(ioread32(shared_mem+8*channel)+ioread32(shared_mem+8*channel+4)));
+      PRU_PWM_LOOP_ns*(pwm_read(channel, ON) + pwm_read(channel, OFF))
+      );
 }
 
 /** @brief Stores and sets the period in ns */
@@ -41,20 +92,23 @@ static ssize_t period_store(struct kobject *kobj, struct kobj_attribute *attr, c
    int on, off;    // on and off times in ns
    sscanf(buf, "%du", &period);
    // Subtract the on-time from the period to get the off time
-   on = ioread32(shared_mem+8*channel);  // Get on time in loops
+   // on = ioread32(shared_mem+8*channel);  // Get on time in loops
+   on = pwm_read(channel, ON);  // Get on time in loops
    off = (period-PRU_PWM_LOOP_ns*on)/PRU_PWM_LOOP_ns;     // Convert back to loops
    if(off<=0) {   // period is too small for the duty_cycle
       off = 1;
-      iowrite32(period/PRU_PWM_LOOP_ns-1, shared_mem+8*channel);
+      // iowrite32(period/PRU_PWM_LOOP_ns-1, shared_mem+8*channel);
+      pwm_write(channel, ON, period/PRU_PWM_LOOP_ns-1);
    }
-   iowrite32(off, shared_mem+8*channel+4);
+   // iowrite32(off, shared_mem+8*channel+4);
+   pwm_write(channel, OFF, off);
    printk(KERN_INFO "period: %dns\n", PRU_PWM_LOOP_ns*(on+off));
    return count;
 }
 
 /** @brief Displays duty_cycle in ns */
 static ssize_t duty_cycle_show(struct kobject *kobj, struct kobj_attribute *attr, char *buf){
-   return sprintf(buf, "%d\n", PRU_PWM_LOOP_ns*ioread32(shared_mem+8*channel));
+   return sprintf(buf, "%d\n",  PRU_PWM_LOOP_ns*pwm_read(channel, ON));
 }
 
 /** @brief Stores and sets the duty_cycle (on-time) in ns */
@@ -62,8 +116,10 @@ static ssize_t duty_cycle_show(struct kobject *kobj, struct kobj_attribute *attr
 static ssize_t duty_cycle_store(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count){
    unsigned int duty;
    int on, off, period;
-   on  = ioread32(shared_mem+8*channel);     // Get onand off times in loops
-   off = ioread32(shared_mem+8*channel+4);
+   // on  = ioread32(shared_mem+8*channel);     // Get onand off times in loops
+   // off = ioread32(shared_mem+8*channel+4);
+   on  = pwm_read(channel, ON);     // Get onand off times in loops
+   off = pwm_read(channel, OFF);
    period = on + off;
 
    sscanf(buf, "%du", &duty); 
@@ -73,8 +129,10 @@ static ssize_t duty_cycle_store(struct kobject *kobj, struct kobj_attribute *att
       off=1;
    }
    
-   iowrite32(on,  shared_mem+8*channel);
-   iowrite32(off, shared_mem+8*channel+4);
+   // iowrite32(on,  shared_mem+8*channel);
+   // iowrite32(off, shared_mem+8*channel+4);
+   pwm_write(channel, ON,  on);
+   pwm_write(channel, OFF, off);
    
    printk(KERN_INFO "duty_cycle: %dns\n", duty);
    return count;
@@ -90,9 +148,9 @@ static ssize_t channel_store(struct kobject *kobj, struct kobj_attribute *attr, 
    
    sscanf(buf, "%du", &new_channel); 
 
-   if((new_channel>0) && (new_channel<SERVO_CHANNELS)) {
+   if((new_channel>=0) && (new_channel<SERVO_CHANNELS)) {
       channel = new_channel;
-      printk(KERN_INFO "channel: %dns\n", channel);
+      printk(KERN_INFO "channel: %d\n", channel);
    } else {
       printk(KERN_INFO "channel must be between 0 and %d. %d was given\n", SERVO_CHANNELS, new_channel);
    }
@@ -184,17 +242,19 @@ static int __init pwm_init(void){
    }
 
    // Mapping SHARED RAM
-   shared_mem = ioremap(PRU_ADDR+PRU_SHAREDMEM, PRU_SHAREDMEM_LEN);
-   // Each channel's period and duty_cycle is stored in shared memory as cycles on
-   // and cycles off.  |ch 0 on | ch 0 off | ch 1 on | ch1 off \ etc.
+   mem = ioremap(PRU_ADDR, PRU_LEN);
+   dram0_mem = mem + PRU0_DRAM + 0x200;
+   dram1_mem = mem + PRU1_DRAM + 0x200;
+   shared_mem= mem + PRU_SHAREDMEM;
+   // Each channel's period and duty_cycle is stored in PRU DRAM memory as cycles ON
+   // and cycles OFF.  |ch 0 on | ch 0 off | ch 1 on | ch1 off  etc.
    // Each is a 32 bit value.  Channel 0 starts at 0.  Channel 1 starts a 8, etc.
-   //  shared_mem+8*channel is the addres of 'channel' on time and
-   //  shared_mem+8*chennel+4 is the off time.
-   // Enable bits are at the end at 12*8=96.
+   //  The first 6 channels are on PRU 0, the remaining 12 are on PRU 1.
+   // Enable bits are at the start of shared memory.
    printk(KERN_INFO "channel: %d, period: %d, duty_cycle: %d, enable: %d\n",
       channel,
-      ioread32(shared_mem+8*channel)+ioread32(shared_mem+8*channel+4),
-      ioread32(shared_mem+8*channel),
+      pwm_read(channel, ON) + pwm_read(channel, OFF),
+      pwm_read(channel, ON),
       (ioread32(shared_mem+PRU_ENABLE)>>channel) & 0x1);
 
    return result;
@@ -207,8 +267,8 @@ static int __init pwm_init(void){
 static void __exit pwm_exit(void){
    kobject_put(ebb_kobj);                   // clean up -- remove the kobject sysfs entry
    printk(KERN_INFO "pwm: Goodbye from the EBB Button LKM!\n");
-   iounmap(shared_mem);
-   printk(KERN_INFO "iounmap(shared_mem)\n");
+   iounmap(mem);
+   printk(KERN_INFO "iounmap(mem)\n");
 }
 
 // This next calls are  mandatory -- they identify the initialization function
