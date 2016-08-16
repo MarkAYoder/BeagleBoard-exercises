@@ -92,15 +92,12 @@ static ssize_t period_store(struct kobject *kobj, struct kobj_attribute *attr, c
    int on, off;    // on and off times in ns
    sscanf(buf, "%du", &period);
    // Subtract the on-time from the period to get the off time
-   // on = ioread32(shared_mem+8*channel);  // Get on time in loops
    on = pwm_read(channel, ON);  // Get on time in loops
    off = (period-PRU_PWM_LOOP_ns*on)/PRU_PWM_LOOP_ns;     // Convert back to loops
    if(off<=0) {   // period is too small for the duty_cycle
       off = 1;
-      // iowrite32(period/PRU_PWM_LOOP_ns-1, shared_mem+8*channel);
       pwm_write(channel, ON, period/PRU_PWM_LOOP_ns-1);
    }
-   // iowrite32(off, shared_mem+8*channel+4);
    pwm_write(channel, OFF, off);
    printk(KERN_INFO "period: %dns\n", PRU_PWM_LOOP_ns*(on+off));
    return count;
@@ -116,8 +113,6 @@ static ssize_t duty_cycle_show(struct kobject *kobj, struct kobj_attribute *attr
 static ssize_t duty_cycle_store(struct kobject *kobj, struct kobj_attribute *attr, const char *buf, size_t count){
    unsigned int duty;
    int on, off, period;
-   // on  = ioread32(shared_mem+8*channel);     // Get onand off times in loops
-   // off = ioread32(shared_mem+8*channel+4);
    on  = pwm_read(channel, ON);     // Get onand off times in loops
    off = pwm_read(channel, OFF);
    period = on + off;
@@ -129,8 +124,6 @@ static ssize_t duty_cycle_store(struct kobject *kobj, struct kobj_attribute *att
       off=1;
    }
    
-   // iowrite32(on,  shared_mem+8*channel);
-   // iowrite32(off, shared_mem+8*channel+4);
    pwm_write(channel, ON,  on);
    pwm_write(channel, OFF, off);
    
