@@ -19,5 +19,9 @@ function readSoil() {
 // A pH of 7 outputs 1.75V.  The reading decreases by .25V for every rise of 1 pH.
 //  7-4(reading-1.75), convert to pH.
 function printSoil(x) {
+    if(x.err) {
+        console.log('x: ' , x);
+        return;
+    }
     console.log('ph: ' + (7-4*(5.1/1.8*x.value-1.75)).toFixed(2));
 }
