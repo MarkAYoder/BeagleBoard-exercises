@@ -3,8 +3,15 @@
 
 var b = require('bonescript');
 
-var SOIL = 'P9_40';
-var ms = 2000;
+var SOIL = 'P9_36';
+var ms = 40;
+var data = [];
+var i;
+var MAXDATA = 50
+for(i=0; i<MAXDATA; i++) {
+    data[i] = 0.484;
+}
+var currentIndex = 0;
 
 setInterval(readSoil, ms);
 
@@ -23,5 +30,20 @@ function printSoil(x) {
         console.log('x: ' , x);
         return;
     }
-    console.log('ph: ' + (7-4*(5.1/1.8*x.value-1.75)).toFixed(2));
+    // console.log('\tvalue: ' + x.value);
+    data[currentIndex++] = x.value;
+    if(currentIndex>=MAXDATA) {
+        currentIndex = 0;
+        printPh();
+    }
+}
+
+function printPh() {
+    var sum=0;
+    for(i=0; i<MAXDATA; i++) {
+        sum += data[i];
+    }
+    var aveValue = sum/MAXDATA;
+    console.log('aveValue: ' + aveValue);
+    console.log('phAve: ' + (4-(6/0.289*(aveValue-0.474))).toFixed(1));
 }
