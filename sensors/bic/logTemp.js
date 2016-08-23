@@ -31,7 +31,7 @@ var logger = new winston.Logger({
     exitOnError: false
 });
 
-var b = require('bonescript');
+var b             = require('bonescript');
 var request       = require('request');
 var child_process = require('child_process');
 var util          = require('util');
@@ -100,7 +100,7 @@ function logpH() {
     var sensorValue = sum/MAXDATA;
     console.log('sensorValue: ' + sensorValue);
     // Convert to pH
-    pHvalue = (4-(6/0.289*(sensorValue-0.474))).toFixed(1)
+    pHvalue = (4-(6/0.289*(sensorValue-0.492))).toFixed(1);
     console.log('pHvalue: ' + pHvalue);
     
     // Now read the temp and humidity
@@ -136,7 +136,7 @@ function readWeather() {
         logger.debug("mid: " + tempMid);
         logger.debug("high:" + tempHigh);
     
-        var url = util.format(urlBase, tempLow, tempMid, tempHigh, humid, 0, phValue, 0);
+        var url = util.format(urlBase, tempLow, tempMid, tempHigh, humid, 0, pHvalue, 0);
         logger.debug("url: ", url);
         request(url, {timeout: 10000}, function (error, response, body) {
             if (!error && response.statusCode == 200) {
