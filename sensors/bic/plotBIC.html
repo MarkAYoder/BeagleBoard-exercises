@@ -130,7 +130,17 @@ var layout = {                     // all "layout" attributes: #layout
         overlaying: 'y',
         position: 0.05,
         side: 'left'
-    }
+    },
+    annotations: [            // all "annotation" attributes: #layout-annotations
+        {
+            text: 'Switched to tanks',     // #layout-annotations-text
+            x:    '2016-08-23 14:00',    // #layout-annotations-x
+            xref: 'x',        // #layout-annotations-xref
+            y:    4,      // #layout-annotations-y
+            yref: 'y3'        // #layout-annotations-yref
+        }
+    ]
+
 };
 
 var server = 'http://data.sparkfun.com/';
