@@ -61,6 +61,9 @@ else        # Desktop
     # The next line enables shell command completion for gcloud.
     source '/home/yoder/Downloads/google-cloud-sdk/completion.bash.inc'
 
+
+    # GCP storage bucket
+    export GOOGLE_APPLICATION_CREDENTIALS=$PWD/office.json
 fi
 
 # don't put duplicate lines in the history. See bash(1) for more options

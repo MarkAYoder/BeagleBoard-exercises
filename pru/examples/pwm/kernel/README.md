@@ -8,7 +8,7 @@ apt-get update
 apt-get install linux-headers=`uname -r`    Install the headers for the running version of the kernel
 make     Compile the module
 insmod pwm channel=5      Insert the module and select channel 5, which is P8_42
-cd /sys/pwm/pwm5          Change to the pwm5 directory
+cd /sys/kernel/pwm/pwm5          Change to the pwm5 directory
 ls
 **duty_cycle  enable  period**    These are the file that control the pwm
 

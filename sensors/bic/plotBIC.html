@@ -91,6 +91,19 @@ var data = [
         mode:   'lines+markers',
         name:   'Humidity',
         yaxis: 'y2'
+    },
+    {   // pH
+        "type": "scatter",
+        "x": [1, 2, 3],
+        "y": [3, 1, 6],
+        "marker": {
+            "color": "rgb(16, 77, 200)",
+            size: 5
+        },
+        connectgaps: false,
+        mode:   'lines+markers',
+        name:   'pH',
+        yaxis: 'y3'
     }
 ];
 
@@ -110,11 +123,30 @@ var layout = {                     // all "layout" attributes: #layout
         overlaying: 'y',
         side: 'right'
     },
+    yaxis3: {
+        title: 'pH',
+        titlefont: {color: 'rgb(16, 77, 255)'},
+        tickfont: {color: 'rgb(148, 103, 189)'},
+        overlaying: 'y',
+        position: 0.05,
+        side: 'left'
+    },
+    annotations: [            // all "annotation" attributes: #layout-annotations
+        {
+            text: 'Switched to tanks',     // #layout-annotations-text
+            x:    '2016-08-23 14:00',    // #layout-annotations-x
+            xref: 'x',        // #layout-annotations-xref
+            y:    4,      // #layout-annotations-y
+            yref: 'y3'        // #layout-annotations-yref
+        }
+    ]
+
 };
 
 var server = 'http://data.sparkfun.com/';
 var public_key = 'OGbYEaOpo6hWaow7A9aK';
-var timeSpan = '?gt[timestamp]=now-2weeks';
+var timeSpan = '?gt[timestamp]=now-1weeks';
+    // timeSpan = '?gt[timestamp]=now-2days';
 
 var zone = 'America/New_York';
 var format = 'YYYY-MM-DD HH:mm:ss';
@@ -137,6 +169,7 @@ $.ajax({
     data[1].x = data[0].x;      // Both plots have same time scale
     data[2].x = data[0].x;
     data[3].x = data[0].x;
+    data[4].x = data[0].x;
     data[0].y = _.map(results, function(item) {  // Copy temp data
             return (item.templow>0) && (item.templow<65)  ?  (item.templow*1.8+32).toFixed(2) : NaN;	// Convert to F
         });
@@ -149,11 +182,14 @@ $.ajax({
     data[3].y = _.map(results, function(item) { 
             return item.humidity>26 ?  item.humidity : NaN;
         });
+    data[4].y = _.map(results, function(item) { 
+            return (item.ph>0) ? item.ph : NaN;
+        });
     // console.log(data[0].x.length);
     
     Plotly.plot('plot', data, layout);      // Puts plot in <div> with id='plot'
     $('#summary').html('Temp: ' + data[0].y[0] + ', ' + data[1].y[0] + ', ' + data[2].y[0] + 'F, ' +
-        'Humidity: ' + data[3].y[0] + '% at ' + data[0].x[0]);
+        'Humidity: ' + data[3].y[0] + "%, pH: " + data[4].y[0] + ' at ' + data[0].x[0]);
 });
 
 </script>

@@ -31,6 +31,7 @@ var logger = new winston.Logger({
     exitOnError: false
 });
 
+var b             = require('bonescript');
 var request       = require('request');
 var child_process = require('child_process');
 var util          = require('util');
@@ -39,6 +40,10 @@ var ms = 5*1000;               // Repeat time
 
 // console.log(util.inspect(request));
 // request.debug = true;
+// 22-Aug-2016 - Added ph
+// The pH sensor produces and analog value that has some noise on it.
+//  We'll read several consecutive values and average them to remove the noise.
+
 
 var filename = "/root/exercises/sensors/bic/phantKeys.json";
 // logger.debug("process.argv.length: " + process.argv.length);
@@ -61,7 +66,46 @@ var w1={
 
 // setInterval(readWeather, ms);
 
-readWeather();
+// Read several analog values and average for the pH
+var pH = 'P9_36';
+var ms = 40;    // Time between values
+var data = [];
+var MAXDATA = 10;
+var pHvalue;
+var currentIndex = 0;
+
+var timer = setInterval(readpH, ms);
+function readpH() {
+    b.analogRead(pH, collectpH);
+}
+
+function collectpH(x) {
+    if(x.err) {
+        console.log('x: ' , x);
+        return;
+    }
+    console.log('\tvalue: ' + x.value);
+    data[currentIndex++] = x.value;
+    if(currentIndex>=MAXDATA) { //  True when you have enough values
+        clearInterval(timer);   // Stop reading the pH
+        logpH();
+    }
+}
+function logpH() {
+    // Find average value
+    var sum=0;
+    for(i=0; i<MAXDATA; i++) {
+        sum += data[i];
+    }
+    var sensorValue = sum/MAXDATA;
+    console.log('sensorValue: ' + sensorValue);
+    // Convert to pH
+    pHvalue = (4-(6/0.289*(sensorValue-0.492))).toFixed(1);
+    console.log('pHvalue: ' + pHvalue);
+    
+    // Now read the temp and humidity
+    readWeather();
+}
 
 function getTemp(data) {
     var temp = data.slice(data.indexOf('t=')+2, -1);// Pull out temp
@@ -92,7 +136,7 @@ function readWeather() {
         logger.debug("mid: " + tempMid);
         logger.debug("high:" + tempHigh);
     
-        var url = util.format(urlBase, tempLow, tempMid, tempHigh, humid, 0, 0, 0);
+        var url = util.format(urlBase, tempLow, tempMid, tempHigh, humid, 0, pHvalue, 0);
         logger.debug("url: ", url);
         request(url, {timeout: 10000}, function (error, response, body) {
             if (!error && response.statusCode == 200) {
