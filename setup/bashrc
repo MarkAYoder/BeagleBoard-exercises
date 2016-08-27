@@ -53,6 +53,14 @@ else        # Desktop
     export ARCH=arm
     export CROSS_COMPILE=arm-linux-gnueabihf-
     export GIT_SSL_NO_VERIFY=1
+    
+    
+    # The next line updates PATH for the Google Cloud SDK.
+    source '/home/yoder/Downloads/google-cloud-sdk/path.bash.inc'
+    
+    # The next line enables shell command completion for gcloud.
+    source '/home/yoder/Downloads/google-cloud-sdk/completion.bash.inc'
+
 
     # GCP storage bucket
     export GOOGLE_APPLICATION_CREDENTIALS=$PWD/office.json
