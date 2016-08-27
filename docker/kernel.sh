@@ -34,3 +34,8 @@ docker run -t -i yoder/kernel:v1 bash
 
 # On another machine
 docker run -t -i yoder/kernel:v1 bash
+
+# Copy to Google Container Repositiory
+# https://cloud.google.com/container-registry/docs/pushing?hl=en_US&_ga=1.141652913.2073565126.1468412417
+docker tag yoder/kernel:v1 gcr.io/trim-approach-136823/beagle-kernel
+gcloud docker push gcr.io/trim-approach-136823/beagle-kernel
