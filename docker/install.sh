@@ -33,3 +33,6 @@ time docker build -t yoder/armhf-whalesay:v2 .
 docker run yoder/armhf-whalesay:v2 cowsay Hello
 
 docker push yoder/armhf-whalesay:v2
+
+# On the host
+sudo usermod -aG docker $(whoami)  # Reloggin
