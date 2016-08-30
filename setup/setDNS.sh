@@ -1,7 +1,7 @@
 #!/bin/bash
 # These are the commands to run on the host so the Beagle
 #  can access the Internet through the USB connection.
-# Run ./ipForward.sh the first time. It will set up the host.
+# Run ./ipMasquerade.sh the first time. It will set up the host.
 # Run this script if the host is already set up.
 # Inspired by http://thoughtshubham.blogspot.com/2010/03/internet-over-usb-otg-on-beagleboard.html
 
@@ -21,7 +21,7 @@ EOF
 # Look up the nameserver of the host and add it to our resolv.conf
 # From: http://askubuntu.com/questions/197036/how-to-know-what-dns-am-i-using-in-ubuntu-12-04
 # Use nmcli dev list for older version nmcli
-nmcli dev show | grep IP4.DNS | sed 's/IP4.DNS\[.\]:/nameserver/' >> /tmp/resolv.conf
+nmcli dev list | grep IP4.DNS | sed 's/IP4.DNS\[.\]:/nameserver/' >> /tmp/resolv.conf
 scp /tmp/resolv.conf root@$beagleAddr:/etc
 
 # Tell the beagle to use the host as the gateway.
