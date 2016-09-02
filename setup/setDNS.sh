@@ -21,7 +21,8 @@ EOF
 # Look up the nameserver of the host and add it to our resolv.conf
 # From: http://askubuntu.com/questions/197036/how-to-know-what-dns-am-i-using-in-ubuntu-12-04
 # Use nmcli dev list for older version nmcli
-nmcli dev show | grep IP4.DNS | sed 's/IP4.DNS\[.\]:/nameserver/' >> /tmp/resolv.conf
+# Use nmcli dev show for newer version nmcli
+nmcli dev list | grep IP4.DNS | sed 's/IP4.DNS\[.\]:/nameserver/' >> /tmp/resolv.conf
 scp /tmp/resolv.conf root@$beagleAddr:/etc
 
 # Tell the beagle to use the host as the gateway.
