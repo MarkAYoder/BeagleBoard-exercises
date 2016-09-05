@@ -12,7 +12,7 @@ BONE_NAME=yoder-debian-bone
 DATE=`date`
 ssh root@$BONE "date -s \"$DATE\""
 
-scp -r ssh root@$BONE:.ssh
+#scp -r ssh root@$BONE:.ssh
 
 # Copy local copy of exercises to bone and then pull
 echo rsyncing exercises, this will take about 40 seconds
