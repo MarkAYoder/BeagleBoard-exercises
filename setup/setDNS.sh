@@ -18,19 +18,23 @@ search rose-hulman.edu dhcp.rose-hulman.edu wlan.rose-hulman.edu
 
 EOF
 
+TMP=/tmp/nmcli
 # Look up the nameserver of the host and add it to our resolv.conf
 # From: http://askubuntu.com/questions/197036/how-to-know-what-dns-am-i-using-in-ubuntu-12-04
 # Use nmcli dev list for older version nmcli
 # Use nmcli dev show for newer version nmcli
-nmcli dev show | grep IP4.DNS | sed 's/IP4.DNS\[.\]:/nameserver/' >> /tmp/resolv.conf
-if [ $? ]; then   # $? is the return code, if not 0 something bad happened.
-    echo "nmcli failed, trying 'list' instead of 'show'"
-    nmcli dev list | grep IP4.DNS | sed 's/IP4.DNS\[.\]:/nameserver/' >> /tmp/resolv.conf
-    if [ $? ]; then
+nmcli dev show > $TMP
+if [ $? -ne 0 ]; then   # $? is the return code, if not 0 something bad happened.
+    echo "nmcli failed, trying older 'list' instead of 'show'"
+    nmcli dev list > $TMP
+    if [ $? -ne 0 ]; then
         echo "nmcli failed again, giving up..."
         exit 1
     fi
 fi
+
+grep IP4.DNS $TMP | sed 's/IP4.DNS\[.\]:/nameserver/' >> /tmp/resolv.conf
+
 scp /tmp/resolv.conf root@$beagleAddr:/etc
 
 # Tell the beagle to use the host as the gateway.
