@@ -23,6 +23,14 @@ EOF
 # Use nmcli dev list for older version nmcli
 # Use nmcli dev show for newer version nmcli
 nmcli dev show | grep IP4.DNS | sed 's/IP4.DNS\[.\]:/nameserver/' >> /tmp/resolv.conf
+if [ $? ]; then   # $? is the return code, if not 0 something bad happened.
+    echo "nmcli failed, trying 'list' instead of 'show'"
+    nmcli dev list | grep IP4.DNS | sed 's/IP4.DNS\[.\]:/nameserver/' >> /tmp/resolv.conf
+    if [ $? ]; then
+        echo "nmcli failed again, giving up..."
+        exit 1
+    fi
+fi
 scp /tmp/resolv.conf root@$beagleAddr:/etc
 
 # Tell the beagle to use the host as the gateway.
