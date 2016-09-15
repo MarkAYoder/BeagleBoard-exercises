@@ -20,9 +20,9 @@ wire.writeBytes(0xf5, [1], function(err) {
 	if(err) {
 		console.log("writeBytes: 0xf5: " + err);
 	}
-})
+	setTimeout(readHumid, wait);
+});
 
-setTimeout(readHumid, wait);
 // Read 2 bytes of humidity data
 // humidity msb, humidity lsb
 function readHumid() {
@@ -34,41 +34,30 @@ function readHumid() {
 		// console.log("readHumid: " + res);
 		humidity = ((((res[0]<<8) + res[1]) * 125) / 65536) - 6;
 		console.log("humidity: " + humidity);
+		sendTempCmd();
 	});
 }
-// 	char data[2] = {0};
-// 	if(read(file, data, 2) != 2)
-// 	{
-// 		printf("Error : Input/output Error \n");
-// 	}
-// 	else
-// 	{
-// 		// Convert the data
-// 		float humidity = (((data[0] * 256 + data[1]) * 125.0) / 65536.0) - 6;
 
-// 		// Output data to screen
-// 		printf("Relative Humidity : %.2f RH \n", humidity);
-// 	}
-
-// 	// Send temperature measurement command(0xF3)
-// 	config[0] = 0xF3;
-// 	write(file, config, 1); 
-// 	sleep(1);
-
-// 	// Read 2 bytes of temperature data
-// 	// temp msb, temp lsb
-// 	if(read(file, data, 2) != 2)
-// 	{
-// 		printf("Error : Input/output Error \n");
-// 	}
-// 	else
-// 	{
-// 		// Convert the data
-// 		float cTemp = (((data[0] * 256 + data[1]) * 175.72) / 65536.0) - 46.85;
-// 		float fTemp = cTemp * 1.8 + 32;
-
-// 		// Output data to screen
-// 		printf("Temperature in Celsius : %.2f C \n", cTemp);
-// 		printf("Temperature in Fahrenheit : %.2f F \n", fTemp);
-// 	}
-// }
+// Send temperature measurement command(0xF3)
+function sendTempCmd() {
+	console.log("Sending read temperature command...");
+	wire.writeBytes(0xf3, [1], function(err) {
+		if(err) {
+			console.log("writeBytes: 0xf3: " + err);
+		}
+		setTimeout(readTemp, wait);
+	});
+}
+// Read 2 bytes of temperature data
+// temperature msb, temperature lsb
+function readTemp() {
+	var temperature;
+	wire.read(2, function(err, res) {
+		if(err) {
+			console.log("readTemp: err: " + err);
+		}
+		// console.log("readTemp: " + res);
+		temperature = ((((res[0]<<8) + res[1]) * 175.72) / 65536) - 46.85;
+		console.log("temperature: " + temperature);
+	});
+}
