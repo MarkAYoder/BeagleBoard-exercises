@@ -4,37 +4,72 @@
 // Mark A. Yoder
 // 2-Aug-2016
 
-var b = require('bonescript');
+var i2c = require('i2c');
+var util = require('util');
+
 var bus = '/dev/i2c-2';
-var TMP006 = 0x40;
+var sensor = 0x40;
 
-b.i2cOpen(bus, TMP006);
-b.i2cReadByte(bus, onReadByte);
+var wait = 1000;  // time in ms to wait from giving command to reading data.
 
-function onReadByte(x) {
-	if(x.event == 'callback') {
-		console.log('onReadByte: ' + JSON.stringify(x));
+var wire = new i2c(sensor, {device: bus});
+
+wire.readBytes(0x00, 5, onReadByte);
+
+function onReadByte(err, res) {
+	if(err) {
+		console.log("onReadByte: err: " + util.inspect(err));
 	}
+	console.log("onReadByte: " + util.inspect(res));
+	// if(x.event == 'callback') {
+	// 	console.log('onReadByte: ' + JSON.stringify(x));
+	// }
 }
 
-// 	// Create I2C bus
-// 	int file;
-// 	char *bus = "/dev/i2c-2";
-// 	if((file = open(bus, O_RDWR)) < 0) 
-// 	{
-// 		printf("Failed to open the bus. \n");
-// 		exit(1);
-// 	}
-// 	// Get I2C device, SI7021 I2C address is 0x40(64)
-// 	ioctl(file, I2C_SLAVE, 0x40);
 
 // 	// Send humidity measurement command(0xF5)
-// 	char config[1] = {0xF5};
-// 	write(file, config, 1);
-// 	sleep(1);
+console.log("Sending read humidity command...");
+wire.writeBytes(0xf5, [1], function(err) {
+	if(err) {
+		console.log("writeBytes: 0xf5: " + err);
+	}
+})
 
+setTimeout(readHumid, wait);
 // 	// Read 2 bytes of humidity data
 // 	// humidity msb, humidity lsb
+function readHumid2() {
+	var hi, lo, humidity;
+	console.log("Reading humidity");
+	wire.readByte(function(err, res) {
+		if(err) {
+			console.log("readHumid: err: " + err);
+		}
+		console.log("readHumid: " + res);
+		hi = res;
+		wire.readByte(function(err, res) {
+			if(err) {
+				console.log("readHumid2: err: " + err);
+			}
+			console.log("readHumid2: " + res);
+			lo = res;
+			humidity = (((hi<<8 + lo) * 125) / 65536) - 6;
+			console.log("humidity: " + humidity);
+		});
+	});
+}
+
+function readHumid() {
+	var humidity;
+	wire.read(2, function(err, res) {
+		if(err) {
+			console.log("readHumid: err: " + err);
+		}
+		console.log("readHumid: " + res);
+		humidity = (((res[0]<<8 + res[1]) * 125) / 65536) - 6;
+		console.log("humidity: " + humidity);
+	});
+}
 // 	char data[2] = {0};
 // 	if(read(file, data, 2) != 2)
 // 	{
