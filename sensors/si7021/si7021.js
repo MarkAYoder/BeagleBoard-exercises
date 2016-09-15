@@ -14,20 +14,7 @@ var wait = 1000;  // time in ms to wait from giving command to reading data.
 
 var wire = new i2c(sensor, {device: bus});
 
-wire.readBytes(0x00, 5, onReadByte);
-
-function onReadByte(err, res) {
-	if(err) {
-		console.log("onReadByte: err: " + util.inspect(err));
-	}
-	console.log("onReadByte: " + util.inspect(res));
-	// if(x.event == 'callback') {
-	// 	console.log('onReadByte: ' + JSON.stringify(x));
-	// }
-}
-
-
-// 	// Send humidity measurement command(0xF5)
+// Send humidity measurement command(0xF5)
 console.log("Sending read humidity command...");
 wire.writeBytes(0xf5, [1], function(err) {
 	if(err) {
@@ -36,37 +23,16 @@ wire.writeBytes(0xf5, [1], function(err) {
 })
 
 setTimeout(readHumid, wait);
-// 	// Read 2 bytes of humidity data
-// 	// humidity msb, humidity lsb
-function readHumid2() {
-	var hi, lo, humidity;
-	console.log("Reading humidity");
-	wire.readByte(function(err, res) {
-		if(err) {
-			console.log("readHumid: err: " + err);
-		}
-		console.log("readHumid: " + res);
-		hi = res;
-		wire.readByte(function(err, res) {
-			if(err) {
-				console.log("readHumid2: err: " + err);
-			}
-			console.log("readHumid2: " + res);
-			lo = res;
-			humidity = (((hi<<8 + lo) * 125) / 65536) - 6;
-			console.log("humidity: " + humidity);
-		});
-	});
-}
-
+// Read 2 bytes of humidity data
+// humidity msb, humidity lsb
 function readHumid() {
 	var humidity;
 	wire.read(2, function(err, res) {
 		if(err) {
 			console.log("readHumid: err: " + err);
 		}
-		console.log("readHumid: " + res);
-		humidity = (((res[0]<<8 + res[1]) * 125) / 65536) - 6;
+		// console.log("readHumid: " + res);
+		humidity = ((((res[0]<<8) + res[1]) * 125) / 65536) - 6;
 		console.log("humidity: " + humidity);
 	});
 }
