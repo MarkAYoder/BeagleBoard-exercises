@@ -110,7 +110,6 @@ function readWeather() {
     		}
     		// logger.debug("readTemp: " + res);
     		temperature = ((((res[0]<<8) + res[1]) * 175.72) / 65536) - 46.85;
-    		temperature = 9/5*temperature+32;   // Convert to F
     		temperature = temperature.toFixed(2);
     		logger.debug("temperature: " + temperature);
 
