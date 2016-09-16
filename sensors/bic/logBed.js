@@ -31,11 +31,21 @@ var logger = new winston.Logger({
     exitOnError: false
 });
 
+var i2c           = require('i2c');
 var request       = require('request');
 var child_process = require('child_process');
 var util          = require('util');
 var fs            = require('fs');
 var ms = 5*1000;               // Repeat time
+
+var bus = '/dev/i2c-2';	// Which i2c bus
+var addr = 0x40;		// Address on bus
+
+var wait = 10;  // time in ms to wait from giving command to reading data.
+
+var sensor = new i2c(addr, {device: bus});
+var temperature;
+var humidity;
 
 // console.log(util.inspect(request));
 // request.debug = true;
@@ -52,55 +62,70 @@ logger.debug(util.inspect(keys));
 
 var urlBase = keys.inputUrl + "/?private_key=" + keys.privateKey + "&templow=%s&tempmid=%s&temphigh=%s&humidity=%s&pressure=%s&ph=%s&extra=%s";
 
-var w1={
-    low: "/sys/bus/w1/devices/28-0000075f8228/w1_slave",
-    mid: "/sys/bus/w1/devices/28-00000128197d/w1_slave",
-    high:"/sys/bus/w1/devices/28-0000074b85ea/w1_slave"
-    };
-
-// setInterval(readWeather, ms);
-
 readWeather();
 
-function getTemp(data) {
-    var temp = data.slice(data.indexOf('t=')+2, -1);// Pull out temp
-    temp = temp.slice(0,2) + '.' + temp.slice(2);   // Put decimal in right place
-    return temp;
-}
-function getHumid(data) {
-    var temp = data.slice(data.indexOf('t=')+2, -1);
-    temp = temp.slice(0,2) + '.' + temp.slice(2);
-    return temp;
-}
-
 function readWeather() {
-    child_process.exec('/root/exercises/sensors/bic/si7021',
-    function (error, stdout, stderr) {
-        logger.debug("stdout: " + stdout);
-        var humid = stdout.substring(0, 5);
-        var temp  = stdout.substring(7, 11);
-
-        if(error) { console.log('error: ' + error); }
-        if(stderr) {console.log('stderr: ' + stderr); }
-        logger.debug("humid: " + humid);
-        logger.debug("temp:  " + temp);
-
-        // tempLow = getTemp(fs.readFileSync(w1.low,  {encoding: 'utf8'}));
-        // tempMid = getTemp(fs.readFileSync(w1.mid,  {encoding: 'utf8'}));
-        // tempHigh= getTemp(fs.readFileSync(w1.high, {encoding: 'utf8'}));
-    
-        // logger.debug("low: " + tempLow);
-        // logger.debug("mid: " + tempMid);
-        // logger.debug("high:" + tempHigh);
-    
-        var url = util.format(urlBase, temp, temp, temp, humid, 0, 0, 0);
-        logger.debug("url: ", url);
-        request(url, {timeout: 10000}, function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                logger.info(body); 
-            } else {
-                logger.error("error=" + error + " response=" + JSON.stringify(response));
-            }
-        });
+    // Send humidity measurement command(0xF5)
+    // logger.debug("Sending read humidity command...");
+    sensor.writeBytes(0xf5, [1], function(err) {
+    	if(err) {
+    		logger.debug("writeBytes: 0xf5: " + err);
+    	}
+    	setTimeout(readHumid, wait);	// Give device time to make measurment
     });
+    
+    // Read 2 bytes of humidity data
+    // humidity msb, humidity lsb
+    function readHumid() {
+    	sensor.read(2, function(err, res) {
+    		if(err) {
+    			logger.debug("readHumid: err: " + err);
+    		}
+    		// logger.debug("readHumid: " + res);
+    		humidity = ((((res[0]<<8) + res[1]) * 125) / 65536) - 6;	// p21
+    		humidity = humidity.toFixed(2);
+    		logger.debug("humidity: " + humidity);
+    		sendTempCmd();
+    	});
+    }
+    
+    // Send temperature measurement command(0xF3)
+    // The exe0 command says to return the temp measured when the humidity was read. p21
+    function sendTempCmd() {
+    	// logger.debug("Sending read temperature command...");
+    	sensor.writeBytes(0xe0, [1], function(err) {
+    		if(err) {
+    			logger.debug("writeBytes: 0xe0: " + err);
+    		}
+    		readTemp();	// No need to wait since it was computed with humidity
+    	});
+    }
+    
+    // Read 2 bytes of temperature data
+    // temperature msb, temperature lsb
+    function readTemp() {
+    	sensor.read(2, function(err, res) {
+    		if(err) {
+    			logger.debug("readTemp: err: " + err);
+    		}
+    		// logger.debug("readTemp: " + res);
+    		temperature = ((((res[0]<<8) + res[1]) * 175.72) / 65536) - 46.85;
+    		temperature = 9/5*temperature+32;   // Convert to F
+    		temperature = temperature.toFixed(2);
+    		logger.debug("temperature: " + temperature);
+
+            logger.debug("humid: " + humidity);
+            logger.debug("temp:  " + temperature);
+        
+            var url = util.format(urlBase, temperature, temperature, temperature, humidity, 0, 0, 0);
+            logger.debug("url: ", url);
+            request(url, {timeout: 10000}, function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    logger.info(body); 
+                } else {
+                    logger.error("error=" + error + " response=" + JSON.stringify(response));
+                }
+            });
+    	});
+    }
 }
