@@ -4,7 +4,7 @@
 // install:  npm install i2c@0.2.1  (the latest version doesn't work)
 
 var i2c = require('i2c');
-var port = '/dev/i2c-2';
+var bus = '/dev/i2c-2';
 var matrix = 0x70;
 var time = 1000; // Delay between images in ms
 
@@ -19,8 +19,8 @@ var neutral = [0x3c, 0x3c, 0x42, 0x42, 0xa9, 0xa9, 0x89, 0x89,
     0x89, 0x89, 0xa9, 0xa9, 0x42, 0x42, 0x3c, 0x3c
 ];
 
-var wire = new i2c(0x70, {
-    device: '/dev/i2c-2'
+var wire = new i2c(matrix, {
+    device: bus
 });
  
 wire.writeByte(0x21, function(err) {            // Start oscillator (p10)

@@ -7,6 +7,7 @@
 
 var port = 9090, // Port to listen on
     bus = '/dev/i2c-2',
+    busNum = 2,     // i2c bus number
     i2cNum = 0,             // Remembers the address of the last request
     http = require('http'),
     url = require('url'),
@@ -107,7 +108,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('i2c', function (i2cNum) {
         console.log('Got i2c request:' + i2cNum);
-        child_process.exec('i2cget -y 1 ' + i2cNum + ' 0 w',
+        child_process.exec('i2cget -y ' + busNum + ' ' + i2cNum + ' 0 w',
             function (error, stdout, stderr) {
 //     The TMP102 returns a 12 bit value with the digits swapped
                 stdout = '0x' + stdout.substring(4,6) + stdout.substring(2,4);
@@ -158,7 +159,7 @@ io.sockets.on('connection', function (socket) {
         socket.emit('audio', sendAudio() );
     });
     
-    socket.on('matrix', function (i2cNum) {
+    socket.on('matrix.bs', function (i2cNum) {
         var i;
         var line = new Array(16);
         // console.log('Got i2c request:' + i2cNum);
@@ -172,9 +173,23 @@ io.sockets.on('connection', function (socket) {
         socket.emit('matrix', line.join(' '));
     });
     
-    socket.on('matrix.old', function (i2cNum) {
+    socket.on('matrix.wire', function (i2cNum) {
+        var i;
+        var line = new Array(16);
+        // console.log('Got i2c request:' + i2cNum);
+        b.i2cOpen(bus, 0x70);
+        for(i=0; i<16; i++) {
+            // Can only read one byte at a time.  Something's wrong
+            line[i] = b.i2cReadBytes(bus, i, 1)[0].toString(16);
+            // console.log("line: " + JSON.stringify(line[i]));
+        }
+        console.log(line.join(' '));
+        socket.emit('matrix', line.join(' '));
+    });
+    
+    socket.on('matrix', function (i2cNum) {
 //        console.log('Got i2c request:' + i2cNum);
-        child_process.exec('i2cdump -y -r 0x00-0x0f 1 ' + i2cNum + ' b',
+        child_process.exec('i2cdump -y -r 0x00-0x0f ' + busNum + ' ' + i2cNum + ' b',
             function (error, stdout, stderr) {
 //      The LED has 8 16-bit values
 //                console.log('i2cget: "' + stdout + '"');
@@ -189,7 +204,7 @@ io.sockets.on('connection', function (socket) {
     });
     
     // Sets one column every time i2cset is received.
-    socket.on('i2cset', function(params) {
+    socket.on('i2cset.bs', function(params) {
         // console.log(params);
         if(params.i2cNum !== i2cNum) {
             i2cNum = params.i2cNum;
@@ -199,10 +214,10 @@ io.sockets.on('connection', function (socket) {
     	b.i2cWriteBytes(bus, params.i, [params.disp]);
     });
     
-    socket.on('i2cset.old', function(params) {
+    socket.on('i2cset', function(params) {
     // console.log(params);
 	// Double i since display has 2 bytes per LED
-	child_process.exec('i2cset -y 1 ' + params.i2cNum + ' ' + params.i + ' ' +
+	child_process.exec('i2cset -y ' + busNum + ' ' + params.i2cNum + ' ' + params.i + ' ' +
 		params.disp); 
     });
     
