@@ -4,7 +4,7 @@
 // npm install -g bmp085
 // Wire SCL to P9_20 and SDA to P9_19
 
-var BMP085 = require('bmp085'),
+var BMP085 = require('./bmp085'),
     barometer = new BMP085({device: '/dev/i2c-2', mode: '2'});
  
 barometer.read(function (data) {

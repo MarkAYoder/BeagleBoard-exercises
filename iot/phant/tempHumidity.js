@@ -34,7 +34,7 @@ var logger = new winston.Logger({
 });
 
 var request       = require('request');
-var BMP085        = require('bmp085');
+var BMP085        = require('./bmp085');
 var util          = require('util');
 var fs            = require('fs');
 var b             = require('bonescript');
