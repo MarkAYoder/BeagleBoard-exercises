@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-/*jshint curly:true, debug:true */
+// Reads in whole matrix and toggles one bit.
+// readBytes seems to only read one byte at a time, thus it called over and over
 var i2c = require('i2c');
-var util = require('util');
 
 var bus = '/dev/i2c-2';
 var matrix = 0x70;
@@ -12,16 +12,12 @@ var y = 4;
 
 var i=0;
 var line = [];
-display.readBytes(i, 1, getValue);
+display.readBytes(i, 1, getValue);  // Get one byte at a time
 
 function getValue(err, res) {
     if(err) {
         console.log("getValue: err: " + err);
     }
-    // var i;
-    // for(i=0; i<res.length; i+=2) {
-    //     console.log("%d: %s, %s", i, res[i].toString(16), res[i+1].toString(16));
-    // }
     line[i] = res[0];
     // console.log("res: %s", line[i].toString(16));
     i++;
@@ -44,7 +40,7 @@ function processData(line) {
         console.log("processData: %s, %s", line[i].toString(16), line[i+1].toString(16));
     }
     
-    display.writeBytes(0, line, done);
+    display.writeBytes(0, line, done);  // You can write a whole line at once
 }
 
 function done(err) {
