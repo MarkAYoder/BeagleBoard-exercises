@@ -10,7 +10,7 @@ setTargetAddress('10.8.7.185', {
     initialized: run
 });
 
-var POT    = 'P9_36';
+var POT    = 'P9_35';
 var BUTTON = 'P9_42';
 var LED    = 'P9_14';
 var FADE   = 'P9_16';

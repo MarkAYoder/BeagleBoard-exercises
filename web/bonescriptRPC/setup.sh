@@ -1,15 +1,15 @@
-# The jQuery files in /var/lib/cloud9/static are old and have a bug with sliders.
-# This links  the newer files from exercises/realtime to /var/lib/cloud9/static2
+# The jQuery files in /usr/share/bone101/static are old and have a bug with sliders.
+# This links  the newer files from exercises/realtime/js to /usr/share/bone101/static
 # so this code can use them.
 
-c9=/var/lib/cloud9
+webRoot=/usr/share/bone101
 here=$PWD
 jq=$here/../../realtime/js
 
-cd $c9
+cd $webRoot
 ln -s $here .
 
-mkdir -p static2
-cd static2
-ln -s $jq/jquery-ui.css $jq/jquery-ui.min.js $jq/jquery.min.js .
-ln -s ../static/images .
+cd static
+mv jquery-ui.min.js jquery-ui.min.js.orig
+mv jquery-ui.css jquery-ui.css.orig
+ln -s $jq/jquery-ui.css $jq/jquery-ui.min.js .

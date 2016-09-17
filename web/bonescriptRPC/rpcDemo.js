@@ -12,7 +12,7 @@ setTargetAddress('10.8.7.185', {
 
 function run() {
     b = require('bonescript');              // <2>
-    var SLIDER = 'P9_36';                       // <3>
+    var SLIDER = 'P9_35';                       // <3>
     var BUTTON = 'P9_42';
     b.pinMode(BUTTON, b.INPUT);
 
