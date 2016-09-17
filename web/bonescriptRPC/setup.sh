@@ -2,7 +2,6 @@
 # This links  the newer files from exercises/realtime/js to /usr/share/bone101/static
 # so this code can use them.
 
-webRoot=/usr/share/bone101
 here=$PWD
 jq=$here/../../realtime/js
 

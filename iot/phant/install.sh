@@ -22,7 +22,7 @@ wget https://www.google.com/jsapi
 
 # Make html visible to default web server
 dir=$PWD
-cd $HTTP
+cd $webRoot
 ln -s $dir .
 
 echo "# Record ping times

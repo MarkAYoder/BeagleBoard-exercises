@@ -20,6 +20,8 @@ alias ls='ls -F'
 # For cross compiling
 if [[ -e /etc/dogtag ]]
     then    # Beagle
+    # Points to the root of the web server
+    export webRoot=/usr/share/bone101
     # For Device Tree Overlays
     export SLOTS=/sys/devices/bone_capemgr/slots
     # This is the Jessie path
