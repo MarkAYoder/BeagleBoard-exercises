@@ -41,5 +41,5 @@ function toggleSeconds() {
     
     console.log("seconds: %d (%d)", seconds, index);
     console.log("seconds: (%d, %d)", position[index][0], position[index][1]);
-    exec(".\toggleByte.js " +  position[index][0] + ' ' + position[index][1]);
+    exec("./toggleByte.js " +  position[index][0] + ' ' + position[index][1]);
 }
