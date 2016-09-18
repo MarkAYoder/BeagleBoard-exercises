@@ -3,13 +3,12 @@
 // Mark A. Yoder
 // 17-Sept-2016
 
-var i2c = require('i2c');
-var util = require('util');
-var exec = require('child_process').exec;
+var i2c = require('i2c-bus');
+// var util = require('util');
 
-var bus = '/dev/i2c-2';
+var bus = 2;
 var matrix = 0x70;
-var display = new i2c(matrix, {device: bus});
+var display = i2c.openSync(bus);
 
 // position maps index to a location around the outside of the display
 // 0,0 is the bottom left.  Starts at top middle
@@ -33,13 +32,19 @@ for(; i<29; i++) {
 
 // console.log("position: " + util.inspect(position));
 
-toggleSeconds();
 var last = 0;
-function toggleSeconds() {
-    var seconds = new Date().getSeconds();
-    var index = (seconds/60*28).toFixed(0);
-    
-    console.log("seconds: %d (%d)", seconds, index);
-    console.log("seconds: (%d, %d)", position[index][0], position[index][1]);
-    exec("./toggleByte.js " +  position[index][0] + ' ' + position[index][1]);
-}
+var seconds = new Date().getSeconds();
+var index = (seconds/60*28).toFixed(0);
+var x = position[index][0];
+var y = position[index][1];
+console.log("seconds: %d (%d)", seconds, index);
+console.log("seconds: (%d, %d)", x, y);
+
+var line = new Buffer(2);
+line[0] = display.readByteSync(matrix, 2*x  );
+line[1] = display.readByteSync(matrix, 2*x+1);
+
+line[0] ^= 1<<y;
+line[1] ^= 1<<y;    
+
+display.writeI2cBlockSync(matrix, 2*x, line.length, line);  // You can write a whole line at once

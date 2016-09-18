@@ -1,50 +1,28 @@
 #!/usr/bin/env node
 // Reads in whole matrix and toggles one bit.
 // readBytes seems to only read one byte at a time, thus it called over and over
-var i2c = require('i2c');
+// Uses 2ic-bus
+// Usage:  toggle.js x y
+var i2c = require('i2c-bus');
 
-var bus = '/dev/i2c-2';
+var bus = 2;
 var matrix = 0x70;
-var display = new i2c(matrix, {device: bus});
+var display = i2c.openSync(bus);
 
-var x = 1;
-var y = 4;
+var line = new Buffer(2);
 
-var i=0;
-var line = [];
-display.readBytes(i, 1, getValue);  // Get one byte at a time
-
-function getValue(err, res) {
-    if(err) {
-        console.log("getValue: err: " + err);
-    }
-    line[i] = res[0];
-    // console.log("res: %s", line[i].toString(16));
-    i++;
-    if(i<16) {
-        display.readBytes(i, 1, getValue);
-    } else {
-        processData(line);
-    }
+var x = 0;
+var y = 0;
+if(process.argv.length === 4) {
+    x = process.argv[2];
+    y = process.argv[3];
+    console.log("x: %d, y: %d", x, y);
 }
 
-function processData(line) {
-    var i;
-    for(i=0; i<line.length; i+=2) {
-        console.log("processData: %d:  %s, %s", i, line[i].toString(16), line[i+1].toString(16));
-    }
-    line[2*x]   ^= 1<<y;
-    line[2*x+1] ^= 1<<y;
+line[0] = display.readByteSync(matrix, 2*x);    // green
+line[1] = display.readByteSync(matrix, 2*x+1);  // red
+
+line[0] ^= 1<<y;    // toggle the y-th bit
+line[1] ^= 1<<y;
     
-    for(i=0; i<line.length; i+=2) {
-        console.log("processData: %s, %s", line[i].toString(16), line[i+1].toString(16));
-    }
-    
-    display.writeBytes(0, line, done);  // You can write a whole line at once
-}
-
-function done(err) {
-    if(err) {
-        console.log("done: err: " + err);
-    }
-}
+display.writeI2cBlockSync(matrix, 2*x, line.length, line);  // You can write a whole line at once
