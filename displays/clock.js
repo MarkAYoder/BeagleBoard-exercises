@@ -3,6 +3,7 @@
 // Mark A. Yoder
 // 17-Sept-2016
 
+// npm install -g i2c-bus
 var i2c = require('i2c-bus');
 // var util = require('util');
 
