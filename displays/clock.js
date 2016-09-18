@@ -32,19 +32,38 @@ for(; i<29; i++) {
 
 // console.log("position: " + util.inspect(position));
 
-var last = 0;
-var seconds = new Date().getSeconds();
-var index = (seconds/60*28).toFixed(0);
-var x = position[index][0];
-var y = position[index][1];
-console.log("seconds: %d (%d)", seconds, index);
-console.log("seconds: (%d, %d)", x, y);
+var last;   // index of bit that was just toggled
 
-var line = new Buffer(2);
-line[0] = display.readByteSync(matrix, 2*x  );
-line[1] = display.readByteSync(matrix, 2*x+1);
+var interval = setInterval(update, 2000);  // update every 2 secs.  Only 28 LEDs to toggle
 
-line[0] ^= 1<<y;
-line[1] ^= 1<<y;    
+function update() {
+    var seconds = new Date().getSeconds();
+    var index = (seconds/60*28).toFixed(0);
+    if(!isNaN(last)) {
+        toggle(last);   // Undo the toggle from before
+    }
+    toggle(index);
+    last = index;       // Remember what you toggled so you can undo it next time
+}
 
-display.writeI2cBlockSync(matrix, 2*x, line.length, line);  // You can write a whole line at once
+function toggle(index) {
+    var x = position[index][0];
+    var y = position[index][1];
+    // console.log("seconds: %d (%d)", seconds, index);
+    // console.log("seconds: (%d, %d)", x, y);
+    
+    var line = new Buffer(2);
+    line[0] = display.readByteSync(matrix, 2*x  );
+    line[1] = display.readByteSync(matrix, 2*x+1);
+    
+    line[0] ^= 1<<y;
+    line[1] ^= 1<<y;    
+    
+    display.writeI2cBlockSync(matrix, 2*x, line.length, line);  // You can write a whole line at once
+}
+
+process.on('SIGINT', function(code) {
+    console.log("Exiting...");
+    clearInterval(interval);
+    toggle(last);
+});
