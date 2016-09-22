@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html class="splash">
+<head>
+<title>SensorTag Weather</title>
+<!-- https://plot.ly/javascript/reference -->
+</head>
+
+<body>
+<h3>Weather in Mark's Room</h3>
+<!--
+    Plots go in blank <div> elements. You can size them in the plot layout,
+    or give the div a size as shown here.
+-->
+<!--<div id="plot" style="width:600px;height:400px;"></div>-->
+<div id="summary">Fetching data from Phant</div>
+<div id="plot"></div>
+
+<!--
+    Include these javascript files.
+    jQuery: plotly.js ships with v1.8 but supports v1.7 through v1.10
+    the weird typedarray.js code is a polyfill, primarily for IE9, that does not
+    natively support typed numeric arrays
+-->
+<!-- Use these for local server -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script>if(typeof window.Int16Array !== 'function')document.write("<scri"+"pt src='dependencies/typedarray.js'></scr"+"ipt>");</script>
+<script type="text/javascript" src="js/plotly-latest.min.js"></script>
+<script type="text/javascript" src="js/underscore-min.js"></script>
+
+<script src="js/moment.min.js"></script>
+<script src="js/moment-timezone.min.js"></script>
+
+<!-- Use these for remote servers -->
+<!--<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>-->
+<!--<script>if(typeof window.Int16Array !== 'function')document.write("<scri"+"pt src='dependencies/typedarray.js'></scr"+"ipt>");</script>-->
+<!--<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>-->
+<!--<script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>-->
+
+<!--<script src="http://momentjs.com/downloads/moment.min.js"></script>-->
+<!--<script src="http://momentjs.com/downloads/moment-timezone-with-data-2010-2020.min.js"></script>-->
+
+<script>
+
+var layout = {              // all "layout" attributes: #layout
+    title: "SensorTag Weather",
+    xaxis: {                // all "layout.xaxis" attributes: #layout-xaxis
+        "title": "Date"     // more about "layout.xaxis.title": #layout-xaxis-title
+    },
+    yaxis: {
+        title: 'Temperature (F)',
+        titlefont: {color: 'rgb(255, 32, 77)'},
+    }
+};
+
+var server = 'http://data.sparkfun.com/';
+var public_key = 'q5nr7brl3DUmrvLD9Qow';
+var timeSpan = '?gt[timestamp]=now-7days';
+// timeSpan = '?gt[timestamp]=now-1day';
+timeSpan = '';
+
+var zone = 'America/New_York';
+var format = 'YYYY-MM-DD HH:mm:ss';
+
+// JSONP request
+$.ajax({
+ // url: 'http://14.139.34.32:8080/output/' + public_key + '.json' + timezone,
+ //   url: server + 'output/' + public_key + '.json' + "?limit=" + 4*60*24*7,
+ //  http://phant.io/docs/output/http/
+  url: server + 'output/' + public_key + '.json' + timeSpan,
+  data: {page: 1},
+  dataType: 'jsonp',
+}).done(function (results) {
+    
+var timestamp = _.map(results, function(item) {
+            return moment.tz(item.timestamp, zone).format(format); // Convert to Plotly time format and ET
+        });
+
+var data = [];
+// console.log("TimeStamps: %s", timestamp);
+
+var keys = Object.keys(results[0]);
+// console.log(keys);
+for(var i=0; i<keys.length; i++) {
+    var key = keys[i];
+    // console.log("key: %s", key);
+    if(key !== 'timestamp') {
+        // console.log("Key: %s, Value: %s", key, results[0][key]);
+        data[i] = {};
+        data[i].x = timestamp;
+        data[i].y = _.map(results, function(item) {  // Copy data
+                    return item[key];
+                });
+        data[i].type = 'scatter';        
+        data[i].marker = {
+            // "color": "rgb(200, 32, 77)",
+            size: 4
+        };
+        data[i].connectgaps = false;
+        data[i].mode = 'markers';
+        data[i].name = key;
+    }
+}
+String.prototype.capitalizeFirstLetter = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+keys = _.map(keys, function(item) { return item.capitalizeFirstLetter() });
+layout.yaxis.title = keys.join(', ');
+
+    Plotly.plot('plot', data, layout);      // Puts plot in <div> with id='plot'
+    $('#summary').html(keys.join(', '));
+});
+
+</script>
+</body>
+</html>
