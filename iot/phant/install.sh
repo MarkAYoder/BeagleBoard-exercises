@@ -10,7 +10,7 @@ wget https://raw.githubusercontent.com/fiskeben/bmp085/master/bmp085.js
 
 # npm install -g phant
 # phant &
-# Browse to http://14.139.34.32:8080/ and click "Create" and fill in the fields
+# Browse to https://data.sparkfun.com/ and click "Create" and fill in the fields
 # Save the keys as json.
 
 # Load jquery and jsapi
