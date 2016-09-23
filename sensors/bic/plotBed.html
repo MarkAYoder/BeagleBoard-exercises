@@ -138,7 +138,7 @@ $.ajax({
     data[2].x = data[0].x;
     data[3].x = data[0].x;
     data[0].y = _.map(results, function(item) {  // Copy temp data
-            return item.templow>0  ?  (item.templow*1.8+32).toFixed(2) : NaN;	// Convert to F
+            return (item.templow>0) && (item.templow<75)  ?  (item.templow*1.8+32).toFixed(2) : NaN;	// Convert to F
         });
     // data[1].y = _.map(results, function(item) { 
     //         return item.tempmid>0  ?  (item.tempmid*1.8+32).toFixed(2) : NaN;	// Convert to F
