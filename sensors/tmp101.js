@@ -8,9 +8,9 @@ var time = 1000;    // Time betwwen readings
 
 var sensor = i2c.openSync(bus);
 
-var temp;
+var temp = [];
 
 for(var i=0; i<tmp101.length; i++) {
-    temp = sensor.readByteSync(tmp101[i], 0x0);
-    console.log("temp: %dC, %dF (0x%s)", temp, temp*9/5+32, tmp101[i].toString(16));
+    temp[i] = sensor.readByteSync(tmp101[i], 0x0);
+    console.log("temp: %dC, %dF (0x%s)", temp[i], temp[i]*9/5+32, tmp101[i].toString(16));
 }
