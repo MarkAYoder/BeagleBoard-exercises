@@ -4,7 +4,7 @@
 var i2c = require('i2c-bus');
 var bus = 2;
 var tmp101 = [0x48, 0x49, 0x4a];
-var time = 1000;    // Time betwwen readings
+var time = 1000;    // Time between readings
 
 var sensor = i2c.openSync(bus);
 
