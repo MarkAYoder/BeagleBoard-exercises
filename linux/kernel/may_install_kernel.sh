@@ -29,7 +29,7 @@ unset KERNEL_UTS
 unset MMC
 
 DIR=$PWD
-BONE=192.168.7.2
+BONE=${1:-192.168.7.2}
 NAME=root
 
 . ${DIR}/version.sh
