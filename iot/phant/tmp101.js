@@ -26,8 +26,8 @@ var temp = [];
 
 // Read the temp sensors
 for(var i=0; i<tmp101.length; i++) {
-    // temp[i] = sensor.readByteSync(tmp101[i], 0x0);
-    temp[i] = Math.random();
+    temp[i] = sensor.readByteSync(tmp101[i], 0x0);
+    // temp[i] = Math.random();
     console.log("temp: %dC, %dF (0x%s)", temp[i], temp[i]*9/5+32, tmp101[i].toString(16));
 }
 
@@ -36,10 +36,10 @@ var url = util.format(urlBase, temp[0], temp[1], temp[2]);
 console.log("url: ", url);
 
 // Send to phant
-request(url, function (error, response, body) {
-    if (!error && response.statusCode == 200) {
+request(url, function (err, res, body) {
+    if (!err && res.statusCode == 200) {
         console.log(body); 
     } else {
-        console.log("error=" + error + " response=" + JSON.stringify(response));
+        console.log("error=" + err + " response=" + JSON.stringify(res));
     }
 });
