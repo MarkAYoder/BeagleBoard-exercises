@@ -3,8 +3,8 @@
 
 # Get the stretch version
 echo "deb http://ftp.us.debian.org/debian/ stretch main contrib non-free" > /etc/apt/sources.list.d/stretch.list
-apt-get update
-apt-get install docker.io/stretch
+apt update
+apt install docker.io/stretch
 
 docker info
 docker run armhf/hello-world

@@ -6,3 +6,9 @@ gcc -lv4l2 -o grabber grabber.c
 # npm install -g v4l2camera
 # npm install -g gm
 # git clone https://github.com/derekmolloy/boneCV.git
+
+# This is for exploring BeagleBone - Chapter 12
+apt update
+apt install libv4l-dev v4l-utils fswebcam gpicview libav-tools
+# 134M and almost 2 hours to install.
+apt install libopencv-core-dev
