@@ -5,12 +5,16 @@
 "use strict";
 
 var port = 9090, // Port to listen on
-    http = require('http'),
-    url = require('url'),
-    fs = require('fs'),
-    util = require('util'),
-    qs = require('querystring'),
-    server;
+    http  = require('http'),
+    url   = require('url'),
+    fs    = require('fs'),
+    util  = require('util'),
+    qs    = require('querystring'),
+    b     = require('bonescript'),
+    server,
+    LED = 'P9_14';
+    
+b.pinMode(LED, b.OUTPUT);
     
 function send404(res) {
     res.writeHead(404);
@@ -24,6 +28,12 @@ server = http.createServer(function (req, res) {
     console.log("path: " + path);
     // console.log("req: " + util.inspect(req));
     // console.log("res: " + util.inspect(req));
+    
+    if(path === '/on') {
+        b.digitalWrite(LED, 1);
+    } else if (path === '/off') {
+        b.digitalWrite(LED, 0);
+    }
     
     console.log(util.inspect(qs.parse(url.parse(req.url).query)));
 
