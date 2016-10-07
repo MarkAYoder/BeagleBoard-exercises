@@ -32,15 +32,24 @@ function buttonPressed(x) {
                 '?' + qs.stringify(string);
     
         console.log(url);
+        request(url, requestCallback);
+
+        string = {value1: 'SMS', value2: 'Test Button', value3: 'BeagleBone'};
     
-        request(url, function (err, res, body) {
-          if (!err && res.statusCode == 200) {
-            console.log(body); 
-          } else {
-            console.log("error=" + err + " response=" + JSON.stringify(res));
-          }
-        });
+        url = 'https://maker.ifttt.com/trigger/' + 'sms' + '/with/key/' + key + 
+                '?' + qs.stringify(string);
+    
+        console.log(url);
+        request(url, requestCallback);
     }
+}
+
+function requestCallback(err, res, body) {
+  if (!err && res.statusCode == 200) {
+      console.log(body);
+  } else {
+      console.log("error=" + err + " response=" + JSON.stringify(res));
+  }
 }
 
 // This creates a web server that listens for LED on and off signal.
