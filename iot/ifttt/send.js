@@ -2,10 +2,10 @@
 var request = require('request');
 var qs = require('querystring');
 // var event = 'my_test';
-// var event = 'my_Web';
+var event = 'my_Web';
 // var event = 'tweet';
 // var event = 'my_mail';
-var event = 'sms';
+// var event = 'sms';
 // var event = 'notification';
 // var event = 'phone';
 var key = 'bHddeE_oLPxdP0ZKABzAe4';
