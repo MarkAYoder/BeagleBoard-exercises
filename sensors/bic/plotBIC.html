@@ -27,9 +27,6 @@
 <script type="text/javascript" src="js/plotly-latest.min.js"></script>
 <script type="text/javascript" src="js/underscore-min.js"></script>
 
-<script src="js/moment.min.js"></script>
-<script src="js/moment-timezone.min.js"></script>
-
 <!-- Use these for remote servers -->
 <!--<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>-->
 <!--<script>if(typeof window.Int16Array !== 'function')document.write("<scri"+"pt src='dependencies/typedarray.js'></scr"+"ipt>");</script>-->
@@ -164,8 +161,9 @@ $.ajax({
     //     console.log(results[i]);
     // }
     data[0].x = _.map(results, function(item) {
-            return moment.tz(item.timestamp, zone).format(format); // Convert to Plotly time format and ET
-        });
+            return new Date(item.timestamp);   // Switch to local timezone
+            });
+
     data[1].x = data[0].x;      // Both plots have same time scale
     data[2].x = data[0].x;
     data[3].x = data[0].x;

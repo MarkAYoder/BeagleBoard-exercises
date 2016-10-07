@@ -27,17 +27,11 @@
 <!--<script type="text/javascript" src="js/plotly-latest.min.js"></script>-->
 <!--<script type="text/javascript" src="js/underscore-min.js"></script>-->
 
-<!--<script src="js/moment.min.js"></script>-->
-<!--<script src="js/moment-timezone.min.js"></script>-->
-
 <!-- Use these for remote servers -->
 <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
 <script>if(typeof window.Int16Array !== 'function')document.write("<scri"+"pt src='dependencies/typedarray.js'></scr"+"ipt>");</script>
 <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>
-
-<script src="http://momentjs.com/downloads/moment.min.js"></script>
-<script src="http://momentjs.com/downloads/moment-timezone-with-data-2010-2020.min.js"></script>
 
 <script>
 
@@ -72,7 +66,7 @@ $.ajax({
 }).done(function (results) {
     
 var timestamp = _.map(results, function(item) {
-            return moment.tz(item.timestamp, zone).format(format); // Convert to Plotly time format and ET
+            return new Date(item.timestamp);   // Switch to local timezone
         });
 
 var data = [];
