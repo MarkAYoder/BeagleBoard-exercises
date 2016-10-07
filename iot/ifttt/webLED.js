@@ -12,7 +12,7 @@ var port = 9090, // Port to listen on
     b     = require('bonescript');
 var key = 'bHddeE_oLPxdP0ZKABzAe4';
 var LED = 'P9_14';
-var button = 'P9_17';
+var button = 'P9_27';
 var event = 'LED';
     
 b.pinMode(LED, b.OUTPUT);
@@ -59,6 +59,9 @@ var server = http.createServer(function (req, res) {
     } else if (path === '/off') {
         b.digitalWrite(LED, 0);
         res.write("LED off<br>");
+    } else if (path === '/toggle') {
+        b.digitalWrite(LED, ~b.digitalRead(LED));
+        res.write("LED toggle<br>");
     }
     
     var params = util.inspect(qs.parse(url.parse(req.url).query));
