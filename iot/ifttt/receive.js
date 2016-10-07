@@ -7,7 +7,6 @@
 var port = 9090, // Port to listen on
     http  = require('http'),
     url   = require('url'),
-    fs    = require('fs'),
     util  = require('util'),
     qs    = require('querystring'),
     b     = require('bonescript'),
@@ -15,12 +14,6 @@ var port = 9090, // Port to listen on
     LED = 'P9_14';
     
 b.pinMode(LED, b.OUTPUT);
-    
-function send404(res) {
-    res.writeHead(404);
-    res.write('404');
-    res.end();
-}
 
 server = http.createServer(function (req, res) {
 // server code
@@ -29,20 +22,20 @@ server = http.createServer(function (req, res) {
     // console.log("req: " + util.inspect(req));
     // console.log("res: " + util.inspect(req));
     
+    res.write("<html>");
     if(path === '/on') {
         b.digitalWrite(LED, 1);
+        res.write("LED on<br>");
     } else if (path === '/off') {
         b.digitalWrite(LED, 0);
+        res.write("LED off<br>");
     }
     
-    console.log(util.inspect(qs.parse(url.parse(req.url).query)));
-
-    fs.readFile(__dirname + path, function (err, data) {
-        if (err) {return send404(res); }
-            console.log("path2: " + path);
-        res.write(data, 'utf8');
-        res.end();
-    });
+    var params = util.inspect(qs.parse(url.parse(req.url).query));
+    console.log(params);
+    res.write(params);
+    res.write("</html>");
+    res.end();
 });
 
 server.listen(port);
