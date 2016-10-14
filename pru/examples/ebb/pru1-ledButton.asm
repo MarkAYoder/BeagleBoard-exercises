@@ -8,12 +8,14 @@
     .asg 200, INS_PER_US            ; 5ns per instruction
     .asg 2,	INS_PER_DELAY_LOOP      ; two instructions per delay loop
                                  ; set up a 50ms delay
-    .asg 50 * 1000 * (INS_PER_US / INS_PER_DELAY_LOOP) , DELAY  
+    .asg 500 * 1000 * (INS_PER_US / INS_PER_DELAY_LOOP) , DELAY  
 
     .asg 32, PRU0_R31_VEC_VALID     ; allows notification of program completion
     .asg 3, PRU_EVTOUT_0            ; the event number that is sent back
 
-START:
+	.clink
+	.global start
+start:
 	set	r30, r30.t5           ; turn on the output pin (LED on)
 	ldi32	r0, DELAY        ; store the length of the delay in REG0
 DELAYON:
@@ -26,7 +28,7 @@ DELAYOFF:
 	SUB	r0, r0, 1        ; decrement REG0 by 1
 	QBNE	DELAYOFF, r0, 0  ; Loop to DELAYOFF, unless REG0=0
 
-	QBBC	START, r31, 3    ; is the button pressed? If not, loop
+	QBBC	start, r31, 3    ; is the button pressed? If not, loop
 
 END:                             ; notify the calling app that finished
 	; MOV	R31.b0, PRU0_R31_VEC_VALID | PRU_EVTOUT_0
