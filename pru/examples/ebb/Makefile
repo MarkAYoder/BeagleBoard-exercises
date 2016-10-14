@@ -43,8 +43,8 @@ LFLAGS=--reread_libs --warn_sections --stack_size=$(STACK_SIZE) --heap_size=$(HE
 
 GEN_DIR=gen
 
-PRU1_FW		=$(GEN_DIR)/main_pru1_fw.out
-# PRU0_FW		=$(GEN_DIR)/main_pru0_fw.out
+# PRU1_FW		=$(GEN_DIR)/main_pru1_fw.out
+PRU0_FW		=$(GEN_DIR)/main_pru0_fw.out
 
 
 # -----------------------------------------------------
@@ -52,20 +52,20 @@ PRU1_FW		=$(GEN_DIR)/main_pru1_fw.out
 
 # add the required firmwares to TARGETS
 # TARGETS		=$(PRU1_FW) $(PRU0_FW)
-TARGETS		=$(PRU1_FW)
+TARGETS		=$(PRU0_FW)
 
 # add the required files while linkin the FW code
 # required linking files for PRU1
 # LINK_PRU1_FW = (GEN_DIR)/pru1-inline-asm.object (GEN_DIR)/code2_pru1.object
 # LINK_PRU1_FW= $(GEN_DIR)/pru1-asm-blinky.object
 # LINK_PRU1_FW= $(GEN_DIR)/pru1-pwm.object
-LINK_PRU1_FW= $(GEN_DIR)/pru1-ledButton.object
+LINK_PRU1_FW= 
 # LINK_PRU1_FW= $(GEN_DIR)/pru1-test.object
 
 # required linking files for PRU0
 # LINK_PRU0_FW = (GEN_DIR)/pru0-inline-asm.object (GEN_DIR)/code2_pru1.object
 # LINK_PRU0_FW=
-LINK_PRU0_FW=
+LINK_PRU0_FW= $(GEN_DIR)/pru0-ledButton.object
 
 #------------------------------------------------------
 
@@ -97,7 +97,7 @@ $(GEN_DIR)/main_pru1.object: main_pru1.c
 	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
 
-$(GEN_DIR)/pru1-ledButton.object: pru1-ledButton.asm
+$(GEN_DIR)/pru0-ledButton.object: pru0-ledButton.asm
 	@mkdir -p $(GEN_DIR)
 	@echo 'CC	$<'
 	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
@@ -144,4 +144,4 @@ reboot_pru0:
 clean:
 	@echo 'CLEAN	.'
 	@rm -rf $(GEN_DIR)
-	@rm encoder-test
+	# @rm encoder-test
