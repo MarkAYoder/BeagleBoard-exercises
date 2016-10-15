@@ -41,6 +41,7 @@
 
 #define	INS_PER_US 200           // 5ns per instruction
 #define INS_PER_DELAY_LOOP 2	 // two instructions per delay loop
+// set up a 50ms delay
 #define TIME 50 * 1000 * (INS_PER_US / INS_PER_DELAY_LOOP)
 
 // The function is defined in pru1_asm_blinky.asm in same dir
@@ -48,27 +49,21 @@
 // seperately linked
 extern void start(int time);
 volatile register unsigned int __R30;
+volatile register unsigned int __R31;
 
 void main(void)
 {
     /* Clear SYSCFG[STANDBY_INIT] to enable OCP master port */
 	CT_CFG.SYSCFG_bit.STANDBY_INIT = 0;
 
-	// Access PRU Shared RAM using Constant Table
-	// C24 defaults to 0x00000000, we need to set bits 11:8 to 0x0200 in order to access local data RAM
-	// PRU1_CTRL.CTBIR0_bit.C24_BLK_IDX = 0x2;
-	// C28 defaults to 0x00000000, we need to set bits 23:8 to 0x0100 in order to have it point to 0x00010000,
-	//		to access SHARED RAM
-	// PRU1_CTRL.CTPPR0_bit.C28_BLK_POINTER = 0x0100;
-	
-;	// set up a 50ms delay
-	
-	// while(1) {
-	// 	__R30 |= 1<<5;
-	// 	__delay_cycles(TIME);
-	// 	__R30 &= ~(1<<5);
-	// 	__delay_cycles(TIME);
-	// }
+	while(!(__R31&(1<<3))) {
+		__R30 |= 1<<5;
+		__delay_cycles(TIME);
+		__R30 &= ~(1<<5);
+		__delay_cycles(TIME);
+	}
+	__delay_cycles(TIME);	// Give some time for press to release
+	// Call assembly language
  	start(TIME);
 	__halt();
 }
