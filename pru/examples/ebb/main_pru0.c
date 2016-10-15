@@ -39,10 +39,15 @@
 #include <pru_ctrl.h>
 #include "resource_table_pru1.h"
 
+#define	INS_PER_US 200           // 5ns per instruction
+#define INS_PER_DELAY_LOOP 2	 // two instructions per delay loop
+#define TIME 50 * 1000 * (INS_PER_US / INS_PER_DELAY_LOOP)
+
 // The function is defined in pru1_asm_blinky.asm in same dir
 // We just need to add a declaration here, the defination can be
 // seperately linked
-extern void start(void);
+extern void start(int time);
+volatile register unsigned int __R30;
 
 void main(void)
 {
@@ -56,6 +61,15 @@ void main(void)
 	//		to access SHARED RAM
 	// PRU1_CTRL.CTPPR0_bit.C28_BLK_POINTER = 0x0100;
 	
-	start();
+;	// set up a 50ms delay
+	
+	// while(1) {
+	// 	__R30 |= 1<<5;
+	// 	__delay_cycles(TIME);
+	// 	__R30 &= ~(1<<5);
+	// 	__delay_cycles(TIME);
+	// }
+ 	start(TIME);
+	__halt();
 }
 
