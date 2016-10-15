@@ -12,13 +12,13 @@
 #	add compile targets, as added to LINK_PRU1(0)_FW for other files.
 # 
 
-# PRU_CGT environment variable must point to the TI PRU compiler directory. E.g.:
-# Set in setup.sh
+# PRU_CGT environment variable must point to the TI PRU compiler directory.
+# PRU_SUPPROT points to pru-software-support-package
+# Both are set in setup.sh
 
 LINKER_COMMAND_FILE=./AM335x_PRU.cmd
-SUPPORTPATH=/opt/source/pru-software-support-package
-LIBS=--library=$(SUPPORTPATH)/lib/rpmsg_lib.lib
-INCLUDE=--include_path=$(SUPPORTPATH)/include --include_path=$(SUPPORTPATH)/include/am335x
+LIBS=--library=$(PRU_SUPPORT)/lib/rpmsg_lib.lib
+INCLUDE=--include_path=$(PRU_SUPPORT)/include --include_path=$(PRU_SUPPORT)/include/am335x
 STACK_SIZE=0x100
 HEAP_SIZE=0x100
 
