@@ -23,4 +23,4 @@ def get_tomato_info(host, username, password, http_id):
  
     return tomato
  
-print get_tomato_info("10.0.4.1", "root", "tyc4tgog", "TIDba0438d0baf17347")
+print get_tomato_info("10.0.4.1", "root", password, "TIDba0438d0baf17347")
