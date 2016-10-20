@@ -31,14 +31,14 @@ endif
 
 
 LINKER_COMMAND_FILE=./AM335x_PRU.cmd
-LIBS=--library=../../lib/rpmsg_lib.lib
-INCLUDE=--include_path=../../include --include_path=../../include/am335x
+LIBS=--library=$(PRU_SUPPORT)/lib/rpmsg_lib.lib
+INCLUDE=--include_path=$(PRU_SUPPORT)/include --include_path=$(PRU_SUPPORT)/include/am335x
 STACK_SIZE=0x100
 HEAP_SIZE=0x100
 
 
 CFLAGS=-v3 -O2 --display_error_number --endian=little --hardware_mac=on --obj_directory=$(GEN_DIR) --pp_directory=$(GEN_DIR) -ppd -ppa --asm_listing --c_src_interlist # --absolute_listing
-LFLAGS=--reread_libs --warn_sections --stack_size=$(STACK_SIZE) --heap_size=$(HEAP_SIZE) -m file.map
+LFLAGS=--reread_libs --warn_sections --stack_size=$(STACK_SIZE) --heap_size=$(HEAP_SIZE) -m $(GEN_DIR)/file.map
 
 
 GEN_DIR=gen
@@ -153,4 +153,4 @@ reboot_pru0:
 clean:
 	@echo 'CLEAN	.'
 	@rm -rf $(GEN_DIR)
-	@rm main_pru1.asm file.map pwm-test
+	@rm main_pru1.asm pwm-test
