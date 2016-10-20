@@ -39,7 +39,7 @@
 #include <pru_ctrl.h>
 #include "resource_table_pru1.h"
 
-// The function is defined in pru1_asm_blinky.asm in same dir
+// The function is defined in pru1_pwm.asm in same dir
 // We just need to add a declaration here, the defination can be
 // seperately linked
 extern void start(void);

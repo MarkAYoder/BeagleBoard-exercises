@@ -12,8 +12,6 @@
 ; PRU 0 has 6 outputs, PRU 1 has 12.
 ; The timing for PRU 0 seems a bit off.  The period is a bit short measuring
 ;	966us when it should be 1000.
-; WARNING:  The PRUs use the same SHAREDRAM addresses for the on/off cycles.
-;	The aught to be fixed some time.
 
 ;	Mark A. Yoder, 29-July-2016
 
