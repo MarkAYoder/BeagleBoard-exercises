@@ -46,7 +46,7 @@ LINK_PRU1_FW=
 #------------------------------------------------------
 
 .PHONY: all
-all: $(TARGETS)
+all: $(TARGETS) pwm-test
 	@echo '-	Generated firmwares are : $^'
 
 
@@ -78,6 +78,9 @@ $(GEN_DIR)/pru1-test.object: pru1-test.asm
 	@mkdir -p $(GEN_DIR)
 	@echo 'CC	$<'
 	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
+
+pwm-test:	pwm-test.c
+	gcc $< -o $@
 
 .PHONY: install install-pru1 install-pru0 copy_pru0_fw copy_pru1_fw reboot_pru_1 reboot_pru_0
 

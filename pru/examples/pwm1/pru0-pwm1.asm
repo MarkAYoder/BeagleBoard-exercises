@@ -11,9 +11,9 @@
 	.clink
 	.global start
 start:
-	; lsr		r14, r14, 1		; Divide number of delay cycles by 2 since each loop takes 2 cycles
+	ldi32	r1, 0x200		; This is the sum of STACK_SIZE and HEAP_SIZE in Makefile
+	lbbo	&r0, r1, 0, 4   ; Load the length of the delay in r0
 	set		r30, r30.t5     ; turn on the output pin (LED on)
-	mov		r0, r14         ; store the length of the delay in REG0
 
 delayon:
 	sub		r0, r0, 1        ; Decrement REG0 by 1
@@ -21,7 +21,7 @@ delayon:
 
 ledoff:
 	clr		r30, r30.t5     ; clear the output bin (LED off)
-	mov		r0, r14	        ; Reset REG0 to the length of the delay
+	lbbo	&r0, r1, 4, 4   ; Load the length of the delay in r0
 
 delayoff:
 	sub		r0, r0, 1        ; decrement REG0 by 1
