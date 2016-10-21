@@ -2,15 +2,12 @@
  *
  *  pwm tester
  *  (c) Copyright 2016
- *  Mark A. Yoder, 20-July-2016
- *	The channels 0-11 are on PRU1 and channels 12-17 are on PRU0
+ *  Mark A. Yoder, 21-Oct-2016
  *	The period and duty cycle values are stored in each PRU's Data memory
- *	The enable bits are stored in the shared memory
  *
  */
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <fcntl.h>
 #include <sys/mman.h>
 
@@ -24,29 +21,17 @@ unsigned int	*pru0DRAM_32int_ptr;		// Points to the start of local DRAM
 unsigned int	*pru1DRAM_32int_ptr;		// Points to the start of local DRAM
 unsigned int	*prusharedMem_32int_ptr;	// Points to the start of the shared memory
 
-/*******************************************************************************
-* int start_pwm_count(int ch, int countOn, int countOff)
-* 
-* Starts a pwm pulse on for countOn and off for countOff to a single channel (ch)
-*******************************************************************************/
-int start_pwm_count(int ch, int countOn, int countOff) {
-	printf("countOn: %d, countOff: %d, count: %d\n", 
-		countOn, countOff, countOn+countOff);
-	// write to PRU shared memory
-	pru0DRAM_32int_ptr[2*(ch)+0] = countOn;		// On time
-	pru0DRAM_32int_ptr[2*(ch)+1] = countOff;	// Off time
-	return 0;
-}
-
 int main(int argc, char *argv[])
 {
 	unsigned int	*pru;		// Points to start of PRU memory.
 	int	fd;
-	int on=10000000;
-	if(argc==2) {
-			on = strtol(argv[1], NULL, 10);
+	int onCount  = 10000000;		// Default 'on' count
+	int offCount = 10000000;
+	if(argc==3) {
+		onCount  = strtol(argv[1], NULL, 10);
+		offCount = strtol(argv[2], NULL, 10);
 	}
-	printf("pwm tester: %d\n", on);
+	printf("pwm tester: %d, %d\n", onCount, offCount);
 	
 	fd = open ("/dev/mem", O_RDWR | O_SYNC);
 	if (fd == -1) {
@@ -65,7 +50,9 @@ int main(int argc, char *argv[])
 	pru1DRAM_32int_ptr =     pru + PRU1_DRAM/4 + 0x200/4;	// Points to 0x200 of PRU1 memory
 	prusharedMem_32int_ptr = pru + PRU_SHAREDMEM/4;	// Points to start of shared memory
 
-	start_pwm_count(0, on, on);
+	int ch =0;		// We only have channel 0
+	pru0DRAM_32int_ptr[2*(ch)+0] = onCount;		// On time
+	pru0DRAM_32int_ptr[2*(ch)+1] = offCount;	// Off time
 
 	if(munmap(pru, PRU_LEN)) {
 		printf("munmap failed\n");
