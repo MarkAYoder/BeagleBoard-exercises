@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 	pru1DRAM_32int_ptr =     pru + PRU1_DRAM/4 + 0x200/4;	// Points to 0x200 of PRU1 memory
 	prusharedMem_32int_ptr = pru + PRU_SHAREDMEM/4;	// Points to start of shared memory
 
-	int ch =0;		// We only have channel 0
+	int ch = 0;		// We only have channel 0
 	pru0DRAM_32int_ptr[2*(ch)+0] = onCount;		// On time
 	pru0DRAM_32int_ptr[2*(ch)+1] = offCount;	// Off time
 

@@ -11,7 +11,7 @@
 	.clink
 	.global start
 start:
-	ldi32	r1, 0x200		; This is the sum of STACK_SIZE and HEAP_SIZE in Makefile
+	ldi		r1, 0x200		; This is the sum of STACK_SIZE and HEAP_SIZE in Makefile
 	lbbo	&r0, r1, 0, 4   ; Load the length of the delay in r0
 	set		r30, r30.t5     ; turn on the output pin (LED on)
 
