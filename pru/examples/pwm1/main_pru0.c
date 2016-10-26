@@ -50,20 +50,30 @@
 extern void start(int time);
 volatile register unsigned int __R30;
 volatile register unsigned int __R31;
+int *onTime  = (int *) 0x200;
+int *offTime = (int *) 0x204;
+int i;
+int time;
 
 void main(void) {
     /* Clear SYSCFG[STANDBY_INIT] to enable OCP master port */
 	CT_CFG.SYSCFG_bit.STANDBY_INIT = 0;
 
 	__delay_cycles(TIME);
- 	start(TIME);
+ 	// start(TIME);
  	__delay_cycles(TIME);
  	
  	while(!(__R31&(1<<3))) {
-		__R30 ^= 1<<5;
-		__delay_cycles(TIME);
-		// __R30 &= ~(1<<5);
-		// __delay_cycles(TIME);
+		time = *onTime;
+		for(i=0; i<time; i++) {
+			__R30 |= 1<<5;
+			// __delay_cycles must be passed a const, so we have to do our own loop
+			// Must have something in loop, otherwise it optimized out.
+		}
+		time = *offTime;
+		for(i=0; i<time; i++) {
+			__R30 &= ~(1<<5);
+		}
 	}
 	__delay_cycles(TIME);	// Give some time for press to release
 	// Call assembly language
