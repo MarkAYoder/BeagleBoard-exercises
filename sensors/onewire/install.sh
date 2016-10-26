@@ -20,5 +20,5 @@ cat w1_slave
 
 # echo BB-W1 > $SLOTS
 
-echo "cape_enable=bone_capemgr.enable_partno=BB-W1-P9.12" >> /boot/uEnv.txt
+# echo "cape_enable=bone_capemgr.enable_partno=BB-W1-P9.12" >> /boot/uEnv.txt
 # Then reboot
