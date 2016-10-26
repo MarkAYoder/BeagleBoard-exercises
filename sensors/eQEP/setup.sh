@@ -1,4 +1,11 @@
 #!/bin/bash
+# For v4.4.x-ti (or rt-ti) r53+ kernels
+config-pin -a P8_11 qep
+config-pin -a P8_12 qep
+cd /sys/devices/platform/ocp
+cat  48302000.epwmss/48302180.eqep/position 48304000.epwmss/48304180.eqep/position 48300000.epwmss/48300180.eqep/position
+
+# This is for older kernels.
 # Find where the eQEP .dtbo files are
 ls /lib/firmware/ | grep -i qep
 # PyBBIO-eqep0-00A0.dtbo
@@ -10,7 +17,7 @@ ls /lib/firmware/ | grep -i qep
 wget https://github.com/derekmolloy/boneDeviceTree/raw/master/docs/BeagleboneBlackP8HeaderTable.pdf
 wget https://github.com/derekmolloy/boneDeviceTree/raw/master/docs/BeagleboneBlackP9HeaderTable.pdf
 # Search for eqp
-# eQEP2 looks like a good one, but it appears in two place.  Try the first one
+# eQEP2 looks like a good one, but it appears in two places.  Try the first one
 export SLOTS=/sys/devices/bone_capemgr.*/slots
 echo PyBBIO-eqep2 > $SLOTS
 -bash: echo: write error: File exists
