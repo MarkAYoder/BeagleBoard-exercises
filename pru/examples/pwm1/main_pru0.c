@@ -36,7 +36,7 @@
 				  
 #include <stdint.h>
 #include <pru_cfg.h>
-// #include <pru_ctrl.h>
+#include "pwmParams.h"
 #include "resource_table_pru1.h"
 
 #define	INS_PER_US 200           // 5ns per instruction
@@ -47,10 +47,10 @@
 // The function is defined in pru1_asm_blinky.asm in same dir
 // We just need to add a declaration here, the defination can be
 // seperately linked
-extern void start(int time);
+extern void start(int *RAM0);
 volatile register unsigned int __R30;
 volatile register unsigned int __R31;
-int *RAM0  = (int *) 0x200;
+int *RAM0  = (int *) pwmParams;
 int i;
 int time;
 
@@ -76,7 +76,7 @@ void main(void) {
 	}
 	__delay_cycles(TIME);	// Give some time for press to release
 	// Call assembly language
- 	start(TIME);
+ 	start(RAM0);
 	__halt();
 }
 

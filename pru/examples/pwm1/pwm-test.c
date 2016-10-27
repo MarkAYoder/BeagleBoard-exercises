@@ -3,13 +3,14 @@
  *  pwm tester
  *  (c) Copyright 2016
  *  Mark A. Yoder, 21-Oct-2016
- *	The period and duty cycle values are stored in each PRU's Data memory
+ *	The period and duty cycle values are stored in PRU's Data memory
  *
  */
 
 #include <stdio.h>
 #include <fcntl.h>
 #include <sys/mman.h>
+#include "pwmParams.h"		// Tells where in RAM0 to store pwm paramters
 
 #define PRU_ADDR		0x4A300000		// Start of PRU memory Page 184 am335x TRM
 #define PRU_LEN			0x80000			// Length of PRU memory
@@ -46,8 +47,8 @@ int main(int argc, char *argv[])
 	close(fd);
 	printf ("Using /dev/mem.\n");
 	
-	pru0DRAM_32int_ptr =     pru + PRU0_DRAM/4 + 0x200/4;	// Points to 0x200 of PRU0 memory
-	pru1DRAM_32int_ptr =     pru + PRU1_DRAM/4 + 0x200/4;	// Points to 0x200 of PRU1 memory
+	pru0DRAM_32int_ptr =     pru + PRU0_DRAM/4 + pwmParams/4;	// Points pwm paramters in PRU0 memory
+	pru1DRAM_32int_ptr =     pru + PRU1_DRAM/4 + pwmParams/4;	// Points pwm paramters in PRU1 memory
 	prusharedMem_32int_ptr = pru + PRU_SHAREDMEM/4;	// Points to start of shared memory
 
 	int ch = 0;		// We only have channel 0
