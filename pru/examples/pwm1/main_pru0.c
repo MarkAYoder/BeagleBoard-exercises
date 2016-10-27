@@ -63,13 +63,13 @@ void main(void) {
  	__delay_cycles(TIME);
  	
  	while(!(__R31&(1<<3))) {
-		time = RAM0[0];
+		time = RAM0[0];		// on time
 		for(i=0; i<time; i++) {
 			__R30 |= 1<<5;
 			// __delay_cycles must be passed a const, so we have to do our own loop
 			// Must have something in loop, otherwise it optimized out.
 		}
-		time = RAM0[1];
+		time = RAM0[1];		// off time
 		for(i=0; i<time; i++) {
 			__R30 &= ~(1<<5);
 		}

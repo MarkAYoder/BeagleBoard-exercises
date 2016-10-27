@@ -11,7 +11,7 @@
 	.clink
 	.global start
 start:
-	lbbo	&r0, r14, 0, 4   ; Load the length of the delay in r0
+	lbbo	&r0, r14, 0, 4   ; Load the on time (passed in r14)
 	set		r30, r30.t5     ; turn on the output pin (LED on)
 
 delayon:
@@ -20,7 +20,7 @@ delayon:
 
 ledoff:
 	clr		r30, r30.t5     ; clear the output bin (LED off)
-	lbbo	&r0, r14, 4, 4   ; Load the length of the delay in r0
+	lbbo	&r0, r14, 4, 4   ; Load off time
 
 delayoff:
 	sub		r0, r0, 1        ; decrement REG0 by 1
