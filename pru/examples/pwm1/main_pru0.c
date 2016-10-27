@@ -50,8 +50,7 @@
 extern void start(int time);
 volatile register unsigned int __R30;
 volatile register unsigned int __R31;
-int *onTime  = (int *) 0x200;
-int *offTime = (int *) 0x204;
+int *RAM0  = (int *) 0x200;
 int i;
 int time;
 
@@ -64,13 +63,13 @@ void main(void) {
  	__delay_cycles(TIME);
  	
  	while(!(__R31&(1<<3))) {
-		time = *onTime;
+		time = RAM0[0];
 		for(i=0; i<time; i++) {
 			__R30 |= 1<<5;
 			// __delay_cycles must be passed a const, so we have to do our own loop
 			// Must have something in loop, otherwise it optimized out.
 		}
-		time = *offTime;
+		time = RAM0[1];
 		for(i=0; i<time; i++) {
 			__R30 &= ~(1<<5);
 		}
