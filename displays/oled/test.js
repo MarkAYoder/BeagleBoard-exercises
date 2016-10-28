@@ -18,10 +18,19 @@ oled.begin(function(){
     // draws 4 white pixels total 
     // format: [x, y, color] 
     oled.drawPixel([
-        [128, 1, 1],
-        [128, 32, 1],
-        [128, 16, 1],
-        [64, 16, 1]
+        [ 32,  16, 1],
+        [ 32,  16+47, 1],
+        [ 32+63, 16, 1],
+        [ 32+63, 16+47, 1]
+        // [64, 1, 1],
+        // [64, 32, 1],
+        // [64, 16, 1],
+        // [32, 16, 1]
     ]);
-  
+    // // args: (x0, y0, x1, y1, color) 
+    // oled.drawLine(1, 1, 64, 48, 1);
+    
+    // // oled.invertDisplay(true);
+    
+    // oled.fillRect(1, 1, 10, 20, 1);
 });
