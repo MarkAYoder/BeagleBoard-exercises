@@ -125,6 +125,36 @@ function readWeather() {
                     logger.error("error=" + error + " response=" + JSON.stringify(response));
                 }
             });
+            
+            // console.log("About to make new oled");
+            // Write to OLED display
+            // Use OLED
+            var oled = require('oled-spi');
+            var font = require('oled-font-5x7');
+            var opts = {
+                device: "/dev/spidev2.1",
+                width:  128,
+                height: 64,
+                dcPin:  7,
+                rstPin: 20
+            };
+            var oled = new oled(opts);
+
+            oled.begin(function() {
+                var xoff = 32;
+                var yoff = 16;
+                oled.turnOnDisplay();
+                oled.clearDisplay();
+                oled.setCursor(0+xoff, 0+yoff);
+                oled.writeString(font, 1, 'Temp:', 1, true);
+                oled.setCursor(0+xoff, 8+yoff);
+                oled.writeString(font, 1, '    ' + temperature, 1, true);
+                
+                oled.setCursor(0+xoff, 16+yoff);
+                oled.writeString(font, 1, 'Humid:', 1, true);
+                oled.setCursor(0+xoff, 24+yoff);
+                oled.writeString(font, 1, '    ' + humidity, 1, true);
+            });
     	});
     }
 }
