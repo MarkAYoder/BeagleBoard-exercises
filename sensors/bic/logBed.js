@@ -148,7 +148,7 @@ function readWeather() {
                 oled.setCursor(0+xoff, 0+yoff);
                 oled.writeString(font, 1, 'Temp:', 1, true);
                 oled.setCursor(0+xoff, 8+yoff);
-                oled.writeString(font, 1, '    ' + temperature, 1, true);
+                oled.writeString(font, 1, '    ' + (temperature*9/5+32).toFixed(0), 1, true);
                 
                 oled.setCursor(0+xoff, 16+yoff);
                 oled.writeString(font, 1, 'Humid:', 1, true);
