@@ -6,7 +6,7 @@ var b             = require('bonescript');
 console.log("Loading oled-spi...");
 var oledspi       = require('oled-spi');
 
-var inputPin = 'P8_45';
+var inputPin = 'P9_28';
 var ms = 15*1000;       // On time
 
 b.pinMode(inputPin, b.INPUT);
@@ -21,14 +21,16 @@ var opts = {
 };
 var oled = new oledspi(opts);
 
-b.attachInterrupt(inputPin, true, b.CHANGE, interruptCallback);
+b.attachInterrupt(inputPin, true, b.FALLING, interruptCallback);
 
 function interruptCallback() {
+    // console.log("Callback");
     oled.turnOnDisplay();
     setTimeout(off, ms);
 }
 
 function off () {
+    // console.log("off");
     oled.turnOffDisplay();
 }
 console.log("Ready...");
