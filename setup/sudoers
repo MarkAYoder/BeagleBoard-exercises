@@ -1,0 +1,1 @@
+zak	ALL=(root) NOPASSWD: /usr/bin/nmap
