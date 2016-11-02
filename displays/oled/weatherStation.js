@@ -10,7 +10,7 @@ var font    = require('oled-font-5x7');
 var request = require('request');
 var fs      = require('fs');
 var util    = require('util'); 
-var timeOut = 5*1000;       // On time
+var timeOut = 15*1000;       // On time
 
 // spi options
 var opts = {
@@ -31,6 +31,11 @@ var keys = JSON.parse(fs.readFileSync(filename));
 console.log("Title: " + keys.title);
 // console.log(util.inspect(keys));
 
+// Fill these in with two url requests.
+var temperature = null;
+var humidity    = null;
+var weather     = null;
+
 var url = keys.outputUrl + "/latest.json";
 request(url, {timeout: 10000}, function (err, res, body) {
     if(err) {
@@ -40,27 +45,13 @@ request(url, {timeout: 10000}, function (err, res, body) {
     // console.log("body: " + body);
     var data = JSON.parse(body)[0];
     // console.log("data: " + data);
-    // console.log("Temp: %d, Humidity: %d", (data.tempmid*9/5+32).toFixed(1),
-            // (data.humidity*1).toFixed(1));
-    var temperature = (data.tempmid*9/5+32).toFixed(1);
-    var humidity    = (data.humidity*1).toFixed(1);
+    temperature = (data.tempmid*9/5+32).toFixed(1);
+    humidity    = (data.humidity*1).toFixed(1);
+    console.log("Temperature: %d, Humidity: %d", temperature, humidity);
     
-    oled.begin(function() {
-        var xoff = 32;
-        var yoff = 16;
-        oled.turnOnDisplay();
-        oled.clearDisplay();
-        oled.setCursor(0+xoff, 0+yoff);
-        oled.writeString(font, 1, 'Temp:', 1, true);
-        oled.setCursor(0+xoff, 8+yoff);
-        oled.writeString(font, 1, '    ' + temperature, 1, true);
-        
-        oled.setCursor(0+xoff, 16+yoff);
-        oled.writeString(font, 1, 'Humid:', 1, true);
-        oled.setCursor(0+xoff, 24+yoff);
-        oled.writeString(font, 1, '    ' + humidity, 1, true);
-        setTimeout(off, timeOut);
-    });
+    if(weather) {
+        displayWeather();
+    }
 });
 
 var urlWeather = "http://api.wunderground.com/api/ec7eb641373d9256/conditions/forecast/q/IN/Brazil.json";
@@ -68,13 +59,39 @@ request(urlWeather, {timeout: 10000}, function(err, res, body) {
     if(err) {
         console.log("err: " + err);
     }
-    var weather = JSON.parse(body);
+    weather = JSON.parse(body);
     console.log("Temp:%s, lo:%s, hi:%s",
             weather.current_observation.temp_f,
             weather.forecast.simpleforecast.forecastday[0].low.fahrenheit,
             weather.forecast.simpleforecast.forecastday[0].high.fahrenheit
             );
+    if(temperature) {
+        displayWeather();
+    }
 });
+
+function displayWeather() {
+    console.log('displayWeather()');
+    oled.begin(function() {
+        var xoff = 32;
+        var yoff = 16;
+        oled.turnOnDisplay();
+        oled.clearDisplay();
+        oled.setCursor(0+xoff, 0+yoff);
+        oled.writeString(font, 1, 'Temp:'+ temperature, 1, true);
+        oled.setCursor(0+xoff, 8+yoff);
+        oled.writeString(font, 1, 'Hum: ' + humidity, 1, true);
+        oled.setCursor(0+xoff, 16+yoff);
+        oled.writeString(font, 1, 'Out: ' + weather.current_observation.temp_f, 1, true);
+        oled.setCursor(0+xoff, 24+yoff);
+        oled.writeString(font, 1, 
+            'lo:  ' + weather.forecast.simpleforecast.forecastday[0].low.fahrenheit, 1, true);
+        oled.setCursor(0+xoff, 32+yoff);
+        oled.writeString(font, 1, 
+            'hi:  ' + weather.forecast.simpleforecast.forecastday[0].high.fahrenheit, 1, true);
+        setTimeout(off, timeOut);
+    }); 
+}
 
 function off () {
     oled.turnOffDisplay();
