@@ -8,18 +8,20 @@ var exec = require('child_process').exec;
 
 var inputPin = 'P8_45';
 var runMe = "./weatherStation.js";
+if(process.argv.length >= 3) {
+    runMe = process.argv[2];
+}
+if(process.argv.length === 4) {
+    inputPin = process.argv[3];
+}
 
 b.pinMode(inputPin, b.INPUT);
 
 b.attachInterrupt(inputPin, true, b.FALLING, interruptCallback);
 
-if(process.argv.length === 3) {
-    runMe = process.argv[2];
-}
-
 function interruptCallback(x) {
     if(!x.attached) {
-        // console.log("Callback");
+        console.log("Callback");
         exec(runMe, function(err, stdout, stderr) {
             if(err) {
                 console.log("err: " + err);
