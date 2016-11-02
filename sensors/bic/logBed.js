@@ -33,24 +33,11 @@ var logger = new winston.Logger({
 
 var i2c           = require('i2c');
 var request       = require('request');
-var child_process = require('child_process');
 var util          = require('util');
 var fs            = require('fs');
-var oledspi       = require('oled-spi');
-var font = require('oled-font-5x7');
-var ms = 5*1000;               // Repeat time
 
 var bus = '/dev/i2c-2';	// Which i2c bus
 var addr = 0x40;		// Address on bus
-/// spi options
-var opts = {
-    device: "/dev/spidev2.1",
-    width:  128,
-    height: 64,
-    dcPin:  7,
-    rstPin: 20
-};
-var oled = new oledspi(opts);
 
 var wait = 10;  // time in ms to wait from giving command to reading data.
 
@@ -69,7 +56,7 @@ if(process.argv.length === 3) {
 var keys = JSON.parse(fs.readFileSync(filename));
 // logger.info("Using: " + filename);
 logger.info("Title: " + keys.title);
-logger.debug(util.inspect(keys));
+// logger.debug(util.inspect(keys));
 
 var urlBase = keys.inputUrl + "/?private_key=" + keys.privateKey + "&templow=%s&tempmid=%s&temphigh=%s&humidity=%s&pressure=%s&ph=%s&extra=%s";
 
@@ -137,29 +124,6 @@ function readWeather() {
                 }
             });
             
-            // console.log("About to make new oled");
-            // Write to OLED display
-            // Use OLED
-            oled.begin(function() {
-                var xoff = 32;
-                var yoff = 16;
-                oled.turnOnDisplay();
-                oled.clearDisplay();
-                oled.setCursor(0+xoff, 0+yoff);
-                oled.writeString(font, 1, 'Temp:', 1, true);
-                oled.setCursor(0+xoff, 8+yoff);
-                oled.writeString(font, 1, '    ' + (temperature*9/5+32).toFixed(1), 1, true);
-                
-                oled.setCursor(0+xoff, 16+yoff);
-                oled.writeString(font, 1, 'Humid:', 1, true);
-                oled.setCursor(0+xoff, 24+yoff);
-                oled.writeString(font, 1, '    ' + (humidity*1).toFixed(1), 1, true);
-                setTimeout(off, 15000);
-            });
-            
-            function off () {
-                oled.turnOffDisplay();
-            }
     	});
     }
 }

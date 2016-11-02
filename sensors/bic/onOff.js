@@ -6,7 +6,7 @@ var b             = require('bonescript');
 console.log("Loading oled-spi...");
 var oledspi       = require('oled-spi');
 
-var inputPin = 'P9_28';
+var inputPin = 'P8_45';
 var ms = 15*1000;       // On time
 
 b.pinMode(inputPin, b.INPUT);
@@ -33,4 +33,4 @@ function off () {
     // console.log("off");
     oled.turnOffDisplay();
 }
-console.log("Ready...");
+console.log("Ready on %s...", inputPin);
