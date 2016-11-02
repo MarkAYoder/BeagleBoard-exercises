@@ -74,7 +74,7 @@ request(urlWeather, {timeout: 10000}, function(err, res, body) {
 
 // Called after both phant and wunderground have responded.
 function displayWeather() {
-    // console.log('displayWeather()');
+    // console.log('oled on...');
     oled.begin(function() {
         var xoff = 32;
         var yoff = 16;
@@ -96,14 +96,13 @@ function displayWeather() {
         
         var d = new Date();
         oled.writeString(font, 1, '      ' + d.getHours() + ':' + d.getMinutes(), 1, true);
-            
 
-            
         setTimeout(off, timeOut);   // Only leave on for timeOut ms
     }); 
 }
 
 function off () {
+    // console.log("oled off...");
     oled.turnOffDisplay();
 }
 
