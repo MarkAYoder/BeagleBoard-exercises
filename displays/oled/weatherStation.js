@@ -107,4 +107,4 @@ function off () {
     oled.turnOffDisplay();
 }
 
-console.log("Ready...");
+// console.log("Ready...");
