@@ -16,7 +16,7 @@ cp removeP9_4142.patch /tmp
 cd /opt/source/bb.org-overlays
 git checkout -b removeP9_4142
 git apply /tmp/removeP9_4142.patch
-# make install
+make install
 # reboot
 # source setup.sh to config-pin P9_41 and P9_42
 modprobe fbtft_device busnum=2 name=adafruit18 debug=7 verbose=3 gpios=dc:7,reset:20
@@ -28,6 +28,7 @@ wget https://kernel.org/theme/images/logos/tux.png
 wget http://www.rose-hulman.edu/InstituteBrandResources/RH_Graphic_Secondary.zip
 
 fbi -d /dev/fb0 -T 1 -a tux.png
+# This worked
 
 apt install mplayer
  
@@ -35,4 +36,4 @@ wget http://hubblesource.stsci.edu/sources/video/clips/details/images/hst_1.mpg
  
 mplayer -nolirc -vo fbdev:/dev/fb0 scale=WIDTH:128 hst_1.mpg
 
-It works!
+This didn't work.
