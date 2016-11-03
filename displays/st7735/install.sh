@@ -24,7 +24,7 @@ make install
 modprobe fbtft_device busnum=2 name=adafruit18 debug=7 verbose=3 gpios=dc:7,reset:20
 
 # This is for RES to P8_45 and D/C to P8_46
-modprobe fbtft_device busnum=2 name=adafruit18 debug=1 verbose=1 gpios=dc:71,reset:70
+modprobe fbtft_device busnum=2 name=sainsmart18 debug=1 verbose=1 gpios=dc:71,reset:70
 # The Adafruit LCD (https://www.adafruit.com/products/358) is 128x160
 
 apt install fbi
