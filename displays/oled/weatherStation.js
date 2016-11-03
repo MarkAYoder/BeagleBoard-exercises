@@ -32,15 +32,15 @@ console.log("Title: " + keys.title);
 // console.log(util.inspect(keys));
 
 // Fill these in with two url requests.  Don't display until both have returned
-var temperature = null;
-var humidity    = null;
+var temperature;
+var humidity;
 var weather     = null;
 
 // Get Bedroom data from phant
 var url = keys.outputUrl + "/latest.json";
 request(url, {timeout: 10000}, function (err, res, body) {
     if(err) {
-        console.log("err: " + err);
+        console.log("err phant: " + err);
     }
     // console.log("res: " + util.inspect(res));
     // console.log("body: " + body);
@@ -59,7 +59,7 @@ request(url, {timeout: 10000}, function (err, res, body) {
 var urlWeather = "http://api.wunderground.com/api/ec7eb641373d9256/conditions/forecast/q/IN/Brazil.json";
 request(urlWeather, {timeout: 10000}, function(err, res, body) {
     if(err) {
-        console.log("err: " + err);
+        console.log("err wunderground: " + err);
     }
     weather = JSON.parse(body);
     // console.log("Temp:%s, lo:%s, hi:%s",
