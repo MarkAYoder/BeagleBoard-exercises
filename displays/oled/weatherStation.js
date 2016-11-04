@@ -21,6 +21,20 @@ var opts = {
     rstPin: 20
 };
 var oled = new oledspi(opts);
+    oled.begin(function() {
+        var xoff = 32;
+        var yoff = 16;
+        oled.clearDisplay();
+        oled.drawPixel([
+            [ 0+xoff,  0+yoff, 1],
+            [ 0+xoff, 47+yoff, 1],
+            [63+xoff,  0+yoff, 1],
+            [63+xoff, 47+yoff, 1]
+        ]);
+        oled.drawLine(12+xoff, 12+yoff, 51+xoff, 35+yoff, 1);
+        oled.drawLine(51+xoff, 12+yoff, 12+xoff, 35+yoff, 1);
+        oled.turnOnDisplay();
+    });
 
 var filename = "/root/exercises/sensors/bic/bedKeys.json";
 if(process.argv.length === 3) {
@@ -32,8 +46,8 @@ console.log("Title: " + keys.title);
 // console.log(util.inspect(keys));
 
 // Fill these in with two url requests.  Don't display until both have returned
-var temperature;
-var humidity;
+var temperature = null;
+var humidity    = null;
 var weather     = null;
 
 // Get Bedroom data from phant
@@ -75,7 +89,7 @@ request(urlWeather, {timeout: 10000}, function(err, res, body) {
 // Called after both phant and wunderground have responded.
 function displayWeather() {
     // console.log('oled on...');
-    oled.begin(function() {
+    // oled.begin(function() {
         var xoff = 32;
         var yoff = 16;
         oled.turnOnDisplay();
@@ -98,7 +112,7 @@ function displayWeather() {
         oled.writeString(font, 1, '      ' + d.getHours() + ':' + d.getMinutes(), 1, true);
 
         setTimeout(off, timeOut);   // Only leave on for timeOut ms
-    }); 
+    // }); 
 }
 
 function off () {
