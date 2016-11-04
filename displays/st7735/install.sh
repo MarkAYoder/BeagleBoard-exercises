@@ -45,6 +45,8 @@ mplayer -nolirc -vo fbdev:/dev/fb0 scale=WIDTH:128 hst_1.mpg
 
 This didn't work.
 
+# From: https://github.com/notro/fbtft/wiki/Framebuffer-use
 apt install fbset
 fbset
 
+SDL_VIDEODRIVER=fbcon SDL_FBDEV=/dev/fb0 mplayer -vo sdl -framedrop hst_1.mpg
