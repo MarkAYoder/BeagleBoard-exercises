@@ -40,13 +40,11 @@ fbi -noverbose -T 1 -a tux.png
 apt install mplayer
  
 wget http://hubblesource.stsci.edu/sources/video/clips/details/images/hst_1.mpg
- 
-mplayer -nolirc -vo fbdev:/dev/fb0 scale=WIDTH:128 hst_1.mpg
 
-This didn't work.
+SDL_VIDEODRIVER=fbcon SDL_FBDEV=/dev/fb0 mplayer --vf-add=rotate=2 -vo sdl -framedrop hst_1.mpg
 
 # From: https://github.com/notro/fbtft/wiki/Framebuffer-use
 apt install fbset
 fbset
 
-SDL_VIDEODRIVER=fbcon SDL_FBDEV=/dev/fb0 mplayer -vo sdl -framedrop hst_1.mpg
+# This looks interesting: http://raspberrycompote.blogspot.com/2012/12/low-level-graphics-on-raspberry-pi-part_9509.html
