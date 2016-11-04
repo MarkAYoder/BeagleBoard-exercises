@@ -27,12 +27,14 @@ modprobe fbtft_device busnum=2 name=adafruit18 debug=7 verbose=3 gpios=dc:7,rese
 modprobe fbtft_device busnum=2 name=sainsmart18 debug=1 verbose=1 gpios=dc:71,reset:70
 # The Adafruit LCD (https://www.adafruit.com/products/358) is 128x160
 
+export FRAMEBUFFER=/dev/fb0
+
 apt install fbi
  
 wget https://kernel.org/theme/images/logos/tux.png
 wget http://www.rose-hulman.edu/InstituteBrandResources/RH_Graphic_Secondary.zip
 
-fbi -d /dev/fb0 -T 1 -a tux.png
+fbi -noverbose -T 1 -a tux.png
 # This worked
 
 apt install mplayer
@@ -42,3 +44,7 @@ wget http://hubblesource.stsci.edu/sources/video/clips/details/images/hst_1.mpg
 mplayer -nolirc -vo fbdev:/dev/fb0 scale=WIDTH:128 hst_1.mpg
 
 This didn't work.
+
+apt install fbset
+fbset
+
