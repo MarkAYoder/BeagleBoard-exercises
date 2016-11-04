@@ -24,6 +24,7 @@ var oled = new oledspi(opts);
     oled.begin(function() {
         var xoff = 32;
         var yoff = 16;
+        oled.turnOnDisplay();
         oled.clearDisplay();
         oled.drawPixel([
             [ 0+xoff,  0+yoff, 1],
@@ -31,9 +32,12 @@ var oled = new oledspi(opts);
             [63+xoff,  0+yoff, 1],
             [63+xoff, 47+yoff, 1]
         ]);
-        oled.drawLine(12+xoff, 12+yoff, 51+xoff, 35+yoff, 1);
-        oled.drawLine(51+xoff, 12+yoff, 12+xoff, 35+yoff, 1);
-        oled.turnOnDisplay();
+        oled.drawLine( 2+xoff, 12+yoff,  2+xoff, 35+yoff, 1);
+        oled.drawLine(61+xoff, 12+yoff, 61+xoff, 35+yoff, 1);
+        oled.drawLine( 2+xoff, 12+yoff, 61+xoff, 12+yoff, 1);
+        oled.drawLine(61+xoff, 35+yoff,  2+xoff, 35+yoff, 1);
+        oled.setCursor(7+xoff, 20+yoff);
+        oled.writeString(font, 1, "Loading", 1, true);
     });
 
 var filename = "/root/exercises/sensors/bic/bedKeys.json";
