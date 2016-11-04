@@ -40,6 +40,7 @@ fbi -noverbose -T 1 -a tux.png
 apt install mplayer
  
 wget http://hubblesource.stsci.edu/sources/video/clips/details/images/hst_1.mpg
+wget http://www.koeniglich.de/pics/RedsNightmare.mpg
 
 SDL_VIDEODRIVER=fbcon SDL_FBDEV=/dev/fb0 mplayer --vf-add=rotate=2 -vo sdl -framedrop hst_1.mpg
 
