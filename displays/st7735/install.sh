@@ -49,3 +49,4 @@ apt install fbset
 fbset
 
 # This looks interesting: http://raspberrycompote.blogspot.com/2012/12/low-level-graphics-on-raspberry-pi-part_9509.html
+git clone https://github.com/rst-/raspberry-compote.git
