@@ -50,3 +50,8 @@ fbset
 
 # This looks interesting: http://raspberrycompote.blogspot.com/2012/12/low-level-graphics-on-raspberry-pi-part_9509.html
 git clone https://github.com/rst-/raspberry-compote.git
+
+# Looks like a usefull library: https://github.com/prpplague/fb-test-app
+
+# For using Afafruit GFX library
+git clone https://github.com/adafruit/Adafruit-GFX-Library.git
