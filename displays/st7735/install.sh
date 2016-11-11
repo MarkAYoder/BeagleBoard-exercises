@@ -1,4 +1,5 @@
 # Nice instructions: http://beagleboard.org/project/bbb-lcd-fbtft-prebuilt/
+# Wiki: https://github.com/notro/fbtft/wiki
 # Driver appears to be already installed.
 # Wiring:
 # Vcc   3.3V
