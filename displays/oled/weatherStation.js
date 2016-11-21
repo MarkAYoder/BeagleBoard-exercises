@@ -26,18 +26,22 @@ var oled = new oledspi(opts);
         var yoff = 16;
         oled.turnOnDisplay();
         oled.clearDisplay();
-        oled.drawPixel([
-            [ 0+xoff,  0+yoff, 1],
-            [ 0+xoff, 47+yoff, 1],
-            [63+xoff,  0+yoff, 1],
-            [63+xoff, 47+yoff, 1]
-        ]);
-        oled.drawLine( 2+xoff, 12+yoff,  2+xoff, 35+yoff, 1);
-        oled.drawLine(61+xoff, 12+yoff, 61+xoff, 35+yoff, 1);
-        oled.drawLine( 2+xoff, 12+yoff, 61+xoff, 12+yoff, 1);
-        oled.drawLine(61+xoff, 35+yoff,  2+xoff, 35+yoff, 1);
-        oled.setCursor(7+xoff, 20+yoff);
-        oled.writeString(font, 1, "Loading", 1, true);
+        // oled.drawPixel([
+        //     [ 0+xoff,  0+yoff, 1],
+        //     [ 0+xoff, 47+yoff, 1],
+        //     [63+xoff,  0+yoff, 1],
+        //     [63+xoff, 47+yoff, 1]
+        // ]);
+        // oled.drawLine( 2+xoff, 12+yoff,  2+xoff, 35+yoff, 1);
+        // oled.drawLine(61+xoff, 12+yoff, 61+xoff, 35+yoff, 1);
+        // oled.drawLine( 2+xoff, 12+yoff, 61+xoff, 12+yoff, 1);
+        // oled.drawLine(61+xoff, 35+yoff,  2+xoff, 35+yoff, 1);
+        // oled.setCursor(7+xoff, 20+yoff);
+        // oled.writeString(font, 1, "Loading", 1, true);
+        
+        var d = new Date();
+        oled.setCursor(0+xoff, 40+yoff);
+        oled.writeString(font, 1, '      ' + d.getHours() + ':' + d.getMinutes(), 1, true);
     });
 
 var filename = "/root/exercises/sensors/bic/bedKeys.json";
@@ -50,28 +54,28 @@ console.log("Title: " + keys.title);
 // console.log(util.inspect(keys));
 
 // Fill these in with two url requests.  Don't display until both have returned
-var temperature = null;
+var temperature = 32;
 var humidity    = null;
 var weather     = null;
 
 // Get Bedroom data from phant
 var url = keys.outputUrl + "/latest.json";
-request(url, {timeout: 10000}, function (err, res, body) {
-    if(err) {
-        console.log("err phant: " + err);
-    }
-    // console.log("res: " + util.inspect(res));
-    // console.log("body: " + body);
-    var data = JSON.parse(body)[0];
-    // console.log("data: " + data);
-    temperature = (data.tempmid*9/5+32).toFixed(1);
-    humidity    = (data.humidity*1).toFixed(1);
-    // console.log("Temperature: %d, Humidity: %d", temperature, humidity);
+// request(url, {timeout: 10000}, function (err, res, body) {
+//     if(err) {
+//         console.log("err phant: " + err);
+//     }
+//     // console.log("res: " + util.inspect(res));
+//     // console.log("body: " + body);
+//     var data = JSON.parse(body)[0];
+//     // console.log("data: " + data);
+//     temperature = (data.tempmid*9/5+32).toFixed(1);
+//     humidity    = (data.humidity*1).toFixed(1);
+//     // console.log("Temperature: %d, Humidity: %d", temperature, humidity);
     
-    if(weather) {   // Display if wunderground has already responded
-        displayWeather();
-    }
-});
+//     if(weather) {   // Display if wunderground has already responded
+//         displayWeather();
+//     }
+// });
 
 // Get outdoor temp and forcast from wunderground
 var urlWeather = "http://api.wunderground.com/api/ec7eb641373d9256/conditions/forecast/q/IN/Brazil.json";
@@ -85,9 +89,21 @@ request(urlWeather, {timeout: 10000}, function(err, res, body) {
     //         weather.forecast.simpleforecast.forecastday[0].low.fahrenheit,
     //         weather.forecast.simpleforecast.forecastday[0].high.fahrenheit
     //         );
-    if(temperature) {   // Display if phant has already responded
-        displayWeather();
-    }
+    // if(temperature) {   // Display if phant has already responded
+    //     displayWeather();
+    // }
+    var xoff = 32;
+    var yoff = 16;
+
+    oled.setCursor(0+xoff, 16+yoff);
+    oled.writeString(font, 1, 'Out: ' + weather.current_observation.temp_f, 1, true);
+    oled.setCursor(0+xoff, 24+yoff);
+    oled.writeString(font, 1, 
+        'lo:  ' + weather.forecast.simpleforecast.forecastday[0].low.fahrenheit, 1, true);
+    oled.setCursor(0+xoff, 32+yoff);
+    oled.writeString(font, 1, 
+        'hi:  ' + weather.forecast.simpleforecast.forecastday[0].high.fahrenheit, 1, true);
+
 });
 
 // Called after both phant and wunderground have responded.
@@ -96,24 +112,12 @@ function displayWeather() {
     // oled.begin(function() {
         var xoff = 32;
         var yoff = 16;
-        oled.turnOnDisplay();
-        oled.clearDisplay();
+        // oled.turnOnDisplay();
+        // oled.clearDisplay();
         oled.setCursor(0+xoff, 0+yoff);
         oled.writeString(font, 1, 'Temp:'+ temperature, 1, true);
         oled.setCursor(0+xoff, 8+yoff);
         oled.writeString(font, 1, 'Hum: ' + humidity, 1, true);
-        oled.setCursor(0+xoff, 16+yoff);
-        oled.writeString(font, 1, 'Out: ' + weather.current_observation.temp_f, 1, true);
-        oled.setCursor(0+xoff, 24+yoff);
-        oled.writeString(font, 1, 
-            'lo:  ' + weather.forecast.simpleforecast.forecastday[0].low.fahrenheit, 1, true);
-        oled.setCursor(0+xoff, 32+yoff);
-        oled.writeString(font, 1, 
-            'hi:  ' + weather.forecast.simpleforecast.forecastday[0].high.fahrenheit, 1, true);
-        oled.setCursor(0+xoff, 40+yoff);
-        
-        var d = new Date();
-        oled.writeString(font, 1, '      ' + d.getHours() + ':' + d.getMinutes(), 1, true);
 
         setTimeout(off, timeOut);   // Only leave on for timeOut ms
     // }); 
