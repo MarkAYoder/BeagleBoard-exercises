@@ -8,10 +8,10 @@
 # SDA   P9_30
 # D/C   P9_42
 # RES   P9_41
-# CS    Gnd
+# CS    P8_44
 # Need to unconfigure GPIOs used for Reset and D/C. 
 # Edit /opt/source/bb.org-overlays/src/arm/univ-emmc-00A0.dts and remove references
-# to P9_41 and P9_42 (and P9.41 and P9.42)
+# to P9_41 and P9_42 (and P9.41 and P9.42) [ or P8_44, P8_45 and P8_46]
 # You can do this with the patch file
 cp removeP9_4142.patch /tmp
 cd /opt/source/bb.org-overlays
@@ -25,7 +25,7 @@ make install
 modprobe fbtft_device busnum=2 name=adafruit18 debug=7 verbose=3 gpios=dc:7,reset:20
 
 # This is for RES to P8_45 and D/C to P8_46
-modprobe fbtft_device busnum=2 name=sainsmart18 debug=1 verbose=1 gpios=dc:71,reset:70
+modprobe fbtft_device busnum=2 name=sainsmart18 debug=1 verbose=1 gpios=dc:71,reset:70,cs:73
 # The Adafruit LCD (https://www.adafruit.com/products/358) is 128x160
 
 export FRAMEBUFFER=/dev/fb0
@@ -36,6 +36,7 @@ wget https://kernel.org/theme/images/logos/tux.png
 wget http://www.rose-hulman.edu/InstituteBrandResources/RH_Graphic_Secondary.zip
 
 fbi -noverbose -T 1 -a tux.png
+fbi -t 5 -blend 1000 -noverbose -T 1 -a Matthias.jpg Malachi.jpg Alan.jpg Louis.jpg
 # This worked
 
 apt install mplayer
