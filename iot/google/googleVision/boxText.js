@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Draws boxes around faces
 var fs = require('fs');
+var util = require('util');
 
 var vision  = JSON.parse(fs.readFileSync(process.argv[3]).toString());
 var text = vision.textAnnotations;
@@ -18,9 +19,13 @@ for(var p in pages) {
         var paragraphs = blocks[b].paragraphs;
         for(var pg in paragraphs) {
             console.log("paragraph[%d] = " + paragraphs[pg], pg);
-            var words = paragraphs[pg];
+            var words = paragraphs[pg].words;
             for(var w in words) {
                 console.log("word[%d] = " + words[w], w);
+                var symbols = words[w].symbols;
+                for(var s in symbols) {
+                    console.log("symbol[%d] = " + util.inspect(symbols[s]), s);
+                }
             }
         }
     }
