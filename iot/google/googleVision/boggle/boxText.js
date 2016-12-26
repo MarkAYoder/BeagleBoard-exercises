@@ -19,6 +19,7 @@ bigBox += "\" ";
 // console.log(vision.fullTextAnnotation.pages[0].blocks[0].paragraphs[0].words[0].symbols);
 
 var coordinates = "";
+var count = 0;
 var pages = vision.fullTextAnnotation.pages;
 for(var p in pages) {
     // console.log("page[%d] = " + pages[p], p);
@@ -40,8 +41,9 @@ for(var p in pages) {
                     for(var j in vertices) {
                         coord += vertices[j].x + ',' + vertices[j].y + ' ';
                     }
-                    coordinates += coord + "\" -pointsize 10 -annotate +" + (vertices[0].x+5.0) + "+" + (vertices[0].y+25.0) + " ";
+                    coordinates += coord + "\" -pointsize 10 -annotate +" + (vertices[0].x+1.0) + "+" + (vertices[0].y-1.0) + " ";
                     coordinates += "'"+symbols[s].text+"' ";
+                    count++;
                     // console.log(vertices);
                     // console.log(coordinates);
                 }
@@ -55,7 +57,7 @@ var cmd = "convert " + process.argv[2] + bigBox + " -fill none -stroke red -stro
             
 // console.log(cmd);
 
-console.log("Marking boxes");
+console.log("Marking %s boxes", count);
 
 exec(cmd, function(err, stdout, stderr) {
   if (err) {
