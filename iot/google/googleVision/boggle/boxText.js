@@ -1,13 +1,20 @@
 #!/usr/bin/env node
 // Draws boxes around letters
-var fs = require('fs');
-var util = require('util');
+const fs = require('fs');
+const util = require('util');
 const exec = require('child_process').exec;
 
 var vision  = JSON.parse(fs.readFileSync(process.argv[3]).toString());
-var text = vision.textAnnotations;
+var vertices = vision.textAnnotations[0].boundingPoly.vertices;
 
-// console.log(vision.textAnnotations[0].boundingPoly);
+// console.log(vertices);
+var bigBox = " -fill none -stroke green -strokewidth 2 -draw \"polygon ";
+for(var j in vertices) {
+    bigBox += vertices[j].x + ',' + vertices[j].y + ' ';
+}
+bigBox += "\" ";
+
+// console.log(bigBox);
 
 // console.log(vision.fullTextAnnotation.pages[0].blocks[0].paragraphs[0].words[0].symbols);
 
@@ -43,7 +50,7 @@ for(var p in pages) {
     }
 }
 
-var cmd = "convert " + process.argv[2] + " -fill none -stroke red -strokewidth 1 "
+var cmd = "convert " + process.argv[2] + bigBox + " -fill none -stroke red -strokewidth 1 "
             + coordinates + " frame.jpg";
             
 // console.log(cmd);
@@ -52,7 +59,7 @@ console.log("Marking boxes");
 
 exec(cmd, function(err, stdout, stderr) {
   if (err) {
-    console.err("exec err: " + err);
+    console.error("exec err: " + err);
     return;
   }
   if(stdout) {
