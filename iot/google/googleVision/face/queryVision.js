@@ -42,5 +42,5 @@ var queryVision = function(path, callback){
   });
 };
 
-console.log(process.argv[2]);
+// console.log(process.argv[2]);
 queryVision(process.argv[2]);
