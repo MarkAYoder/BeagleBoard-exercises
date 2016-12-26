@@ -33,7 +33,7 @@ for(var p in pages) {
                     for(var j in vertices) {
                         coord += vertices[j].x + ',' + vertices[j].y + ' ';
                     }
-                    coordinates += coord + "\" -pointsize 28 -annotate +" + (vertices[0].x+20.0) + "+" + (vertices[0].y+60.0) + " ";
+                    coordinates += coord + "\" -pointsize 10 -annotate +" + (vertices[0].x+5.0) + "+" + (vertices[0].y+25.0) + " ";
                     coordinates += "'"+symbols[s].text+"' ";
                     // console.log(vertices);
                     // console.log(coordinates);
@@ -43,7 +43,7 @@ for(var p in pages) {
     }
 }
 
-var cmd = "convert " + process.argv[2] + " -fill none -stroke black -strokewidth 3 "
+var cmd = "convert " + process.argv[2] + " -fill none -stroke red -strokewidth 1 "
             + coordinates + " frame.jpg";
             
 // console.log(cmd);
