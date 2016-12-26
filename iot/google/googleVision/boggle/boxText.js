@@ -32,7 +32,7 @@ for(var p in pages) {
                     for(var j in vertices) {
                         coord += vertices[j].x + ',' + vertices[j].y + ' ';
                     }
-                    coordinates += coord + "\" -pointsize 28 -annotate +" + (vertices[0].x+15.0) + "+" + (vertices[0].y+20.0) + " ";
+                    coordinates += coord + "\" -pointsize 28 -annotate +" + (vertices[0].x+20.0) + "+" + (vertices[0].y+60.0) + " ";
                     coordinates += "'"+symbols[s].text+"' ";
                     // console.log(vertices);
                     // console.log(coordinates);
