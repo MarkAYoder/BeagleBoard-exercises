@@ -6,6 +6,9 @@ fswebcam --device /dev/video0 --input 0 --resolution 1280x720 \
     --no-banner \
     --jpeg 100 --save $FRAME
 
+# echo Converting to gray
+# convert $FRAME -colorspace Gray $FRAME
+
 echo "Sending to Google"
 ./boggle.js $FRAME > $JSON
 
