@@ -14,7 +14,8 @@ fswebcam --device /dev/video0 --input 0 --resolution 320x176 \
 
 echo "Sending to Google"
 if ./boggle.js $FRAME > $JSON
-then exit
+then echo Success
+else echo Failure; exit 1
 fi
 
 # echo "Marking boxes"

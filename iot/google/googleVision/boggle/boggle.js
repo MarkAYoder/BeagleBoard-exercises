@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 // From: https://groups.google.com/d/msg/cloud-vision-trusted-testers/cmpDD08YdEo/yA66qCS0CgAJ
 
-var key = 'AIzaSyD8RAfCr0CD2QPzmfEJUtuwy7vfm0lraKE';
-var fs = require('fs');
-var request = require('request');
+const key = 'AIzaSyD8RAfCr0CD2QPzmfEJUtuwy7vfm0lraKE';
+const fs = require('fs');
+const request = require('request');
 
-var queryVision = function(path, callback){
+function queryVision(path) {
   
   var buffer = fs.readFileSync(path, 'base64'); 
   var json   = {
@@ -31,17 +31,12 @@ var queryVision = function(path, callback){
   }, 
   function (err, response, body){
     if (err || response.statusCode != 200) {
-      return console.error('error', err, body.error);
+      console.error('error', err, body.error);
       process.exit(1);
     }
-    
     console.log(JSON.stringify(body.responses[0], undefined, 2));
-    
-    var response = body.responses[0];
-    // callback();
-
   });
-};
+}
 
 // console.log(process.argv[2]);
 queryVision(process.argv[2]);
