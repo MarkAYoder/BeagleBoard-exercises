@@ -31,7 +31,8 @@ var queryVision = function(path, callback){
   }, 
   function (err, response, body){
     if (err || response.statusCode != 200) {
-      return console.log('error', err, body.error);
+      return console.error('error', err, body.error);
+      process.exit(1);
     }
     
     console.log(JSON.stringify(body.responses[0], undefined, 2));

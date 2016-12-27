@@ -13,7 +13,9 @@ fswebcam --device /dev/video0 --input 0 --resolution 320x176 \
 # convert $FRAME -colorspace Gray $FRAME
 
 echo "Sending to Google"
-./boggle.js $FRAME > $JSON
+if ./boggle.js $FRAME > $JSON
+then exit
+fi
 
 # echo "Marking boxes"
 ./boxText.js $FRAME $JSON
