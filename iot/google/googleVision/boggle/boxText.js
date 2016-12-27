@@ -35,8 +35,6 @@ for(var p in pages) {
                 // console.log("word[%d] = " + words[w], w);
                 var symbols = words[w].symbols;
                 for(var s in symbols) {
-                    // console.log("symbol[%d] = " + util.inspect(symbols[s]), s);
-                    // console.log("text: %s, boundingBox: " + symbols[s].boundingBox, symbols[s].text);
                     var vertices = symbols[s].boundingBox.vertices;
                     var coord = "-draw \"polygon ";
                     for(var j in vertices) {
@@ -63,7 +61,6 @@ console.log("Marking %s boxes", count);
 exec(cmd, function(err, stdout, stderr) {
   if (err) {
     console.error("exec err: " + err);
-    return;
   }
   if(stdout) {
     console.log("stdout: " + stdout);
