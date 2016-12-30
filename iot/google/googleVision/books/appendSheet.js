@@ -3,6 +3,7 @@ var fs = require('fs');
 var readline = require('readline');
 var google = require('googleapis');
 var googleAuth = require('google-auth-library');
+const util = require('util');
 
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/sheets.googleapis.com-nodejs-quickstart.json
@@ -102,22 +103,21 @@ function storeToken(token) {
  */
 function listMajors(auth) {
   var sheets = google.sheets('v4');
+  var values = process.argv.slice(2);
   sheets.spreadsheets.values.append({
     auth: auth,
     spreadsheetId: '12bMUBiLK50yuiAl7aou0KxoMYeOthx0F0GLRR-cmw6A',
-    range: 'C2:E',
+    range: 'A1',
     valueInputOption: "USER_ENTERED",
     resource: {  // From: http://stackoverflow.com/questions/39502346/trying-to-append-row-google-sheets-api
-        values: [
-            [123456]
-        ]
+        values: [ values ]
     }
   }, function(err, response) {
     if (err) {
       console.log('The API returned an error: ' + err);
       return;
     }
-    console.log("Append: " + response);
+    console.log("Append: " + util.inspect(response));
   });
   
 //   sheets.spreadsheets.values.get({
