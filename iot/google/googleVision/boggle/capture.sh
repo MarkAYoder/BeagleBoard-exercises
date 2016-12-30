@@ -2,11 +2,13 @@
 FRAME=/tmp/frame.jpg
 JSON=/tmp/frame.json
 
-fswebcam --device /dev/video0 --input 0 --resolution 320x176 \
+fswebcam --device /dev/video0 --input 0 --resolution 640x360 \
+    --rotate 270 \
     --no-banner \
     --jpeg 100 --save $FRAME
 
 # echo Resizing
+# 1280x720, 640x360, 320x176
 # convert $FRAME -resize 320x180 $FRAME
 
 # echo Converting to gray
