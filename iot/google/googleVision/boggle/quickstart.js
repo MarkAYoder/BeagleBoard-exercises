@@ -6,7 +6,7 @@ var googleAuth = require('google-auth-library');
 
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/sheets.googleapis.com-nodejs-quickstart.json
-var SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
+var SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
     process.env.USERPROFILE) + '/.credentials/';
 var TOKEN_PATH = TOKEN_DIR + 'sheets.googleapis.com-nodejs-quickstart.json';
@@ -102,25 +102,43 @@ function storeToken(token) {
  */
 function listMajors(auth) {
   var sheets = google.sheets('v4');
-  sheets.spreadsheets.values.get({
+  sheets.spreadsheets.values.append({
     auth: auth,
-    spreadsheetId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
-    range: 'Class Data!A2:E',
+    spreadsheetId: '12bMUBiLK50yuiAl7aou0KxoMYeOthx0F0GLRR-cmw6A',
+    range: 'C2:E',
+    valueInputOption: "USER_ENTERED",
+    resource: {  // From: http://stackoverflow.com/questions/39502346/trying-to-append-row-google-sheets-api
+        values: [
+            [123456]
+        ]
+    }
   }, function(err, response) {
     if (err) {
       console.log('The API returned an error: ' + err);
       return;
     }
-    var rows = response.values;
-    if (rows.length == 0) {
-      console.log('No data found.');
-    } else {
-      console.log('Name, Major:');
-      for (var i = 0; i < rows.length; i++) {
-        var row = rows[i];
-        // Print columns A and E, which correspond to indices 0 and 4.
-        console.log('%s, %s', row[0], row[4]);
-      }
-    }
+    console.log("Append: " + response);
   });
+  
+//   sheets.spreadsheets.values.get({
+//     auth: auth,
+//     spreadsheetId: '12bMUBiLK50yuiAl7aou0KxoMYeOthx0F0GLRR-cmw6A',
+//     range: 'A2:E',
+//   }, function(err, response) {
+//     if (err) {
+//       console.log('The API returned an error: ' + err);
+//       return;
+//     }
+//     var rows = response.values;
+//     if (rows.length == 0) {
+//       console.log('No data found.');
+//     } else {
+//       console.log('Name, Major:');
+//       for (var i = 0; i < rows.length; i++) {
+//         var row = rows[i];
+//         // Print columns A and E, which correspond to indices 0 and 4.
+//         console.log('%s, %s', row[0], row[4]);
+//       }
+//     }
+//   });
 }
