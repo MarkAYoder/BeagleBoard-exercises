@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Draws boxes around letters
+// Draws boxes around individual letters
 const fs = require('fs');
 const util = require('util');
 const exec = require('child_process').exec;
