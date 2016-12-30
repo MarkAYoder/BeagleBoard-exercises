@@ -11,6 +11,8 @@ const all = 0; // Set to 1 to mark each letter
 var vision  = JSON.parse(fs.readFileSync(process.argv[3]).toString());
 var vertices = vision.textAnnotations[0].boundingPoly.vertices;
 var text = vision.textAnnotations[0].description;
+text = text.replace(/"/g, "\\\""); // Escape "'s
+
 console.log(text);
 console.log("Marking %s charcters", text.length);
 
@@ -44,7 +46,6 @@ exec(cmd, function(err, stdout, stderr) {
 text = text.replace(/^/, "\"");     // Start with a ""
 text = text.replace(/\n/g, '" "');  // End each newline and begin each line
 text = text.replace(/$/, '"');      // End with quote
-// text = text.replace(/'/, "\\'"); // No need to escape ' now
 console.log("text: " + text);
 
 exec("./appendSheet.js " + text, function(err, stdout, stderr) {
