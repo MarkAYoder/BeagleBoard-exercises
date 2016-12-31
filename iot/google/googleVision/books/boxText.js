@@ -46,6 +46,7 @@ exec(cmd, function(err, stdout, stderr) {
 text = text.replace(/^/, "\"");     // Start with a ""
 text = text.replace(/\n/g, '" "');  // End each newline and begin each line
 text = text.replace(/$/, '"');      // End with quote
+text = process.argv[2] + ' ' + text;
 console.log("text: " + text);
 
 exec("./appendSheet.js " + text, function(err, stdout, stderr) {
