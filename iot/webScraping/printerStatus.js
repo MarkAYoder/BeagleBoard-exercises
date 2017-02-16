@@ -12,25 +12,26 @@ request(url, function(error, response, html) {
 		// console.log("html: " + html);
 		var $ = cheerio.load(html);
 
-		// $('.staticProp').filter(function() {
-	 //       var data = $(this);
-	 //       // console.log("data: " + data);
-	 //       // Find path to Tray 1 status
-	 //       var path = data.children().first().children().first().children().first().children();
-	 //       // console.log("path: " + path);
-	 //       var tray = path.eq(0).text();
-	 //       if(tray.indexOf("Tray") > -1) {
-	 //       	var status = path.eq(1).children().first().children().first().children().first().children().first().attr('title');
-	 //       	var size   = path.eq(3).children().first().children().first().children().first().text();
-		//         console.log("tray:   " + tray);
-		//         console.log("status: " + status);
-		//         console.log("size:   " + size);
-	 //       }
-  //      });
-        $('.listboxdtm').filter(function() {
-        	var data = $(this);
-        	console.log("data: " + data);
+		$('.listboxS').filter(function() {
+	        var data = $(this);
+	        // console.log("data: " + data);
+	        // Find path to Tray 1 status
+	        var path = data.children().eq(2).children().first().children().first().children();
+	        // console.log("path: " + path);
+	        var tray = path.eq(0).text();
+	        // console.log("tray: " + tray);
+	        if(tray.indexOf("Tray 3") > -1) {
+	        	var status = path.eq(1).children().eq(0).attr('title');
+	        	var size   = path.eq(1).text();
+		        console.log("tray:   " + tray);
+		        console.log("status: " + status);
+		        console.log("size:   " + size);
+	        }
         });
+        // $('.listboxS').filter(function() {
+        // 	var data = $(this);
+        // 	console.log("data: " + data);
+        // });
 	}
 });
 	
