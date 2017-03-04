@@ -1,12 +1,12 @@
 # From: https://firebase.google.com/docs/database/rest/save-data
 
 export DB='https://friendlychat-c7ea7.firebaseio.com/users.json'
-export apikey="AIzaSyDaMwP3HNH52o2JWC4Nb8ZNHpdb0k0pn6s"
+export apikey="AAAAd3djyFo:APA91bHkpYmfiJZHy_vTaNbg6wWIJXe-TvnjUAK5FLfHILpd0rnIJJ8z15zljzoIjcQclLxm5WlGYjgAJops76H0wrAFy7amwyLUdntgTFesdeeahaqbBlOWpqUXh5r8mTkgD563ruTW"
 
 curl -X POST -d '{
   "alanisawesome": {
-    "name": "Alan Turing",
-    "birthday": "June 23, 1912"
+    "name": "New Key",
+    "birthday": "4-Feb-2017"
   }
 }' $DB 
 curl -X POST -d '{
