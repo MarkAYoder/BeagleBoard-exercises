@@ -1,12 +1,25 @@
 #!/bin/bash
 # Here are the extra things I install on the bone.
-# Run this on the host computer with the Black Bone attached
-#  via USB
+# Run this on the host computer with the BeagleBone Black attached via USB
 # --Mark
 # 20-Aug-2013
+# 23-Mar-2017, Adjusted for debian login
+# Before running the script you need to set a root password and setup keys
+#	for remote login without a password.
+# Set root passwork
+# host$ ssh debian@192.168.7.2, default password is temppwd
+# bone$ sudo root
+# bone$ passwd root
+# Now exit twice to get mack to the host machine.
+# Set generate an ssh key and copy your id for remote access
+# host$ ssh-keygen  (accpet the default answer to all prompts)
+# host$ ssh-copy-id root@192.168.7.2
+# host$ ssh-copy-id debian@192.168.7.2
+# You can now ssh to the Bone either as root or debian without a password from your host.
 set -e
 BONE=${1:-192.168.7.2}
-BONE_NAME=yoder-debian-bone
+BONE_NAME=Bone
+USER=debian
 
 # Set the date to that of the host computer
 DATE=`date`
@@ -14,22 +27,18 @@ ssh root@$BONE "date -s \"$DATE\""
 
 scp -r ssh root@$BONE:.ssh
 
+# Do things are debian first.
+
 # Copy local copy of exercises to bone and then pull
 echo rsyncing exercises, this will take about 40 seconds
-time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises root@$BONE:.
+time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises $USER@$BONE:.
 
 # echo rsyncing beaglebone-cookbook, this will take about 2 seconds
-# time rsync -azq ../../beaglebone-cookbook root@$BONE:.
-# time rsync -azq ../../exploringBB root@$BONE:.
-# time rsync -azq ../../libsoc root@$BONE:.
+# time rsync -azq ../../beaglebone-cookbook $USER@$BONE:.
+# time rsync -azq ../../exploringBB $USER@$BONE:.
+# time rsync -azq ../../libsoc $USER@$BONE:.
 
-ssh root@$BONE "
-# Set the network name of the board
-echo $BONE_NAME > /etc/hostname
-
-# Turn off messages that appeard when you login
-mv /etc/issue.net /etc/issue.net.orig
-
+ssh $USER@$BONE "
 # vi settings
 echo 'syntax on' >>~/.vimrc
 
@@ -51,6 +60,23 @@ ln -s --backup=numbered exercises/setup/bashrc .bashrc
 
 # Set the default sound card to NOT be HDMI
 ln -s --backup=numbered exercises/setup/asoundrc .asoundrc
+
+# Set language
+export LANG=en_US.UTF-8
+
+"
+
+# Now do root things
+ssh root@$BONE "
+# Set the network name of the board
+echo $BONE_NAME > /etc/hostname
+
+# Turn off messages that appeard when you login
+mv /etc/issue.net /etc/issue.net.orig
+
+
+# Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
+ln -s --backup=numbered ~$USER/exercises/setup/bashrc .bashrc
 
 # Set the time zone to Indiana
 timedatectl set-timezone America/Indiana/Indianapolis
@@ -94,6 +120,7 @@ echo \"deb http://ftp.us.debian.org/debian/ stretch main contrib non-free\" > st
 echo \"#deb-src http://ftp.us.debian.org/debian/ stretch main contrib non-free\" >> stretch.list
 echo \"deb http://ftp.us.debian.org/debian/ sid main contrib non-free\" > sid.list
 # echo \"APT::Default-Release \\"\"stable\\"\";\" > /etc/apt/apt.conf.d/local
+
 "
 exit
 
