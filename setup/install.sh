@@ -68,6 +68,10 @@ export LANG=en_US.UTF-8
 
 # Now do root things
 ssh root@$BONE "
+
+# link to exercises
+ln -s ~$USER/exercises/ .
+
 # Set the network name of the board
 echo $BONE_NAME > /etc/hostname
 
