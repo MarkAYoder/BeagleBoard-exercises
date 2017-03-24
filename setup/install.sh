@@ -12,9 +12,9 @@
 # bone$ passwd root
 # While logged onto the Bone as root you may need to edit /etc/shh/sshd_config
 # Find the line that says "PermitRootLogin" and set it to "yes".
-# You may have to reboot if you made the change.
+# Then run "systemctl restart sshd"
 # Now exit twice to get mack to the host machine.
-# Set generate an ssh key and copy your id for remote access
+# Now generate an ssh key and copy your id for remote access
 # host$ ssh-keygen  (accpet the default answer to all prompts)
 # host$ ssh-copy-id root@192.168.7.2
 # host$ ssh-copy-id debian@192.168.7.2
