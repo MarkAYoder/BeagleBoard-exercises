@@ -62,7 +62,7 @@ var oled = new oledspi(opts);
     });
 
 // Path to fson file telling which phant data to use
-var filename = "/root/exercises/sensors/bic/bedKeys.json";
+var filename = "/home/debian/exercises/sensors/bic/bedKeys.json";
 if(process.argv.length === 3) {
     filename = process.argv[2];
 }
