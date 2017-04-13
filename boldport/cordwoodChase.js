@@ -12,7 +12,7 @@ for(var i in leds) {
 }
 
 var periodOn = 100;
-var periodOff= 105;
+var periodOff= 101;
 var stateOn = 0;
 var stateOff = leds.length/2;
 
