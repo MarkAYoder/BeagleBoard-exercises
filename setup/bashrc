@@ -125,7 +125,7 @@ then
     then
         PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
     else
-        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;35m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+        PS1='${debian_chroot:+($debian_chroot)}\[\033[01;34m\]\u@\h\[\033[00m\]:\[\033[01;33m\]\w\[\033[00m\]\$ '
     fi
 fi
 
@@ -170,3 +170,9 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/debian/google-cloud-sdk/path.bash.inc' ]; then source '/home/debian/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/debian/google-cloud-sdk/completion.bash.inc' ]; then source '/home/debian/google-cloud-sdk/completion.bash.inc'; fi
