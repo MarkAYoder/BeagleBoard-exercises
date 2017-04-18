@@ -2,7 +2,7 @@
 # Edit /lib/systemd/system/cloud9.service and add
 User=debian
 # Edit /etc/default/cloud9 and change HOME to
-/etc/default/cloud9
+HOME=/home/debian
 # Then run
 sudo systemctl restart cloud9
 
