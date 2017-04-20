@@ -73,13 +73,14 @@ export LANG=en_US.UTF-8
 ssh root@$BONE "
 
 # link to exercises
-ln -s ~$USER .
+# ln -s ~$USER .
 
 # Set the network name of the board
 echo $BONE_NAME > /etc/hostname
 
 # Turn off messages that appeard when you login
-mv /etc/issue.net /etc/issue.net.orig
+# mv /etc/issue.net /etc/issue.net.orig
+mv /etc/motd /etc/motd.orig
 
 
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
