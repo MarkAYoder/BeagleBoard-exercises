@@ -7,8 +7,3 @@ npm install -g oled-font-5x7
 #       P9_41 to Reset
 #       P9_42 to Data/Command
 #       3.3V  to Chip Select
-
-# Display hdmi audio
-sudo mv /boot/uEnv.txt /boot/uEnv.txt.orig
-sudo sudo sh -c "sed 's/#disable_uboot_overlay_audio=1/disable_uboot_overlay_audio=1/' < /boot/uEnv.txt.orig > /boot/uEnv.txt"
-# sudo reboot
