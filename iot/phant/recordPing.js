@@ -9,7 +9,7 @@ var request       = require('request');
 var util          = require('util');
 var fs            = require('fs');
 
-var filename = "/root/exercises/iot/phant/keys.json";
+var filename = "/home/debian/exercises/iot/phant/keys.json";
 var ping = 'ping -c1 -i1 ';
 console.log("process.argv.length: " + process.argv.length);
 if(process.argv.length > 2) {
