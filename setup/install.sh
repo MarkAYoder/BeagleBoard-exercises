@@ -28,7 +28,7 @@ USER=debian
 DATE=`date`
 ssh root@$BONE "date -s \"$DATE\""
 
-scp -r ssh root@$BONE:.ssh
+# scp -r ssh root@$BONE:.ssh
 
 # Do things are debian first.
 
@@ -68,7 +68,7 @@ ln -s --backup=numbered exercises/setup/asoundrc .asoundrc
 export LANG=en_US.UTF-8
 
 # Set up cloud9
-ln -s /opt/cloud9/.c9 .
+ln -s --backup=numbered /opt/cloud9/.c9 .
 
 "
 
@@ -80,9 +80,10 @@ mv /boot/uEnv.txt /boot/uEnv.txt.orig
 sed 's/#disable_uboot_overlay_audio=1/disable_uboot_overlay_audio=1/' < /boot/uEnv.txt.orig > /boot/uEnv.txt
 
 # Switch cloud9 to USER debian
-echo -e "\nUser=debian" >> /lib/systemd/system/cloud9.service
+echo ""            >> /lib/systemd/system/cloud9.service
+echo "User=debian" >> /lib/systemd/system/cloud9.service
 mv /etc/default/cloud9 /etc/default/cloud9.orig
-sed 's?HOME=/opt/cloud9?HOME=/home/debian?' < cloud9.orig  > cloud9
+sed 's?HOME=/opt/cloud9?HOME=/home/debian?' < /etc/default/cloud9.orig  > /etc/default/cloud9
 
 # link to exercises
 # ln -s ~$USER .
