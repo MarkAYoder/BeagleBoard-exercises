@@ -67,10 +67,22 @@ ln -s --backup=numbered exercises/setup/asoundrc .asoundrc
 # Set language
 export LANG=en_US.UTF-8
 
+# Set up cloud9
+ln -s /opt/cloud9/.c9 .
+
 "
 
 # Now do root things
 ssh root@$BONE "
+
+# Disable hdmi audio
+mv /boot/uEnv.txt /boot/uEnv.txt.orig
+sed 's/#disable_uboot_overlay_audio=1/disable_uboot_overlay_audio=1/' < /boot/uEnv.txt.orig > /boot/uEnv.txt
+
+# Switch cloud9 to USER debian
+echo -e "\nUser=debian" >> /lib/systemd/system/cloud9.service
+mv /etc/default/cloud9 /etc/default/cloud9.orig
+sed 's?HOME=/opt/cloud9?HOME=/home/debian?' < cloud9.orig  > cloud9
 
 # link to exercises
 # ln -s ~$USER .
@@ -81,7 +93,6 @@ echo $BONE_NAME > /etc/hostname
 # Turn off messages that appeard when you login
 # mv /etc/issue.net /etc/issue.net.orig
 mv /etc/motd /etc/motd.orig
-
 
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
 ln -s --backup=numbered ~$USER/exercises/setup/bashrc .bashrc
