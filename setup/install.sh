@@ -80,7 +80,8 @@ mv /boot/uEnv.txt /boot/uEnv.txt.orig
 sed 's/#disable_uboot_overlay_audio=1/disable_uboot_overlay_audio=1/' < /boot/uEnv.txt.orig > /boot/uEnv.txt
 
 # Switch cloud9 to USER debian
-echo -e "\nUser=debian" >> /lib/systemd/system/cloud9.service
+echo ""            >> /lib/systemd/system/cloud9.service
+echo "User=debian" >> /lib/systemd/system/cloud9.service
 mv /etc/default/cloud9 /etc/default/cloud9.orig
 sed 's?HOME=/opt/cloud9?HOME=/home/debian?' < /etc/default/cloud9.orig  > /etc/default/cloud9
 
