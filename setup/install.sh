@@ -79,7 +79,8 @@ ssh root@$BONE "
 echo $BONE_NAME > /etc/hostname
 
 # Turn off messages that appeard when you login
-mv /etc/issue.net /etc/issue.net.orig
+# mv /etc/issue.net /etc/issue.net.orig
+mv /etc/motd /etc/motd.orig
 
 
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
