@@ -2,6 +2,8 @@
 // From: https://github.com/desmondmorris/node-twitter/tree/master/examples#streams
 var Twitter = require('twitter');
 
+const track = "MarkAYoder";
+
 var client = new Twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
@@ -13,7 +15,7 @@ var client = new Twitter({
  * Stream statuses filtered by keyword
  * number of tweets per second depends on topic popularity
  **/
-client.stream('statuses/filter', {track: 'twitter'},  function(stream) {
+client.stream('statuses/filter', {track: track},  function(stream) {
   stream.on('data', function(tweet) {
     console.log(tweet.text);
   });
