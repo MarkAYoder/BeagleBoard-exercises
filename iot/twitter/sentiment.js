@@ -3,12 +3,14 @@
 // See hhttps://dev.twitter.com/rest/public
 // to see what you can request
 
-var Twitter = require('twitter');
+const Twitter = require('twitter');
+const util = require('util');
 
 // const screen_name = 'MarkAYoder';
-const screen_name = 'realDonaldTrump';
+// const screen_name = 'realDonaldTrump';
+const screen_name = 'RoseHulmanPrez';
 
-var client = new Twitter({
+const client = new Twitter({
     consumer_key: process.env.TWITTER_CONSUMER_KEY,
     consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
     access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
@@ -38,7 +40,7 @@ client.get('statuses/user_timeline', opts,  function(error, params, response) {
     var i;
     for(i=0; i<params.length; i++) {
         console.log(i + ": " + params[i].created_at + " " + params[i].text);   // Text only
-        // console.log();   // Text only
+        console.log();   // Text only
         
         // Detects the sentiment of the text
         language.detectSentiment(params[i].text)
@@ -48,6 +50,8 @@ client.get('statuses/user_timeline', opts,  function(error, params, response) {
             console.log(`Text: ${sentiment}`);
             console.log(`Sentiment score: ${sentiment.score}`);
             console.log(`Sentiment magnitude: ${sentiment.magnitude}`);
+            console.log(util.inspect(sentiment));
+            console.log();
           })
           .catch((err) => {
             console.error('ERROR:', err);
