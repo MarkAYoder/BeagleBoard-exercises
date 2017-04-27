@@ -7,4 +7,3 @@ npm install -g oled-font-5x7
 #       P9_41 to Reset
 #       P9_42 to Data/Command
 #       3.3V  to Chip Select
-

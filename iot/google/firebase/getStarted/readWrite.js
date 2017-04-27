@@ -26,16 +26,26 @@ const firebase = require('firebase');
 
 //   console.log(database);
 
+// This does seem to work
+var userId = 'userid0';
+firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+  var username = snapshot.val();
+  console.log(username);
+});
+
 function writeUserData(userId, name, email, imageUrl) {
-  firebase.database().ref('users/' + userId).set({
+  firebase.database().ref('users3/' + userId).set({
     username: name,
     email: email,
     profile_picture : imageUrl
   });
 }
 
-for(var i=0; i<10; i++) {
-    console.log(i);
-    writeUserData('userId'+i, 'name ' + i, 'email', 'imageUrl');
-}
+// for(var i=0; i<2; i++) {
+//     console.log(i);
+//     writeUserData('userId'+i, 'name ' + i, 'email', 'imageUrl');
+// }
+
+console.log(firebase.auth());
+
 console.log("Done");

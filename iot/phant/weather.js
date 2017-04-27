@@ -15,7 +15,7 @@ var logger = new winston.Logger({
     transports: [
         new winston.transports.File({
             level: 'debug',
-            filename: '/var/run/log/weather.log',
+            filename: '/home/debian/weather.log',
             handleExceptions: true,
             json: true,
             maxsize: 1024000, // 1MB
@@ -41,7 +41,7 @@ var ms = 15*60*1000;               // Repeat time
 // request.debug = true;
 
 // var filename = "/home/yoder/exercises/iot/phant/keys_weather.json";
-var filename = "/root/exercises/iot/phant/keys_weather.json";
+var filename = "/home/debian/exercises/iot/phant/keys_weather.json";
 // logger.debug("process.argv.length: " + process.argv.length);
 if(process.argv.length === 3) {
     filename = process.argv[2];

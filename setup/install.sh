@@ -28,7 +28,7 @@ USER=debian
 DATE=`date`
 ssh root@$BONE "date -s \"$DATE\""
 
-scp -r ssh root@$BONE:.ssh
+# scp -r ssh root@$BONE:.ssh
 
 # Do things are debian first.
 
@@ -67,10 +67,27 @@ ln -s --backup=numbered exercises/setup/asoundrc .asoundrc
 # Set language
 export LANG=en_US.UTF-8
 
+# Set up cloud9
+ln -s --backup=numbered /opt/cloud9/.c9 .
+
 "
 
 # Now do root things
 ssh root@$BONE "
+
+# Disable hdmi audio
+mv /boot/uEnv.txt /boot/uEnv.txt.orig
+sed 's/#disable_uboot_overlay_audio=1/disable_uboot_overlay_audio=1/' < /boot/uEnv.txt.orig > /boot/uEnv.txt
+
+# Switch cloud9 to USER debian
+# echo ""            >> /lib/systemd/system/cloud9.service
+# echo "User=debian" >> /lib/systemd/system/cloud9.service
+mv /etc/default/cloud9 /etc/default/cloud9.orig
+sed 's?HOME=/opt/cloud9?HOME=/home/debian?' < /etc/default/cloud9.orig  > /etc/default/cloud9
+
+# Get the right modes
+# chown -R :cloud9ide /opt/cloud9/.c9/ || true 
+# chmod -R g+w /opt/cloud9/.c9/ || true 
 
 # link to exercises
 # ln -s ~$USER .
@@ -79,8 +96,8 @@ ssh root@$BONE "
 echo $BONE_NAME > /etc/hostname
 
 # Turn off messages that appeard when you login
-mv /etc/issue.net /etc/issue.net.orig
-
+# mv /etc/issue.net /etc/issue.net.orig
+mv /etc/motd /etc/motd.orig
 
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
 ln -s --backup=numbered ~$USER/exercises/setup/bashrc .bashrc
