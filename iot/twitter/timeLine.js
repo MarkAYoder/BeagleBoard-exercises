@@ -5,6 +5,9 @@
 
 var Twitter = require('twitter');
 
+const screen_name = 'MarkAYoder';
+// const screen_name = 'realDonaldTrump';
+
 var client = new Twitter({
     consumer_key: process.env.API_KEY,
     consumer_secret: process.env.API_SECRET,
@@ -30,11 +33,14 @@ var client = new Twitter({
 // });
 
 // Get timeline for a given user
-var opts = {screen_name: 'MarkAYoder', count: 1};
+var opts = {screen_name: screen_name, count: 4};
 client.get('statuses/user_timeline', opts,  function(error, params, response) {
-    // console.log(error);
+    console.log(error);
     if(error) throw error;
     // console.log(params);  // Tweet body
-    console.log(params[0].created_at);   // Text only
-    console.log(params[0].text);   // Text only
+    var i;
+    for(i=0; i<params.length; i++) {
+        console.log(i + ": " + params[i].created_at + " " + params[i].text);   // Text only
+        // console.log();   // Text only
+    }
 });
