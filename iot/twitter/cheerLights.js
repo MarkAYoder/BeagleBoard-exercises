@@ -20,10 +20,10 @@ colors.sort(function(a,b) {     // Soft colors so longer names will be found.
 });
 
 var client = new Twitter({
-    consumer_key: process.env.API_KEY,
-    consumer_secret: process.env.API_SECRET,
-    access_token_key: process.env.TOKEN,
-    access_token_secret: process.env.TOKEN_SECRET,
+    consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+    access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
     });
     
 function clear(color, skip) {
