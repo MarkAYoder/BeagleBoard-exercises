@@ -16,6 +16,7 @@ gcloud compute firewall-rules list
 gcloud compute firewall-rules create redis --allow=tcp:6379
 gcloud compute firewall-rules create mongo --allow=tcp:27017
 gcloud compute firewall-rules create neo4j --allow=tcp:7474
+gcloud compute firewall-rules create solr  --allow=tcp:8983
 
 # Stop the instances
 # gcloud compute instances stop instance-1 instance-2 instance-3 instance-4
