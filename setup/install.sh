@@ -21,7 +21,7 @@
 # You can now ssh to the Bone either as root or debian without a password from your host.
 set -e
 BONE=${1:-192.168.7.2}
-BONE_NAME=Bone
+BONE_NAME=bone
 USER=debian
 
 # Set the date to that of the host computer
@@ -33,7 +33,7 @@ ssh root@$BONE "date -s \"$DATE\""
 # Do things are debian first.
 
 # Copy local copy of exercises to bone and then pull
-echo rsyncing exercises, this will take about 40 seconds
+echo rsyncing exercises, this will take a couple of minutes
 time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises $USER@$BONE:.
 
 # echo rsyncing beaglebone-cookbook, this will take about 2 seconds
@@ -96,8 +96,8 @@ sed 's?HOME=/opt/cloud9?HOME=/home/debian?' < /etc/default/cloud9.orig  > /etc/d
 echo $BONE_NAME > /etc/hostname
 
 # Turn off messages that appeard when you login
-# mv /etc/issue.net /etc/issue.net.orig
-mv /etc/motd /etc/motd.orig
+mv /etc/issue /etc/issue.orig
+# mv /etc/motd /etc/motd.orig
 
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
 ln -s --backup=numbered ~$USER/exercises/setup/bashrc .bashrc
@@ -135,14 +135,14 @@ mv apache2 hide
 
 # Add Wheezy backport, Jessie and Sid to apt-get
 # Make Wheezy the default
-cd /etc/apt/sources.list.d
-mkdir hide
-cd hide
-echo \"deb http://ftp.us.debian.org/debian/ wheezy-backports main\" > wheezy-backports.list
-echo \"deb http://ftp.us.debian.org/debian/ jessie main contrib non-free\" > jessie.list
-echo \"deb http://ftp.us.debian.org/debian/ stretch main contrib non-free\" > stretch.list
-echo \"#deb-src http://ftp.us.debian.org/debian/ stretch main contrib non-free\" >> stretch.list
-echo \"deb http://ftp.us.debian.org/debian/ sid main contrib non-free\" > sid.list
+# cd /etc/apt/sources.list.d
+# mkdir hide
+# cd hide
+# echo \"deb http://ftp.us.debian.org/debian/ wheezy-backports main\" > wheezy-backports.list
+# echo \"deb http://ftp.us.debian.org/debian/ jessie main contrib non-free\" > jessie.list
+# echo \"deb http://ftp.us.debian.org/debian/ stretch main contrib non-free\" > stretch.list
+# echo \"#deb-src http://ftp.us.debian.org/debian/ stretch main contrib non-free\" >> stretch.list
+# echo \"deb http://ftp.us.debian.org/debian/ sid main contrib non-free\" > sid.list
 # echo \"APT::Default-Release \\"\"stable\\"\";\" > /etc/apt/apt.conf.d/local
 
 "
