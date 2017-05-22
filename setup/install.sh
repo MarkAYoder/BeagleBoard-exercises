@@ -35,7 +35,9 @@ ssh root@$BONE "date -s \"$DATE\""
 # Do things are debian first.
 
 # Copy local copy of exercises to bone and then pull
+echo
 echo rsyncing exercises, this will take a couple of minutes
+echo
 time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises $USER@$BONE:.
 
 # echo rsyncing beaglebone-cookbook, this will take about 2 seconds
@@ -70,7 +72,7 @@ ln -s --backup=numbered exercises/setup/asoundrc .asoundrc
 export LANG=en_US.UTF-8
 
 # Set up cloud9
-ln -s --backup=numbered /opt/cloud9/.c9 .
+# ln -s --backup=numbered /opt/cloud9/.c9 .
 
 "
 
@@ -84,8 +86,8 @@ sed 's/#disable_uboot_overlay_audio=1/disable_uboot_overlay_audio=1/' < /boot/uE
 # Switch cloud9 to USER debian
 # echo ""            >> /lib/systemd/system/cloud9.service
 # echo "User=debian" >> /lib/systemd/system/cloud9.service
-mv /etc/default/cloud9 /etc/default/cloud9.orig
-sed 's?HOME=/opt/cloud9?HOME=/home/debian?' < /etc/default/cloud9.orig  > /etc/default/cloud9
+# mv /etc/default/cloud9 /etc/default/cloud9.orig
+# sed 's?HOME=/opt/cloud9?HOME=/home/debian?' < /etc/default/cloud9.orig  > /etc/default/cloud9
 
 # Get the right modes
 # chown -R :cloud9ide /opt/cloud9/.c9/ || true 
@@ -99,7 +101,8 @@ echo $BONE_NAME > /etc/hostname
 
 # Turn off messages that appeard when you login
 mv /etc/issue /etc/issue.orig
-# mv /etc/motd /etc/motd.orig
+mv /etc/issue.net /etc/issue.net.orig
+mv /etc/motd /etc/motd.orig
 
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
 ln -s --backup=numbered ~$USER/exercises/setup/bashrc .bashrc
