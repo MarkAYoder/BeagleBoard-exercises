@@ -10,6 +10,7 @@ if [ "$1" == "" ]; then
 	echo $SITE
 else
 	echo $1
+	cd ~/BeagleBoard/Images
 	     wget $SITE/$1/$RELEASE/bone-debian-$RELEASE-armhf-$1-4gb.bmap
 	time wget $SITE/$1/$RELEASE/bone-debian-$RELEASE-armhf-$1-4gb.img.xz
 fi
