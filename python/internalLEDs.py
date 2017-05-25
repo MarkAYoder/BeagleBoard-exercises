@@ -2,7 +2,7 @@
 import Adafruit_BBIO.GPIO as GPIO
 import time
 
-LEDs=6
+LEDs=4
 
 for i in range(LEDs):
     GPIO.setup("USR%d" % i, GPIO.OUT)
