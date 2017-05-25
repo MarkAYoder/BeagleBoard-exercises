@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Reads the PAUSE button and sets the LED
+# Reads the PAUSE button using interupts and sets the LED
 # Pin table at https://github.com/beagleboard/beaglebone-blue/blob/master/BeagleBone_Blue_Pin_Table.csv
 
 # Import PyBBIO library:
@@ -19,4 +19,4 @@ while True:
   state = GPIO.input(button)
   GPIO.output(LED, state)
   
-  time.sleep(0.1)
+  GPIO.wait_for_edge(button, GPIO.BOTH)
