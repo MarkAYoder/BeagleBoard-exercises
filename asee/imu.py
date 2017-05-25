@@ -53,6 +53,6 @@ except KeyboardInterrupt:
 finally:
 
     # say bye
-    print("\nBye Beaglebone!")
+    print("\nBye BeagleBone!")
         
 # exiting program will automatically clean up cape

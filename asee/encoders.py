@@ -10,43 +10,39 @@ import time
 import rcpy 
 import rcpy.encoder as encoder
 
-def main():
-    # set state to rcpy.RUNNING
-    rcpy.set_state(rcpy.RUNNING)
+# set state to rcpy.RUNNING
+rcpy.set_state(rcpy.RUNNING)
 
-    # message
-    print("Press Ctrl-C to exit")
+# message
+print("Press Ctrl-C to exit")
 
-    # header
-    print('     E2 |     E3')
+# header
+print('     E2 |     E3')
 
-    try:
+try:
 
-        # keep running
-        while True:
+    # keep running
+    while True:
 
-            # running
-            if rcpy.get_state() == rcpy.RUNNING:
-                
-                # read all encoders
-                e2 = encoder.get(2)
-                e3 = encoder.get(3)
+        # running
+        if rcpy.get_state() == rcpy.RUNNING:
+            
+            # read all encoders
+            e2 = encoder.get(2)
+            e3 = encoder.get(3)
 
-                print('\r {:+6d} | {:+6d}'.format(e2,e3), end='')
+            print('\r {:+6d} | {:+6d}'.format(e2,e3), end='')
 
-            # sleep some
-            time.sleep(.5)
+        # sleep some
+        time.sleep(.5)
 
-    except KeyboardInterrupt:
-        # Catch Ctrl-C
-        pass
-    
-    finally:
+except KeyboardInterrupt:
+    # Catch Ctrl-C
+    pass
 
-        # say bye
-        print("\nBye Beaglebone!")
+finally:
+
+    # say bye
+    print("\nBye BeagleBone!")
             
 # exiting program will automatically clean up cape
-
-if __name__ == "__main__":
-    main()
