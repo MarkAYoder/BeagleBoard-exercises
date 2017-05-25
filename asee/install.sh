@@ -18,3 +18,6 @@ sudo ./install.sh
 
 cd ../rcpy
 sudo python3 setup.py install
+
+cd ../ctrl
+sudo python3 setup.py install
