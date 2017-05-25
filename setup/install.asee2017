@@ -1,0 +1,42 @@
+#!/bin/bash
+# Here are the extra things I install on the bone for the ASEE workshop.
+# Run this on the host computer with the BeagleBone Blue attached via USB
+# --Mark
+# 25-May-2017
+set -e
+BONE=192.168.7.2
+USER=debian
+
+# Set the date to that of the host computer
+./setDNS.sh
+./setDate.sh
+
+# Copy local copy of exercises to bone
+# echo rsyncing exercises, this will take about 40 seconds
+# time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises root@bone:.
+
+# Include workshop material
+rsync -azq ../../ASEE\ 2015\ Workshop bone:/media/BEAGLEBONE
+rsync -azq ../../ASEE\ 2015\ Workshop/servo.js bone:/var/lib/cloud9/examples
+rsync -azq ../../iot-beaglebone root@bone:.
+
+ssh $USER@$BONE "
+git clone https://github.com/mcdeoliveira/Robotics_Cape_Installer.git
+git clone https://github.com/mcdeoliveira/rcpy
+git clone https://github.com/mcdeoliveira/ctrl.git
+
+sudo apt update
+sudo apt install less
+sudo apt install python3-setuptools python3-dev python3-numpy
+
+cd Robotics_Cape_Installer
+git checkout devel
+sudo ./install.sh
+
+cd ../rcpy
+sudo python3 setup.py install
+
+
+"
+exit
+
