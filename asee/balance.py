@@ -1,4 +1,4 @@
-#!/usr/bin/enc python3
+#!/usr/bin/env python3
 # Makes the robot balance
 # Based on: https://github.com/mcdeoliveira/ctrl/raw/master/examples/rc_mip_balance.py
 
@@ -22,6 +22,7 @@ ARROW_UP = "\033[A"
 ARROW_DOWN = "\033[B"
 ARROW_RIGHT = "\033[C"
 ARROW_LEFT = "\033[D"
+SPACE = " "
 
 def read_key():
 
@@ -60,8 +61,13 @@ def get_arrows(mip, fd):
         elif key == ARROW_DOWN:
             phi_dot_reference = phi_dot_reference - 10/360
             mip.set_signal('phi_dot_reference', - phi_dot_reference)
-            
-        
+        elif key == SPACE:
+            print("SPACE")
+            phi_dot_reference = 0
+            mip.set_signal('phi_dot_reference', - phi_dot_reference)
+            steer_reference = 0.5
+            mip.set_signal('steer_reference', steer_reference)
+
 def main():
 
     # import blocks and controller
