@@ -10,5 +10,4 @@ git checkout devel
 sudo ./install.sh
 
 cd ../rcpy
-git checkout devel
 sudo python3 setup.py install
