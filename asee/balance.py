@@ -63,6 +63,7 @@ def get_arrows(mip, fd):
         elif key == ARROW_DOWN:
             phi_dot_reference = phi_dot_reference - 10/360
             mip.set_signal('phi_dot_reference', - phi_dot_reference)
+            
         elif key == SPACE:
             phi_dot_reference = 0
             mip.set_signal('phi_dot_reference', - phi_dot_reference)
