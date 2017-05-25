@@ -22,6 +22,8 @@ ARROW_UP = "\033[A"
 ARROW_DOWN = "\033[B"
 ARROW_RIGHT = "\033[C"
 ARROW_LEFT = "\033[D"
+DEL        = "\033[3"
+END        = "\033[4"
 SPACE = " "
 
 def read_key():
@@ -62,11 +64,16 @@ def get_arrows(mip, fd):
             phi_dot_reference = phi_dot_reference - 10/360
             mip.set_signal('phi_dot_reference', - phi_dot_reference)
         elif key == SPACE:
-            print("SPACE")
             phi_dot_reference = 0
             mip.set_signal('phi_dot_reference', - phi_dot_reference)
             steer_reference = 0.5
             mip.set_signal('steer_reference', steer_reference)
+        elif key == DEL:
+            steer_reference = 0.5
+            mip.set_signal('steer_reference', steer_reference)
+        elif key == END:            
+            phi_dot_reference = 0
+            mip.set_signal('phi_dot_reference', - phi_dot_reference)
 
 def main():
 
