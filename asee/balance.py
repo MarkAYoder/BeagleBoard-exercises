@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # Makes the robot balance
 # Based on: https://github.com/mcdeoliveira/ctrl/raw/master/examples/rc_mip_balance.py
-
 import math
 import time
 import warnings
@@ -18,13 +17,13 @@ warnings.formatwarning = brief_warning
 
 # read key stuff
 
-ARROW_UP = "\033[A"
-ARROW_DOWN = "\033[B"
+ARROW_UP    = "\033[A"
+ARROW_DOWN  = "\033[B"
 ARROW_RIGHT = "\033[C"
-ARROW_LEFT = "\033[D"
-DEL        = "\033[3"
-END        = "\033[4"
-SPACE = " "
+ARROW_LEFT  = "\033[D"
+DEL         = "."
+END         = "/"
+SPACE       = " "
 
 def read_key():
 
@@ -63,7 +62,6 @@ def get_arrows(mip, fd):
         elif key == ARROW_DOWN:
             phi_dot_reference = phi_dot_reference - 10/360
             mip.set_signal('phi_dot_reference', - phi_dot_reference)
-            
         elif key == SPACE:
             phi_dot_reference = 0
             mip.set_signal('phi_dot_reference', - phi_dot_reference)
@@ -83,6 +81,7 @@ def main():
     from ctrl.block.system import System, Subtract, Differentiator, Sum, Gain
     from ctrl.block.nl import ControlledCombination
     from ctrl.block import Logger, ShortCircuit
+    from ctrl.block.logic import CompareAbs
     from ctrl.system.ss import DTSS
 
     # create mip
@@ -134,6 +133,12 @@ def main():
     mip.set_signal('phi_dot_reference',0)
     mip.set_signal('steer_reference',0.5)
 
+    # add kill switch
+    mip.add_filter('kill',
+                   CompareAbs(threshold = 0.4),
+                   ['theta'],
+                   ['is_running'])
+    
     # print controller
     print(mip.info('all'))
 
@@ -149,8 +154,16 @@ def main():
 
         input('Hold your MIP upright and hit <ENTER> to start balancing')
 
-        print('\nUse the UP and DOWN arrows to move forward and back')
-        print('Use the LEFT and RIGHT arrows to steer\n')
+        print("""
+Use your keyboard to control the mip:
+
+* UP and DOWN arrows move forward and back
+* LEFT and RIGHT arrows steer
+* / stops forward motion
+* . stops steering
+* SPACE resets forward motion and steering
+
+""")
         
         # reset everything
         mip.set_source('clock',reset=True)
