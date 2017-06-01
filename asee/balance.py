@@ -135,7 +135,7 @@ def main():
 
     # add kill switch
     mip.add_filter('kill',
-                   CompareAbs(threshold = 0.4),
+                   CompareAbs(threshold = 0.2),
                    ['theta'],
                    ['is_running'])
     

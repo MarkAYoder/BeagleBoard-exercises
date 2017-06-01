@@ -3,7 +3,7 @@
 import Adafruit_BBIO.GPIO as GPIO
 import time
 
-LED = "USR2"
+LED = "USR3"
 
 GPIO.setup(LED, GPIO.OUT)
 
