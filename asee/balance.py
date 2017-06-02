@@ -51,16 +51,16 @@ def get_arrows(mip, fd):
         
         key = read_key()
         if key == ARROW_LEFT:
-            steer_reference = max(steer_reference - 0.01, 0)
+            steer_reference = max(steer_reference - 20/360, 0)
             mip.set_signal('steer_reference', steer_reference)
         elif key == ARROW_RIGHT:
-            steer_reference = min(steer_reference + 0.01, 1)
+            steer_reference = min(steer_reference + 20/360, 1)
             mip.set_signal('steer_reference', steer_reference)
         elif key == ARROW_UP:
-            phi_dot_reference = phi_dot_reference + 10/360
+            phi_dot_reference = phi_dot_reference + 0.05
             mip.set_signal('phi_dot_reference', - phi_dot_reference)
         elif key == ARROW_DOWN:
-            phi_dot_reference = phi_dot_reference - 10/360
+            phi_dot_reference = phi_dot_reference - 0.05
             mip.set_signal('phi_dot_reference', - phi_dot_reference)
         elif key == SPACE:
             phi_dot_reference = 0
