@@ -38,15 +38,15 @@ def read_key():
 def get_arrows(mip, fd):
 
     phi_dot_reference = 0
-    steer_reference = 0.5
+    steer_reference = 180/360
     
     tty.setcbreak(fd)
     while mip.get_state() != ctrl.EXITING:
         
-        print('\rvelocity = {:+4.0f} deg/s'
-              '  steering = {:+4.2f} %'
-              .format(360*phi_dot_reference,
-                      100*(steer_reference-0.5)),
+        print('\rvelocity = {:+4.0f} '
+              '  steering = {:+4.2f} deg'
+              .format(100*phi_dot_reference,
+                      360*(steer_reference-180/360)),
               end='')
         
         key = read_key()
@@ -57,18 +57,18 @@ def get_arrows(mip, fd):
             steer_reference = min(steer_reference + 20/360, 1)
             mip.set_signal('steer_reference', steer_reference)
         elif key == ARROW_UP:
-            phi_dot_reference = phi_dot_reference + 0.05
+            phi_dot_reference = phi_dot_reference + 0.1
             mip.set_signal('phi_dot_reference', - phi_dot_reference)
         elif key == ARROW_DOWN:
-            phi_dot_reference = phi_dot_reference - 0.05
+            phi_dot_reference = phi_dot_reference - 0.1
             mip.set_signal('phi_dot_reference', - phi_dot_reference)
         elif key == SPACE:
             phi_dot_reference = 0
             mip.set_signal('phi_dot_reference', - phi_dot_reference)
-            steer_reference = 0.5
+            steer_reference = 180/360
             mip.set_signal('steer_reference', steer_reference)
         elif key == DEL:
-            steer_reference = 0.5
+            steer_reference = 180/360
             mip.set_signal('steer_reference', steer_reference)
         elif key == END:            
             phi_dot_reference = 0
