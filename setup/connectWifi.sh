@@ -1,5 +1,8 @@
 # Connect to Wifi using connman
 # From: https://wiki.archlinux.org/index.php/Connman#Wi-Fi
+# Also try:
+# scan wifi
+# services
 connmanctl << EOF
 enable wifi
 agent on
