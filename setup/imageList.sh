@@ -12,6 +12,6 @@ else
 	echo $1
 	cd ~/BeagleBoard/Images
 	     wget $SITE/$1/$RELEASE/bone-debian-$RELEASE-armhf-$1-4gb.bmap
+	     wget $SITE/$1/$RELEASE/bone-debian-$RELEASE-armhf-$1-4gb.img.xz.sha256sum
 	time wget $SITE/$1/$RELEASE/bone-debian-$RELEASE-armhf-$1-4gb.img.xz
 fi
-
