@@ -6,14 +6,7 @@
 
 ln -s /opt/source/Robotics_Cape_Installer/ .
 ln -s /opt/source/rcpy/ .
-
-sudo apt update
-sudo apt install python3-numpy
-
-git clone https://github.com/mcdeoliveira/pyctrl.git
-
-cd ../pyctrl
-sudo python3 setup.py install
+ln -s /opt/source/pyctrl/ .
 
 EXAMPLES=/var/lib/cloud9/examples/robot
 mkdir -p $EXAMPLES
