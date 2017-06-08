@@ -95,11 +95,13 @@
 <body>
     <h1>EduMIP Robot Control</h1>
     <div id="buttons">
-      <button id="led0" onClick='button(0)'/>Forward</button><br>
-      <button id="led1" onClick='button(1)'/>Left</button>
-      <button id="led2" onClick='button(2)'/>Right</button><br>
-      <button id="led3" onClick='button(3)'/>Back</button><br>
-      <button id="led3" onClick='button(3)'/>Stop</button>
+      <table>
+          <tr><td></td><td><button id="led0" onClick='button(0)'/>Forward</button></td><td></td></tr>
+          <tr><td><button id="led1" onClick='button(1)'/>Left</button></td>
+          <td><button id="led3" onClick='button(4)'/>Stop</button></td>
+          <td><button id="led2" onClick='button(2)'/>Right</button></td></tr>
+          <tr><td></td><td><button id="led3" onClick='button(3)'/>Back</button></td><td></td></tr>
+      </table>
     </div>
     <p>Average ping/pong latency: <b><span id="ping-pong"></span>ms</b></p>
     <h2>Send:</h2>
