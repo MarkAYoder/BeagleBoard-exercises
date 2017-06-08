@@ -5,9 +5,10 @@
 SITE=https://rcn-ee.com/rootfs/bb.org/testing/ 
 RELEASE=stretch-iot
 if [ "$1" == "" ]; then
-	google-chrome $SITE
-	curl $SITE | sed -n '/^$/!{s/<[^>]*>//g;p;}' 
+	curl $SITE | sed -n '/^$/!{s/<[^>]*>//g;p;}' | awk -F/ '{print $1}'
 	echo $SITE
+elif [ "$1" == "web" ]; then
+	google-chrome $SITE
 else
 	echo $1
 	cd ~/BeagleBoard/Images
