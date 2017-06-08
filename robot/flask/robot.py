@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 from flask import Flask, render_template, session, request
-from flask_socketio import SocketIO, emit, join_room, leave_room, \
-    close_room, rooms, disconnect
+from flask_socketio import SocketIO, emit, disconnect
 
 # Set this variable to "threading", "eventlet" or "gevent" to test the
 # different async modes, or leave it set to None for the application to choose
@@ -54,6 +53,32 @@ def disconnect_request():
 @socketio.on('my_ping')
 def ping_pong():
     emit('my_pong')
+    
+@socketio.on('forward')
+def button():
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response',
+         {'data': 'Forward ', 'count': session['receive_count']})
+@socketio.on('left')
+def button():
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response',
+         {'data': 'Left ', 'count': session['receive_count']})
+@socketio.on('right')
+def button():
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response',
+         {'data': 'Right ', 'count': session['receive_count']})
+@socketio.on('back')
+def button():
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response',
+         {'data': 'Back ', 'count': session['receive_count']})
+@socketio.on('stop')
+def button():
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response',
+         {'data': 'Stop ', 'count': session['receive_count']})
 
 
 @socketio.on('connect')

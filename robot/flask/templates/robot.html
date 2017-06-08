@@ -5,6 +5,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.2/socket.io.slim.js"></script>
     <script type="text/javascript" charset="utf-8">
+    var socket;
         $(document).ready(function() {
             // Use a "/test" namespace.
             // An application can open a connection on multiple namespaces, and
@@ -16,7 +17,7 @@
             // Connect to the Socket.IO server.
             // The connection URL has the following format:
             //     http[s]://<domain>:<port>[/<namespace>]
-            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+            socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
 
             // Event handler for new connections.
             // The callback function is invoked when a connection with the
@@ -68,11 +69,38 @@
                 socket.emit('disconnect_request');
                 return false;
             });
+
         });
+        function button(num) {
+            switch(num) {
+                case 0:
+                    socket.emit('forward');
+                    break;
+                case 1:
+                    socket.emit('left');
+                    break;
+                case 2:
+                    socket.emit('right');
+                    break;
+                case 3:
+                    socket.emit('back');
+                    break;
+                case 4:
+                    socket.emit('stop');
+                    break;
+            }
+        }
     </script>
 </head>
 <body>
     <h1>EduMIP Robot Control</h1>
+    <div id="buttons">
+      <button id="led0" onClick='button(0)'/>Forward</button><br>
+      <button id="led1" onClick='button(1)'/>Left</button>
+      <button id="led2" onClick='button(2)'/>Right</button><br>
+      <button id="led3" onClick='button(3)'/>Back</button><br>
+      <button id="led3" onClick='button(3)'/>Stop</button>
+    </div>
     <p>Average ping/pong latency: <b><span id="ping-pong"></span>ms</b></p>
     <h2>Send:</h2>
     <form id="emit" method="POST" action='#'>
