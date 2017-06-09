@@ -99,7 +99,7 @@
     </script>
 </head>
 <body>
-    <h3>EduMIP Robot Controler</h3>
+    <h4>EduMIP Robot Controler</h4>
     <div id="buttons">
       <button id="led0" onClick='button(5)'/>Start Balancing</button>
       <table>
@@ -112,7 +112,7 @@
     <button id="led0" onClick='button(6)'/>Stop Balancing</button>
     </div>
     <p>Average ping/pong latency: <b><span id="ping-pong"></span>ms</b></p>
-    <h2>Send:</h2>
+    <h4>Send:</h4>
     <form id="emit" method="POST" action='#'>
         <input type="text" name="emit_data" id="emit_data" placeholder="Message">
         <input type="submit" value="Echo">
@@ -121,7 +121,7 @@
     <form id="disconnect" method="POST" action="#">
         <input type="submit" value="Disconnect">
     </form>
-    <h2>Receive:</h2>
+    <h4>Receive:</h4>
     <div id="log"></div>
 </body>
 </html>
