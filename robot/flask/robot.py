@@ -7,7 +7,7 @@ from flask_socketio import SocketIO, emit, disconnect
 # the best option based on installed packages.
 async_mode = None
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode=async_mode)
 thread = None
@@ -36,6 +36,12 @@ fd.write("Test")
 def index():
     return render_template('robot.html', async_mode=socketio.async_mode)
 
+@app.route('/js/<path:path>')
+def send_js(path):
+    print("Getting")
+    print('/js/'+path)
+    return send_from_directory('js', path)
+    # return app.send_static_file('/js/'+path)
 
 @socketio.on('my_event')
 def test_message(message):

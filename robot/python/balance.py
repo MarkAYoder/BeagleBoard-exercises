@@ -50,7 +50,7 @@ def get_arrows(mip, fd):
               end='')
         
         key = read_key()
-        print("key")
+
         if key == ARROW_LEFT:
             steer_reference = max(steer_reference - 20/360, 0)
             mip.set_signal('steer_reference', steer_reference)

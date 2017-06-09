@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>EduMIP Robot Control</title>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.2/socket.io.slim.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery-3.2.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='socket.io.slim.js'  ) }}"></script>
     <script type="text/javascript" charset="utf-8">
     var socket;
         $(document).ready(function() {
