@@ -4,8 +4,9 @@ cd Flask-SocketIO/example
 sudo apt update
 sudo apt install python3-pip
 pip3 install -r requirements.txt
-# Edit app.py to include: socketio.run(app, host='0.0.0.0')
+cd ../..
 
+# We need local copies of this files since we can't depend on having exernal Internet
 mkdir -p static
 cd static
 wget https://code.jquery.com/jquery-3.2.1.min.js

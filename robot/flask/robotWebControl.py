@@ -7,7 +7,7 @@ from flask_socketio import SocketIO, emit, disconnect
 # the best option based on installed packages.
 async_mode = None
 
-app = Flask(__name__, static_url_path='/static')
+app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode=async_mode)
 thread = None
@@ -19,8 +19,9 @@ ARROW_LEFT  = "\033[D"
 DEL         = "."
 END         = "/"
 SPACE       = " "
+
+# "pip" is a named pipe that we right to and python/balance.py reads from
 fd = open("pipe", 'w')
-fd.write("Test")
 
 # def background_thread():
 #     """Example of how to send server generated events to clients."""
@@ -38,10 +39,7 @@ def index():
 
 @app.route('/js/<path:path>')
 def send_js(path):
-    print("Getting")
-    print('/js/'+path)
     return send_from_directory('js', path)
-    # return app.send_static_file('/js/'+path)
 
 @socketio.on('my_event')
 def test_message(message):
@@ -110,6 +108,14 @@ def button():
          {'data': 'Start ', 'count': session['receive_count']})
     fd.write('\n')
     fd.flush()
+@socketio.on('exit')
+def button():
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response',
+         {'data': 'Stop Balancing ', 'count': session['receive_count']})
+    fd.write('x')
+    fd.flush()
+    sys.exit()
 
 @socketio.on('connect')
 def test_connect():
@@ -122,7 +128,6 @@ def test_connect():
 @socketio.on('disconnect')
 def test_disconnect():
     print('Client disconnected', request.sid)
-
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', debug=False)

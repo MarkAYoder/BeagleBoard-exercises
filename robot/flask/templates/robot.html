@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>EduMIP Robot Control</title>
+    <title>EduMIP Robot Controler</title>
     <script type="text/javascript" src="{{ url_for('static', filename='jquery-3.2.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='socket.io.slim.js'  ) }}"></script>
     <script type="text/javascript" charset="utf-8">
@@ -91,14 +91,17 @@
                 case 5:
                     socket.emit('start');
                     break;
+                case 6:
+                    socket.emit('exit');
+                    break;
             }
         }
     </script>
 </head>
 <body>
-    <h1>EduMIP Robot Control</h1>
+    <h3>EduMIP Robot Controler</h3>
     <div id="buttons">
-      <button id="led0" onClick='button(5)'/>Start</button>
+      <button id="led0" onClick='button(5)'/>Start Balancing</button>
       <table>
           <tr><td></td><td><button id="led0" onClick='button(0)'/>Forward</button></td><td></td></tr>
           <tr><td><button id="led1" onClick='button(1)'/>Left</button></td>
@@ -106,6 +109,7 @@
           <td><button id="led2" onClick='button(2)'/>Right</button></td></tr>
           <tr><td></td><td><button id="led3" onClick='button(3)'/>Back</button></td><td></td></tr>
       </table>
+    <button id="led0" onClick='button(6)'/>Stop Balancing</button>
     </div>
     <p>Average ping/pong latency: <b><span id="ping-pong"></span>ms</b></p>
     <h2>Send:</h2>
