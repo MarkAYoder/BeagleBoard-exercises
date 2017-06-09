@@ -40,7 +40,7 @@ def get_arrows(mip, fd):
     phi_dot_reference = 0
     steer_reference = 180/360
     
-    tty.setcbreak(fd)
+    # tty.setcbreak(fd)
     while mip.get_state() != pyctrl.EXITING:
         
         print('\rvelocity = {:+4.0f} '
@@ -50,6 +50,7 @@ def get_arrows(mip, fd):
               end='')
         
         key = read_key()
+        print("key")
         if key == ARROW_LEFT:
             steer_reference = max(steer_reference - 20/360, 0)
             mip.set_signal('steer_reference', steer_reference)
@@ -143,7 +144,7 @@ def main():
     print(mip.info('all'))
 
     fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
+    # old_settings = termios.tcgetattr(fd)
     try:
 
         print("""
@@ -183,6 +184,8 @@ Use your keyboard to control the mip:
         thread.daemon = True
         thread.start()
         
+        print("Started thread")
+        
         # and wait until controller dies
         mip.join()
         
@@ -191,8 +194,8 @@ Use your keyboard to control the mip:
         print("> Balancing aborted")
         mip.set_state(pyctrl.EXITING)
 
-    finally:
-        termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+    # finally:
+        # termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
         
 if __name__ == "__main__":
     main()

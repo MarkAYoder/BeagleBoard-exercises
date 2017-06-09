@@ -12,6 +12,15 @@ app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app, async_mode=async_mode)
 thread = None
 
+ARROW_UP    = "\033[A"
+ARROW_DOWN  = "\033[B"
+ARROW_RIGHT = "\033[C"
+ARROW_LEFT  = "\033[D"
+DEL         = "."
+END         = "/"
+SPACE       = " "
+fd = open("pipe", 'w')
+fd.write("Test")
 
 # def background_thread():
 #     """Example of how to send server generated events to clients."""
@@ -33,7 +42,6 @@ def test_message(message):
     session['receive_count'] = session.get('receive_count', 0) + 1
     emit('my_response',
          {'data': message['data'], 'count': session['receive_count']})
-
 
 @socketio.on('my_broadcast_event')
 def test_broadcast_message(message):
@@ -59,27 +67,43 @@ def button():
     session['receive_count'] = session.get('receive_count', 0) + 1
     emit('my_response',
          {'data': 'Forward ', 'count': session['receive_count']})
+    fd.write(ARROW_UP)
+    fd.flush()
 @socketio.on('left')
 def button():
     session['receive_count'] = session.get('receive_count', 0) + 1
     emit('my_response',
          {'data': 'Left ', 'count': session['receive_count']})
+    fd.write(ARROW_LEFT)
+    fd.flush()
 @socketio.on('right')
 def button():
     session['receive_count'] = session.get('receive_count', 0) + 1
     emit('my_response',
          {'data': 'Right ', 'count': session['receive_count']})
+    fd.write(ARROW_RIGHT)
+    fd.flush()
 @socketio.on('back')
 def button():
     session['receive_count'] = session.get('receive_count', 0) + 1
     emit('my_response',
          {'data': 'Back ', 'count': session['receive_count']})
+    fd.write(ARROW_DOWN)
+    fd.flush()
 @socketio.on('stop')
 def button():
     session['receive_count'] = session.get('receive_count', 0) + 1
     emit('my_response',
          {'data': 'Stop ', 'count': session['receive_count']})
-
+    fd.write(SPACE)
+    fd.flush()
+@socketio.on('start')
+def button():
+    session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response',
+         {'data': 'Start ', 'count': session['receive_count']})
+    fd.write('\n')
+    fd.flush()
 
 @socketio.on('connect')
 def test_connect():

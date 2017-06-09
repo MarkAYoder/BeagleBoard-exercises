@@ -88,6 +88,9 @@
                 case 4:
                     socket.emit('stop');
                     break;
+                case 5:
+                    socket.emit('start');
+                    break;
             }
         }
     </script>
@@ -95,6 +98,7 @@
 <body>
     <h1>EduMIP Robot Control</h1>
     <div id="buttons">
+      <button id="led0" onClick='button(5)'/>Start</button>
       <table>
           <tr><td></td><td><button id="led0" onClick='button(0)'/>Forward</button></td><td></td></tr>
           <tr><td><button id="led1" onClick='button(1)'/>Left</button></td>
