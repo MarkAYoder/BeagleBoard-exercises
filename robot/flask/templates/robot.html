@@ -42,7 +42,7 @@
             window.setInterval(function() {
                 start_time = (new Date).getTime();
                 socket.emit('my_ping');
-            }, 10000);
+            }, 100000);
 
             // Handler for the "pong" message. When the pong is received, the
             // time from the ping is stored, and the average of the last 30
@@ -72,42 +72,46 @@
 
         });
         function button(num) {
-            switch(num) {
-                case 0:
-                    socket.emit('forward');
-                    break;
-                case 1:
-                    socket.emit('left');
-                    break;
-                case 2:
-                    socket.emit('right');
-                    break;
-                case 3:
-                    socket.emit('back');
-                    break;
-                case 4:
-                    socket.emit('stop');
-                    break;
-                case 5:
-                    socket.emit('start');
-                    break;
-                case 6:
-                    socket.emit('exit');
-                    break;
-            }
+            // socket.emit('button');
+            socket.emit('button',  {data: num.toString()});
+
+            // switch(num) {
+            //     case 0:
+            //         // socket.emit('start', {data: num});
+            //         socket.emit('start');
+            //         break;
+            //     case 1:
+            //         socket.emit('forward');
+            //         break;
+            //     case 2:
+            //         socket.emit('left');
+            //         break;
+            //     case 3:
+            //         socket.emit('stop');
+            //         break;
+            //     case 4:
+            //         socket.emit('right');
+            //         break;
+            //     case 5:
+            //         socket.emit('back');
+            //         break;
+            //     case 6:
+            //         socket.emit('exit');
+            //         break;
+            // }
         }
     </script>
 </head>
 <body>
     <h4>EduMIP Robot Controler</h4>
     <div id="buttons">
-      <button id="led0" onClick='button(5)'/>Start Balancing</button>
+      <button id="led0" onClick='button(0)'/>Start Balancing</button>
       <table>
-          <tr><td></td><td><button id="led0" onClick='button(0)'/>Forward</button></td><td></td></tr>
-          <tr><td><button id="led1" onClick='button(1)'/>Left</button></td>
-          <td><button id="led3" onClick='button(4)'/>Stop</button></td>
-          <td><button id="led2" onClick='button(2)'/>Right</button></td></tr>
-          <tr><td></td><td><button id="led3" onClick='button(3)'/>Back</button></td><td></td></tr>
+          <tr><td></td><td><button id="led0" onClick='button(1)'/>Forward</button></td><td></td></tr>
+          <tr><td><button id="led1" onClick='button(2)'/>Left</button></td>
+          <td><button id="led3" onClick='button(3)'/>Stop</button></td>
+          <td><button id="led2" onClick='button(4)'/>Right</button></td></tr>
+          <tr><td></td><td><button id="led3" onClick='button(5)'/>Back</button></td><td></td></tr>
       </table>
     <button id="led0" onClick='button(6)'/>Stop Balancing</button>
     </div>

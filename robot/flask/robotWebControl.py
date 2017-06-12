@@ -19,6 +19,11 @@ ARROW_LEFT  = "\033[D"
 DEL         = "."
 END         = "/"
 SPACE       = " "
+START_BAL   = "\n"
+STOP_BAL    = "x"
+
+buttons = [START_BAL, ARROW_UP, ARROW_LEFT, SPACE, 
+            ARROW_RIGHT, ARROW_DOWN, STOP_BAL, DEL, END]
 
 # "pip" is a named pipe that we right to and python/balance.py reads from
 fd = open("pipe", 'w')
@@ -37,9 +42,9 @@ fd = open("pipe", 'w')
 def index():
     return render_template('robot.html', async_mode=socketio.async_mode)
 
-@app.route('/js/<path:path>')
-def send_js(path):
-    return send_from_directory('js', path)
+# @app.route('/js/<path:path>')
+# def send_js(path):
+#     return send_from_directory('js', path)
 
 @socketio.on('my_event')
 def test_message(message):
@@ -66,56 +71,66 @@ def disconnect_request():
 def ping_pong():
     emit('my_pong')
     
-@socketio.on('forward')
-def button():
+@socketio.on('button')
+def button(num):
     session['receive_count'] = session.get('receive_count', 0) + 1
     emit('my_response',
-         {'data': 'Forward ', 'count': session['receive_count']})
-    fd.write(ARROW_UP)
+         {'data': 'ButtonGo ', 'count': session['receive_count']})
+    print("Button")
+    print(num['data'])
+    fd.write(buttons[int(num['data'])])
     fd.flush()
-@socketio.on('left')
-def button():
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my_response',
-         {'data': 'Left ', 'count': session['receive_count']})
-    fd.write(ARROW_LEFT)
-    fd.flush()
-@socketio.on('right')
-def button():
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my_response',
-         {'data': 'Right ', 'count': session['receive_count']})
-    fd.write(ARROW_RIGHT)
-    fd.flush()
-@socketio.on('back')
-def button():
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my_response',
-         {'data': 'Back ', 'count': session['receive_count']})
-    fd.write(ARROW_DOWN)
-    fd.flush()
-@socketio.on('stop')
-def button():
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my_response',
-         {'data': 'Stop ', 'count': session['receive_count']})
-    fd.write(SPACE)
-    fd.flush()
-@socketio.on('start')
-def button():
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my_response',
-         {'data': 'Start ', 'count': session['receive_count']})
-    fd.write('\n')
-    fd.flush()
-@socketio.on('exit')
-def button():
-    session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my_response',
-         {'data': 'Stop Balancing ', 'count': session['receive_count']})
-    fd.write('x')
-    fd.flush()
-    sys.exit()
+# @socketio.on('forward')
+# def button():
+#     session['receive_count'] = session.get('receive_count', 0) + 1
+#     emit('my_response',
+#          {'data': 'Forward ', 'count': session['receive_count']})
+#     print("Forward")
+#     fd.write(ARROW_UP)
+#     fd.flush()
+# @socketio.on('left')
+# def button():
+#     session['receive_count'] = session.get('receive_count', 0) + 1
+#     emit('my_response',
+#          {'data': 'Left ', 'count': session['receive_count']})
+#     fd.write(ARROW_LEFT)
+#     fd.flush()
+# @socketio.on('right')
+# def button():
+#     session['receive_count'] = session.get('receive_count', 0) + 1
+#     emit('my_response',
+#          {'data': 'Right ', 'count': session['receive_count']})
+#     fd.write(ARROW_RIGHT)
+#     fd.flush()
+# @socketio.on('back')
+# def button():
+#     session['receive_count'] = session.get('receive_count', 0) + 1
+#     emit('my_response',
+#          {'data': 'Back ', 'count': session['receive_count']})
+#     fd.write(ARROW_DOWN)
+#     fd.flush()
+# @socketio.on('stop')
+# def button():
+#     session['receive_count'] = session.get('receive_count', 0) + 1
+#     emit('my_response',
+#          {'data': 'Stop ', 'count': session['receive_count']})
+#     fd.write(SPACE)
+#     fd.flush()
+# @socketio.on('start')
+# def button():
+#     session['receive_count'] = session.get('receive_count', 0) + 1
+#     emit('my_response',
+#          {'data': 'Start ', 'count': session['receive_count']})
+#     fd.write('\n')
+#     fd.flush()
+# @socketio.on('exit')
+# def button():
+#     session['receive_count'] = session.get('receive_count', 0) + 1
+#     emit('my_response',
+#          {'data': 'Stop Balancing ', 'count': session['receive_count']})
+#     fd.write('x')
+#     fd.flush()
+    # sys.exit()
 
 @socketio.on('connect')
 def test_connect():
