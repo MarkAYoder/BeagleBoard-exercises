@@ -73,32 +73,7 @@
         });
         function button(num) {
             // socket.emit('button');
-            socket.emit('button',  {data: num.toString()});
-
-            // switch(num) {
-            //     case 0:
-            //         // socket.emit('start', {data: num});
-            //         socket.emit('start');
-            //         break;
-            //     case 1:
-            //         socket.emit('forward');
-            //         break;
-            //     case 2:
-            //         socket.emit('left');
-            //         break;
-            //     case 3:
-            //         socket.emit('stop');
-            //         break;
-            //     case 4:
-            //         socket.emit('right');
-            //         break;
-            //     case 5:
-            //         socket.emit('back');
-            //         break;
-            //     case 6:
-            //         socket.emit('exit');
-            //         break;
-            // }
+            socket.emit('button',  num);
         }
     </script>
 </head>
