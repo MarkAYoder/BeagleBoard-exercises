@@ -14,3 +14,7 @@ wget https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.2/socket.io.slim.js
 cd ..
 
 mkfifo pipe
+
+# For video streaming
+cd /opt/scripts/tools/software/mjpg-streamer
+sudo ./install_mjpg_streamer.sh
