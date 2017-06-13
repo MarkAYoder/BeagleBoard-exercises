@@ -71,7 +71,7 @@ def ping_pong():
 def button(num):
     session['receive_count'] = session.get('receive_count', 0) + 1
     emit('my_response',
-         {'data': 'ButtonGo ', 'count': session['receive_count']})
+         {'data': 'button ', 'count': session['receive_count']})
     print("Button")
     print(num)
     fd.write(buttons[int(num)])
