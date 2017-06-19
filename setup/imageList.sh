@@ -12,7 +12,8 @@ elif [ "$1" == "web" ]; then
 else
 	echo $1
 	cd ~/BeagleBoard/Images
-	     wget $SITE/$1/$RELEASE/bone-debian-$RELEASE-armhf-$1-4gb.bmap
-	     wget $SITE/$1/$RELEASE/bone-debian-$RELEASE-armhf-$1-4gb.img.xz.sha256sum
-	time wget $SITE/$1/$RELEASE/bone-debian-$RELEASE-armhf-$1-4gb.img.xz
+	     URL=$SITE/$1/$RELEASE/bone-debian-9.0-iot-armhf-$1-4gb
+	     wget $URL.bmap
+	     wget $URL.img.xz.sha256sum
+	time wget $URL.img.xz
 fi
