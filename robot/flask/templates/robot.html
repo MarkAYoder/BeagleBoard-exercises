@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
     <title>EduMIP Robot Controler</title>
     <script type="text/javascript" src="{{ url_for('static', filename='jquery-3.2.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='socket.io.slim.js'  ) }}"></script>
@@ -72,46 +73,27 @@
 
         });
         function button(num) {
-            switch(num) {
-                case 0:
-                    socket.emit('forward');
-                    break;
-                case 1:
-                    socket.emit('left');
-                    break;
-                case 2:
-                    socket.emit('right');
-                    break;
-                case 3:
-                    socket.emit('back');
-                    break;
-                case 4:
-                    socket.emit('stop');
-                    break;
-                case 5:
-                    socket.emit('start');
-                    break;
-                case 6:
-                    socket.emit('exit');
-                    break;
-            }
+            // socket.emit('button');
+            socket.emit('button',  num);
         }
     </script>
 </head>
 <body>
     <h4>EduMIP Robot Controler</h4>
     <div id="buttons">
-      <button id="led0" onClick='button(5)'/>Start Balancing</button>
+      <button id="led0" onClick='button(0)'/>Start Balancing</button>
       <table>
-          <tr><td></td><td><button id="led0" onClick='button(0)'/>Forward</button></td><td></td></tr>
-          <tr><td><button id="led1" onClick='button(1)'/>Left</button></td>
-          <td><button id="led3" onClick='button(4)'/>Stop</button></td>
-          <td><button id="led2" onClick='button(2)'/>Right</button></td></tr>
-          <tr><td></td><td><button id="led3" onClick='button(3)'/>Back</button></td><td></td></tr>
+          <tr><td></td><td><button id="led0" onClick='button(1)'/>Forward</button></td><td></td></tr>
+          <tr><td><button id="led1" onClick='button(2)'/>Left</button></td>
+          <td><button id="led3" onClick='button(3)'/>Stop</button></td>
+          <td><button id="led2" onClick='button(4)'/>Right</button></td></tr>
+          <tr><td></td><td><button id="led3" onClick='button(5)'/>Back</button></td><td></td></tr>
       </table>
     <button id="led0" onClick='button(6)'/>Stop Balancing</button>
     </div>
-    <p>Average ping/pong latency: <b><span id="ping-pong"></span>ms</b></p>
+    <img src="http://192.168.8.1:8090/?action=stream" height="240" width="320"/>
+    <!--<img src="http://10.0.4.105:8090/?action=stream" height="240" width="320"/>-->
+    <p>Latency: <b><span id="ping-pong"></span>ms</b></p>
     <h4>Send:</h4>
     <form id="emit" method="POST" action='#'>
         <input type="text" name="emit_data" id="emit_data" placeholder="Message">
