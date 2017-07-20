@@ -6,6 +6,7 @@
 connmanctl << EOF
 enable wifi
 agent on
+config wifi_*_managed_psk autoconnect on
 connect wifi_f45eab3b76c7_596f646572576972656c65737332_managed_psk
 quit
 EOF
