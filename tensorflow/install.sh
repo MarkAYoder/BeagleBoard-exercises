@@ -12,3 +12,4 @@ wget https://github.com/tensorflow/tensorflow/raw/r1.2/tensorflow/examples/tutor
 # From: https://www.tensorflow.org/get_started/mnist/pros
 wget https://github.com/tensorflow/tensorflow/raw/r1.2/tensorflow/examples/tutorials/mnist/mnist_deep.py
 
+# Nice tutorial:  https://www.oreilly.com/learning/hello-tensorflow
