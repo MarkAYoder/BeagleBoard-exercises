@@ -1,1 +1,1 @@
-sudo apt install libsoc-dev
+sudo apt install libsoc2 libsoc-dev
