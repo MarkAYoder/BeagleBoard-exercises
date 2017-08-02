@@ -98,7 +98,7 @@ sed 's/#disable_uboot_overlay_audio=1/disable_uboot_overlay_audio=1/' < /boot/uE
 
 # Set the network name of the board, use the default name plus the last
 #   four digits of the inet6 address.
-echo $BONE_NAME-`ifconfig SoftAp0 | awk '/inet6/{print substr($2, length($2)-3)}'` > /etc/hostname
+echo $BONE_NAME-`/sbin/ifconfig SoftAp0 | awk '/inet6/{print substr($2, length($2)-3)}'` > /etc/hostname
 
 # Turn off messages that appeard when you login
 mv /etc/issue /etc/issue.orig
