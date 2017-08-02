@@ -7,7 +7,7 @@
 #include <libsoc_debug.h>
 
 // Blinks an LED attached to P9_14 (gpio1_18, 32+18=50)
-#define GPIO_OUTPUT  50
+#define GPIO_OUTPUT  49
 
 int main(void) {
   gpio *gpio_output;    // Create gpio pointer
