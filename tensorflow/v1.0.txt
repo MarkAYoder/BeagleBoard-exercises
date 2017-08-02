@@ -1,0 +1,7 @@
+Here are some changes in version 1.0
+initialize_all_variables()  => global_variables_initializer()
+mul() => multiply()
+tf.SummaryWriter() => tf.summary.FileWriter()
+tf.scalar_summary() => tf.summary.scalar()
+tf.merge_all_summaries() => tf.summary.merge_all()
+

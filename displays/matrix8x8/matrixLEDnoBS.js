@@ -4,7 +4,7 @@
 // install:  npm install i2c@0.2.1  (the latest version doesn't work)
 
 var i2c = require('i2c');
-var bus = '/dev/i2c-2';
+var bus = '/dev/i2c-1';
 var matrix = 0x70;
 var time = 1000; // Delay between images in ms
 
