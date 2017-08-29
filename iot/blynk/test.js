@@ -4,9 +4,7 @@ var Blynk = require('blynk-library');
 
 var AUTH = '087e4c21298e413ab9d5f87a5279e5c9';
 
-var blynk = new Blynk.Blynk(AUTH, options = {
-    connector: new Blynk.TcpClient()
-});
+var blynk = new Blynk.Blynk(AUTH);
 
 var v1 = new blynk.VirtualPin(1);
 var v9 = new blynk.VirtualPin(9);
