@@ -38,6 +38,7 @@ ssh root@$BONE "date -s \"$DATE\""
 echo
 echo rsyncing exercises, this will take a couple of minutes
 echo
+# git clone https://github.com/MarkAYoder/BeagleBoard-exercises.git exercises --depth=1
 time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises $USER@$BONE:.
 
 # echo rsyncing beaglebone-cookbook, this will take about 2 seconds
