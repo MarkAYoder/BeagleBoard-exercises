@@ -5,7 +5,7 @@
 // Usage:  toggle.js x y
 var i2c = require('i2c-bus');
 
-var bus = 2;
+var bus = 1;
 var matrix = 0x70;
 var display = i2c.openSync(bus);
 

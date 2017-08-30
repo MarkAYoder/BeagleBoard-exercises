@@ -4,7 +4,7 @@
 // install:  npm install i2c-bus
 
 var i2c = require('i2c-bus');
-var bus = 2;
+var bus = 1;
 var matrix = 0x70;
 var time = 1000; // Delay between images in ms
 

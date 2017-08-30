@@ -5,7 +5,7 @@
 // Usage:  toggleByte x y
 var i2c = require('i2c');
 
-var bus = '/dev/i2c-2';
+var bus = '/dev/i2c-1';
 var matrix = 0x70;
 var display = new i2c(matrix, {device: bus});
 

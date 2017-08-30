@@ -6,7 +6,7 @@
 // Mark A. Yoder, 31-Aug-2015
 
 var b = require('bonescript');
-var port = '/dev/i2c-2'
+var port = '/dev/i2c-1'
 var matrix = 0x70;
 var time = 500; // Delay between images in ms
 
