@@ -6,6 +6,7 @@ var leds = ["USR0", "USR1", "USR2", "USR3",
             "GP1_3", "GP1_4",
             "RED_LED", "GREEN_LED"
             ];
+// var leds = ["USR0", "USR1", "USR2", "USR3"];
 
 for(var i in leds) {
     b.pinMode(leds[i], b.OUTPUT);
