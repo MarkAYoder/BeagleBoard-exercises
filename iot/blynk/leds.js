@@ -2,6 +2,7 @@
 // From Blinks various LEDs
 var Blynk = require('blynk-library');
 var b = require('bonescript');
+var util = require('util');
 
 var LED0 = 'GP1_3';
 var button = 'GP0_5';
@@ -13,13 +14,16 @@ var AUTH = 'dc1c083949324ca28fbf393231f8cf09';
 var blynk = new Blynk.Blynk(AUTH);
 
 var v0 = new blynk.VirtualPin(0);
-var v1 = new blynk.VirtualPin(1);
+var v1 = new blynk.WidgetLED(1);
+// console.log(util.inspect(v1));
 // var v9 = new blynk.VirtualPin(9);
 
 v0.on('write', function(param) {
     console.log('V0:', param[0]);
     b.digitalWrite(LED0, param[0]);
 });
+
+v1.setValue(0);    // Initiallly off
 
 // v9.on('read', function() {
 //     v9.write(new Date().getSeconds());
@@ -29,5 +33,5 @@ b.attachInterrupt(button, toggle, b.CHANGE);
 
 function toggle(x) {
     console.log("V1: ", x.value);
-    x.value ? v1.write(255) : v1.write(0);
+    x.value ? v1.turnOff() : v1.turnOn();
 }
