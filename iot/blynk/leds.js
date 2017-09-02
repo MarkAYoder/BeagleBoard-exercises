@@ -4,16 +4,16 @@ var Blynk = require('blynk-library');
 var b = require('bonescript');
 
 var LED0 = 'GP1_3';
-// var button = 'GP0_5';
+var button = 'GP0_5';
 b.pinMode(LED0, b.OUTPUT);
-// b.pinMode(button, b.INPUT);
+b.pinMode(button, b.INPUT);
 
 var AUTH = 'dc1c083949324ca28fbf393231f8cf09';
 
 var blynk = new Blynk.Blynk(AUTH);
 
 var v0 = new blynk.VirtualPin(0);
-// var v1 = new blynk.VirtualPin(1);
+var v1 = new blynk.VirtualPin(1);
 // var v9 = new blynk.VirtualPin(9);
 
 v0.on('write', function(param) {
@@ -25,9 +25,9 @@ v0.on('write', function(param) {
 //     v9.write(new Date().getSeconds());
 // });
 
-// b.attachInterrupt(button, b.CHANGE, toggle);
+b.attachInterrupt(button, toggle, b.CHANGE);
 
-// function toggle(x) {
-//     console.log("V1: ", x.value);
-//     // x.value ? v1.on() : v1.off();
-// }
+function toggle(x) {
+    console.log("V1: ", x.value);
+    x.value ? v1.write(255) : v1.write(0);
+}
