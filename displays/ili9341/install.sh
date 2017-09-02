@@ -19,6 +19,9 @@ sudo apt install mplayer
 wget http://hubblesource.stsci.edu/sources/video/clips/details/images/hst_1.mpg
 wget http://www.koeniglich.de/pics/RedsNightmare.mpg
 
+# This will let us add text to the images
+sudo apt install imagemagick
+
 # 1.  Solder the two (2) JST SH 6 Wire Assemblies to the 2.4 TFT Breakout with: 
 
 # JST Pin	TFT Pin
