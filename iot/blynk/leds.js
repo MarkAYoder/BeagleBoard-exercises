@@ -4,7 +4,7 @@ var Blynk = require('blynk-library');
 var b = require('bonescript');
 var util = require('util');
 
-var LED0 = 'GP1_3';
+var LED0 = 'GREEN_LED';
 var button = 'GP0_5';
 b.pinMode(LED0, b.OUTPUT);
 b.pinMode(button, b.INPUT);
