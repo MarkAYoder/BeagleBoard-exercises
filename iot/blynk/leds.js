@@ -14,7 +14,7 @@ var AUTH = 'dc1c083949324ca28fbf393231f8cf09';
 var blynk = new Blynk.Blynk(AUTH);
 
 var v0 = new blynk.VirtualPin(0);
-var v1 = new blynk.WidgetLED(1);
+var v10 = new blynk.WidgetLED(10);
 // console.log(util.inspect(v1));
 // var v9 = new blynk.VirtualPin(9);
 
@@ -23,7 +23,7 @@ v0.on('write', function(param) {
     b.digitalWrite(LED0, param[0]);
 });
 
-v1.setValue(0);    // Initiallly off
+v10.setValue(0);    // Initiallly off
 
 // v9.on('read', function() {
 //     v9.write(new Date().getSeconds());
@@ -33,5 +33,5 @@ b.attachInterrupt(button, toggle, b.CHANGE);
 
 function toggle(x) {
     console.log("V1: ", x.value);
-    x.value ? v1.turnOff() : v1.turnOn();
+    x.value ? v10.turnOff() : v10.turnOn();
 }
