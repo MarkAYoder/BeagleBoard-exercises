@@ -6,7 +6,9 @@ var util = require('util');
 
 var LEDs = ['GP1_3', 'GP1_4', 'GREEN_LED', 'RED_LED'];
 var button = 'GP0_5';
-for(var i=0; i<LEDs.length; i++) {
+
+var i;
+for(i=0; i<LEDs.length; i++) {
     console.log("pinMode: " + i);
     b.pinMode(LEDs[i], b.OUTPUT);
 }
@@ -16,22 +18,21 @@ var AUTH = 'dc1c083949324ca28fbf393231f8cf09';
 
 var blynk = new Blynk.Blynk(AUTH);
 
-var v = new Array(LEDs.length);
+var v;
 for(i=0; i<LEDs.length; i++) {
     console.log("VirtualPin: " + i);
-    v[i] = new blynk.VirtualPin(i);
-}
-var v10 = new blynk.WidgetLED(10);
-
-for(i=0; i<LEDs.length; i++) {
-    v[i].on('write', function(param) {
-        console.log('V' + i + ':', param[0]);
+    v = new blynk.VirtualPin(i);
+    console.log(util.inspect(v));
+    v.on('write', function(param) {
+        console.log(util.inspect(param));
+        console.log('V' + i + ':', param[0]);  // This part doesn't work since i isn't evaluated at the right time
         b.digitalWrite(LEDs[i], param[0]);
     });
 }
 
-v10.setValue(0);    // Initiallly off
+var v10 = new blynk.WidgetLED(10);
 
+v10.setValue(0);    // Initiallly off
 b.attachInterrupt(button, toggle, b.CHANGE);
 
 function toggle(x) {
