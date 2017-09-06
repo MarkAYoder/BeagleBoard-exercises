@@ -91,6 +91,9 @@ sed 's/#disable_uboot_overlay_audio=1/disable_uboot_overlay_audio=1/' < /boot/uE
 #   four digits of the inet6 address.
 echo $BONE_NAME-`/sbin/ifconfig SoftAp0 | awk '/inet6/{print substr($2, length($2)-3)}'` > /etc/hostname
 
+# Set access point password
+# edit /etc/default/bb-wl18xx
+
 # Turn off messages that appeard when you login
 mv /etc/issue /etc/issue.orig
 mv /etc/issue.net /etc/issue.net.orig
