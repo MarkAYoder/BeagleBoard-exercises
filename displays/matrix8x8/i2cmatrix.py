@@ -4,8 +4,8 @@
 
 import smbus
 import time
-bus = smbus.SMBus(1)
-matrix = 0x70
+bus = smbus.SMBus(1)  # Use i2c bus 1
+matrix = 0x70         # Use address 0x70
 
 delay = 1; # Delay between images in s
 
