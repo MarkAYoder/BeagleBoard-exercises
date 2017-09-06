@@ -3,10 +3,10 @@
 
 # From: https://github.com/notro/fbtft/wiki/Framebuffer-use
 # This is for controlling the framebuffer
-apt install fbset
+sudo apt install fbset
 
 # Get framebuffer imageviewer
-apt install fbi
+sudo apt install fbi
 
 # Get some images to work on
 wget https://kernel.org/theme/images/logos/tux.png

@@ -2,7 +2,7 @@
 var b = require('bonescript');
 
 var button = "PAUSE";
-var LED    = "RED_LED";
+var LED    = "RED";
 
 b.pinMode(button, b.INPUT);
 b.pinMode(LED, b.OUTPUT);
