@@ -23,7 +23,7 @@ GPIO.output(LEDm, 1)
 
 print("Running...")
 
-GPIO.add_event_detect(buttonP, GPIO.BOTH)
+GPIO.add_event_detect(buttonP, GPIO.BOTH) # RISING, FALLING or BOTH
 GPIO.add_event_detect(buttonM, GPIO.BOTH)
 
 while True:   # This is ugly since we have to poll for the event
