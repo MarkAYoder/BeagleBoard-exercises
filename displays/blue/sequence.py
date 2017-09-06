@@ -14,8 +14,8 @@ for LED in LEDs:
 
 while True:
     for LED in LEDs:
-        GPIO.output(LED, GPIO.HIGH)
+        GPIO.output(LED, 1)
     time.sleep(delay)
     for LED in LEDs:
-        GPIO.output(LED, GPIO.LOW)
+        GPIO.output(LED, 0)
     time.sleep(delay)
