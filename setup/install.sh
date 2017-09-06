@@ -84,10 +84,6 @@ ssh root@$BONE "
 mv /boot/uEnv.txt /boot/uEnv.txt.orig
 sed 's/#disable_uboot_overlay_audio=1/disable_uboot_overlay_audio=1/' < /boot/uEnv.txt.orig > /boot/uEnv.txt
 
-# Get the right modes
-# chown -R :cloud9ide /opt/cloud9/.c9/ || true 
-# chmod -R g+w /opt/cloud9/.c9/ || true 
-
 # link to exercises
 # ln -s ~$USER .
 
