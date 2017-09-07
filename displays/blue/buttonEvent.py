@@ -18,39 +18,29 @@ GPIO.setup(LEDm,    GPIO.OUT)
 GPIO.setup(buttonP, GPIO.IN)
 GPIO.setup(buttonM, GPIO.IN)
 
+# Turn on both LEDs
 GPIO.output(LEDp, 1)
 GPIO.output(LEDm, 1)
+
+# Map buttons to LEDs
+map = {buttonP: LEDp, buttonM: LEDm}
 
 def updateLED(channel):
     print("channel = " + channel)
     state = GPIO.input(channel)
-    if(channel == 'PAUSE'):
-      LED = LEDp
-    else:
-      LED = LEDm
-    GPIO.output(LED, state)
-    print(LED + " Toggled")
+    GPIO.output(map[channel], state)
+    print(map[channel] + " Toggled")
 
 print("Running...")
 
 GPIO.add_event_detect(buttonP, GPIO.BOTH, callback=updateLED) # RISING, FALLING or BOTH
 GPIO.add_event_detect(buttonM, GPIO.BOTH, callback=updateLED)
 
-# while True:   # This is ugly since we have to poll for the event
-#   if GPIO.event_detected(buttonP):
-#     state = GPIO.input(buttonP)
-#     GPIO.output(LEDp, state)
-#     print(LEDp + " Toggled")
-    
-#   if GPIO.event_detected(buttonM):
-#     state = GPIO.input(buttonM)
-#     GPIO.output(LEDm, state)
-#     print(LEDm + " Toggled")
-
 try:
     while True:
-        pass
+        time.sleep(100)   # Let other processes run
 
 except KeyboardInterrupt:
+    print("Cleaning Up")
     GPIO.cleanup()
 GPIO.cleanup()
