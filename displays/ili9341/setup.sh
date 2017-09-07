@@ -11,7 +11,7 @@ fbi -t 5 -blend 1000 -noverbose -T 1 -a Matthias.jpg Malachi.jpg Alan.jpg Louis.
 # Play a movie
 SDL_VIDEODRIVER=fbcon 
 SDL_FBDEV=/dev/fb0
-mplayer -vf-add rotate=2 -framedrop hst_1.mpg
+mplayer -vf-add rotate=4 -framedrop hst_1.mpg
 
 # Look at the framebuffer settings
 fbset
