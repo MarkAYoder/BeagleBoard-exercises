@@ -37,3 +37,5 @@ sudo apt install imagemagick
 # 2.  Connect	JST-1 to S1.1 connector on BeagleBone Blue.
 
 # 3.  Connect JST-2 to GP0 connector on BeagleBone Blue.
+
+sudo apt install python-pygame
