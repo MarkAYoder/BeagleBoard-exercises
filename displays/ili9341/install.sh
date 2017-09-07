@@ -31,8 +31,8 @@ sudo apt install imagemagick
 # 1-4	MISO
 # 1-5	CLK
 # 1-6	CS
-# 2-3	D/C
-# 2-4	RST
+# 2-5	D/C
+# 2-6	RST
 
 # 2.  Connect	JST-1 to S1.1 connector on BeagleBone Blue.
 
