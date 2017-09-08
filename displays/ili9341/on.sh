@@ -25,9 +25,10 @@ sudo bash << EOF
     echo spi > /sys/devices/platform/ocp/ocp\:P9_29_pinmux/state # MISO - B13 - S1.1_4
     echo spi > /sys/devices/platform/ocp/ocp\:P9_30_pinmux/state # MOSI - D12 - S1.1_3
     echo spi > /sys/devices/platform/ocp/ocp\:H18_pinmux/state # CS - H18 - S1.1_6
-    sleep 2
+    # echo spi > /sys/devices/platform/ocp/ocp\:C18_pinmux/state # CS - H18 - S1.2_6
+    sleep 1
     
     # Insert the framebuffer modules
     # modprobe fbtft_device name=adafruit28 busnum=1 rotate=00 gpios=reset:49,dc:57
-    modprobe fbtft_device name=adafruit28 busnum=1 rotate=90 gpios=reset:113,dc:116
+    modprobe fbtft_device name=adafruit28 busnum=1 rotate=90 gpios=reset:113,dc:116 cs=0
 EOF
