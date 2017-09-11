@@ -19,7 +19,7 @@ process.argv.forEach(function(val, index, array) {
 
 function pinMux(gpio, flag) {
     var addr = '(' + (0x44e10800 + 
-                    parseInt(gpio.muxRegOffset, 16)).toString(16) + ')';
+                    parseInt(gpio.muxRegOffset, 16)).toString(16) + '.0)';
     
 //    console.log('grep "' + addr + '" ' + PINS);
     exec('grep "' + addr + '" ' + PINS,
