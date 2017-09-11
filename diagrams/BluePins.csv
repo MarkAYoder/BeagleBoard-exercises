@@ -1,18 +1,18 @@
-JST,gpio,gpio,Black Header
-GP0_3,gpio1_25,57,
-GP0_4,gpio1_17,49,P9_23
-GP0_5,gpio3_20,116,P9_41B
-GP0_6,gpio3_17,113,P9_28
-,,,
-GP1_3,gpio3_20,98,
-GP1_4,gpio3_17,97,
-,,,
-PAUSE,gpio2_5,69,P8_9
-MODE,gpio2_4,68,P8_10
-,,,
-BAT25,,,
-BAT50,,,
-BAT75,,,
-BAT100,,,
-,,,
-WIFI,,,
+JST,gpio,gpio,Pull,Black Header
+GP0_3,gpio1_25,57,Up,
+GP0_4,gpio1_17,49,Down,P9_23
+GP0_5,gpio3_20,116,Up,P9_41B
+GP0_6,gpio3_17,113,Down,P9_28
+,,,,
+GP1_3,gpio3_20,98,Up,
+GP1_4,gpio3_17,97,Up,
+,,,,
+PAUSE,gpio2_5,69,,P8_9
+MODE,gpio2_4,68,,P8_10
+,,,,
+BAT25,,,,
+BAT50,,,,
+BAT75,,,,
+BAT100,,,,
+,,,,
+WIFI,,,,
