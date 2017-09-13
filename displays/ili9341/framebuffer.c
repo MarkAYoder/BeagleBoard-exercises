@@ -61,27 +61,20 @@ int main()
     }
     printf("The framebuffer device was mapped to memory successfully.\n");
 
-    x = 100; y = 100;       // Where we are going to put the pixel
-
-    // Figure out where in memory to put the pixel
-    for (y = 50; y < 240; y++)
-        for (x = 25; x < 300; x++) {
-
+    for (y = 50; y < 200; y++)
+        for (x = 25; x < 250; x++) {
+            // Figure out where in memory to put the pixel
             location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) +
                        (y+vinfo.yoffset) * finfo.line_length;
 
-            if (vinfo.bits_per_pixel == 32) {
-                *(fbp + location) = 100;        // Some blue
-                *(fbp + location + 1) = 15+(x-100)/2;     // A little green
-                *(fbp + location + 2) = 200-(y-100)/5;    // A lot of red
-                *(fbp + location + 3) = 0;      // No transparency
-        //location += 4;
-            } else  { //assume 16bpp
-                int b = 10;
-                int g = (x-100)/6;     // A little green
-                int r = 31-(y-100)/16;    // A lot of red
+            if (vinfo.bits_per_pixel == 16) {
+                int r = 31;     // 5 bits
+                int g = 0;      // 6 bits
+                int b = 0;      // 5 bits
                 unsigned short int t = r<<11 | g << 5 | b;
                 *((unsigned short int*)(fbp + location)) = t;
+            } else  {
+                printf("Can't handle %d bpp\n", vinfo.bits_per_pixel);
             }
 
         }
