@@ -1,4 +1,5 @@
 /*
+From: https://gist.github.com/FredEckert/3425429
 To test that the Linux framebuffer is set up correctly, and that the device permissions
 are correct, use the program below which opens the frame buffer and draws a gradient-
 filled red square:

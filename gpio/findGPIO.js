@@ -69,7 +69,8 @@ var gpio,
 
 for(i=2; i<process.argv.length; i++) {
     gpio = process.argv[i].toUpperCase();
-    if (gpio[0] === 'P' | gpio[0] === 'U') {
+    if(gpio[0].search("PUGRB")) {
+    // if (gpio[0] === 'P' | gpio[0] === 'U' | gpio[0] === 'G') {
         if(flag) {
             console.log(b.bone.pins[gpio]);
         }
