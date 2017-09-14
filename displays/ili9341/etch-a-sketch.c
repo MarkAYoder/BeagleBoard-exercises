@@ -108,7 +108,7 @@ int main()
             *((unsigned short int*)(fbp + location)) = t;
         }
 		
-		rc_usleep(50000);
+		rc_usleep(5000);
 	}
 	
 	rc_cleanup();
