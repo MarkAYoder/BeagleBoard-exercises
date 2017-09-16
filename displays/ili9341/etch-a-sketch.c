@@ -27,7 +27,7 @@ int main()
     struct fb_fix_screeninfo finfo;
     long int screensize = 0;
     char *fbp = 0;
-    int x = 0, y = 0;
+    int x = 0, y = 1;       // Make it so the it runs before the encoder is moved
     int xold = 0, yold = 0;
     long int location = 0;
 
@@ -82,6 +82,13 @@ int main()
 	printf("   E3   |");
 	printf("   E4   |");
 	printf(" \n");
+	
+	// Black out the screen
+	short color = (0<<11) | (0 << 5) | 8;  // RGB
+	for(int i=0; i<screensize; i+=2) {
+	    fbp[i  ] = color;      // Lower 8 bits
+	    fbp[i+1] = color>>8;   // Upper 8 bits
+	}
 
 	while(rc_get_state() != EXITING) {
 		printf("\r");
@@ -91,21 +98,28 @@ int main()
 		fflush(stdout);
         // Update framebuffer
         // Figure out where in memory to put the pixel
-        x = rc_get_encoder_pos(2)/5 % vinfo.xres;
-        y = rc_get_encoder_pos(3)/5 % vinfo.yres;
+        x = (rc_get_encoder_pos(1)/2 + vinfo.xres) % vinfo.xres;
+        y = (rc_get_encoder_pos(3)/2 + vinfo.yres) % vinfo.yres;
+        // printf("xpos: %d, xres: %d\n", rc_get_encoder_pos(1), vinfo.xres);
         
         if((x != xold) || (y != yold)) {
             printf("Updating location to %d, %d\n", x, y);
-            xold = x;
-            yold = y;
+            // Set old location to green
+            location = (xold+vinfo.xoffset) * (vinfo.bits_per_pixel/8) +
+                       (yold+vinfo.yoffset) * finfo.line_length;
+            int r = 0;     // 5 bits
+            int g = 17;      // 6 bits
+            int b = 0;      // 5 bits
+            unsigned short int t = r<<11 | g << 5 | b;
+            *((unsigned short int*)(fbp + location)) = t;
+            
+            // Set new location to white
             location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) +
                        (y+vinfo.yoffset) * finfo.line_length;
     
-            int r = 0;     // 5 bits
-            int g = 0;      // 6 bits
-            int b = 31;      // 5 bits
-            unsigned short int t = r<<11 | g << 5 | b;
-            *((unsigned short int*)(fbp + location)) = t;
+            *((unsigned short int*)(fbp + location)) = 0xff;
+            xold = x;
+            yold = y;
         }
 		
 		rc_usleep(5000);
