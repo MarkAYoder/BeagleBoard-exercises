@@ -19,7 +19,7 @@ sudo bash << EOF
     # echo gpio > /sys/devices/platform/ocp/ocp\:P9_23_pinmux/state # RESET - V14 - GP0_4
     # echo gpio > /sys/devices/platform/ocp/ocp\:U16_pinmux/state # D/C     - U16 - GP0_3
     echo gpio > /sys/devices/platform/ocp/ocp\:P9_28_pinmux/state # RESET- P9_28 - GP0_6
-    echo gpio > /sys/devices/platform/ocp/ocp\:D13_pinmux/state   # D/C  - D13 - GP0_3
+    echo gpio > /sys/devices/platform/ocp/ocp\:D13_pinmux/state   # D/C  - D13 - GP0_5
     echo spi > /sys/devices/platform/ocp/ocp\:P9_31_pinmux/state  # SCLK - A13 - S1.1_5
     echo spi > /sys/devices/platform/ocp/ocp\:P9_29_pinmux/state  # MISO - B13 - S1.1_4
     echo spi > /sys/devices/platform/ocp/ocp\:P9_30_pinmux/state  # MOSI - D12 - S1.1_3
