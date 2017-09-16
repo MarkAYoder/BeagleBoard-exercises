@@ -10,25 +10,26 @@ sudo bash << EOF
     rmmod --force fbtft_device
 
     # unexport poins 49 and 57 so the framebuffer can use them
-    # echo 49 > /sys/class/gpio/unexport # RESET - V14 - GP0_PIN4
-    # echo 57 > /sys/class/gpio/unexport # D/C - U16 - GP0_PIN3
-    echo 113 > /sys/class/gpio/unexport # RESET - V14 - GP0_PIN6
-    echo 116 > /sys/class/gpio/unexport # D/C - U16 - GP0_PIN5
+    echo 49 > /sys/class/gpio/unexport # RESET - V14 - GP0_PIN4
+    echo 57 > /sys/class/gpio/unexport # D/C - U16 - GP0_PIN3
+    # echo 113 > /sys/class/gpio/unexport # RESET - V14 - GP0_PIN6
+    # echo 116 > /sys/class/gpio/unexport # D/C - U16 - GP0_PIN5
     echo 29 > /sys/class/gpio/unexport # CS - H18
+    # echo 7 > /sys/class/gpio/unexport # CS - C18
         
     # Set the pinmuxes for the display
-    # echo gpio > /sys/devices/platform/ocp/ocp\:P9_23_pinmux/state # RESET - V14 - GP0_4
-    # echo gpio > /sys/devices/platform/ocp/ocp\:U16_pinmux/state # D/C - U16 - GP0_3
-    echo gpio > /sys/devices/platform/ocp/ocp\:P9_28_pinmux/state # RESET - V14 - GP0_6
-    echo gpio > /sys/devices/platform/ocp/ocp\:D13_pinmux/state # D/C - U16 - GP0_3
+    echo gpio > /sys/devices/platform/ocp/ocp\:P9_23_pinmux/state # RESET - V14 - GP0_4
+    echo gpio > /sys/devices/platform/ocp/ocp\:U16_pinmux/state # D/C - U16 - GP0_3
+    # echo gpio > /sys/devices/platform/ocp/ocp\:P9_28_pinmux/state # RESET - V14 - GP0_6
+    # echo gpio > /sys/devices/platform/ocp/ocp\:D13_pinmux/state # D/C - U16 - GP0_3
     echo spi > /sys/devices/platform/ocp/ocp\:P9_31_pinmux/state # SCLK - A13 - S1.1_5
     echo spi > /sys/devices/platform/ocp/ocp\:P9_29_pinmux/state # MISO - B13 - S1.1_4
     echo spi > /sys/devices/platform/ocp/ocp\:P9_30_pinmux/state # MOSI - D12 - S1.1_3
     echo spi > /sys/devices/platform/ocp/ocp\:H18_pinmux/state # CS - H18 - S1.1_6
-    # echo spi > /sys/devices/platform/ocp/ocp\:C18_pinmux/state # CS - H18 - S1.2_6
+    # echo spi > /sys/devices/platform/ocp/ocp\:C18_pinmux/state # CS - C18 - S1.2_6
     sleep 1
     
     # Insert the framebuffer modules
-    # modprobe fbtft_device name=adafruit28 busnum=1 rotate=00 gpios=reset:49,dc:57
-    modprobe fbtft_device name=adafruit28 busnum=1 rotate=90 gpios=reset:113,dc:116 cs=0
+    modprobe fbtft_device name=adafruit28 busnum=1 rotate=90 gpios=reset:49,dc:57
+    # modprobe fbtft_device name=adafruit28 busnum=1 rotate=00 gpios=reset:113,dc:116 cs=0
 EOF
