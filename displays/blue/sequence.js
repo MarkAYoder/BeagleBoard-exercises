@@ -3,11 +3,13 @@
 var b = require('bonescript');
 
 var LEDs = ["USR0", "USR1", "USR2", "USR3", 
-            "GP0_4", "GP0_5", "GP0_6",
-            "GP1_3", "GP1_4",
+            // "GP0_4", "GP0_5", "GP0_6",
+            // "GP1_3", 
+            "GP1_4",
+            "bat25", "bat50", "bat75", "bat100", 
             "RED", "GREEN"
             ];
-var input = "GP0_3";
+var input = "GP1_3";
 var currentLED = 0;
 
 b.pinMode(input, b.INPUT);
