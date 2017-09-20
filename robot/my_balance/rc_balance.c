@@ -284,8 +284,8 @@ void* setpoint_manager(void* ptr){
 		else if(rc_is_dsm_active()==0){
 			if(setpoint.drive_mode == TURN){
 				setpoint.theta     =  0;
-				setpoint.phi_dot   = -DRIVE_RATE_NOVICE * 0.5;
-				setpoint.gamma_dot =  TURN_RATE_NOVICE  * 0.3;				
+				setpoint.phi_dot   =  DRIVE_RATE_NOVICE * 0.3;
+				setpoint.gamma_dot =  TURN_RATE_NOVICE  * 0.5;				
 			} else {
 				setpoint.theta     = 0;
 				setpoint.phi_dot   = 0;
