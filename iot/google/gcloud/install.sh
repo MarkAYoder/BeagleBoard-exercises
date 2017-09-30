@@ -1,6 +1,6 @@
 # From: https://cloud.google.com/sdk/docs/
 
-SDKz=google-cloud-sdk-153.0.0-linux-x86.tar.gz
+SDKz=google-cloud-sdk-173.0.0-linux-x86.tar.gz
 SDK=google-cloud-sdk
 wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/$SDKz
 tar xzf $SDKz
