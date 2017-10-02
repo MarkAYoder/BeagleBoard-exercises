@@ -4,12 +4,12 @@ var Blynk = require('blynk-library');
 var b = require('bonescript');
 var util = require('util');
 
-var LEDs = ['GP1_3', 'GP1_4', 'GREEN_LED', 'RED_LED'];
-var button = 'GP0_5';
+var LEDs = ['GP1_4', 'GREEN', 'RED'];
+var button = 'GP1_3';
 
 var i;
 for(i=0; i<LEDs.length; i++) {
-    console.log("pinMode: " + i);
+    // console.log("pinMode: " + i);
     b.pinMode(LEDs[i], b.OUTPUT);
 }
 b.pinMode(button, b.INPUT);
@@ -20,15 +20,18 @@ var blynk = new Blynk.Blynk(AUTH);
 
 var v;
 for(i=0; i<LEDs.length; i++) {
-    console.log("VirtualPin: " + i);
+    // console.log("VirtualPin: " + i);
     v = new blynk.VirtualPin(i);
-    console.log(util.inspect(v));
+    // console.log(util.inspect(v));
     v.on('write', function(param) {
-        console.log(util.inspect(param));
-        console.log('V' + i + ':', param[0]);  // This part doesn't work since i isn't evaluated at the right time
-        b.digitalWrite(LEDs[i], param[0]);
+        // console.log("this: " + util.inspect(this));
+        // console.log("param: " + util.inspect(param));
+        // console.log("pin: " + this.pin);
+        console.log('V' + this.pin + ':', param[0]);
+        b.digitalWrite(LEDs[this.pin], param[0]);
     });
 }
+
 
 var v10 = new blynk.WidgetLED(10);
 
