@@ -5,7 +5,7 @@ var b = require('bonescript');
 var util = require('util');
 
 var LED0 = 'GREEN';
-var button = 'GP0_3';
+var button = 'GP1_3';
 b.pinMode(LED0, b.OUTPUT);
 b.pinMode(button, b.INPUT);
 
