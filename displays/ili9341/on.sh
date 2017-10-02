@@ -9,7 +9,7 @@ sudo bash << EOF
     rmmod --force fbtft
     rmmod --force fbtft_device
 
-    # unexport poins 49 and 57 so the framebuffer can use them
+    # unexport pins 49 and 57 so the framebuffer can use them
     # echo 49 > /sys/class/gpio/unexport # RESET - V14 - GP0_4
     # echo 57 > /sys/class/gpio/unexport # D/C - U16 - GP0_3
     echo 113 > /sys/class/gpio/unexport # RESET - V14 - GP0_6

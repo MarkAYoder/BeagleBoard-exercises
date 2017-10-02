@@ -8,6 +8,9 @@ sudo apt install fbset
 # Get framebuffer imageviewer
 sudo apt install fbi
 
+# Load if using JavaScript mmap
+sudo npm install -g mmap.js
+
 # Get some images to work on
 wget https://kernel.org/theme/images/logos/tux.png
 wget http://www.rose-hulman.edu/InstituteBrandResources/RH_Graphic_Secondary.zip
