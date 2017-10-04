@@ -7,4 +7,7 @@ CFLAGS		:= -Wall -O2
 LFLAGS		:= -L /opt/source/Robotics_Cape_Installer/libraries -lm -lrt -lpthread -lroboticscape
 
 etch-a-sketch:	etch-a-sketch.c
-	$(CC) $(CFLAGS) $(LFLAGS) etch-a-sketch.c -o etch-a-sketch
+	$(CC) $(CFLAGS) $(LFLAGS) $^ -o $@
+
+framebuffer:	framebuffer.c
+	$(CC) $(CFLAGS) $^ -o $@

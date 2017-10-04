@@ -9,16 +9,16 @@ sudo bash << EOF
     rmmod fbtft_device
     sleep 1
     # Get access to the RESET pin
-    echo 49  > /sys/class/gpio/export # RESET - V14 - GP0_PIN4
+    echo 113  > /sys/class/gpio/export # RESET - V14 - GP0_PIN4
     echo Toggling RESET
     sleep 1
     # Toggle it
-    echo out > /sys/class/gpio/gpio49/direction
-    echo 0   > /sys/class/gpio/gpio49/value
-    echo 1   > /sys/class/gpio/gpio49/value
+    echo out > /sys/class/gpio/gpio113/direction
+    echo 0   > /sys/class/gpio/gpio113/value
+    echo 1   > /sys/class/gpio/gpio113/value
     
-    # Remove acces so the framebuffer can use it
-    echo 49  > /sys/class/gpio/unexport # RESET - V14 - GP0_PIN4
+    # Remove access so the framebuffer can use it
+    echo 113  > /sys/class/gpio/unexport # RESET - V14 - GP0_PIN4
 
     # Fire up the framebuffer
     echo Firing up framebuffer

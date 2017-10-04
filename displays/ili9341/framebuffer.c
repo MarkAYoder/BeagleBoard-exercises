@@ -18,7 +18,7 @@ http://cep.xor.aps.anl.gov/software/qt4-x11-4.2.2/qtopiacore-testingframebuffer.
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 
-int main()
+int main (int argc, char *argv[])
 {
     int fbfd = 0;
     struct fb_var_screeninfo vinfo;
@@ -27,6 +27,16 @@ int main()
     char *fbp = 0;
     int x = 0, y = 0;
     long int location = 0;
+    int r = 0;     // 5 bits
+    int g = 31;      // 6 bits
+    int b = 31;      // 5 bits
+    
+    if(argc == 4) {     // get RGB color
+        r = atoi(argv[1]);
+        g = atoi(argv[2]);
+        b = atoi(argv[3]);
+    }
+    printf("R: %d, G: %d, B: %d\n", r, g, b);
 
     // Open the file for reading and writing
     fbfd = open("/dev/fb0", O_RDWR);
@@ -72,10 +82,6 @@ int main()
             // Figure out where in memory to put the pixel
             location = (x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) +
                        (y+vinfo.yoffset) * finfo.line_length;
-
-            int r = 0;     // 5 bits
-            int g = 0;      // 6 bits
-            int b = 31;      // 5 bits
             unsigned short int t = r<<11 | g << 5 | b;
             *((unsigned short int*)(fbp + location)) = t;
             // usleep(100);
