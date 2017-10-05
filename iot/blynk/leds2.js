@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 // From Blinks various LEDs
-var Blynk = require('blynk-library');
-var b = require('bonescript');
-var util = require('util');
+const Blynk = require('blynk-library');
+const b = require('bonescript');
+const util = require('util');
 
-var LEDs = ['GP1_4', 'GREEN', 'RED'];
-var button = 'GP1_3';
+const LEDs = ['GP1_4', 'GREEN', 'RED'];
+const button = 'GP1_3';
 
 var i;
 for(i=0; i<LEDs.length; i++) {
@@ -14,7 +14,7 @@ for(i=0; i<LEDs.length; i++) {
 }
 b.pinMode(button, b.INPUT);
 
-var AUTH = 'dc1c083949324ca28fbf393231f8cf09';
+const AUTH = 'dc1c083949324ca28fbf393231f8cf09';
 
 var blynk = new Blynk.Blynk(AUTH);
 

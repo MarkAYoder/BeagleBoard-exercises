@@ -3,17 +3,17 @@
 
 "use strict";
 
-var port = 9090, // Port to listen on
+const port = 9090, // Port to listen on
     http  = require('http'),
     request = require('request'),
     url   = require('url'),
     util  = require('util'),
     qs    = require('querystring'),
     b     = require('bonescript');
-var key = 'bHddeE_oLPxdP0ZKABzAe4';
-var LED = 'P9_14';
-var button = 'P9_27';
-var event = 'LED';
+const key = 'bHddeE_oLPxdP0ZKABzAe4';
+const LED = 'GP1_4';
+const button = 'GP1_3';
+const event = 'LED';
     
 b.pinMode(LED, b.OUTPUT);
 b.pinMode(button, b.INPUT);
