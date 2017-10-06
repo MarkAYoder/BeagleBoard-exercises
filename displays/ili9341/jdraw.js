@@ -27,11 +27,21 @@ for(ang=0; ang<2*Math.PI; ang+=Math.PI/6) {
         xcent+(rad-len)*Math.cos(ang), ycent+(rad-len)*Math.sin(ang));
 }
 
+// Draw second hand
+
+const d = new Date();
+const sec = d.getSeconds();
+console.log("Seconds: " + sec);
+
+ang = Math.PI/2-2*Math.PI*sec/60;
+cmd += util.format("line %d,%d %d,%d\n", xcent, ycent, xcent+rad*Math.cos(ang), ycent-rad*Math.sin(ang));
+
 cmd +=  "\" " + TMP_FILE + "; ";
 
-cmd += "sudo fbi -noverbose -T 1 " + TMP_FILE;
+// cmd += "sudo fbi -noverbose -T 1 " + TMP_FILE;
+cmd += "gnome-open " + TMP_FILE;
 
-// console.log(cmd);
+console.log(cmd);
 
 const exec = require('child_process').exec;
 exec(cmd, (error, stdout, stderr) => {
@@ -42,6 +52,3 @@ exec(cmd, (error, stdout, stderr) => {
   if(stdout) console.log(`stdout: ${stdout}`);
   if(stderr) console.log(`stderr: ${stderr}`);
 });
-
-var d = new Date();
-console.log("Seconds: " + d.getSeconds());
