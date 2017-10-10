@@ -30,7 +30,9 @@ for(ang=0; ang<2*Math.PI; ang+=Math.PI/6) {
 
 // Draw second hand
 
-setTimeout(displayTime, 1000);
+// setTimeout(displayTime, 1000);
+
+displayTime();
 
 function displayTime() {
     const d = new Date();
@@ -52,7 +54,7 @@ function displayTime() {
     
     currentCmd +=  "\" " + TMP_FILE + "; ";
     
-    currentCmd += "sudo fbi -noverbose -T 1 " + TMP_FILE;
+    // currentCmd += "sudo fbi -noverbose -T 1 " + TMP_FILE;
     // currentCmd += "gnome-open " + TMP_FILE;
     // currentCmd += "ffmpeg -i " + TMP_FILE + " -vcodec rawvideo -f rawvideo -pix_fmt rgb565 -y /dev/fb0";
     
@@ -66,7 +68,7 @@ function displayTime() {
       }
       if(stdout) console.log(`stdout: ${stdout}`);
     //   if(stderr) console.log(`stderr: ${stderr}`);
-      setTimeout(displayTime, 1000);
+      // setTimeout(displayTime, 1000);
     });
     
 }
