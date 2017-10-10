@@ -14,7 +14,7 @@ sudo npm install -g mmap.js
 # Get some images to work on
 wget https://kernel.org/theme/images/logos/tux.png
 wget http://www.rose-hulman.edu/InstituteBrandResources/RH_Graphic_Secondary.zip
-wget https://beagleboard.org/static/images/boris_education.png -o boris.png
+curl https://beagleboard.org/static/images/boris_education.png > boris.png
 
 # Get mplayer to play some video
 sudo apt install mplayer
