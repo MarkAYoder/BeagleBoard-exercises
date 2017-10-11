@@ -104,6 +104,7 @@ class pyclock :
         
         minScale = 0.85     # Size of minute hand relative to second
         hourScale = 0.5
+        width = 3           # Width of hands
         
         rad = 100   # Radius
         len = 10    # Length of ticks
@@ -121,47 +122,52 @@ class pyclock :
             in_pos = (xcent+(rad-len)*math.cos(ang), ycent-(rad-len)*math.sin(ang))
             pygame.draw.line(self.screen, faceC, in_pos, out_pos, 2)
 
-        oldAngS = 0
-        oldAngM = 0
-        oldAngH = 0
+        currentTime = time.localtime()
+        hour = currentTime[3]%12
+        minute = currentTime[4]
+        second = currentTime[5]
+        oldAngS = math.pi/2-2*math.pi*second/60
+        oldAngM = math.pi/2-2*math.pi*minute/60
+        oldAngH = math.pi/2-2*math.pi*hour/12
         while True:
             currentTime = time.localtime()
             hour = currentTime[3]%12
             minute = currentTime[4]
             second = currentTime[5]
-            print("Time: ", hour, ":", minute, ":", second)
+            # print("Time: ", hour, ":", minute, ":", second)
             
             # Erase second hand
             pygame.draw.line(self.screen, backgroundC, (xcent, ycent), 
-                (xcent+rad*math.cos(oldAngS), ycent-rad*math.sin(oldAngS)), 
-                1)
+                (xcent+(rad-len)*math.cos(oldAngS), ycent-(rad-len)*math.sin(oldAngS)), 
+                width)
             # Erase minute hand
             pygame.draw.line(self.screen, backgroundC, (xcent, ycent), 
                 (xcent+minScale*rad*math.cos(oldAngM), ycent-minScale*rad*math.sin(oldAngM)), 
-                1)
+                width)
             # Erase hour hand
             pygame.draw.line(self.screen, backgroundC, (xcent, ycent), 
                 (xcent+hourScale*rad*math.cos(oldAngH), ycent-hourScale*rad*math.sin(oldAngH)), 
-                1)
+                width)
                 
             # Draw second hand
             angS = math.pi/2-2*math.pi*second/60
             pygame.draw.line(self.screen, faceC, (xcent, ycent), 
-                (xcent+rad*math.cos(angS), ycent-rad*math.sin(angS)), 
-                1)
+                (xcent+(rad-len)*math.cos(angS), ycent-(rad-len)*math.sin(angS)), 
+                width)
             # minute hand
             angM = math.pi/2-2*math.pi*minute/60
             pygame.draw.line(self.screen, faceC, (xcent, ycent), 
                 (xcent+minScale*rad*math.cos(angM), ycent-minScale*rad*math.sin(angM)), 
-                1)
+                width)
             # hour hand
-            angM = math.pi/2-2*math.pi*hour/12
+            angH = math.pi/2-2*math.pi*hour/12
             pygame.draw.line(self.screen, faceC, (xcent, ycent), 
-                (xcent+hourScale*rad*math.cos(angM), ycent-hourScale*rad*math.sin(angM)), 
-                1)
+                (xcent+hourScale*rad*math.cos(angH), ycent-hourScale*rad*math.sin(angH)), 
+                width)
 
             oldAngS = angS
             oldAngM = angM
+            oldAngH = angH
             
             pygame.display.update()
             pygame.time.wait(1000)
