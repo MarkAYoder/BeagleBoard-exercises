@@ -102,6 +102,9 @@ class pyclock :
         ycent = int(ymax/2)
         print("xcent, ycent: ", xcent, "x", ycent)
         
+        minScale = 0.85     # Size of minute hand relative to second
+        hourScale = 0.5
+        
         rad = 100   # Radius
         len = 10    # Length of ticks
         
@@ -134,7 +137,11 @@ class pyclock :
                 1)
             # Erase minute hand
             pygame.draw.line(self.screen, backgroundC, (xcent, ycent), 
-                (xcent+rad*math.cos(oldAngM), ycent-rad*math.sin(oldAngM)), 
+                (xcent+minScale*rad*math.cos(oldAngM), ycent-minScale*rad*math.sin(oldAngM)), 
+                1)
+            # Erase hour hand
+            pygame.draw.line(self.screen, backgroundC, (xcent, ycent), 
+                (xcent+hourScale*rad*math.cos(oldAngH), ycent-hourScale*rad*math.sin(oldAngH)), 
                 1)
                 
             # Draw second hand
@@ -145,7 +152,12 @@ class pyclock :
             # minute hand
             angM = math.pi/2-2*math.pi*minute/60
             pygame.draw.line(self.screen, faceC, (xcent, ycent), 
-                (xcent+rad*math.cos(angM), ycent-rad*math.sin(angM)), 
+                (xcent+minScale*rad*math.cos(angM), ycent-minScale*rad*math.sin(angM)), 
+                1)
+            # hour hand
+            angM = math.pi/2-2*math.pi*hour/12
+            pygame.draw.line(self.screen, faceC, (xcent, ycent), 
+                (xcent+hourScale*rad*math.cos(angM), ycent-hourScale*rad*math.sin(angM)), 
                 1)
 
             oldAngS = angS
