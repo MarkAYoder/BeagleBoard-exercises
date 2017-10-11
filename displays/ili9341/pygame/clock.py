@@ -68,16 +68,16 @@ class pyclock :
         print("xmay, ymax: ", xmax, "x", ymax)
         
         # Set center of clock
-        xcent = int(xmax/4)
-        ycent = int(ymax/4)
+        xcent = int(xmax/2)
+        ycent = int(ymax/2)
         print("xcent, ycent: ", xcent, "x", ycent)
         
         minScale = 0.85     # Size of minute hand relative to second
         hourScale = 0.5
         width = 2           # Width of hands
         
-        rad = 50   # Radius
-        len = 10    # Length of ticks
+        rad = 100   # Radius
+        len = 15    # Length of ticks
         
         backgroundC = (173,216,230)
         faceC = (0, 0, 255)
@@ -92,13 +92,9 @@ class pyclock :
             in_pos = (xcent+(rad-len)*math.cos(ang), ycent-(rad-len)*math.sin(ang))
             pygame.draw.line(self.screen, faceC, in_pos, out_pos, 2)
 
-        currentTime = time.localtime()
-        hour = currentTime[3]%12
-        minute = currentTime[4]
-        second = currentTime[5]
-        oldAngS = math.pi/2-2*math.pi*second/60
-        oldAngM = math.pi/2-2*math.pi*minute/60
-        oldAngH = math.pi/2-2*math.pi*hour/12
+        oldAngS = 0
+        oldAngM = 0
+        oldAngH = 0
         while True:
             currentTime = time.localtime()
             hour = currentTime[3]%12
