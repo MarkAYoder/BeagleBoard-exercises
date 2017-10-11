@@ -5,6 +5,8 @@ import pygame
 import time
 import random
 import math
+from datetime import datetime
+import time
 
 class pyclock :
     screen = None;
@@ -46,7 +48,7 @@ class pyclock :
         # Initialise font support
         pygame.font.init()
         # Render the screen
-        pygame.display.update()
+        # pygame.display.update()
 
     def __del__(self):
         "Destructor to make sure pygame shuts down, etc."
@@ -115,7 +117,42 @@ class pyclock :
             out_pos= (xcent+rad*math.cos(ang),       ycent-rad*math.sin(ang))
             in_pos = (xcent+(rad-len)*math.cos(ang), ycent-(rad-len)*math.sin(ang))
             pygame.draw.line(self.screen, faceC, in_pos, out_pos, 2)
-        pygame.display.update()
+
+        oldAngS = 0
+        oldAngM = 0
+        oldAngH = 0
+        while True:
+            currentTime = time.localtime()
+            hour = currentTime[3]%12
+            minute = currentTime[4]
+            second = currentTime[5]
+            print("Time: ", hour, ":", minute, ":", second)
+            
+            # Erase second hand
+            pygame.draw.line(self.screen, backgroundC, (xcent, ycent), 
+                (xcent+rad*math.cos(oldAngS), ycent-rad*math.sin(oldAngS)), 
+                1)
+            # Erase minute hand
+            pygame.draw.line(self.screen, backgroundC, (xcent, ycent), 
+                (xcent+rad*math.cos(oldAngM), ycent-rad*math.sin(oldAngM)), 
+                1)
+                
+            # Draw second hand
+            angS = math.pi/2-2*math.pi*second/60
+            pygame.draw.line(self.screen, faceC, (xcent, ycent), 
+                (xcent+rad*math.cos(angS), ycent-rad*math.sin(angS)), 
+                1)
+            # minute hand
+            angM = math.pi/2-2*math.pi*minute/60
+            pygame.draw.line(self.screen, faceC, (xcent, ycent), 
+                (xcent+rad*math.cos(angM), ycent-rad*math.sin(angM)), 
+                1)
+
+            oldAngS = angS
+            oldAngM = angM
+            
+            pygame.display.update()
+            pygame.time.wait(1000)
 
 # Create an instance of the clock class
 clock = pyclock()
