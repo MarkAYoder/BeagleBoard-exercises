@@ -60,37 +60,7 @@ class pyclock :
         pygame.draw.rect(self.screen, (0, 128, 230), pygame.Rect(30, 30, 60, 60))
         # Update the display
         pygame.display.update()
-        
-    def drawGraticule(self):
-        "Renders an empty graticule"
-        # The graticule is divided into 10 columns x 8 rows
-        # Each cell is 50x40 pixels large, with 5 subdivisions per
-        # cell, meaning 10x8 pixels each.  Subdivision lines are
-        # displayed on the central X and Y axis
-        # Active area = 10,30 to 510,350 (500x320 pixels)
-        borderColor = (255, 255, 255)
-        lineColor = (64, 64, 64)
-        subDividerColor = (128, 128, 128)
-        # Outer border: 2 pixels wide
-        pygame.draw.rect(self.screen, borderColor, (8,28,504,324), 2)
-        # Horizontal lines (40 pixels apart)
-        for i in range(0, 7):
-            y = 70+i*40
-            pygame.draw.line(self.screen, lineColor, (10, y), (510, y))
-        # Vertical lines (50 pixels apart)
-        for i in range(0, 9):
-            x = 60+i*50
-            pygame.draw.line(self.screen, lineColor, (x, 30), (x, 350))
-        # Vertical sub-divisions (8 pixels apart)
-        for i in range(1, 40):
-            y = 30+i*8
-            pygame.draw.line(self.screen, subDividerColor, (258, y), (262, y))
-        # Horizontal sub-divisions (10 pixels apart)
-        for i in range(1, 50):
-            x = 10+i*10
-            pygame.draw.line(self.screen, subDividerColor, (x, 188), (x, 192))
-        pygame.display.update()
-        
+
     def drawClock(self):
         xmax = pygame.display.Info().current_w
         ymax = pygame.display.Info().current_h
@@ -98,15 +68,15 @@ class pyclock :
         print("xmay, ymax: ", xmax, "x", ymax)
         
         # Set center of clock
-        xcent = int(xmax/2)
-        ycent = int(ymax/2)
+        xcent = int(xmax/4)
+        ycent = int(ymax/4)
         print("xcent, ycent: ", xcent, "x", ycent)
         
         minScale = 0.85     # Size of minute hand relative to second
         hourScale = 0.5
-        width = 3           # Width of hands
+        width = 2           # Width of hands
         
-        rad = 100   # Radius
+        rad = 50   # Radius
         len = 10    # Length of ticks
         
         backgroundC = (173,216,230)
@@ -115,7 +85,7 @@ class pyclock :
         self.screen.fill(backgroundC)
         # Draw face
         pygame.draw.circle(self.screen, faceC, (xcent, ycent), rad, 1)
-        #put tick marks inside the circle
+        # Put tick marks inside the circle
         for i in range(12):
             ang = i*math.pi/6
             out_pos= (xcent+rad*math.cos(ang),       ycent-rad*math.sin(ang))
@@ -175,6 +145,5 @@ class pyclock :
 # Create an instance of the clock class
 clock = pyclock()
 # clock.test()
-# clock.drawGraticule()
 clock.drawClock()
 time.sleep(100)
