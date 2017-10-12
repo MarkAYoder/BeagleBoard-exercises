@@ -83,12 +83,12 @@ class pyclock :
             in_pos = (xcent+(rad-len)*math.cos(ang), ycent-(rad-len)*math.sin(ang))
             pygame.draw.line(self.screen, faceC, in_pos, out_pos, 2)
 
-        oldAngS = 0
+        oldAngS = 0     # Remeber where hands were so they can be removed
         oldAngM = 0
         oldAngH = 0
         while True:
             currentTime = time.localtime()
-            hour = currentTime[3]%12
+            hour = currentTime[3]%12    # Convert to 12 hour time
             minute = currentTime[4]
             second = currentTime[5]
 
@@ -123,13 +123,15 @@ class pyclock :
                 (xcent+hourScale*rad*math.cos(angH), ycent-hourScale*rad*math.sin(angH)), 
                 width)
 
-            oldAngS = angS
+            oldAngS = angS      # Remember current locations
             oldAngM = angM
             oldAngH = angH
             
+            # Display the time in digital form too
             textsurface = myfont.render(
                 str(hour)+":"+str(minute)+":"+str(second), False, (0, 0, 0))
             self.screen.blit(textsurface,(0, 0))
+
             pygame.display.update()
             pygame.time.wait(1000)
 
