@@ -6,3 +6,4 @@ sudo apt install libfreetype6-dev
 sudo python3 -m pip install pygame
 
 sudo pip3 install requests
+sudo pip3 install pillow
