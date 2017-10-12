@@ -102,7 +102,7 @@ request(urlWeather, {timeout: 10000}, function(err, res, body) {
     if(err) {
         console.log("err wunderground: " + err);
     }
-    weather = JSON.parse(body);
+    var weather = JSON.parse(body);
     // console.log("Temp:%s, lo:%s, hi:%s",
     //         weather.current_observation.temp_f,
     //         weather.forecast.simpleforecast.forecastday[0].low.fahrenheit,
