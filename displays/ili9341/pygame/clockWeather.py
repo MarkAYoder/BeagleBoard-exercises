@@ -136,13 +136,13 @@ class pyclock :
             
             # Display the time in digital form too
             # print("myfont.get_linesize(): " + str(myfont.get_linesize()))
+            # print("Time: " + time.strftime("%I:%M:%S"))
             textsurface = myfont.render(
-                str(hour)+":"+str(minute)+":"+str(second)+"  ", 
-                False, (0, 0, 0), backgroundC)
+                time.strftime("%I:%M:%S")+"  ", False, (0, 0, 0), backgroundC)
             self.screen.blit(textsurface,(0, 0))
             
             # Get outdoor temp and forcast from wunderground
-            if second == 0:
+            if (minute%5 == 0) and (second ==0):
                 print("Getting weather")
                 r = requests.get(urlWeather)
                 if(r.status_code==200):
@@ -155,7 +155,7 @@ class pyclock :
                     print("Low:  ", weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'])
                     print("High: ", weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'])
                     textsurface = myfont.render(
-                        "Time: " + weather['current_observation']['local_time_rfc822'] +
+                        # "Time: " + weather['current_observation']['local_time_rfc822'] +
                         "Temp: "  +str(weather['current_observation']['temp_f']) +
                         ", Hu: "+str(weather['current_observation']['relative_humidity']) +
                         ", Lo: "+str(weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit']) +
