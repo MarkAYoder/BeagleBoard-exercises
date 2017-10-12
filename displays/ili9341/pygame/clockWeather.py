@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 # Displays an analog clock on an LCD display
+# Also displays current weather and forcast
 # From: https://learn.adafruit.com/pi-video-output-using-pygame/pointing-pygame-to-the-framebuffer
 
 import os
 import pygame
 import time
 import math
+
+import requests     # For getting weather
 
 class pyclock :
     screen = None;
@@ -51,6 +54,8 @@ class pyclock :
         "Destructor to make sure pygame shuts down, etc."
 
     def drawClock(self):
+        urlWeather = "http://api.wunderground.com/api/ec7eb641373d9256/conditions/forecast/q/IN/Brazil.json"
+
         xmax = pygame.display.Info().current_w
         ymax = pygame.display.Info().current_h
         
@@ -59,7 +64,7 @@ class pyclock :
         # Set center of clock
         
         # https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
-        myfont = pygame.font.SysFont('Comic Sans MS', 30)
+        myfont = pygame.font.SysFont('FreeSerif', 20, True)
 
         xcent = int(xmax/2)
         ycent = int(ymax/2)
@@ -130,10 +135,37 @@ class pyclock :
             oldAngH = angH
             
             # Display the time in digital form too
+            # print("myfont.get_linesize(): " + str(myfont.get_linesize()))
             textsurface = myfont.render(
                 str(hour)+":"+str(minute)+":"+str(second)+"  ", 
                 False, (0, 0, 0), backgroundC)
             self.screen.blit(textsurface,(0, 0))
+            
+            # Get outdoor temp and forcast from wunderground
+            if second == 0:
+                print("Getting weather")
+                r = requests.get(urlWeather)
+                if(r.status_code==200):
+                    # print("headers: ", r.headers)
+                    # print("text: ", r.text)
+                    # print("json: ", r.json())
+                    weather = r.json()
+                    print("Temp: ", weather['current_observation']['temp_f'])
+                    print("Humid:", weather['current_observation']['relative_humidity'])
+                    print("Low:  ", weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'])
+                    print("High: ", weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'])
+                    textsurface = myfont.render(
+                        "Time: " + weather['current_observation']['local_time_rfc822'] +
+                        "Temp: "  +str(weather['current_observation']['temp_f']) +
+                        ", Hu: "+str(weather['current_observation']['relative_humidity']) +
+                        ", Lo: "+str(weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit']) +
+                        ", Hi: " +str(weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit']),
+                        False, (0, 0, 0), backgroundC)
+                    self.screen.blit(textsurface,(0, ymax-myfont.get_linesize()))
+                
+    
+                else:
+                    print("status_code: ", r.status_code)
 
             pygame.display.update()
             pygame.time.wait(1000)
