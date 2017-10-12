@@ -47,8 +47,6 @@ class pyclock :
         pygame.mouse.set_visible(False)
         # Initialise font support
         pygame.font.init()
-        # Render the screen
-        # pygame.display.update()
 
     def __del__(self):
         "Destructor to make sure pygame shuts down, etc."
@@ -68,6 +66,10 @@ class pyclock :
         print("xmay, ymax: ", xmax, "x", ymax)
         
         # Set center of clock
+        
+        # https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
+        myfont = pygame.font.SysFont('Comic Sans MS', 30)
+
         xcent = int(xmax/2)
         ycent = int(ymax/2)
         print("xcent, ycent: ", xcent, "x", ycent)
@@ -136,6 +138,9 @@ class pyclock :
             oldAngM = angM
             oldAngH = angH
             
+            textsurface = myfont.render(
+                str(hour)+":"+str(minute)+":"+str(second), False, (0, 0, 0))
+            self.screen.blit(textsurface,(xcent, ycent))
             pygame.display.update()
             pygame.time.wait(1000)
 
