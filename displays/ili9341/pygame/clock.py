@@ -3,10 +3,7 @@
 import os
 import pygame
 import time
-import random
 import math
-from datetime import datetime
-import time
 
 class pyclock :
     screen = None;
@@ -50,14 +47,6 @@ class pyclock :
 
     def __del__(self):
         "Destructor to make sure pygame shuts down, etc."
-
-    def test(self):
-        # Fill the screen with red (255, 0, 0)
-        red = (255, 0, 0)
-        self.screen.fill(red)
-        pygame.draw.rect(self.screen, (0, 128, 230), pygame.Rect(30, 30, 60, 60))
-        # Update the display
-        pygame.display.update()
 
     def drawClock(self):
         xmax = pygame.display.Info().current_w
@@ -140,12 +129,10 @@ class pyclock :
             
             textsurface = myfont.render(
                 str(hour)+":"+str(minute)+":"+str(second), False, (0, 0, 0))
-            self.screen.blit(textsurface,(xcent, ycent))
+            self.screen.blit(textsurface,(0, 0))
             pygame.display.update()
             pygame.time.wait(1000)
 
 # Create an instance of the clock class
 clock = pyclock()
-# clock.test()
 clock.drawClock()
-time.sleep(100)
