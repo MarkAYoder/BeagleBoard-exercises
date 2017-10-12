@@ -100,6 +100,7 @@ class pyclock :
             hour = currentTime[3]%12
             minute = currentTime[4]
             second = currentTime[5]
+
             # print("Time: ", hour, ":", minute, ":", second)
             
             # Erase second hand
@@ -121,12 +122,12 @@ class pyclock :
                 (xcent+(rad-len)*math.cos(angS), ycent-(rad-len)*math.sin(angS)), 
                 width)
             # minute hand
-            angM = math.pi/2-2*math.pi*minute/60
+            angM = math.pi/2-2*math.pi*minute/60 + angS/60
             pygame.draw.line(self.screen, faceC, (xcent, ycent), 
                 (xcent+minScale*rad*math.cos(angM), ycent-minScale*rad*math.sin(angM)), 
                 width)
             # hour hand
-            angH = math.pi/2-2*math.pi*hour/12
+            angH = math.pi/2-2*math.pi*hour/12 + angM/12
             pygame.draw.line(self.screen, faceC, (xcent, ycent), 
                 (xcent+hourScale*rad*math.cos(angH), ycent-hourScale*rad*math.sin(angH)), 
                 width)
