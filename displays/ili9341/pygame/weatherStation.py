@@ -26,6 +26,6 @@ if(r.status_code==200):
     print("Humid:", weather['current_observation']['relative_humidity'])
     print("Low:  ", weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'])
     print("High: ", weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'])
+    print("All : ", weather['forecast']['simpleforecast']['forecastday'])
 else:
     print("status_code: ", r.status_code)
-    
