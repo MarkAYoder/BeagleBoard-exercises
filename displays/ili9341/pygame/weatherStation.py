@@ -22,7 +22,7 @@ if(r.status_code==200):
     # print("json: ", r.json())
     weather = r.json()
     print("Temp: ", weather['current_observation']['temp_f'])
-    print("Low: " , weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'])
+    print("Low:  ", weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'])
     print("High: ", weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'])
 else:
     print("status_code: ", r.status_code)
