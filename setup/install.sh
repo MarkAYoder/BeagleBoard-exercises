@@ -92,7 +92,7 @@ sed 's/#disable_uboot_overlay_audio=1/disable_uboot_overlay_audio=1/' < /boot/uE
 
 # Set the network name of the board, use the default name plus the last
 #   four digits of the inet6 address.
-echo $BONE_NAME-`/sbin/ifconfig SoftAp0 | awk '/inet6/{print substr($2, length($2)-3)}'` > /etc/hostname
+# echo $BONE_NAME-`/sbin/ifconfig SoftAp0 | awk '/inet6/{print substr($2, length($2)-3)}'` > /etc/hostname
 
 # Set access point password
 # edit /etc/default/bb-wl18xx
@@ -123,9 +123,7 @@ if [ ! -e /usr/local/lib/node_modules/socket.io ] ; then
 fi
 
 # Turn off some services
-cd /etc/init.d/
-mkdir -p hide
-mv apache2 hide
+systemctl disable apache2
 
 # Set up boneServer to run at boot time
 # cp ~/exercises/realtime/boneServer.service /lib/systemd/system
