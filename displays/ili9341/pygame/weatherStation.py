@@ -14,7 +14,7 @@
 import requests
 
 # Get outdoor temp and forcast from wunderground
-urlWeather = "http://api.wunderground.com/api/ec7eb641373d9256/conditions/forecast/q/IN/Brazil.json"
+urlWeather = "http://api.wunderground.com/api/ec7eb641373d9256/history/conditions/forecast/q/IN/Brazil.json"
 r = requests.get(urlWeather)
 if(r.status_code==200):
     # print("headers: ", r.headers)
@@ -22,10 +22,11 @@ if(r.status_code==200):
     # print("json: ", r.json())
     weather = r.json()
     print("Temp: ", weather['current_observation']['temp_f'])
-    print("Temp: ", weather['current_observation'])
+    print("Yesterday Max: ", weather['history']['dailysummary'][0]['maxtempi'])
+    print("Yesterday Min: ", weather['history']['dailysummary'][0]['mintempi'])
     print("Humid:", weather['current_observation']['relative_humidity'])
     print("Low:  ", weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'])
     print("High: ", weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'])
-    print("All : ", weather['forecast']['simpleforecast']['forecastday'])
+#    print("All : ", weather['forecast']['simpleforecast']['forecastday'])
 else:
     print("status_code: ", r.status_code)
