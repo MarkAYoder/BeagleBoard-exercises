@@ -96,6 +96,7 @@ class pyclock :
         oldAngS = 0     # Remeber where hands were so they can be removed
         oldAngM = 0
         oldAngH = 0
+        oldIcon = "";   # Remember last icon used
         while True:
             currentTime = time.localtime()
             hour = currentTime[3]%12    # Convert to 12 hour time
@@ -145,7 +146,7 @@ class pyclock :
             self.screen.blit(textsurface,(0, 0))
 
             # Get outdoor temp and forcast from wunderground
-            if (minute%1 == 0) and (second ==0):
+            if (minute%1 == 0) and (second%15==0):
             # if True:
                 print("Getting weather")
                 r = requests.get(urlWeather)
@@ -178,16 +179,20 @@ class pyclock :
                     # Get the weather icon and display it
                     # https://stackoverflow.com/questions/32853980/temporarily-retrieve-an-image-using-the-requests-library
                     icon = weather['current_observation']['icon_url']
-                    # print("Getting: " + icon)
-                    r = requests.get(icon, stream=True)
-                    r.raw.decode_content = True # handle spurious Content-Encoding
-                    im = Image.open(r.raw)
-                    # print(im.format, im.mode, im.size)
-                    im.save("/tmp/weather.gif")
-                    image = pygame.image.load("/tmp/weather.gif")
-        
-                    # print("Size: " + str(image.get_size()))
-                    self.screen.blit(image, (xmax-image.get_width(), 0))                    
+                    if icon != oldIcon:
+                        print("Getting: " + icon)
+                        r = requests.get(icon, stream=True)
+                        r.raw.decode_content = True # handle spurious Content-Encoding
+                        im = Image.open(r.raw)
+                        # print(im.format, im.mode, im.size)
+                        im.save("/tmp/weather.gif")
+                        image = pygame.image.load("/tmp/weather.gif")
+            
+                        # print("Size: " + str(image.get_size()))
+                        self.screen.blit(image, (xmax-image.get_width(), 0))
+                        oldIcon = icon
+                    else:
+                        print("Already have: " + icon)
     
                 else:
                     print("status_code: ", r.status_code)
