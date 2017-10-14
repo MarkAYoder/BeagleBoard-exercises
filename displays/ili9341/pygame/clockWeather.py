@@ -57,7 +57,8 @@ class pyclock :
 
     def drawClock(self):
         # https://www.wunderground.com/weather/api/d/docs
-        urlWeather = "http://api.wunderground.com/api/ec7eb641373d9256/conditions/forecast/history/q/IN/Brazil.json"
+        key = "ec7eb641373d9256"
+        urlWeather = "http://api.wunderground.com/api/" + key + "/conditions/forecast/history/q/IN/Brazil.json"
 
         xmax = pygame.display.Info().current_w
         ymax = pygame.display.Info().current_h
@@ -97,6 +98,7 @@ class pyclock :
         oldAngM = 0
         oldAngH = 0
         oldIcon = "";   # Remember last icon used
+        first   = True  # First time through the loop
         while True:
             currentTime = time.localtime()
             hour = currentTime[3]%12    # Convert to 12 hour time
@@ -146,7 +148,8 @@ class pyclock :
             self.screen.blit(textsurface,(0, 0))
 
             # Get outdoor temp and forcast from wunderground
-            if (minute%1 == 0) and (second%15==0):
+            if first or ((minute%15 == 0) and (second%60==0)):
+                first = False
             # if True:
                 print("Getting weather")
                 r = requests.get(urlWeather)
