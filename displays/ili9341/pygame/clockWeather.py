@@ -56,7 +56,8 @@ class pyclock :
         "Destructor to make sure pygame shuts down, etc."
 
     def drawClock(self):
-        urlWeather = "http://api.wunderground.com/api/ec7eb641373d9256/conditions/forecast/q/IN/Brazil.json"
+        # https://www.wunderground.com/weather/api/d/docs
+        urlWeather = "http://api.wunderground.com/api/ec7eb641373d9256/conditions/forecast/history/q/IN/Brazil.json"
 
         xmax = pygame.display.Info().current_w
         ymax = pygame.display.Info().current_h
@@ -64,9 +65,6 @@ class pyclock :
         print("xmay, ymax: ", xmax, "x", ymax)
         
         # Set center of clock
-        
-        # https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
-        myfont = pygame.font.SysFont('FreeSerif', 20, True)
 
         xcent = int(xmax/2)
         ycent = int(ymax/2)
@@ -76,11 +74,14 @@ class pyclock :
         hourScale = 0.5
         width = 2           # Width of hands
         
-        rad = 100   # Radius
+        rad = 80   # Radius
         len = 15    # Length of ticks
         
         backgroundC = (173,216,230)
         faceC = (0, 0, 255)
+
+        # https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
+        myfont = pygame.font.SysFont('FreeSerif', 25, True)
 
         self.screen.fill(backgroundC)
         # Draw face
@@ -144,7 +145,7 @@ class pyclock :
             self.screen.blit(textsurface,(0, 0))
 
             # Get outdoor temp and forcast from wunderground
-            if (minute%5 == 0) and (second ==0):
+            if (minute%1 == 0) and (second ==0):
             # if True:
                 print("Getting weather")
                 r = requests.get(urlWeather)
@@ -154,10 +155,10 @@ class pyclock :
                     # print("text: ", r.text)
                     # print("json: ", r.json())
                     weather = r.json()
-                    print("Temp: ", weather['current_observation']['temp_f'])
-                    print("Humid:", weather['current_observation']['relative_humidity'])
-                    print("Low:  ", weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'])
-                    print("High: ", weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'])
+                    # print("Temp: ", weather['current_observation']['temp_f'])
+                    # print("Humid:", weather['current_observation']['relative_humidity'])
+                    # print("Low:  ", weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'])
+                    # print("High: ", weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'])
                     textsurface = myfont.render(
                         # "Time: " + weather['current_observation']['local_time_rfc822'] +
                         "Temp: "  +str(weather['current_observation']['temp_f']) +
@@ -167,10 +168,17 @@ class pyclock :
                         False, (0, 0, 0), backgroundC)
                     self.screen.blit(textsurface,(0, ymax-myfont.get_linesize()))
                     
+                    textsurface = myfont.render(
+                        "Yesterday: " + 
+                        "Min: "+weather['history']['dailysummary'][0]['mintempi'] +
+                        ", Max: "+weather['history']['dailysummary'][0]['maxtempi'],
+                        False, (0, 0, 0), backgroundC)
+                    self.screen.blit(textsurface,(0, ymax-2*myfont.get_linesize()))
+                    
                     # Get the weather icon and display it
                     # https://stackoverflow.com/questions/32853980/temporarily-retrieve-an-image-using-the-requests-library
                     icon = weather['current_observation']['icon_url']
-                    print("Getting: " + icon)
+                    # print("Getting: " + icon)
                     r = requests.get(icon, stream=True)
                     r.raw.decode_content = True # handle spurious Content-Encoding
                     im = Image.open(r.raw)
