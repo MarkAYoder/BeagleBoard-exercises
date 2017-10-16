@@ -82,7 +82,8 @@ class pyclock :
         faceC = (0, 0, 255)
 
         # https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
-        myfont = pygame.font.SysFont('FreeSerif', 25, True)
+        myfont = pygame.font.SysFont('FreeSerif', 20, True)
+        myfontBig = pygame.font.SysFont('FreeSerif', 40, True)
 
         self.screen.fill(backgroundC)
         # Draw face
@@ -145,7 +146,7 @@ class pyclock :
             # print("Time: " + time.strftime("%I:%M:%S"))
             textsurface = myfont.render(
                 time.strftime("%I:%M:%S")+"  ", False, (0, 0, 0), backgroundC)
-            self.screen.blit(textsurface,(0, 0))
+            self.screen.blit(textsurface,(xmax/2, 0))
 
             # Get outdoor temp and forcast from wunderground
             if first or ((minute%15 == 0) and (second%60==0)):
@@ -163,21 +164,34 @@ class pyclock :
                     # print("Humid:", weather['current_observation']['relative_humidity'])
                     # print("Low:  ", weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'])
                     # print("High: ", weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'])
+                    textsurface = myfontBig.render(
+                        str(weather['current_observation']['temp_f']),
+                        False, (0, 0, 0), backgroundC)
+                    self.screen.blit(textsurface,(0, 0))
+                    
+                    textsurface = myfont.render(
+                        str(weather['current_observation']['relative_humidity']),
+                        False, (0, 0, 0), backgroundC)
+                    self.screen.blit(textsurface,(0, myfontBig.get_linesize()))
+                    
                     textsurface = myfont.render(
                         # "Time: " + weather['current_observation']['local_time_rfc822'] +
-                        "Temp: "  +str(weather['current_observation']['temp_f']) +
-                        ", Hu: "+str(weather['current_observation']['relative_humidity']) +
-                        ", Lo: "+str(weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit']) +
-                        ", Hi: " +str(weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit']),
+                        "Lo: "+str(weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit']),
                         False, (0, 0, 0), backgroundC)
-                    self.screen.blit(textsurface,(0, ymax-myfont.get_linesize()))
+                    self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+myfont.get_linesize()))
+                    
+                    textsurface = myfont.render(
+                        # "Time: " + weather['current_observation']['local_time_rfc822'] +
+                        "Hi: " +str(weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit']),
+                        False, (0, 0, 0), backgroundC)
+                    self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+2*myfont.get_linesize()))
                     
                     textsurface = myfont.render(
                         "Yesterday: " + 
                         "Min: "+weather['history']['dailysummary'][0]['mintempi'] +
                         ", Max: "+weather['history']['dailysummary'][0]['maxtempi'],
                         False, (0, 0, 0), backgroundC)
-                    self.screen.blit(textsurface,(0, ymax-2*myfont.get_linesize()))
+                    self.screen.blit(textsurface,(0,ymax-myfont.get_linesize()))
                     
                     # Get the weather icon and display it
                     # https://stackoverflow.com/questions/32853980/temporarily-retrieve-an-image-using-the-requests-library
