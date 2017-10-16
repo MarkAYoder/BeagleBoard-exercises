@@ -58,7 +58,9 @@ class pyclock :
     def drawClock(self):
         # https://www.wunderground.com/weather/api/d/docs
         key = "ec7eb641373d9256"
-        urlWeather = "http://api.wunderground.com/api/" + key + "/conditions/forecast/history/q/IN/Brazil.json"
+        urlWeather = "http://api.wunderground.com/api/" + key + "/conditions/forecast/history/yesterday/q/IN/Brazil.json"
+        # Need to use keyword 'yesterday' so ['history']['dailysummary'][0]['mintempi']
+        #  gets yesterdays min and max
 
         xmax = pygame.display.Info().current_w
         ymax = pygame.display.Info().current_h
@@ -181,10 +183,15 @@ class pyclock :
                     self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+myfont.get_linesize()))
                     
                     textsurface = myfont.render(
-                        # "Time: " + weather['current_observation']['local_time_rfc822'] +
                         "Hi: " +str(weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit']),
                         False, (0, 0, 0), backgroundC)
                     self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+2*myfont.get_linesize()))
+                    
+                    tmp = weather['forecast']['simpleforecast']['forecastday'][0]
+                    textsurface = myfont.render(
+                       "Wind: " + tmp['avewind']['dir'] + " " + str(tmp['avewind']['mph']) + " to " + str(tmp['maxwind']['mph']),
+                        False, (0, 0, 0), backgroundC)
+                    self.screen.blit(textsurface,(0,ymax-2*myfont.get_linesize()))
                     
                     textsurface = myfont.render(
                         "Yesterday: " + 
