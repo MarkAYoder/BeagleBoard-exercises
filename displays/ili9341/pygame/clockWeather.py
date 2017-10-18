@@ -7,6 +7,7 @@ import os
 import pygame
 import time
 import math
+import sys
 
 import requests     # For getting weather
 from PIL import Image
@@ -84,7 +85,7 @@ class pyclock :
         faceC = (0, 0, 255)
 
         # https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
-        myfont = pygame.font.SysFont('FreeSerif', 20, True)
+        myfont = pygame.font.SysFont('FreeSerif', 25, True)
         myfontBig = pygame.font.SysFont('FreeSerif', 40, True)
 
         self.screen.fill(backgroundC)
@@ -151,75 +152,83 @@ class pyclock :
             self.screen.blit(textsurface,(xmax/2, 0))
 
             # Get outdoor temp and forcast from wunderground
-            if first or ((minute%15 == 0) and (second%60==0)):
+            if first or ((minute%15 == 0) and (second%60==5)):
                 first = False
             # if True:
                 print("Getting weather")
-                r = requests.get(urlWeather)
-                if(r.status_code==200):
-                    # Print the weather on the LCD
-                    # print("headers: ", r.headers)
-                    # print("text: ", r.text)
-                    # print("json: ", r.json())
-                    weather = r.json()
-                    # print("Temp: ", weather['current_observation']['temp_f'])
-                    # print("Humid:", weather['current_observation']['relative_humidity'])
-                    # print("Low:  ", weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'])
-                    # print("High: ", weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'])
-                    textsurface = myfontBig.render(
-                        str(weather['current_observation']['temp_f']),
-                        False, (0, 0, 0), backgroundC)
-                    self.screen.blit(textsurface,(0, 0))
-                    
-                    textsurface = myfont.render(
-                        str(weather['current_observation']['relative_humidity']),
-                        False, (0, 0, 0), backgroundC)
-                    self.screen.blit(textsurface,(0, myfontBig.get_linesize()))
-                    
-                    textsurface = myfont.render(
-                        # "Time: " + weather['current_observation']['local_time_rfc822'] +
-                        "Lo: "+str(weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit']),
-                        False, (0, 0, 0), backgroundC)
-                    self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+myfont.get_linesize()))
-                    
-                    textsurface = myfont.render(
-                        "Hi: " +str(weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit']),
-                        False, (0, 0, 0), backgroundC)
-                    self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+2*myfont.get_linesize()))
-                    
-                    tmp = weather['forecast']['simpleforecast']['forecastday'][0]
-                    textsurface = myfont.render(
-                       "Wind: " + tmp['avewind']['dir'] + " " + str(tmp['avewind']['mph']) + " to " + str(tmp['maxwind']['mph']),
-                        False, (0, 0, 0), backgroundC)
-                    self.screen.blit(textsurface,(0,ymax-2*myfont.get_linesize()))
-                    
-                    textsurface = myfont.render(
-                        "Yesterday: " + 
-                        "Min: "+weather['history']['dailysummary'][0]['mintempi'] +
-                        ", Max: "+weather['history']['dailysummary'][0]['maxtempi'],
-                        False, (0, 0, 0), backgroundC)
-                    self.screen.blit(textsurface,(0,ymax-myfont.get_linesize()))
-                    
-                    # Get the weather icon and display it
-                    # https://stackoverflow.com/questions/32853980/temporarily-retrieve-an-image-using-the-requests-library
-                    icon = weather['current_observation']['icon_url']
-                    if icon != oldIcon:
-                        print("Getting: " + icon)
-                        r = requests.get(icon, stream=True)
-                        r.raw.decode_content = True # handle spurious Content-Encoding
-                        im = Image.open(r.raw)
-                        # print(im.format, im.mode, im.size)
-                        im.save("/tmp/weather.gif")
-                        image = pygame.image.load("/tmp/weather.gif")
-            
-                        # print("Size: " + str(image.get_size()))
-                        self.screen.blit(image, (xmax-image.get_width(), 0))
-                        oldIcon = icon
+                try:
+                    r = requests.get(urlWeather)
+                    if(r.status_code==200):
+                        # Print the weather on the LCD
+                        # print("headers: ", r.headers)
+                        # print("text: ", r.text)
+                        # print("json: ", r.json())
+                        weather = r.json()
+                        # print("Temp: ", weather['current_observation']['temp_f'])
+                        # print("Humid:", weather['current_observation']['relative_humidity'])
+                        # print("Low:  ", weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'])
+                        # print("High: ", weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'])
+                        textsurface = myfontBig.render(
+                            str(weather['current_observation']['temp_f']),
+                            False, (0, 0, 0), backgroundC)
+                        self.screen.blit(textsurface,(0, 0))
+                        
+                        textsurface = myfont.render(
+                            str(weather['current_observation']['relative_humidity']),
+                            False, (0, 0, 0), backgroundC)
+                        self.screen.blit(textsurface,(0, myfontBig.get_linesize()))
+                        
+                        textsurface = myfont.render(
+                            # "Time: " + weather['current_observation']['local_time_rfc822'] +
+                            "Lo: "+str(weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit']),
+                            False, (0, 0, 0), backgroundC)
+                        self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+myfont.get_linesize()))
+                        
+                        textsurface = myfont.render(
+                            "Hi: " +str(weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit']),
+                            False, (0, 0, 0), backgroundC)
+                        self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+2*myfont.get_linesize()))
+                        
+                        tmp = weather['forecast']['simpleforecast']['forecastday'][0]
+                        textsurface = myfont.render(
+                           "Wind: " + tmp['avewind']['dir'] + " " + str(tmp['avewind']['mph']) + " to " + str(tmp['maxwind']['mph']),
+                            False, (0, 0, 0), backgroundC)
+                        self.screen.blit(textsurface,(0,ymax-2*myfont.get_linesize()))
+                        
+                        textsurface = myfont.render(
+                            "Yesterday: " + 
+                            "Min: "+weather['history']['dailysummary'][0]['mintempi'] +
+                            ", Max: "+weather['history']['dailysummary'][0]['maxtempi'],
+                            False, (0, 0, 0), backgroundC)
+                        self.screen.blit(textsurface,(0,ymax-myfont.get_linesize()))
+                        
+                        # Get the weather icon and display it
+                        # https://stackoverflow.com/questions/32853980/temporarily-retrieve-an-image-using-the-requests-library
+                        icon = weather['current_observation']['icon_url']
+                        if icon != oldIcon:
+                            print("Getting: " + icon)
+                            r = requests.get(icon, stream=True)
+                            r.raw.decode_content = True # handle spurious Content-Encoding
+                            im = Image.open(r.raw)
+                            # print(im.format, im.mode, im.size)
+                            im.save("/tmp/weather.gif")
+                            image = pygame.image.load("/tmp/weather.gif")
+                
+                            # print("Size: " + str(image.get_size()))
+                            self.screen.blit(image, (xmax-image.get_width(), 0))
+                            oldIcon = icon
+                        else:
+                            print("Already have: " + icon)
+        
                     else:
-                        print("Already have: " + icon)
-    
-                else:
-                    print("status_code: ", r.status_code)
+                        print("status_code: ", r.status_code)
+                except:
+                    print("Unexpected error:", sys.exc_info()[0])
+                    textsurface = myfont.render(
+                        "Network Error",
+                        False, (255, 0, 0), backgroundC)
+                    self.screen.blit(textsurface,(0, ymax-myfont.get_linesize()))
+                    
 
             pygame.display.update()
             pygame.time.wait(1000)
