@@ -7,6 +7,7 @@ import os
 import pygame
 import time
 import math
+import sys
 
 import requests     # For getting weather
 from PIL import Image
