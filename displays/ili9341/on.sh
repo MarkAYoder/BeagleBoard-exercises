@@ -6,37 +6,44 @@
 export GPIO=/sys/class/gpio
 export OCP=/sys/devices/platform/ocp
 export LED=49
+export RESET=113    # RESET - V14 - GP0_6
+export DC=116       # D/C - U16 - GP0_3
+export CS=29        # CS - H18
 
 sudo bash << EOF
     # Remove the framebuffer modules
-    if lsmod | grep -q 'fbtft_device '     ; then rmmod fbtft_device;  fi
-    if lsmod | grep -q 'fb_ili9341 '       ; then rmmod fb_ili9341;    fi
-    if lsmod | grep -q 'fbtft '            ; then rmmod fbtft;         fi
+    if lsmod | grep -q 'fbtft_device ' ; then rmmod fbtft_device;  fi
+    if lsmod | grep -q 'fb_ili9341 '   ; then rmmod fb_ili9341;    fi
+    if lsmod | grep -q 'fbtft '        ; then rmmod fbtft;         fi
 
     # unexport pins 49 and 57 so the framebuffer can use them
     # echo 49 > $GPIO/unexport # RESET - V14 - GP0_4
     # echo 57 > $GPIO/unexport # D/C - U16 - GP0_3
-    echo 113 > $GPIO/unexport # RESET - V14 - GP0_6
-    echo 116 > $GPIO/unexport # D/C - U16 - GP0_5
+    if [ -d $GPIO/gpio$RESET ]; then echo $RESET > $GPIO/unexport; fi
+    # echo 113 > $GPIO/unexport # RESET - V14 - GP0_6
+    if [ -d $GPIO/gpio$DC    ]; then echo $DC    > $GPIO/unexport; fi
+    # echo 116 > $GPIO/unexport # D/C   - U16 - GP0_5
         
     # Set the pinmuxes for the display
     # echo gpio > $OCP/ocp\:P9_23_pinmux/state # RESET - V14 - GP0_4
     # echo gpio > $OCP/ocp\:U16_pinmux/state # D/C     - U16 - GP0_3
     echo gpio > $OCP/ocp\:P9_28_pinmux/state # RESET- P9_28 - GP0_6
     echo gpio > $OCP/ocp\:D13_pinmux/state   # D/C  - D13 - GP0_5
-    echo spi > $OCP/ocp\:P9_31_pinmux/state  # SCLK - A13 - S1.1_5
-    echo spi > $OCP/ocp\:P9_29_pinmux/state  # MISO - B13 - S1.1_4
-    echo spi > $OCP/ocp\:P9_30_pinmux/state  # MOSI - D12 - S1.1_3
+    echo spi  > $OCP/ocp\:P9_31_pinmux/state  # SCLK - A13 - S1.1_5
+    echo spi  > $OCP/ocp\:P9_29_pinmux/state  # MISO - B13 - S1.1_4
+    echo spi  > $OCP/ocp\:P9_30_pinmux/state  # MOSI - D12 - S1.1_3
     
     # Set chip select  H18 is cs 0,  C18 is cs 1
-    echo 29  > $GPIO/unexport # CS - H18
+    if [ -d $GPIO/gpio$CS    ]; then echo $CS    > $GPIO/unexport; fi
+    # echo 29  > $GPIO/unexport # CS - H18
     echo spi > $OCP/ocp\:H18_pinmux/state # CS - H18 - S1.1_6
     # echo 7 > $GPIO/unexport # CS - C18
     # echo spi > $OCP/ocp\:C18_pinmux/state # CS - C18 - S1.2_6
     
     # LED pin, turn on
     echo gpio > $OCP/ocp\:P9_23_pinmux/state # LED- P9_23 - GP0_4
-    echo $LED  > $GPIO/export
+    if [ ! -d $GPIO/gpio$LED    ]; then echo $LED    > $GPIO/export; fi
+    # echo $LED  > $GPIO/export
     echo out > $GPIO/gpio$LED/direction
     echo 1   > $GPIO/gpio$LED/value
     
