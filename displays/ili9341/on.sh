@@ -1,19 +1,22 @@
-#!/bin/sh
+#!/bin/bash
 # From: https://gist.github.com/jadonk/0e4a190fc01dc5723d1f183737af1d83
 
 # Connect the display before running this.
 
+export GPIO=/sys/class/gpio
+export LED=49
+
 sudo bash << EOF
-    # remove the framebuffer modules
-    rmmod fb_ili9341
-    rmmod fbtft
-    rmmod fbtft_device
+    # Remove the framebuffer modules
+    if lsmod | grep -q 'fbtft_device '     ; then rmmod fbtft_device;  fi
+    if lsmod | grep -q 'fb_ili9341 '       ; then rmmod fb_ili9341;    fi
+    if lsmod | grep -q 'fbtft '            ; then rmmod fbtft;         fi
 
     # unexport pins 49 and 57 so the framebuffer can use them
-    # echo 49 > /sys/class/gpio/unexport # RESET - V14 - GP0_4
-    # echo 57 > /sys/class/gpio/unexport # D/C - U16 - GP0_3
-    echo 113 > /sys/class/gpio/unexport # RESET - V14 - GP0_6
-    echo 116 > /sys/class/gpio/unexport # D/C - U16 - GP0_5
+    # echo 49 > $GPIO/unexport # RESET - V14 - GP0_4
+    # echo 57 > $GPIO/unexport # D/C - U16 - GP0_3
+    echo 113 > $GPIO/unexport # RESET - V14 - GP0_6
+    echo 116 > $GPIO/unexport # D/C - U16 - GP0_5
         
     # Set the pinmuxes for the display
     # echo gpio > /sys/devices/platform/ocp/ocp\:P9_23_pinmux/state # RESET - V14 - GP0_4
@@ -25,16 +28,16 @@ sudo bash << EOF
     echo spi > /sys/devices/platform/ocp/ocp\:P9_30_pinmux/state  # MOSI - D12 - S1.1_3
     
     # Set chip select  H18 is cs 0,  C18 is cs 1
-    echo 29 > /sys/class/gpio/unexport # CS - H18
+    echo 29  > $GPIO/unexport # CS - H18
     echo spi > /sys/devices/platform/ocp/ocp\:H18_pinmux/state # CS - H18 - S1.1_6
-    # echo 7 > /sys/class/gpio/unexport # CS - C18
+    # echo 7 > $GPIO/unexport # CS - C18
     # echo spi > /sys/devices/platform/ocp/ocp\:C18_pinmux/state # CS - C18 - S1.2_6
     
     # LED pin, turn on
     echo gpio > /sys/devices/platform/ocp/ocp\:P9_23_pinmux/state # LED- P9_23 - GP0_4
-    echo 49  > /sys/class/gpio/export
-    echo out > /sys/class/gpio/gpio49/direction
-    echo 1   > /sys/class/gpio/gpio49/value
+    echo $LED  > $GPIO/export
+    echo out > $GPIO/gpio$LED/direction
+    echo 1   > $GPIO/gpio$LED/value
     
     sleep 1
     
