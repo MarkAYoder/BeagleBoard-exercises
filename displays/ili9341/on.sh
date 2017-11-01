@@ -5,9 +5,9 @@
 
 sudo bash << EOF
     # remove the framebuffer modules
-    rmmod --force fb_ili9341
-    rmmod --force fbtft
-    rmmod --force fbtft_device
+    rmmod fb_ili9341
+    rmmod fbtft
+    rmmod fbtft_device
 
     # unexport pins 49 and 57 so the framebuffer can use them
     # echo 49 > /sys/class/gpio/unexport # RESET - V14 - GP0_4
@@ -29,6 +29,12 @@ sudo bash << EOF
     echo spi > /sys/devices/platform/ocp/ocp\:H18_pinmux/state # CS - H18 - S1.1_6
     # echo 7 > /sys/class/gpio/unexport # CS - C18
     # echo spi > /sys/devices/platform/ocp/ocp\:C18_pinmux/state # CS - C18 - S1.2_6
+    
+    # LED pin, turn on
+    echo gpio > /sys/devices/platform/ocp/ocp\:P9_23_pinmux/state # LED- P9_23 - GP0_4
+    echo 49  > /sys/class/gpio/export
+    echo out > /sys/class/gpio/gpio49/direction
+    echo 1   > /sys/class/gpio/gpio49/value
     
     sleep 1
     

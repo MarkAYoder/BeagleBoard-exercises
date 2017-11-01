@@ -5,9 +5,9 @@
 
 sudo bash << EOF
     # remove the framebuffer modules
-    rmmod --force fb_ili9341
-    rmmod --force fbtft
-    rmmod --force fbtft_device
+    rmmod fb_ili9341
+    rmmod fbtft
+    rmmod fbtft_device
 
     # unexport poins 49 and 57 so the framebuffer can use them
     # echo 49 > /sys/class/gpio/unexport # RESET - V14 - GP0_PIN4
@@ -18,5 +18,8 @@ sudo bash << EOF
     # Turn of chip select:  H18 is cs 0,  C18 is cs 1
     echo 29 > /sys/class/gpio/unexport # CS - H18
     # echo 7 > /sys/class/gpio/unexport # CS - C18
+    
+    # Turn off LED
+    echo 0 > /sys/class/gpio/gpio49/value
         
 EOF
