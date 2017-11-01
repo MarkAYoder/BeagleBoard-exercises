@@ -4,6 +4,7 @@
 # Connect the display before running this.
 
 export GPIO=/sys/class/gpio
+export OCP=/sys/devices/platform/ocp
 export LED=49
 
 sudo bash << EOF
@@ -19,22 +20,22 @@ sudo bash << EOF
     echo 116 > $GPIO/unexport # D/C - U16 - GP0_5
         
     # Set the pinmuxes for the display
-    # echo gpio > /sys/devices/platform/ocp/ocp\:P9_23_pinmux/state # RESET - V14 - GP0_4
-    # echo gpio > /sys/devices/platform/ocp/ocp\:U16_pinmux/state # D/C     - U16 - GP0_3
-    echo gpio > /sys/devices/platform/ocp/ocp\:P9_28_pinmux/state # RESET- P9_28 - GP0_6
-    echo gpio > /sys/devices/platform/ocp/ocp\:D13_pinmux/state   # D/C  - D13 - GP0_5
-    echo spi > /sys/devices/platform/ocp/ocp\:P9_31_pinmux/state  # SCLK - A13 - S1.1_5
-    echo spi > /sys/devices/platform/ocp/ocp\:P9_29_pinmux/state  # MISO - B13 - S1.1_4
-    echo spi > /sys/devices/platform/ocp/ocp\:P9_30_pinmux/state  # MOSI - D12 - S1.1_3
+    # echo gpio > $OCP/ocp\:P9_23_pinmux/state # RESET - V14 - GP0_4
+    # echo gpio > $OCP/ocp\:U16_pinmux/state # D/C     - U16 - GP0_3
+    echo gpio > $OCP/ocp\:P9_28_pinmux/state # RESET- P9_28 - GP0_6
+    echo gpio > $OCP/ocp\:D13_pinmux/state   # D/C  - D13 - GP0_5
+    echo spi > $OCP/ocp\:P9_31_pinmux/state  # SCLK - A13 - S1.1_5
+    echo spi > $OCP/ocp\:P9_29_pinmux/state  # MISO - B13 - S1.1_4
+    echo spi > $OCP/ocp\:P9_30_pinmux/state  # MOSI - D12 - S1.1_3
     
     # Set chip select  H18 is cs 0,  C18 is cs 1
     echo 29  > $GPIO/unexport # CS - H18
-    echo spi > /sys/devices/platform/ocp/ocp\:H18_pinmux/state # CS - H18 - S1.1_6
+    echo spi > $OCP/ocp\:H18_pinmux/state # CS - H18 - S1.1_6
     # echo 7 > $GPIO/unexport # CS - C18
-    # echo spi > /sys/devices/platform/ocp/ocp\:C18_pinmux/state # CS - C18 - S1.2_6
+    # echo spi > $OCP/ocp\:C18_pinmux/state # CS - C18 - S1.2_6
     
     # LED pin, turn on
-    echo gpio > /sys/devices/platform/ocp/ocp\:P9_23_pinmux/state # LED- P9_23 - GP0_4
+    echo gpio > $OCP/ocp\:P9_23_pinmux/state # LED- P9_23 - GP0_4
     echo $LED  > $GPIO/export
     echo out > $GPIO/gpio$LED/direction
     echo 1   > $GPIO/gpio$LED/value
