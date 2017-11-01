@@ -20,10 +20,8 @@ sudo bash << EOF
     # echo 49 > $GPIO/unexport # RESET - V14 - GP0_4
     # echo 57 > $GPIO/unexport # D/C - U16 - GP0_3
     if [ -d $GPIO/gpio$RESET ]; then echo $RESET > $GPIO/unexport; fi
-    # echo 113 > $GPIO/unexport # RESET - V14 - GP0_6
     if [ -d $GPIO/gpio$DC    ]; then echo $DC    > $GPIO/unexport; fi
-    # echo 116 > $GPIO/unexport # D/C   - U16 - GP0_5
-        
+
     # Set the pinmuxes for the display
     # echo gpio > $OCP/ocp\:P9_23_pinmux/state # RESET - V14 - GP0_4
     # echo gpio > $OCP/ocp\:U16_pinmux/state # D/C     - U16 - GP0_3
@@ -35,21 +33,18 @@ sudo bash << EOF
     
     # Set chip select  H18 is cs 0,  C18 is cs 1
     if [ -d $GPIO/gpio$CS    ]; then echo $CS    > $GPIO/unexport; fi
-    # echo 29  > $GPIO/unexport # CS - H18
     echo spi > $OCP/ocp\:H18_pinmux/state # CS - H18 - S1.1_6
-    # echo 7 > $GPIO/unexport # CS - C18
     # echo spi > $OCP/ocp\:C18_pinmux/state # CS - C18 - S1.2_6
     
     # LED pin, turn on
     echo gpio > $OCP/ocp\:P9_23_pinmux/state # LED- P9_23 - GP0_4
     if [ ! -d $GPIO/gpio$LED    ]; then echo $LED    > $GPIO/export; fi
-    # echo $LED  > $GPIO/export
     echo out > $GPIO/gpio$LED/direction
     echo 1   > $GPIO/gpio$LED/value
     
-    sleep 1
+    sleep 0.5
     
     # Insert the framebuffer modules
     # modprobe fbtft_device name=adafruit28 busnum=1 rotate=90 gpios=reset:49,dc:57
-    modprobe fbtft_device name=adafruit28 busnum=1 rotate=90 gpios=reset:113,dc:116 cs=0
+    modprobe fbtft_device name=adafruit28 busnum=1 rotate=90 gpios=reset:$RESET,dc:$DC cs=0
 EOF
