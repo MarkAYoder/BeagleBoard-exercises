@@ -13,8 +13,8 @@ export CS=29        # CS - H18
 sudo bash << EOF
     # Remove the framebuffer modules
     if lsmod | grep -q 'fbtft_device ' ; then rmmod fbtft_device;  fi
-    if lsmod | grep -q 'fb_ili9341 '   ; then rmmod fb_ili9341;    fi
-    if lsmod | grep -q 'fbtft '        ; then rmmod fbtft;         fi
+    if lsmod | grep -q 'fb_ili9341 '   ; then rmmod --force fb_ili9341;    fi
+    if lsmod | grep -q 'fbtft '        ; then rmmod --force fbtft;         fi
 
     # unexport pins 49 and 57 so the framebuffer can use them
     # echo 49 > $GPIO/unexport # RESET - V14 - GP0_4
@@ -32,17 +32,17 @@ sudo bash << EOF
     echo spi  > $OCP/ocp\:P9_30_pinmux/state  # MOSI - D12 - S1.1_3
     
     # Set chip select  H18 is cs 0,  C18 is cs 1
-    if [ -d $GPIO/gpio$CS    ]; then echo $CS    > $GPIO/unexport; fi
+    if [ -d $GPIO/gpio$CS ]; then echo $CS    > $GPIO/unexport; fi
     echo spi > $OCP/ocp\:H18_pinmux/state # CS - H18 - S1.1_6
     # echo spi > $OCP/ocp\:C18_pinmux/state # CS - C18 - S1.2_6
     
     # LED pin, turn on
-    echo gpio > $OCP/ocp\:P9_23_pinmux/state # LED- P9_23 - GP0_4
-    if [ ! -d $GPIO/gpio$LED    ]; then echo $LED    > $GPIO/export; fi
-    echo out > $GPIO/gpio$LED/direction
-    echo 1   > $GPIO/gpio$LED/value
+    # echo gpio > $OCP/ocp\:P9_23_pinmux/state # LED- P9_23 - GP0_4
+    # if [ ! -d $GPIO/gpio$LED    ]; then echo $LED    > $GPIO/export; fi
+    # echo out > $GPIO/gpio$LED/direction
+    # echo 1   > $GPIO/gpio$LED/value
     
-    sleep 0.5
+    sleep 1
     
     # Insert the framebuffer modules
     # modprobe fbtft_device name=adafruit28 busnum=1 rotate=90 gpios=reset:49,dc:57
