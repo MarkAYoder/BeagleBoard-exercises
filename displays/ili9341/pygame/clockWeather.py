@@ -86,7 +86,7 @@ class pyclock :
                     image = pygame.image.load(file)
     
                 # print("Size: " + str(image.get_size()))
-                self.screen.blit(image, (xmax-image.get_width(), yCount))
+                self.screen.blit(image, (xmax-image.get_width(), yCount*image.get_height()))
                 oldIcon = icon
             else:
                 print("Already displaying: " + icon)
@@ -240,8 +240,10 @@ class pyclock :
                         # Get the weather icon and display it
                         # https://stackoverflow.com/questions/32853980/temporarily-retrieve-an-image-using-the-requests-library
                         print("getting icon")
-                        icon = weather['current_observation']['icon_url']
-                        displayIcon(icon, 0)
+                        displayIcon(weather['current_observation']['icon_url'], 0)
+                        # Forecast has both day and night.  Here I skip half of them.
+                        for i in range(0, 7, 2):
+                            displayIcon(weather['forecast']['txt_forecast']['forecastday'][i]['icon_url'], i/2+1)
         
                     else:
                         print("status_code: ", r.status_code)
