@@ -15,8 +15,8 @@ from PIL import Image
 import shutil
 
 class pyclock :
-    screen = None;
-    
+    screen = None
+
     def __init__(self):
         "Ininitializes a new pygame screen using the framebuffer"
         # Based on "Python GUI in Linux frame buffer"
@@ -56,8 +56,41 @@ class pyclock :
 
     def __del__(self):
         "Destructor to make sure pygame shuts down, etc."
-
+        
     def drawClock(self):
+        # oldIcon = ""   # Remember last icon used
+        # icon is the url for the icon to be displayed
+        # yCount is how many icons down to display.  I'm assuming all icon are the same height
+        def displayIcon(icon, yCount):
+            # I'd reather have oldIcon as global, but it doesn't work
+            # global oldIcon
+            oldIcon = ""
+            print("displayIcon(" + icon + ", " + str(yCount) + ")")
+            file = "/tmp/" + icon.split('/')[-1]
+            print(file)
+            # Check to see if we already have this icon on display
+            print("oldIcon: ", oldIcon)
+            if icon != oldIcon:
+                # We have a new icon, see if it's alreay in /tmp
+                print("Getting: " + icon)
+                try:
+                    image = pygame.image.load(file)
+                    print("Found in: " + file)
+                # We don't have it already, so get it from the weather site
+                except:
+                    r = requests.get(icon, stream=True)
+                    r.raw.decode_content = True # handle spurious Content-Encoding
+                    im = Image.open(r.raw)
+                    # print(im.format, im.mode, im.size)
+                    im.save(file)
+                    image = pygame.image.load(file)
+    
+                # print("Size: " + str(image.get_size()))
+                self.screen.blit(image, (xmax-image.get_width(), yCount))
+                oldIcon = icon
+            else:
+                print("Already displaying: " + icon)
+                
         # https://www.wunderground.com/weather/api/d/docs
         key = "ec7eb641373d9256"
         urlWeather = "http://api.wunderground.com/api/" + key + "/conditions/forecast/history/yesterday/q/IN/Brazil.json"
@@ -102,7 +135,6 @@ class pyclock :
         oldAngS = 0     # Remeber where hands were so they can be removed
         oldAngM = 0
         oldAngH = 0
-        oldIcon = "";   # Remember last icon used
         first   = True  # First time through the loop
         while True:
             currentTime = time.localtime()
@@ -170,6 +202,7 @@ class pyclock :
                         # print("Humid:", weather['current_observation']['relative_humidity'])
                         # print("Low:  ", weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'])
                         # print("High: ", weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'])
+                        # print("forecast: ", weather['forecast'])
                         textsurface = myfontBig.render(
                             str(weather['current_observation']['temp_f']) + "  ",
                             False, (0, 0, 0), backgroundC)
@@ -206,35 +239,14 @@ class pyclock :
                         
                         # Get the weather icon and display it
                         # https://stackoverflow.com/questions/32853980/temporarily-retrieve-an-image-using-the-requests-library
+                        print("getting icon")
                         icon = weather['current_observation']['icon_url']
-                        file = "/tmp/" + icon.split('/')[-1]
-                        # print(file)
-                        # Check to see if we alreay have this icon on display
-                        if icon != oldIcon:
-                            # We have a new icon, see if it's alreay in /tmp
-                            print("Getting: " + icon)
-                            try:
-                                image = pygame.image.load(file)
-                                print("Found in: " + file)
-                            # We don't have it already, so get it from the weather site
-                            except:
-                                r = requests.get(icon, stream=True)
-                                r.raw.decode_content = True # handle spurious Content-Encoding
-                                im = Image.open(r.raw)
-                                # print(im.format, im.mode, im.size)
-                                im.save(file)
-                                image = pygame.image.load(file)
-                
-                            # print("Size: " + str(image.get_size()))
-                            self.screen.blit(image, (xmax-image.get_width(), 0))
-                            oldIcon = icon
-                        else:
-                            print("Already displaying: " + icon)
+                        displayIcon(icon, 0)
         
                     else:
                         print("status_code: ", r.status_code)
                 except:
-                    print("Unexpected error:", sys.exc_info()[0])
+                    print("Unexpected error:", sys.exc_info())
                     textsurface = myfont.render(
                         "Network Error",
                         False, (255, 0, 0), backgroundC)
