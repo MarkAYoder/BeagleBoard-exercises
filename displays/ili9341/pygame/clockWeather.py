@@ -8,6 +8,7 @@ import pygame
 import time
 import math
 import sys
+# from types import *
 
 import requests     # For getting weather
 from PIL import Image
@@ -206,20 +207,29 @@ class pyclock :
                         # Get the weather icon and display it
                         # https://stackoverflow.com/questions/32853980/temporarily-retrieve-an-image-using-the-requests-library
                         icon = weather['current_observation']['icon_url']
+                        file = "/tmp/" + icon.split('/')[-1]
+                        # print(file)
+                        # Check to see if we alreay have this icon on display
                         if icon != oldIcon:
+                            # We have a new icon, see if it's alreay in /tmp
                             print("Getting: " + icon)
-                            r = requests.get(icon, stream=True)
-                            r.raw.decode_content = True # handle spurious Content-Encoding
-                            im = Image.open(r.raw)
-                            # print(im.format, im.mode, im.size)
-                            im.save("/tmp/weather.gif")
-                            image = pygame.image.load("/tmp/weather.gif")
+                            try:
+                                image = pygame.image.load(file)
+                                print("Found in: " + file)
+                            # We don't have it already, so get it from the weather site
+                            except:
+                                r = requests.get(icon, stream=True)
+                                r.raw.decode_content = True # handle spurious Content-Encoding
+                                im = Image.open(r.raw)
+                                # print(im.format, im.mode, im.size)
+                                im.save(file)
+                                image = pygame.image.load(file)
                 
                             # print("Size: " + str(image.get_size()))
                             self.screen.blit(image, (xmax-image.get_width(), 0))
                             oldIcon = icon
                         else:
-                            print("Already have: " + icon)
+                            print("Already displaying: " + icon)
         
                     else:
                         print("status_code: ", r.status_code)
