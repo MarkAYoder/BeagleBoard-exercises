@@ -76,21 +76,21 @@ class pyclock :
         
         minScale = 0.85     # Size of minute hand relative to second
         hourScale = 0.5
-        width = 2           # Width of hands
+        width = 3           # Width of hands
         
-        rad = 80   # Radius
+        rad = 75   # Radius
         len = 15    # Length of ticks
         
         backgroundC = (173,216,230)
         faceC = (0, 0, 255)
 
         # https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
-        myfont = pygame.font.SysFont('FreeSerif', 20, True)
+        myfont = pygame.font.SysFont('FreeSerif', 30, True)
         myfontBig = pygame.font.SysFont('FreeSerif', 40, True)
 
         self.screen.fill(backgroundC)
         # Draw face
-        pygame.draw.circle(self.screen, faceC, (xcent, ycent), rad, 1)
+        pygame.draw.circle(self.screen, faceC, (xcent, ycent), rad, 2)
         # Put tick marks inside the circle
         for i in range(12):
             ang = i*math.pi/6
@@ -170,7 +170,7 @@ class pyclock :
                         # print("Low:  ", weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'])
                         # print("High: ", weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'])
                         textsurface = myfontBig.render(
-                            str(weather['current_observation']['temp_f']),
+                            str(weather['current_observation']['temp_f']) + "  ",
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0, 0))
                         
@@ -197,9 +197,9 @@ class pyclock :
                         self.screen.blit(textsurface,(0,ymax-2*myfont.get_linesize()))
                         
                         textsurface = myfont.render(
-                            "Yesterday: " + 
-                            "Min: "+weather['history']['dailysummary'][0]['mintempi'] +
-                            ", Max: "+weather['history']['dailysummary'][0]['maxtempi'],
+                            "Yesterday: "
+                            +weather['history']['dailysummary'][0]['mintempi']
+                            +"/"+weather['history']['dailysummary'][0]['maxtempi'],
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0,ymax-myfont.get_linesize()))
                         
