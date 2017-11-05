@@ -58,38 +58,27 @@ class pyclock :
         "Destructor to make sure pygame shuts down, etc."
         
     def drawClock(self):
-        # oldIcon = ""   # Remember last icon used
         # icon is the url for the icon to be displayed
         # yCount is how many icons down to display.  I'm assuming all icon are the same height
         def displayIcon(icon, yCount):
-            # I'd reather have oldIcon as global, but it doesn't work
-            # global oldIcon
-            oldIcon = ""
             print("displayIcon(" + icon + ", " + str(yCount) + ")")
             file = "/tmp/" + icon.split('/')[-1]
-            print(file)
-            # Check to see if we already have this icon on display
-            print("oldIcon: ", oldIcon)
-            if icon != oldIcon:
-                # We have a new icon, see if it's alreay in /tmp
-                print("Getting: " + icon)
-                try:
-                    image = pygame.image.load(file)
-                    print("Found in: " + file)
-                # We don't have it already, so get it from the weather site
-                except:
-                    r = requests.get(icon, stream=True)
-                    r.raw.decode_content = True # handle spurious Content-Encoding
-                    im = Image.open(r.raw)
-                    # print(im.format, im.mode, im.size)
-                    im.save(file)
-                    image = pygame.image.load(file)
-    
-                # print("Size: " + str(image.get_size()))
-                self.screen.blit(image, (xmax-image.get_width(), yCount*image.get_height()))
-                oldIcon = icon
-            else:
-                print("Already displaying: " + icon)
+            # See if icon is already in /tmp
+            # print("Getting: " + icon)
+            try:
+                image = pygame.image.load(file)
+                print("Found in: " + file)
+            # We don't have it already, so get it from the weather site
+            except:
+                r = requests.get(icon, stream=True)
+                r.raw.decode_content = True # handle spurious Content-Encoding
+                im = Image.open(r.raw)
+                # print(im.format, im.mode, im.size)
+                im.save(file)
+                image = pygame.image.load(file)
+
+            # print("Size: " + str(image.get_size()))
+            self.screen.blit(image, (xmax-image.get_width(), yCount*image.get_height()))
                 
         # https://www.wunderground.com/weather/api/d/docs
         key = "ec7eb641373d9256"
@@ -239,7 +228,6 @@ class pyclock :
                         
                         # Get the weather icon and display it
                         # https://stackoverflow.com/questions/32853980/temporarily-retrieve-an-image-using-the-requests-library
-                        print("getting icon")
                         displayIcon(weather['current_observation']['icon_url'], 0)
                         # Forecast has both day and night.  Here I skip half of them.
                         for i in range(0, 7, 2):
