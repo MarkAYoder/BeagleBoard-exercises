@@ -8,11 +8,10 @@ import pygame
 import time
 import math
 import sys
-# from types import *
 
 import requests     # For getting weather
 from PIL import Image
-import shutil
+# import shutil
 
 class pyclock :
     screen = None
@@ -60,7 +59,7 @@ class pyclock :
     def drawClock(self):
         # icon is the url for the icon to be displayed
         # yCount is how many icons down to display.  I'm assuming all icon are the same height
-        def displayIcon(icon, yCount):
+        def displayIcon(icon, title, yCount):
             print("displayIcon(" + icon + ", " + str(yCount) + ")")
             file = "/tmp/" + icon.split('/')[-1]
             # See if icon is already in /tmp
@@ -77,6 +76,9 @@ class pyclock :
                 im.save(file)
                 image = pygame.image.load(file)
 
+            # print("title: " + title)
+            textsurface = myfont.render(title[:2], False, (0, 0, 0), backgroundC)
+            self.screen.blit(textsurface,(xmax-70, yCount*image.get_height()))
             # print("Size: " + str(image.get_size()))
             self.screen.blit(image, (xmax-image.get_width(), yCount*image.get_height()))
                 
@@ -101,14 +103,14 @@ class pyclock :
         hourScale = 0.5
         width = 3           # Width of hands
         
-        rad = 75   # Radius
+        rad = 70   # Radius
         len = 15    # Length of ticks
         
         backgroundC = (173,216,230)
         faceC = (0, 0, 255)
 
         # https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
-        myfont = pygame.font.SysFont('FreeSerif', 30, True)
+        myfont = pygame.font.SysFont('FreeSerif', 20, True)
         myfontBig = pygame.font.SysFont('FreeSerif', 40, True)
 
         self.screen.fill(backgroundC)
@@ -228,10 +230,12 @@ class pyclock :
                         
                         # Get the weather icon and display it
                         # https://stackoverflow.com/questions/32853980/temporarily-retrieve-an-image-using-the-requests-library
-                        displayIcon(weather['current_observation']['icon_url'], 0)
+                        displayIcon(weather['current_observation']['icon_url'], "Now", 0)
                         # Forecast has both day and night.  Here I skip half of them.
                         for i in range(0, 7, 2):
-                            displayIcon(weather['forecast']['txt_forecast']['forecastday'][i]['icon_url'], i/2+1)
+                            displayIcon(weather['forecast']['txt_forecast']['forecastday'][i]['icon_url'], 
+                            weather['forecast']['txt_forecast']['forecastday'][i]['title'], 
+                                i/2+1)
         
                     else:
                         print("status_code: ", r.status_code)
