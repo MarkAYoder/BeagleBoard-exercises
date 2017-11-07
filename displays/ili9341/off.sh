@@ -17,10 +17,10 @@ sudo bash << EOF
     if lsmod | grep -q 'fbtft '        ; then rmmod --force fbtft;         fi
 
     # Turn off LED
-    # if [ -d $GPIO/gpio$LED ]
-    # then 
-    #     echo 0 > $GPIO/gpio$LED/value
-    #     echo $LED    > $GPIO/unexport
-    # fi
+    if [ -d $GPIO/gpio$LED ]
+    then 
+        echo 0 > $GPIO/gpio$LED/value
+        echo $LED    > $GPIO/unexport
+    fi
         
 EOF
