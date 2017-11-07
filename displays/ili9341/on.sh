@@ -37,12 +37,12 @@ sudo bash << EOF
     # echo spi > $OCP/ocp\:C18_pinmux/state # CS - C18 - S1.2_6
     
     # LED pin, turn on
-    # echo gpio > $OCP/ocp\:P9_23_pinmux/state # LED- P9_23 - GP0_4
-    # if [ ! -d $GPIO/gpio$LED    ]; then echo $LED    > $GPIO/export; fi
-    # echo out > $GPIO/gpio$LED/direction
-    # echo 1   > $GPIO/gpio$LED/value
+    echo gpio > $OCP/ocp\:P9_23_pinmux/state # LED- P9_23 - GP0_4
+    if [ ! -d $GPIO/gpio$LED    ]; then echo $LED    > $GPIO/export; fi
+    echo out > $GPIO/gpio$LED/direction
+    echo 1   > $GPIO/gpio$LED/value
     
-    sleep 1
+    sleep 0.5
     
     # Insert the framebuffer modules
     # modprobe fbtft_device name=adafruit28 busnum=1 rotate=90 gpios=reset:49,dc:57
