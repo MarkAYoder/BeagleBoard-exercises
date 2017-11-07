@@ -77,8 +77,8 @@ class pyclock :
                 image = pygame.image.load(file)
 
             # print("title: " + title)
-            textsurface = myfont.render(title[:2], False, (0, 0, 0), backgroundC)
-            self.screen.blit(textsurface,(xmax-70, yCount*image.get_height()))
+            textsurface = myfont.render(title[:3], False, (0, 0, 0), backgroundC)
+            self.screen.blit(textsurface,(xmax-80, yCount*image.get_height()))
             # print("Size: " + str(image.get_size()))
             self.screen.blit(image, (xmax-image.get_width(), yCount*image.get_height()))
                 
@@ -110,7 +110,7 @@ class pyclock :
         faceC = (0, 0, 255)
 
         # https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
-        myfont = pygame.font.SysFont('FreeSerif', 20, True)
+        myfont = pygame.font.SysFont('FreeSerif', 25, True)
         myfontBig = pygame.font.SysFont('FreeSerif', 40, True)
 
         self.screen.fill(backgroundC)
@@ -173,7 +173,8 @@ class pyclock :
             # print("Time: " + time.strftime("%I:%M:%S"))
             textsurface = myfont.render(
                 time.strftime("%I:%M:%S")+"  ", False, (0, 0, 0), backgroundC)
-            self.screen.blit(textsurface,(xmax/2, 0))
+            # Print time centered at top of screen
+            self.screen.blit(textsurface,(xmax/2-textsurface.get_width()/2, 0))
 
             # Get outdoor temp and forcast from wunderground
             if first or ((minute%15 == 0) and (second%60==5)):
@@ -232,10 +233,13 @@ class pyclock :
                         # https://stackoverflow.com/questions/32853980/temporarily-retrieve-an-image-using-the-requests-library
                         displayIcon(weather['current_observation']['icon_url'], "Now", 0)
                         # Forecast has both day and night.  Here I skip half of them.
-                        for i in range(0, 7, 2):
-                            displayIcon(weather['forecast']['txt_forecast']['forecastday'][i]['icon_url'], 
-                            weather['forecast']['txt_forecast']['forecastday'][i]['title'], 
-                                i/2+1)
+                        for i in range(0, 4, 1):
+                            # displayIcon(weather['forecast']['txt_forecast']['forecastday'][i]['icon_url'], 
+                            # weather['forecast']['txt_forecast']['forecastday'][i]['title'], 
+                            #     i/2+1)
+                            displayIcon(weather['forecast']['simpleforecast']['forecastday'][i]['icon_url'], 
+                            weather['forecast']['simpleforecast']['forecastday'][i]['date']['weekday_short'], 
+                                i+1)
         
                     else:
                         print("status_code: ", r.status_code)
