@@ -4,8 +4,8 @@
 SITE=https://packages.debian.org/
 RELEASE=stretch
 if [ "$1" == "" ]; then
-	gnome-open $SITE/$RELEASE/
+	google-chrome $SITE/$RELEASE/
 else
 	echo $1
-	gnome-open $SITE/$RELEASE/$1
+	google-chrome $SITE/$RELEASE/$1
 fi
