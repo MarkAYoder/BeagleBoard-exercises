@@ -76,6 +76,10 @@ class pyclock :
                 im.save(file)
                 image = pygame.image.load(file)
 
+            # Black out backgroun
+            pygame.draw.rect(self.screen, backgroundC, 
+                    (xmax-image.get_width(), yCount*image.get_height(),
+                    image.get_width(), yCount*image.get_height()), 0)
             # print("title: " + title)
             textsurface = myfont.render(title[:3], False, (0, 0, 0), backgroundC)
             self.screen.blit(textsurface,(xmax-80, yCount*image.get_height()))
