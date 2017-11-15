@@ -76,7 +76,7 @@ class pyclock :
                 im.save(file)
                 image = pygame.image.load(file)
 
-            # Black out backgroun
+            # Blank out background
             pygame.draw.rect(self.screen, backgroundC, 
                     (xmax-image.get_width(), yCount*image.get_height(),
                     image.get_width(), yCount*image.get_height()), 0)
