@@ -77,7 +77,7 @@ class pyclock :
                 image = pygame.image.load(file)
 
             # print("title: " + title)
-            textsurface = myfont.render(title[:3], False, (0, 0, 0), backgroundC)
+            textsurface = myfont.render(title[:3]+"   ", False, (0, 0, 0), backgroundC)
             self.screen.blit(textsurface,(xmax-80, yCount*image.get_height()))
             # print("Size: " + str(image.get_size()))
             self.screen.blit(image, (xmax-image.get_width(), yCount*image.get_height()))
