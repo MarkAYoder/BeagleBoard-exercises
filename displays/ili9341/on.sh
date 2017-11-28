@@ -6,7 +6,12 @@
 export GPIO=/sys/class/gpio
 export OCP=/sys/devices/platform/ocp
 export LED=49
-export RESET=113    # RESET - V14 - GP0_6
+# This is for the Blue
+# export RESET=113    # RESET - V14 - GP0_6
+# export DC=116       # D/C - U16 - GP0_3
+# export CS=29        # CS - H18
+# This is for the Black
+export RESET=115    # RESET - P9_27
 export DC=116       # D/C - U16 - GP0_3
 export CS=29        # CS - H18
 

@@ -6,9 +6,9 @@
 # Gnd   Gnd
 # SCL   P9_31
 # SDA   P9_30
-# D/C   P9_42
-# RES   P9_41
-# CS    P8_44
+# D/C   P9_42       Looks like P8_44
+# RES   P9_41       Looks like P8_43 now
+# CS    P8_44       Looks like GND
 # Need to unconfigure GPIOs used for Reset and D/C. 
 # Edit /opt/source/bb.org-overlays/src/arm/univ-emmc-00A0.dts and remove references
 # to P9_41 and P9_42 (and P9.41 and P9.42) [ or P8_44, P8_45 and P8_46]
