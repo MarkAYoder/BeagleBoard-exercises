@@ -35,7 +35,7 @@ import Adafruit_GPIO.SPI as SPI
 # BeagleBone Black configuration.
 DC  = 'P9_26'
 RST = 'P9_27'
-SPI_PORT = 1
+SPI_PORT = 2
 SPI_DEVICE = 0
 
 # Create TFT LCD display class.

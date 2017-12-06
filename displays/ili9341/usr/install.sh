@@ -3,12 +3,22 @@
 
 # D/C goes to P9_26
 # RESET goes to P9_27
-
-config-pin P9_17 spi_cs
-config-pin P9_18 spi
-config-pin P9_22 spi_sclk
 config-pin P9_26 gpio
 config-pin P9_27 gpio
+
+# SPI_PORT 1 - Adafruit instructions
+# config-pin P9_17 spi_cs
+# config-pin P9_18 spi
+# config-pin P9_22 spi_scl
+
+# SPI_PORT 2
+# CS   to P9_28
+# MOSI to P9_30
+# SCLK to P9_31
+config-pin P9_28 spi_cs
+config-pin P9_30 spi
+config-pin P9_31 spi_sclk
+
 
 # From: https://learn.adafruit.com/user-space-spi-tft-python-library-ili9341-2-8/usage
 sudo apt-get update
