@@ -7,9 +7,6 @@
 config-pin P9_18 spi
 config-pin P9_22 spi_sclk
 
-# Make it so sudo isn't needed
-sudo chown root:gpio /sys/firmware/lpd8806/device/*
-
 # config-pin P9_30 spi
 # config-pin P9_31 spi_sclk
 
@@ -22,3 +19,7 @@ export STRING_LEN=320
 
 sleep 1	# Seems to hang if this isn't here.
 sudo insmod driver/lpd8806.ko string_len=$STRING_LEN
+
+# Make it so sudo isn't needed
+sudo chown root:gpio /sys/firmware/lpd8806/device/*
+
