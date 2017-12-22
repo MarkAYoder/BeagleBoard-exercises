@@ -3,7 +3,7 @@ sudo apt install linux-headers-`uname -r`
 cd driver
 make
 
-# The rest isn't need for Linux tree 4.9.63-ti-r79 #1 SMP PREEMPT Fri Nov 24 02:27:20 UTC 2017 armv7l GNU/Linux
+# The rest isn't needed for Linux tree 4.9.63-ti-r79 #1 SMP PREEMPT Fri Nov 24 02:27:20 UTC 2017 armv7l GNU/Linux
 
 # Here's how to get SPI working under Jessie
 # Edit /boot/uEnv.txt and removed the comment on the following line:
