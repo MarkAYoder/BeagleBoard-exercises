@@ -68,7 +68,10 @@ else        # Desktop
     export GOOGLE_APPLICATION_CREDENTIALS=$PWD/office.json
 
     # Use a bigger cursor on the desktop
-    dconf write /org/gnome/desktop/interface/cursor-size 36
+    if [[ $DISPLAY ]]
+    then
+    	dconf write /org/gnome/desktop/interface/cursor-size 36
+    fi
 fi
 
 # don't put duplicate lines in the history. See bash(1) for more options
