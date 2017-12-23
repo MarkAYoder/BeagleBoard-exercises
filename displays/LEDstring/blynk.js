@@ -4,12 +4,11 @@ const Blynk = require('blynk-library');
 const b = require('bonescript');
 const util = require('util');
 const exec = require('child_process').exec;
-const framebuffer = "../../displays/ili9341/framebuffer";
+var fs = require('fs');
+const LEDs = "/sys/firmware/lpd8806/device/rgb";
+const LEDcount = process.env.STRING_LEN;
 
-const LED0 = 'P9_14';
-const button = 'P9_26';
-b.pinMode(LED0, b.OUTPUT);
-b.pinMode(button, b.INPUT);
+var fd = fs.openSync(LEDs, 'w');
 
 const AUTH = 'dc1c083949324ca28fbf393231f8cf09';
 
@@ -21,22 +20,15 @@ var v10 = new blynk.WidgetLED(10);
 // var v9 = new blynk.VirtualPin(9);
 
 v4.on('write', function(param) {
-    var r = param[0]/1023*31;
-    var g = param[1]/1023*63;
-    var b = param[2]/1023*31;
+    var r = param[0];
+    var g = param[1];
+    var b = param[2];
     console.log(util.format("R: %d, G: %d, B: %d", r, g, b));
+    for(var i=0; i<LEDcount; i++) {
+        fs.write(fd, util.format("%d %d %d %d ", r, g, b, i));
+    }
+    // Update string
+    fs.write(fd, util.format("\n"));
 
 });
 
-v10.setValue(0);    // Initiallly off
-
-// v9.on('read', function() {
-//     v9.write(new Date().getSeconds());
-// });
-
-b.attachInterrupt(button, toggle, b.CHANGE);
-
-function toggle(x) {
-    console.log("V1: ", x.value);
-    x.value ? v10.turnOff() : v10.turnOn();
-}
