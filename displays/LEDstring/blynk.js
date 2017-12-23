@@ -36,13 +36,13 @@ function display(r, g, b, idx) {
     // fs.write(fd, util.format("\n"));
 }
 
-function fire(current, stop, ms) {
+function fire(r, g, b, current, stop, ms) {
     // console.log("fire! " + current);
     display(0, 0, 0, current);
     current++;
     if(current < stop) {
         display(r, g, b, current);
-        setTimeout(fire, ms, current, stop, ms);
+        setTimeout(fire, ms, r, g, b, current, stop, ms);
     }
 }
 
@@ -63,14 +63,18 @@ v4.on('write', function(param) {
     display(r, g, b);
 });
 
+// Snowball, white
 v0.on('write', function(param) {
     console.log('fire: ', param[0]);
     if(param[0]==='1') {
-        fire(50, LEDcount, snowballTime);
+        fire(255, 255, 255, 50, LEDcount, snowballTime);
     }
 });
 v1.on('write', function(param) {
-    console.log('V1: ', param[0]);
+    console.log('fire color: ', param[0]);
+    if(param[0]==='1') {
+        fire(r, g, b, 50, LEDcount, snowballTime);
+    }
 });
 v5.on('write', function(param) {
     console.log('Red: ', param[0]);
