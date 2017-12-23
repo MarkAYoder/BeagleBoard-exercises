@@ -24,7 +24,7 @@ var v8 = new blynk.VirtualPin(8);   // Scale
 function display(r, g, b) {
     console.log(util.format("R: %d, G: %d, B: %d", r, g, b));
     for(var i=0; i<LEDcount; i++) {
-        fs.write(fd, util.format("%d %d %d %d ", r>>scale, g, b, i));
+        fs.write(fd, util.format("%d %d %d %d ", r>>scale, g>>scale, b>>scale, i));
     }
     // Update string
     fs.write(fd, util.format("\n"));
