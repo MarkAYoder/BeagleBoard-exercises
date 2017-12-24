@@ -67,13 +67,13 @@ v4.on('write', function(param) {
 v0.on('write', function(param) {
     console.log('fire: ', param[0]);
     if(param[0]==='1') {
-        fire(255, 255, 255, 50, LEDcount, snowballTime);
+        fire(255, 255, 255, 0, LEDcount, snowballTime);
     }
 });
 v1.on('write', function(param) {
     console.log('fire color: ', param[0]);
     if(param[0]==='1') {
-        fire(r, g, b, 50, LEDcount, snowballTime);
+        fire(r, g, b, 0, LEDcount, snowballTime);
     }
 });
 v5.on('write', function(param) {
