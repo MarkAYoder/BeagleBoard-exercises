@@ -8,7 +8,7 @@ const exec = require('child_process').exec;
 var parameters = {
   // Required
   country: 'US',
-  year:    2017,
+  year:    date.getYear(),
   // Optional
   month:    date.getMonth()+1,
   day:      date.getDate(),
@@ -22,17 +22,20 @@ hapi.holidays(parameters, function (err, data) {
     if(err) {
         console.log("err: " + err);
     }
-    console.log("data: " + data);
-    console.log("data: " + data.holidays[0].name);
+    var name = data.holidays[0].name;
+    name = name.replace(/'/, "\\\'");   // Escape ' with \'
+    console.log("name: " + name);
   
-    console.log("date: " + date.getDate());
-  
-    exec("the_matrix_scrolltext " + data.holidays[0].name, (error, stdout, stderr) => {
+   exec("the_matrix_scrolltext " + name, (error, stdout, stderr) => {
     if (error) {
-      console.error(`exec error: ${error}`);
-      return;
+        console.error(`exec error: ${error}`);
+        return;
     }
-    console.log(`stdout: ${stdout}`);
-    console.log(`stderr: ${stderr}`);
+    if(stdout) {
+        console.log(`stdout: ${stdout}`);
+    }
+    if(stderr) {
+        console.log(`stderr: ${stderr}`);
+    }
     });
 });
