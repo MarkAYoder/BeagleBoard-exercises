@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 from time import sleep
 import math
 import random
@@ -12,7 +12,7 @@ keepgoing = True
 
 def signal_handler(signal, frame):
     global keepgoing
-    print 'You pressed Ctrl+C!'
+    print ('You pressed Ctrl+C!')
     keepgoing = False
 #    fo.close()
 #    sys.exit(0)
@@ -21,7 +21,7 @@ signal.signal(signal.SIGINT, signal_handler)
 # Update the thread at a regular interval
 def keepDisplaying(delay):
     global keepgoing
-    print "keepDisplaying called with delay = %f" % delay
+    print ("keepDisplaying called with delay = %f" % delay)
     
     while keepgoing:
         fo.write("0 0 0 -1\n")
@@ -61,6 +61,8 @@ def skiUpDown():
             if not keepgoing:
                 break
             sleep(0.02)
+            
+    print ("One more skiier has stopped")
     
 # Open a file
 fo = open("/sys/firmware/lpd8806/device/rgb", "w", 0)
@@ -72,11 +74,17 @@ threading.Thread(target=keepDisplaying, args=(0.01,)).start()
 for i in range(10):
     last = threading.Thread(target=skiUpDown)
     last.start()
+    if not keepgoing:
+        break
     sleep(random.uniform(.5,3))
 
-print "All threads launched"
+print ("All threads launched")
 
-last.join()
+# This didn't work... couldn't end the program
+#last.join()  
 
-print "All Done"
+while keepgoing:
+    sleep(.5)
+
+print ("All Done")
 
