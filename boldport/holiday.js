@@ -8,10 +8,11 @@ const exec = require('child_process').exec;
 var parameters = {
   // Required
   country: 'US',
-  year:    date.getYear(),
+  year:    date.getFullYear()-1,  // Not free for today
   // Optional
   month:    date.getMonth()+1,
   day:      date.getDate(),
+//   day:      20,
   // previous: true,
   // upcoming: true,
   // public:   true,
@@ -22,9 +23,14 @@ hapi.holidays(parameters, function (err, data) {
     if(err) {
         console.log("err: " + err);
     }
+    // console.log("data: " + util.inspect(data));
+    if(data.holidays.length === 0) {
+        console.log("Sorry, no holiday");
+        return;
+    }
     var name = data.holidays[0].name;
     name = name.replace(/'/, "\\\'");   // Escape ' with \'
-    console.log("name: " + name);
+    console.log(name);
   
    exec("the_matrix_scrolltext Happy " + name, (error, stdout, stderr) => {
     if (error) {
