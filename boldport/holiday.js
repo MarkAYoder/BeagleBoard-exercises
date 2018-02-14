@@ -20,19 +20,20 @@ var parameters = {
 };
 
 hapi.holidays(parameters, function (err, data) {
+    var name;
     if(err) {
         console.log("err: " + err);
     }
     // console.log("data: " + util.inspect(data));
     if(data.holidays.length === 0) {
-        console.log("Sorry, no holiday");
-        return;
+        name = "Sorry, no holiday";
+    } else {
+        name = "Happy " + data.holidays[0].name;
+        name = name.replace(/'/, "\\\'");   // Escape ' with \'
     }
-    var name = data.holidays[0].name;
-    name = name.replace(/'/, "\\\'");   // Escape ' with \'
     console.log(name);
   
-   exec("the_matrix_scrolltext Happy " + name, (error, stdout, stderr) => {
+   exec("the_matrix_scrolltext " + name, (error, stdout, stderr) => {
     if (error) {
         console.error(`exec error: ${error}`);
         return;
