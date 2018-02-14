@@ -26,7 +26,7 @@ hapi.holidays(parameters, function (err, data) {
     name = name.replace(/'/, "\\\'");   // Escape ' with \'
     console.log("name: " + name);
   
-   exec("the_matrix_scrolltext " + name, (error, stdout, stderr) => {
+   exec("the_matrix_scrolltext Happy " + name, (error, stdout, stderr) => {
     if (error) {
         console.error(`exec error: ${error}`);
         return;
