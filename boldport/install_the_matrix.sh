@@ -13,3 +13,7 @@ grep bus_ *             # Show which files need to be edited to change the bus.
 the_matrix_identify
 the_matrix_leds
 the_matrix_scrolltest
+
+
+# This is of displaying the current holiday
+sudo npm install -g --save node-holidayapi
