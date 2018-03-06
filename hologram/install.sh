@@ -14,5 +14,5 @@ curl -L hologram.io/python-install | bash
 curl -L hologram.io/python-update | bash
 
 PPPATH=/opt/scripts/tools/software/hologram-tools/ppp
-sudo bash -c "sed 's/ACM0/O4/' $PPPATH/peers/nova > /etc/ppp/peers/nova"
-sudo cp $PPPATH/chatscripts/nova /etc/chatscripts
+sudo bash -c "sed 's/ACM0/O4/' $PPPATH/peers/nova > /etc/ppp/peers/sim800"
+sudo cp $PPPATH/chatscripts/nova /etc/chatscripts/sim800
