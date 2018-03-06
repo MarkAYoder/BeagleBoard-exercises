@@ -3,9 +3,6 @@
 
 git clone https://github.com/benstr/AT-Workshop.git
 
-config-pin P9_11 uart
-config-pin P9_13 uart
-
 sudo apt-get install ppp elinks
 
 wget https://raw.githubusercontent.com/adafruit/FONA_PPP/master/fona
