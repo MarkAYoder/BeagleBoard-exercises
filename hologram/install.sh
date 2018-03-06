@@ -2,3 +2,6 @@
 # https://learn.adafruit.com/fona-tethering-to-raspberry-pi-or-beaglebone-black/overview
 
 git clone https://github.com/benstr/AT-Workshop.git
+
+config-pin P9_11 uart
+config-pin P9_13 uart
