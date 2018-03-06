@@ -2,17 +2,12 @@
 # From: https://www.boldport.com/products/the-matrix/
 git clone https://github.com/threebytesfull/matrix-pi.git
 sudo apt install python-smbus # python3-smbus
-cd matrix-pi
-sudo pip install the_matrix
+sudo pip install -e matrix-pi
 i2cdetect -y -r 2  # I wired to i2c bus 2.  P9_19 - SCL, P9_20 - SDA
-# The library defaults to bus 1.  I edited the library to use bus 2
-pip show the_matrix     # This shows where pip installed the library
-cd /usr/local/lib/python2.7/dist-packages/the_matrix
-grep bus_ *             # Show which files need to be edited to change the bus.
-# Change bus_number=1 to bus_number=2
-the_matrix_identify
-the_matrix_leds
-the_matrix_scrolltest
+# The library defaults to bus 1, use -b for bus 2
+the_matrix_identify -b 2
+the_matrix_leds -b 2 5 10
+the_matrix_scrolltest -b This is a test
 
 
 # This is of displaying the current holiday

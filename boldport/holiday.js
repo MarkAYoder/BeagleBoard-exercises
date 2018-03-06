@@ -33,7 +33,7 @@ hapi.holidays(parameters, function (err, data) {
     }
     console.log(name);
   
-   exec("the_matrix_scrolltext " + name, (error, stdout, stderr) => {
+   exec("the_matrix_scrolltext -b 2 " + name, (error, stdout, stderr) => {
     if (error) {
         console.error(`exec error: ${error}`);
         return;
