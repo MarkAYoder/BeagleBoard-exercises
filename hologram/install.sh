@@ -5,3 +5,13 @@ git clone https://github.com/benstr/AT-Workshop.git
 
 config-pin P9_11 uart
 config-pin P9_13 uart
+
+sudo apt-get install ppp elinks
+
+wget https://raw.githubusercontent.com/adafruit/FONA_PPP/master/fona
+
+# https://hologram.io/docs/guide/connect/connect-device/
+# https://hologram.io/docs/guide/nova/developer-tools/
+
+curl -L hologram.io/python-install | bash
+curl -L hologram.io/python-update | bash
