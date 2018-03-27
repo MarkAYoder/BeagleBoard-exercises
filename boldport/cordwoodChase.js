@@ -5,7 +5,10 @@ console.log("Loading bonescript...");
 var b = require('bonescript');
 console.log("Done...");
 
-var leds = ["P8_8", "P8_10", "P8_12", "P8_14", "P8_16", "P8_18"];
+// This is for cordwood 1
+// var leds = ["P8_8", "P8_10", "P8_12", "P8_14", "P8_16", "P8_18"];
+// This is for cordwood 2
+var leds = ["P8_7", "P8_8", "P8_10", "P8_12", "P8_14", "P8_16", "P8_18", "P8_19"];
 
 for(var i in leds) {
     b.pinMode(leds[i], b.OUTPUT);
