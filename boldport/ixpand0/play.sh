@@ -12,7 +12,7 @@ i2cset -y -r $BUS $ADDR 0x00 0xff
 # Set GPIOB to outputs
 i2cset -y -r $BUS $ADDR 0x01 0x00
 # Set pull-up resistors on GPIOA
-i2cset -y -r $BUS $ADDR 0x06 0xff
+i2cset -y -r $BUS $ADDR 0x0c 0xff
 i2cdump -y -r 0x00-0x1f 2 0x20 b
 
 # Cycle through LEDs
@@ -29,3 +29,6 @@ do
 done
 
 i2cset -y $BUS $ADDR 0x13 0xff
+
+# Read switched
+i2cget -y $BUS $ADDR 0x12 b
