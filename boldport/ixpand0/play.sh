@@ -14,3 +14,18 @@ i2cset -y -r $BUS $ADDR 0x01 0x00
 # Set pull-up resistors on GPIOA
 i2cset -y -r $BUS $ADDR 0x06 0xff
 i2cdump -y -r 0x00-0x1f 2 0x20 b
+
+# Cycle through LEDs
+for i in {0..7};
+do
+    i2cset -y $BUS $ADDR 0x13 $((1<<$i))
+    sleep 0.1
+done
+
+for i in {6..-1..-1};
+do
+    i2cset -y $BUS $ADDR 0x13 $((1<<$i))
+    sleep 0.1
+done
+
+i2cset -y $BUS $ADDR 0x13 0xff
