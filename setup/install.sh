@@ -77,9 +77,9 @@ export LANG=en_US.UTF-8
 # Now do root things
 ssh root@$BONE "
 
-# Disable hdmi audio
+# Disable hdmi video to get access to PRU pins on P8
 mv /boot/uEnv.txt /boot/uEnv.txt.orig
-sed 's/#disable_uboot_overlay_audio=1/disable_uboot_overlay_audio=1/' < /boot/uEnv.txt.orig > /boot/uEnv.txt
+sed 's/#disable_uboot_overlay_video=1/disable_uboot_overlay_video=1/' < /boot/uEnv.txt.orig > /boot/uEnv.txt
 
 # link to exercises
 # ln -s ~$USER .
