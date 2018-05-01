@@ -2,7 +2,7 @@
 # Enable remote proc by following: http://elinux.org/EBC_Exercise_30_PRU_via_remoteproc_and_RPMsg
 
 export PRU_CGT=/usr/share/ti/cgt-pru
-export PRU_SUPPORT=/opt/source/pru-software-support-package
+export PRU_SUPPORT=/usr/lib/ti/pru-software-support-package
 
 HEADER=P8_
 PINS="27 28 29 30 39 40 41 42 43 44 45 46"
