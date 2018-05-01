@@ -9,7 +9,7 @@ if [ "$1" == "" ]; then
 	curl -s $SITE/ | sed -n '/^$/!{s/<[^>]*>//g;p;}' | awk -F/ '{print $1}'
 	echo $SITE
 elif [ "$1" == "web" ]; then
-	gnome-open $SITE
+	xdg-open $SITE
 else
 	echo $1
 	cd ~/BeagleBoard/Images

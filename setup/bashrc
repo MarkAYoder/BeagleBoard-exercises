@@ -48,7 +48,7 @@ if [[ -e /etc/dogtag ]]
     alias   pstep1='pnext1 && pregs1 | sed -n 3p && pregs1 | sed -n -e 12,24p | awk '"'"'{print $1, "=",  $3}'"'"' | column'
 
 else        # Desktop
-    alias go=gnome-open
+    alias go=xdg-open
     # DSP First
     export PATH=$PATH:~/cdrom/support/scripts
 
