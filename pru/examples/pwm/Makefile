@@ -12,23 +12,8 @@
 #	add compile targets, as added to LINK_PRU1(0)_FW for other files.
 # 
 
-# PRU_CGT environment variable must point to the TI PRU compiler directory. E.g.:
-#(Linux) export PRU_CGT=/home/jason/ti/ccs_v6_1_0/ccsv6/tools/compiler/ti-cgt-pru_2.1.0
-#(Windows) set PRU_CGT=C:/TI/ccs_v6_0_1/ccsv6/tools/compiler/ti-cgt-pru_2.1.0
-
-ifndef PRU_CGT
-define ERROR_BODY
-
-************************************************************
-PRU_CGT environment variable is not set. Examples given:
-(Linux) export PRU_CGT=/home/jason/ti/ccs_v6_1_0/ccsv6/tools/compiler/ti-cgt-pru_2.1.0
-(Windows) set PRU_CGT=C:/TI/ccs_v6_0_1/ccsv6/tools/compiler/ti-cgt-pru_2.1.0
-************************************************************
-
-endef
-$(error $(ERROR_BODY))
-endif
-
+PRU_CGT=/usr/share/ti/cgt-pru
+PRU_SUPPORT=/usr/lib/ti/pru-software-support-package
 
 LINKER_COMMAND_FILE=./AM335x_PRU.cmd
 LIBS=--library=$(PRU_SUPPORT)/lib/rpmsg_lib.lib
@@ -154,4 +139,4 @@ reboot_pru0:
 clean:
 	@echo 'CLEAN	.'
 	@rm -rf $(GEN_DIR)
-	@rm main_pru1.asm pwm-test
+	@rm main_pru0.asm main_pru1.asm pwm-test
