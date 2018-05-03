@@ -1,6 +1,6 @@
 # 
 # Copyright (c) 2016 Zubeen Tolani <ZeekHuge - zeekhuge@gmail.com>
-# Makefile to make PRU_inlineASM_blinky project
+# Makefile to make PRU_inline
 #
 # The make file is tried to be made as generic as possible
 # So that it can be used to compile other programs too
@@ -43,7 +43,6 @@ TARGETS		=$(PRU1_FW) $(PRU0_FW)
 # add the required files while linkin the FW code
 # required linking files for PRU1
 # LINK_PRU1_FW = (GEN_DIR)/pru1-inline-asm.object (GEN_DIR)/code2_pru1.object
-# LINK_PRU1_FW= $(GEN_DIR)/pru1-asm-blinky.object
 # LINK_PRU1_FW= $(GEN_DIR)/pru1-test.object
 
 # required linking files for PRU1
@@ -81,11 +80,6 @@ $(GEN_DIR)/main_pru1.object: main_pru1.c
 	@echo 'CC	$<'
 	@clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
-
-$(GEN_DIR)/pru1-asm-blinky.object: pru1-asm-blinky.asm
-	@mkdir -p $(GEN_DIR)
-	@echo 'CC	$<'
-	@clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
 $(GEN_DIR)/pru0-pwm.object: pru-pwm.asm
 	@mkdir -p $(GEN_DIR)
