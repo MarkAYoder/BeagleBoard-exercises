@@ -77,45 +77,45 @@ all: $(TARGETS) pwm-test
 
 $(PRU1_FW): $(GEN_DIR)/main_pru1.object $(LINK_PRU1_FW)
 	@echo 'LD	$^'
-	@$(PRU_CGT)/bin/lnkpru -i$(PRU_CGT)/lib -i$(PRU_CGT)/include $(LFLAGS) -o $@ $^  $(LINKER_COMMAND_FILE) --library=libc.a $(LIBS) $^
+	@lnkpru -i$(PRU_CGT)/lib -i$(PRU_CGT)/include $(LFLAGS) -o $@ $^  $(LINKER_COMMAND_FILE) --library=libc.a $(LIBS) $^
 
 
 $(PRU0_FW): $(GEN_DIR)/main_pru0.object $(LINK_PRU0_FW)
 	@echo 'LD	$^' 
-	@$(PRU_CGT)/bin/lnkpru -i$(PRU_CGT)/lib -i$(PRU_CGT)/include $(LFLAGS) -o $@ $^  $(LINKER_COMMAND_FILE) --library=libc.a $(LIBS) $^
+	@lnkpru -i$(PRU_CGT)/lib -i$(PRU_CGT)/include $(LFLAGS) -o $@ $^  $(LINKER_COMMAND_FILE) --library=libc.a $(LIBS) $^
 
 
 $(GEN_DIR)/main_pru0.object: main_pru0.c 
 	@mkdir -p $(GEN_DIR)
 	@echo 'CC	$<'
-	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
+	@clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
 
 $(GEN_DIR)/main_pru1.object: main_pru1.c
 	@mkdir -p $(GEN_DIR)
 	@echo 'CC	$<'
-	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
+	@clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
 
 $(GEN_DIR)/pru1-asm-blinky.object: pru1-asm-blinky.asm
 	@mkdir -p $(GEN_DIR)
 	@echo 'CC	$<'
-	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
+	@clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
 $(GEN_DIR)/pru0-pwm.object: pru-pwm.asm
 	@mkdir -p $(GEN_DIR)
 	@echo 'CC	$<'
-	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -D=PRU_NUM=0 -fe $@ $<
+	@clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -D=PRU_NUM=0 -fe $@ $<
 
 $(GEN_DIR)/pru1-pwm.object: pru-pwm.asm
 	@mkdir -p $(GEN_DIR)
 	@echo 'CC	$<'
-	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -D=PRU_NUM=1 -fe $@ $<
+	@clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -D=PRU_NUM=1 -fe $@ $<
 
 $(GEN_DIR)/pru1-test.object: pru1-test.asm
 	@mkdir -p $(GEN_DIR)
 	@echo 'CC	$<'
-	@$(PRU_CGT)/bin/clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
+	@clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
 pwm-test:	pwm-test.c
 	gcc $< -o $@
