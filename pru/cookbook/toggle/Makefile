@@ -39,38 +39,24 @@ PRU0_FW		=$(GEN_DIR)/main_pru0_fw.out
 # TARGETS		=$(PRU1_FW) $(PRU0_FW)
 TARGETS		=$(PRU0_FW)
 
-# add the required files while linkin the FW code
-# required linking files for PRU1
-# LINK_PRU1_FW = (GEN_DIR)/pru1-inline-asm.object (GEN_DIR)/code2_pru1.object
-# LINK_PRU1_FW= $(GEN_DIR)/pru1-test.object
-
-# required linking files for PRU1
-# LINK_PRU0_FW = (GEN_DIR)/pru0-inline-asm.object (GEN_DIR)/code2_pru1.object
-LINK_PRU1_FW= $(GEN_DIR)/pru1-pwm.object
-LINK_PRU0_FW= $(GEN_DIR)/pru0-pwm.object
-
 #------------------------------------------------------
 
 .PHONY: all
-all: $(TARGETS) pwm-test
+all: $(TARGETS)
 	@echo '-	Generated firmwares are : $^'
-
 
 $(PRU1_FW): $(GEN_DIR)/main_pru1.object $(LINK_PRU1_FW)
 	@echo 'LD	$^'
 	@lnkpru -i$(PRU_CGT)/lib -i$(PRU_CGT)/include $(LFLAGS) -o $@ $^  $(LINKER_COMMAND_FILE) --library=libc.a $(LIBS) $^
 
-
-$(PRU0_FW): $(GEN_DIR)/main_pru0.object $(LINK_PRU0_FW)
+$(PRU0_FW): $(GEN_DIR)/main_pru0.object
 	@echo 'LD	$^' 
 	@lnkpru -i$(PRU_CGT)/lib -i$(PRU_CGT)/include $(LFLAGS) -o $@ $^  $(LINKER_COMMAND_FILE) --library=libc.a $(LIBS) $^
-
 
 $(GEN_DIR)/main_pru0.object: main_pru0.c 
 	@mkdir -p $(GEN_DIR)
 	@echo 'CC	$<'
 	@clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
-
 
 $(GEN_DIR)/main_pru1.object: main_pru1.c
 	@mkdir -p $(GEN_DIR)
