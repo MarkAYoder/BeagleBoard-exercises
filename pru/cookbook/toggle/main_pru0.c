@@ -38,6 +38,7 @@
 volatile register uint32_t __R30;
 volatile register uint32_t __R31;
 
+#define LED (0x1<<5)
 #define SW (0x1<<3)
 
 /*
@@ -50,9 +51,9 @@ int main(void)
 
 	while (1) {
 		if(!(__R31 & SW)) {
-			__R30 ^= (0x1<<5);
-			__delay_cycles(10000000); // half-second delay
-			// __delay_cycles(1); // half-second delay
+			__R30 ^= LED;
+			// __delay_cycles(10000000); // half-second delay
+			__delay_cycles(1); // half-second delay
 		}
 	}
 }
