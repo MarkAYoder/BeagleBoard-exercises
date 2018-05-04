@@ -45,17 +45,13 @@ volatile register uint32_t __R31;
  */
 int main(void)
 {
-	volatile uint32_t gpo;
-
 	/* GPI Mode 0, GPO Mode 0 */
 	CT_CFG.GPCFG0 = 0;
 
 	while (1) {
-		// gpo = __R30;
-		// gpo ^= 0xFF;
 		if(!(__R31 & SW)) {
 			__R30 ^= (0x1<<5);
-			__delay_cycles(1000000); // half-second delay
+			__delay_cycles(10000000); // half-second delay
 			// __delay_cycles(1); // half-second delay
 		}
 	}
