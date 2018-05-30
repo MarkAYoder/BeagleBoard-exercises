@@ -1,0 +1,14 @@
+Here's how I copied the eMMC from on bone to another.
+
+1.	Follow these instructions[1] to create an SD card that will boot
+	and copy the eMMC to a .img file and compress it.
+2.	On ubuntu I used the Disks command to format the CD to FAT.
+3.	Once the .img.gz file was created on the Bone (it took some 30
+	minutes), I ejected it from the Bone and mounted on the host and
+	copied it to the host.
+4.	I used etcher to uncompress and copy the image to another CD card.
+5.	I checked the card by booting a Bone from it.
+6.	Then edit /boot/uEnv.txt to make the CD flash the eMMC on another Bone. 
+
+
+[1] https://elinux.org/BeagleBone_Black_Extracting_eMMC_contents
