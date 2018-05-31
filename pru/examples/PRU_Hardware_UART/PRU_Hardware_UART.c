@@ -84,6 +84,7 @@ void main(void)
 
 	/* Enable loopback for test */
 	CT_UART.MCR = 0x10;
+	CT_UART.MCR = 0x00;
 
 	/* Choose desired response to emulation suspend events by configuring
 	 * FREE bit and enable UART by setting UTRST and URRST in PWREMU_MGMT */
@@ -115,8 +116,8 @@ void main(void)
 			 * indicating there is data in the RX FIFO */
 			// while ((CT_UART.LSR & 0x1) == 0x0);
 	
-			/* Read the value from RBR */
-			buffer[cnt] = CT_UART.RBR;
+			// /* Read the value from RBR */
+			// buffer[cnt] = CT_UART.RBR;
 	
 			/* Wait for TX FIFO to be empty */
 			while (!((CT_UART.FCR & 0x2) == 0x2));
