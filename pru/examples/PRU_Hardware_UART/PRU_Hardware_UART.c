@@ -114,10 +114,10 @@ void main(void)
 	
 			/* Because we are doing loopback, wait until LSR.DR == 1
 			 * indicating there is data in the RX FIFO */
-			// while ((CT_UART.LSR & 0x1) == 0x0);
+			while ((CT_UART.LSR & 0x1) == 0x0);
 	
-			// /* Read the value from RBR */
-			// buffer[cnt] = CT_UART.RBR;
+			/* Read the value from RBR */
+			buffer[cnt] = CT_UART.RBR;
 	
 			/* Wait for TX FIFO to be empty */
 			while (!((CT_UART.FCR & 0x2) == 0x2));
