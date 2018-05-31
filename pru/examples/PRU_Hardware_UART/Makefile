@@ -20,21 +20,23 @@ HEAP_SIZE=0x100
 CFLAGS=-v3 -O2 --display_error_number --endian=little --hardware_mac=on --obj_directory=$(GEN_DIR) --pp_directory=$(GEN_DIR) --asm_directory=$(GEN_DIR) -ppd -ppa --asm_listing --c_src_interlist # --absolute_listing
 LFLAGS=--reread_libs --warn_sections --stack_size=$(STACK_SIZE) --heap_size=$(HEAP_SIZE) -m $(GEN_DIR)/file.map
 
-GEN_DIR=/tmp/$(PRUN)-gen
+GEN_DIR=/tmp/pru$(PRUN)-gen
 
 PRU_DIR=$(wildcard /sys/devices/platform/ocp/4a326000.pruss-soc-bus/4a300000.pruss/4a33*000.pru$(PRUN)/remoteproc/remoteproc*)
 
 all: run
 
-run: install stop start
+run: stop install start
 	@echo '-	rebooting $(PRUN) via $(PRU_DIR)'
 	@# @sudo $(dir $(realpath $(firstword $(MAKEFILE_LIST))))/write_init_pins.sh /lib/firmware/am335x-$(PRUN)-fw
 	@echo "-	$(PRUN) is now loaded with $(GEN_DIR)/$(TARGET).out"
 
 stop:
+	@echo "-    Stopping PRU$(PRUN)"
 	@echo stop | sudo tee $(PRU_DIR)/state || echo Cannot stop $(PRUN)
 
 start:
+	@echo "-    Starting PRU$(PRUN)"
 	@echo start | sudo tee $(PRU_DIR)/state
 
 
