@@ -7,4 +7,4 @@ export PRU_CGT=/usr/share/ti/cgt-pru
 export PRU_SUPPORT=/opt/source/pru-software-support-package
 
 export PRUN=0
-export TARGET=PRU_Hardware_UART
+export TARGET=uart1
