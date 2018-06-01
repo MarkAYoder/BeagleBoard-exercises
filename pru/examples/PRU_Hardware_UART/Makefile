@@ -40,8 +40,8 @@ start:
 	@echo start | sudo tee $(PRU_DIR)/state
 
 install: $(GEN_DIR)/$(TARGET).out
-	@echo '-	copying firmware file $(GEN_DIR)/$(TARGET).out to /lib/firmware/am335x-$(PRUN)-fw'
-	@sudo cp $(GEN_DIR)/$(TARGET).out /lib/firmware/am335x-$(PRUN)-fw
+	@echo '-	copying firmware file $(GEN_DIR)/$(TARGET).out to /lib/firmware/am335x-pru$(PRUN)-fw'
+	@sudo cp $(GEN_DIR)/$(TARGET).out /lib/firmware/am335x-pru$(PRUN)-fw
 
 $(GEN_DIR)/$(TARGET).out: $(GEN_DIR)/$(TARGET).obj
 	@echo 'LD	$^' 
