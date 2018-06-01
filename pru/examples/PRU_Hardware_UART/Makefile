@@ -39,7 +39,6 @@ start:
 	@echo "-    Starting PRU$(PRUN)"
 	@echo start | sudo tee $(PRU_DIR)/state
 
-
 install: $(GEN_DIR)/$(TARGET).out
 	@echo '-	copying firmware file $(GEN_DIR)/$(TARGET).out to /lib/firmware/am335x-$(PRUN)-fw'
 	@sudo cp $(GEN_DIR)/$(TARGET).out /lib/firmware/am335x-$(PRUN)-fw
@@ -54,5 +53,5 @@ $(GEN_DIR)/$(TARGET).obj: $(TARGET).c
 	@clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
 clean:
-	@echo 'CLEAN	.'
+	@echo 'CLEAN	PRU$(PRUN).'
 	@rm -rf $(GEN_DIR)
