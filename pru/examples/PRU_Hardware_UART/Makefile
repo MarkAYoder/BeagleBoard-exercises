@@ -24,12 +24,7 @@ GEN_DIR=/tmp/pru$(PRUN)-gen
 
 PRU_DIR=$(wildcard /sys/devices/platform/ocp/4a326000.pruss-soc-bus/4a300000.pruss/4a33*000.pru$(PRUN)/remoteproc/remoteproc*)
 
-all: run
-
-run: stop install start
-	@echo '-	rebooting $(PRUN) via $(PRU_DIR)'
-	@# @sudo $(dir $(realpath $(firstword $(MAKEFILE_LIST))))/write_init_pins.sh /lib/firmware/am335x-$(PRUN)-fw
-	@echo "-	$(PRUN) is now loaded with $(GEN_DIR)/$(TARGET).out"
+all: stop install start
 
 stop:
 	@echo "-    Stopping PRU$(PRUN)"
@@ -53,5 +48,5 @@ $(GEN_DIR)/$(TARGET).obj: $(TARGET).c
 	@clpru --include_path=$(PRU_CGT)/include $(INCLUDE) $(CFLAGS) -fe $@ $<
 
 clean:
-	@echo 'CLEAN	PRU$(PRUN).'
+	@echo 'CLEAN	.    PRU$(PRUN)'
 	@rm -rf $(GEN_DIR)
