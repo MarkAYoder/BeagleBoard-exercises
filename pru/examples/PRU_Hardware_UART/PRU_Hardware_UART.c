@@ -9,11 +9,8 @@
 #define FIFO_SIZE	16
 #define MAX_CHARS	8
 
-/* This hostBuffer structure is temporary but stores a data buffer */
-struct {
-	uint8_t msg; // Not used today
-	uint8_t data[FIFO_SIZE];
-} hostBuffer;
+/*  hostBuffer points to the string to be printed */
+volatile char* hostBuffer;
 
 /* Making this buffer global will force the received data into memory */
 uint8_t buffer[MAX_CHARS];
@@ -63,13 +60,7 @@ void main(void)
 	/*** END INITIALIZATION ***/
 
 	/* Priming the 'hostbuffer' with a message */
-	hostBuffer.data[0] = 'H';
-	hostBuffer.data[1] = 'e';
-	hostBuffer.data[2] = 'l';
-	hostBuffer.data[3] = 'l';
-	hostBuffer.data[4] = 'o';
-	hostBuffer.data[5] = '!';
-	hostBuffer.data[6] = '\0';
+	hostBuffer = "Hello!";
 
 	/*** SEND SOME DATA ***/
 
@@ -77,7 +68,7 @@ void main(void)
 	while(1) {
 		for (cnt = 0; cnt < MAX_CHARS; cnt++) {
 			/* Load character, ensure it is not string termination */
-			if ((tx = hostBuffer.data[cnt]) == '\0')
+			if ((tx = hostBuffer[cnt]) == '\0')
 				break;
 			CT_UART.THR = tx;
 	
