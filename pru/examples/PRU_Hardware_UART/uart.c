@@ -4,18 +4,11 @@
 #include <pru_uart.h>
 #include "resource_table_empty.h"
 
-/* Commented out to prevent internal Loopback */
-//#define HWLOOPBACK
-
-/* If SWLOOPBACK is defined, this flag tells the main loop to copy rxBuf to txBuf */
-#ifdef SWLOOPBACK
-uint8_t lpbkFlag;
-#endif
-
 /* The FIFO size on the PRU UART is 16 bytes; however, we are (arbitrarily)
  * only going to send 8 at a time */
 #define FIFO_SIZE	16
 #define MAX_CHARS	8
+#define BUFFER		40
 
 //******************************************************************************
 //    Print Message Out
@@ -40,14 +33,12 @@ void PrintMessageOut(volatile char* Message)
 		}
 		if (Message[index] == NULL)
 			break;
-
 	}
 
 	/* Wait until the TX FIFO and the TX SR are completely empty */
 	while (!CT_UART.LSR_bit.TEMT);
 
 }
-
 
 //******************************************************************************
 //    IEP Timer Config
@@ -66,8 +57,8 @@ void main(void)
 	uint32_t i;
 	volatile uint32_t not_done = 1;
 
-	char rxBuffer[6];
-	rxBuffer[5] = NULL; // null terminate the string
+	char rxBuffer[BUFFER];
+	rxBuffer[BUFFER-1] = NULL; // null terminate the string
 
 	/*** INITIALIZATION ***/
 
@@ -93,11 +84,7 @@ void main(void)
 
 	/* If flow control is desired write appropriate values to MCR. */
 	/* No flow control for now, but enable loopback for test */
-#ifdef HWLOOPBACK
-	CT_UART.MCR = 0x10;
-#elif SWLOOPBACK
 	CT_UART.MCR = 0x00;
-#endif
 
 	/* Choose desired response to emulation suspend events by configuring
 	 * FREE bit and enable UART by setting UTRST and URRST in PWREMU_MGMT */
@@ -112,19 +99,23 @@ void main(void)
 
 	/*** END INITIALIZATION ***/
 
-	/* Print out greeting message */
-	PrintMessageOut("Hello you are in the PRU UART demo test please enter 5 characters\r\n");
-
-	/* Read in 5 characters from user, then echo them back out */
-	for (i = 0; i < 5 ; i++) {
-		rxBuffer[i] = ReadMessageIn();
+	while(1) {
+		/* Print out greeting message */
+		PrintMessageOut("Hello you are in the PRU UART demo test please enter some characters\r\n");
+	
+		/* Read in 5 characters from user, then echo them back out */
+		for (i = 0; i < BUFFER-1 ; i++) {
+			rxBuffer[i] = ReadMessageIn();
+			if(rxBuffer[i] == '\r') {	// Quit early if ENTER is hit.
+				rxBuffer[i+1] = NULL;
+				break;
+			}
+		}
+	
+		PrintMessageOut("you typed:\r\n");
+		PrintMessageOut(rxBuffer);
+		PrintMessageOut("\r\n");
 	}
-
-	PrintMessageOut("you typed:\r\n");
-
-	PrintMessageOut(rxBuffer);
-
-	PrintMessageOut("\r\n");
 
 	/*** DONE SENDING DATA ***/
 	/* Disable UART before halting */
