@@ -45,7 +45,6 @@ void main(void)
 	CT_UART.LCR = 3;
 
 	/* Enable loopback for test */
-	CT_UART.MCR = 0x10;
 	CT_UART.MCR = 0x00;
 
 	/* Choose desired response to emulation suspend events by configuring
@@ -62,7 +61,6 @@ void main(void)
 
 	/* Let's send/receive some dummy data */
 	while(1) {
-		// for (cnt = 0; cnt < MAX_CHARS; cnt++) {
 		cnt = 0;
 		while(1) {
 			/* Load character, ensure it is not string termination */
