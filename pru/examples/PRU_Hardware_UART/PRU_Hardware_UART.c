@@ -9,21 +9,17 @@
 #define FIFO_SIZE	16
 #define MAX_CHARS	8
 
-/*  hostBuffer points to the string to be printed */
-volatile char* hostBuffer;
-
-/* Making this buffer global will force the received data into memory */
-uint8_t buffer[MAX_CHARS];
-
 void main(void)
 {
 	uint8_t tx;
+	uint8_t rx;
 	uint8_t cnt;
 
+	/*  hostBuffer points to the string to be printed */
+	char* hostBuffer;
+	
 	/* TODO: If modifying this to send data through the pins then PinMuxing
-	 * needs to be taken care of prior to running this code.
-	 * This is usually done via a GEL file in CCS or by the Linux driver */
-
+	 * needs to be taken care of prior to running this code.  */
 
 	/*** INITIALIZATION ***/
 
@@ -60,16 +56,19 @@ void main(void)
 	/*** END INITIALIZATION ***/
 
 	/* Priming the 'hostbuffer' with a message */
-	hostBuffer = "Hello!";
+	hostBuffer = "Hello!  This is a long string\r\n";
 
 	/*** SEND SOME DATA ***/
 
 	/* Let's send/receive some dummy data */
 	while(1) {
-		for (cnt = 0; cnt < MAX_CHARS; cnt++) {
+		// for (cnt = 0; cnt < MAX_CHARS; cnt++) {
+		cnt = 0;
+		while(1) {
 			/* Load character, ensure it is not string termination */
 			if ((tx = hostBuffer[cnt]) == '\0')
 				break;
+			cnt++;
 			CT_UART.THR = tx;
 	
 			/* Because we are doing loopback, wait until LSR.DR == 1
@@ -77,7 +76,7 @@ void main(void)
 			while ((CT_UART.LSR & 0x1) == 0x0);
 	
 			/* Read the value from RBR */
-			buffer[cnt] = CT_UART.RBR;
+			rx = CT_UART.RBR;
 	
 			/* Wait for TX FIFO to be empty */
 			while (!((CT_UART.FCR & 0x2) == 0x2));
