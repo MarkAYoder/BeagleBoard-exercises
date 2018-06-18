@@ -1,0 +1,11 @@
+# Here's the master site
+https://atlas.oreilly.com/oreillymedia/beaglebone-cookbook/
+
+# Generate a key
+ssh-keygen
+# Then copy ~/.ssh/id_rsa.pub to
+https://atlas.oreilly.com/settings/ssh
+# Then go to
+https://atlas.oreilly.com/oreillymedia/beaglebone-cookbook/settings
+# and get to top git path and clone it
+git clone git@git.atlas.oreilly.com:oreillymedia/beaglebone-cookbook.git
