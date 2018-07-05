@@ -22,7 +22,7 @@
 #include <linux/rpmsg.h>
 
 #define MSG		"hello world!"
-#define MSG_LIMIT	100
+#define MSG_LIMIT	10
 
 struct instance_data {
 	int rx_count;

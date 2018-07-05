@@ -7,3 +7,7 @@ LAB_5=/opt/source/pru-software-support-package/labs/lab_5
 cp $LAB_5/solution/PRU_RPMsg_Echo_Interrupt1/main.c .
 cp $LAB_5/solution/PRU_RPMsg_Echo_Interrupt1/resource_table_1.h .
 cp $LAB_5/rpmsg_pru_user_space_echo.c .
+
+wget https://github.com/torvalds/linux/raw/master/samples/rpmsg/rpmsg_client_sample.c
+
+sudo apt install linux-headers-`uname -r`
