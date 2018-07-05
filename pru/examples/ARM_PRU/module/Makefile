@@ -5,6 +5,7 @@
 KDIR := /lib/modules/$(shell uname -r)/build
 
 obj-m += rpmsg_client_sample.o
+obj-m += rpmsg_pru.o
 
 all:
 	$(MAKE) -C $(KDIR) M=$$PWD
@@ -18,5 +19,7 @@ print:
 	@echo obj-m= $(obj-m)
 	
 clean:
-	rm -rf .tmp_versions .rpmsg_client_sample* rpmsg_client_sample*.mod.c *.o 
+	rm -rf .tmp_versions *.o 
+	rm -rf .rpmsg_client_sample* rpmsg_client_sample*.mod.c
+	rm -rf .rpmsg_pru* rpmsg_pru*.mod.c
 	rm modules.order Module.symvers .built-in.o.cmd 

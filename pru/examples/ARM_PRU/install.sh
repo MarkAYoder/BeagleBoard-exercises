@@ -11,3 +11,8 @@ cp $LAB_5/rpmsg_pru_user_space_echo.c .
 wget https://github.com/torvalds/linux/raw/master/samples/rpmsg/rpmsg_client_sample.c
 
 sudo apt install linux-headers-`uname -r`
+
+wget https://github.com/beagleboard/linux/raw/4.9/drivers/rpmsg/rpmsg_pru.c
+mv rpmsg_pru.c module/rpmsg_pru.c
+
+gcc rpmsg_pru_user_space_echo.c -o rpmsg_echo

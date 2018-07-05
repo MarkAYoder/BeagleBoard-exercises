@@ -58,8 +58,8 @@ volatile register uint32_t __R31;
  * Using the name 'rpmsg-pru' will probe the rpmsg_pru driver found
  * at linux-x.y.z/drivers/rpmsg/rpmsg_pru.c
  */
-#define CHAN_NAME			"rpmsg-client-sample"
-//#define CHAN_NAME			"rpmsg-pru"
+// #define CHAN_NAME			"rpmsg-client-sample"
+#define CHAN_NAME			"rpmsg-pru"
 
 #define CHAN_DESC			"Channel 31"
 #define CHAN_PORT			31
