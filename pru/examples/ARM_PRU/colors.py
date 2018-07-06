@@ -25,9 +25,9 @@ while True:
             g = (max*oldg+(newg-oldg)*max*time/maxtime)
             b = (max*oldb+(newb-oldb)*max*time/maxtime)
             for i in range(0, length):
-                fo.write("%d %d %d %d" % (i, r, g, b))
+                fo.write("%d %d %d %d\n" % (i, r, g, b))
                 # print("0 0 127 %d" % (i))
-            fo.write("-1 0 0 0\n");    
+            fo.write("-1 0 0 0 \n");    
             
             # print (r,g,b)
             
