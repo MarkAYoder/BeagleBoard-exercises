@@ -68,7 +68,7 @@ volatile register uint32_t __R31;
  */
 #define VIRTIO_CONFIG_S_DRIVER_OK	4
 
-uint8_t payload[RPMSG_BUF_SIZE];
+char payload[RPMSG_BUF_SIZE];
 
 #define STR_LEN 24
 #define	oneCyclesOn		700/5	// Stay on 700ns
@@ -93,7 +93,7 @@ void main(void)
 	int i, j;
 	// Set everything to background
 	for(i=0; i<STR_LEN; i++) {
-		color[i] = 0x100000;
+		color[i] = 0x010000;
 	}
 
 	__R30 = 0x0;
@@ -120,12 +120,13 @@ void main(void)
 			CT_INTC.SICR_bit.STS_CLR_IDX = FROM_ARM_HOST;
 			/* Receive all available messages, multiple messages can be sent per kick */
 			while (pru_rpmsg_receive(&transport, &src, &dst, payload, &len) == PRU_RPMSG_SUCCESS) {
-			    uint8_t *ret;
+			    char *ret;
 			    int index;
-			    index = atoi((char *)payload);			    
-			    ret = (uint8_t *)strchr((char *)payload, ' ');
+			    // Input format is:  index red green blue
+			    index = atoi(payload);			    
+			    ret = strchr(payload, ' ');
 			    if(index < STR_LEN) {
-				    color[index] = strtol((char *)&ret[1], NULL, 0);
+				    color[index] = strtol(&ret[1], NULL, 0);
 				    			// Output the string
 					for(j=0; j<STR_LEN; j++) {
 						for(i=23; i>=0; i--) {
