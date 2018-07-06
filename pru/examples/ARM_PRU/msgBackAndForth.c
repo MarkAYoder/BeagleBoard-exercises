@@ -49,7 +49,7 @@ volatile register uint32_t __R31;
  * PRU1 uses system event 18 (To ARM) and 19 (From ARM)
  */
 #define TO_ARM_HOST			18	
-#define FROM_ARM_HOST			19
+#define FROM_ARM_HOST		19
 
 /*
  * Using the name 'rpmsg-client-sample' will probe the RPMsg sample driver
