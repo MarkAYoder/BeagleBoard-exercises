@@ -1,36 +1,4 @@
-/*
- * Copyright (C) 2016 Texas Instruments Incorporated - http://www.ti.com/
- *
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *	* Redistributions of source code must retain the above copyright
- *	  notice, this list of conditions and the following disclaimer.
- *
- *	* Redistributions in binary form must reproduce the above copyright
- *	  notice, this list of conditions and the following disclaimer in the
- *	  documentation and/or other materials provided with the
- *	  distribution.
- *
- *	* Neither the name of Texas Instruments Incorporated nor the names of
- *	  its contributors may be used to endorse or promote products derived
- *	  from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
- * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
+// Use rpmsg to control the NeoPixels via /dev/rpmsg_pru30
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>			// atoi
@@ -90,13 +58,12 @@ void main(void)
 	volatile uint8_t *status;
 	
 	uint32_t color[STR_LEN];	// green, red, blue
+	uint8_t r, g, b;
 	int i, j;
 	// Set everything to background
 	for(i=0; i<STR_LEN; i++) {
 		color[i] = 0x010000;
 	}
-
-	__R30 = 0x0;
 
 	/* Allow OCP master port access by the PRU so the PRU can read external memories */
 	CT_CFG.SYSCFG_bit.STANDBY_INIT = 0;
@@ -120,15 +87,22 @@ void main(void)
 			CT_INTC.SICR_bit.STS_CLR_IDX = FROM_ARM_HOST;
 			/* Receive all available messages, multiple messages can be sent per kick */
 			while (pru_rpmsg_receive(&transport, &src, &dst, payload, &len) == PRU_RPMSG_SUCCESS) {
-			    char *ret;
-			    int index;
+			    char *ret;	// rest of payload after front character is removed
+			    int index;	// index of LED to control
 			    // Input format is:  index red green blue
 			    index = atoi(payload);			    
-			    ret = strchr(payload, ' ');
 			    if(index < STR_LEN) {
-				    color[index] = strtol(&ret[1], NULL, 0);
-				    			// Output the string
+			    	ret = strchr(payload, ' ');	// Skip over index
+				    r = strtol(&ret[1], NULL, 0);
+				    ret = strchr(&ret[1], ' ');	// Skip over r, etc.
+				    g = strtol(&ret[1], NULL, 0);
+				    ret = strchr(&ret[1], ' ');
+				    b = strtol(&ret[1], NULL, 0);
+
+				    color[index] = (g<<16)|(r<<8)|b;	// String wants GRB
+				    // Output the string
 					for(j=0; j<STR_LEN; j++) {
+						// Cycle through each bit
 						for(i=23; i>=0; i--) {
 							if(color[j] & (0x1<<i)) {
 								__R30 |= 0x1<<out;		// Set the GPIO pin to 1
