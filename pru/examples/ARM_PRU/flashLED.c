@@ -50,12 +50,12 @@ volatile register uint32_t __R31;
  * PRU1 uses system event 18 (To ARM) and 19 (From ARM)
  */
 #define TO_ARM_HOST			16	
-#define FROM_ARM_HOST			17
+#define FROM_ARM_HOST		17
 
 #define BLUE				0x1
 #define GREEN				0x2
 #define ORANGE				0x4
-#define RED				0x8
+#define RED					0x8
 
 /*
 * Using the name 'rpmsg-pru' will probe the rpmsg_pru driver found
@@ -108,14 +108,24 @@ void main(void)
 			while (pru_rpmsg_receive(&transport, &src, &dst, payload, &len) == PRU_RPMSG_SUCCESS) {
 				int i;
 				for (i = 0; i < len; i++) {
-					if (payload[i] == 'b' || payload[i] == 'B')
-						__R30 ^= BLUE;
-					else if (payload[i] == 'g' || payload[i] == 'G')
-						__R30 ^= GREEN;
-					else if (payload[i] == 'o' || payload[i] == 'O')
-						__R30 ^= ORANGE;
-					else if (payload[i] == 'r' || payload[i] == 'R')
-						__R30 ^= RED;
+					switch(payload[i]) {
+						case 'b':
+						case 'B':
+							__R30 ^= BLUE;
+							break;
+						case 'g':
+						case 'G':
+							__R30 ^= GREEN;
+							break;
+						case 'o':
+						case 'O':
+							__R30 ^= ORANGE;
+							break;
+						case 'r':
+						case 'R':
+							__R30 ^= RED;
+							break;
+					}
 				}
 			}
 		}
