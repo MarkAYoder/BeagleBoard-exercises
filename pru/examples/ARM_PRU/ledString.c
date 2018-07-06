@@ -43,10 +43,10 @@ char payload[RPMSG_BUF_SIZE];
 #define oneCyclesOff	800/5
 #define zeroCyclesOn	350/5
 #define zeroCyclesOff	600/5
-#define resetCycles		60000/5	// Must be at least 50u, use 60u
-#define out 1		// Bit number to output one
+#define resetCycles		51000/5	// Must be at least 50u, use 51u
+#define out 1					// Bit number to output on
 
-#define SPEED 20000000/5	// Time to wait between updates
+#define SPEED 20000000/5		// Time to wait between updates
 
 /*
  * main.c
@@ -90,8 +90,9 @@ void main(void)
 			    char *ret;	// rest of payload after front character is removed
 			    int index;	// index of LED to control
 			    // Input format is:  index red green blue
-			    index = atoi(payload);			    
-			    if(index < STR_LEN) {
+			    index = atoi(payload);	
+			    // Update the array, but don't write it out.
+			    if((index >=0) & (index < STR_LEN)) {
 			    	ret = strchr(payload, ' ');	// Skip over index
 				    r = strtol(&ret[1], NULL, 0);
 				    ret = strchr(&ret[1], ' ');	// Skip over r, etc.
@@ -100,6 +101,9 @@ void main(void)
 				    b = strtol(&ret[1], NULL, 0);
 
 				    color[index] = (g<<16)|(r<<8)|b;	// String wants GRB
+			    }
+			    // When index is -1, send the array to the LED string
+			    if(index == -1) {
 				    // Output the string
 					for(j=0; j<STR_LEN; j++) {
 						// Cycle through each bit
@@ -108,12 +112,12 @@ void main(void)
 								__R30 |= 0x1<<out;		// Set the GPIO pin to 1
 								__delay_cycles(oneCyclesOn-1);
 								__R30 &= ~(0x1<<out);	// Clear the GPIO pin
-								__delay_cycles(oneCyclesOff-2);
+								__delay_cycles(oneCyclesOff-14);
 							} else {
 								__R30 |= 0x1<<out;		// Set the GPIO pin to 1
 								__delay_cycles(zeroCyclesOn-1);
 								__R30 &= ~(0x1<<out);	// Clear the GPIO pin
-								__delay_cycles(zeroCyclesOff-2);
+								__delay_cycles(zeroCyclesOff-14);
 							}
 						}
 					}
