@@ -7,3 +7,5 @@ sudo ./rpi_vzytuchzth.sh
 
 # Let's try this
 git clone https://github.com/myDevicesIoT/cayennejs.git
+
+npm install cayennejs
