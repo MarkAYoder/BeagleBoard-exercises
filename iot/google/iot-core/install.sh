@@ -2,6 +2,8 @@
 
 git clone https://github.com/GoogleCloudPlatform/nodejs-docs-samples
 
+npm install -g      # This takes some 30 minutes
+
 export PROJECT_ID=core-iot-may
 
 gcloud pubsub subscriptions create \

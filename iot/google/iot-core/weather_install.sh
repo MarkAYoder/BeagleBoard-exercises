@@ -39,3 +39,6 @@ node cloudiot_mqtt_example_nodejs.js \
     --messageType=state
 
 gcloud pubsub subscriptions pull --auto-ack --limit 5 telemetry-subscription
+
+npm install -g firebase-tools
+
