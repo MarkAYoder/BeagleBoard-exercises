@@ -23,3 +23,19 @@ gcloud pubsub subscriptions create \
 gcloud iot registries create weather-station-registry \
     --region us-central1 \
     --state-pubsub-topic=telemetry-topic
+
+# Edit 
+#     // const payload = `${argv.registryId}/${argv.deviceId}-payload-${messagesSent}`;
+#    const payload = `{"hum":35, "temp":${messagesSent}}`;
+
+# These are for the weather station example
+node cloudiot_mqtt_example_nodejs.js \
+    --projectId=$PROJECT_ID \
+    --registryId=weather-station-registry \
+    --deviceId=my-device \
+    --privateKeyFile=rsa_private.pem \
+    --numMessages=5 \
+    --algorithm=RS256 \
+    --messageType=state
+
+gcloud pubsub subscriptions pull --auto-ack --limit 5 telemetry-subscription
