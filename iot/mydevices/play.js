@@ -9,6 +9,8 @@ const cayenneClient = new Cayenne.MQTT({
 });
 
 cayenneClient.connect((err, mqttClient) => {
+  var test = cayenneClient.getDataTopic(3);
+  console.log("test: " + test);
   // dashboard widget automatically detects datatype & unit
   cayenneClient.kelvinWrite(3, 65);
 
