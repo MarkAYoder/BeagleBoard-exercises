@@ -8,10 +8,11 @@ var fs            = require('fs');
 const filename = "/home/debian/exercises/iot/thingspeak/keys_office.json";
 const keys = JSON.parse(fs.readFileSync(filename));
 
-const results = 5;
+const results = 2;
 const url = util.format("https://api.thingspeak.com/channels/%s/feeds.json/?api_key=%s&results=%s",
     keys.channel_id, keys.write_key, results);
 
+// From: https://www.mathworks.com/help/thingspeak/readdata.html
 // Get all fields
 request(url, {timeout: 10000}, function (error, response, body) {
     if (!error && response.statusCode == 200) {
@@ -21,7 +22,7 @@ request(url, {timeout: 10000}, function (error, response, body) {
     }
 });
 
-
+// From: https://www.mathworks.com/help/thingspeak/readfield.html
 // Just get one field
 const field = 1;
 const url2 = util.format("https://api.thingspeak.com/channels/%s/fields/%s.json/?api_key=%s&results=%s",
