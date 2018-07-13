@@ -35,7 +35,7 @@
 const BMP085        = require('bmp085');
 const util          = require('util');
 const fs            = require('fs');
-const ms = 15*1000;               // Repeat time
+const ms = 15*60*1000;               // Repeat time
 const Cayenne = require('cayennejs');
 
 // console.log(util.inspect(request));
