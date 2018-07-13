@@ -12,7 +12,7 @@ cayenneClient.connect((err, mqttClient) => {
   var test = cayenneClient.getDataTopic(3);
   console.log("test: " + test);
   // dashboard widget automatically detects datatype & unit
-  cayenneClient.kelvinWrite(3, 65);
+  cayenneClient.fahrenheitWrite(3, 65);
 
   // sending raw values without datatypes
   cayenneClient.rawWrite(4, 123);
