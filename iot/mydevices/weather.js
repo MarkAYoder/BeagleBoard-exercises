@@ -72,11 +72,16 @@ cayenneClient.connect((err, mqttClient) => {
         // logger.debug("pressure: " + pressure);
         console.log("temp: " + temp);
         console.log("pressure: " + pressure);
-        
-        // sending raw values without datatypes
-        cayenneClient.pascalWrite(4, pressure);
 
         // dashboard widget automatically detects datatype & unit
         cayenneClient.celsiusWrite(3, temp);
+        
+        // sending raw values without datatypes
+        cayenneClient.pascalWrite(4, pressure);
+        
+        // subscribe to data channel for actions (actuators)
+        cayenneClient.on("cmd9", function(data) {
+        console.log(data);
+        });
     }
 });
