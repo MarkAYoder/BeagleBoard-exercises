@@ -35,8 +35,8 @@ client.on('connect', function() {
     function postTemp(data) {
         // logger.debug("data: " + util.inspect(data));
         console.log("data: " + util.inspect(data));
-        const temp = data.temperature;
-        const pressure = data.pressure.toFixed(1);
+        const temp = data.temperature*9/5+32;
+        const pressure = data.pressure.toFixed(1)>950?NaN:data.pressure.toFixed(1);
     
         // logger.debug("temp: " + temp);
         // logger.debug("pressure: " + pressure);
