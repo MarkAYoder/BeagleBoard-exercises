@@ -9,9 +9,9 @@
 
 // Logging 
 // https://www.npmjs.com/package/winston
-// var winston = require('winston');
+// const winston = require('winston');
 
-// var logger = new winston.Logger({
+// const logger = new winston.Logger({
 //     transports: [
 //         new winston.transports.File({
 //             level: 'debug',
@@ -31,27 +31,25 @@
 //     exitOnError: false
 // });
 
-// var request       = require('request');
-var BMP085        = require('bmp085');
-var util          = require('util');
-// var fs            = require('fs');
-var ms = 15*1000;               // Repeat time
-var Cayenne = require('cayennejs');
+// const request       = require('request');
+const BMP085        = require('bmp085');
+const util          = require('util');
+const fs            = require('fs');
+const ms = 15*1000;               // Repeat time
+const Cayenne = require('cayennejs');
 
 // console.log(util.inspect(request));
 // request.debug = true;
 
 // Initiate MQTT API
-const cayenneClient = new Cayenne.MQTT({
-  username: "9d396770-6f4d-11e8-84d1-4d9372e87a68",
-  password: "b977512eb348da0f00a02d000acf36d324ae6346",
-  clientId: "a4153ba0-6f4d-11e8-ab28-e7cb4e37d88a"
-});
+const filename = "/home/debian/exercises/iot/mydevices/keys_home.json";
+const keys = JSON.parse(fs.readFileSync(filename));
+const cayenneClient = new Cayenne.MQTT(keys);
 
-var barometer = new BMP085({device: '/dev/i2c-2', mode: '2'});
+const barometer = new BMP085({device: '/dev/i2c-2', mode: '2'});
 
 cayenneClient.connect((err, mqttClient) => {
-  var test = cayenneClient.getDataTopic(3);
+  const test = cayenneClient.getDataTopic(3);
   console.log("test: " + test);
 
     setInterval(readWeather, ms);
@@ -65,8 +63,8 @@ cayenneClient.connect((err, mqttClient) => {
     function postTemp(data) {
         // logger.debug("data: " + util.inspect(data));
         console.log("data: " + util.inspect(data));
-        var temp = data.temperature;
-        var pressure = data.pressure.toFixed(1);
+        const temp = data.temperature;
+        const pressure = data.pressure.toFixed(1);
     
         // logger.debug("temp: " + temp);
         // logger.debug("pressure: " + pressure);

@@ -1,12 +1,13 @@
 #!/usr/bin/env node
-var Cayenne = require('cayennejs');
+const Cayenne = require('cayennejs');
+const fs = require('fs');
+
+const filename = "/home/debian/exercises/iot/mydevices/keys_office.json";
+const keys = JSON.parse(fs.readFileSync(filename));
+// console.log("keys: " + keys);
 
 // Initiate MQTT API
-const cayenneClient = new Cayenne.MQTT({
-  username: "9d396770-6f4d-11e8-84d1-4d9372e87a68",
-  password: "b977512eb348da0f00a02d000acf36d324ae6346",
-  clientId: "a4153ba0-6f4d-11e8-ab28-e7cb4e37d88a"
-});
+const cayenneClient = new Cayenne.MQTT(keys);
 
 cayenneClient.connect((err, mqttClient) => {
   var test = cayenneClient.getDataTopic(3);
