@@ -7,10 +7,27 @@ var fs            = require('fs');
 
 const filename = "/home/debian/exercises/iot/thingspeak/keys_office.json";
 const keys = JSON.parse(fs.readFileSync(filename));
-const url = util.format("https://api.thingspeak.com/channels/%s/feeds.json/?api_key=%s&results=%s",
-    keys.channel_id, keys.write_key, 1);
 
+const results = 5;
+const url = util.format("https://api.thingspeak.com/channels/%s/feeds.json/?api_key=%s&results=%s",
+    keys.channel_id, keys.write_key, results);
+
+// Get all fields
 request(url, {timeout: 10000}, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+        console.log(body); 
+    } else {
+        console.log("error=" + error + " response=" + JSON.stringify(response));
+    }
+});
+
+
+// Just get one field
+const field = 1;
+const url2 = util.format("https://api.thingspeak.com/channels/%s/fields/%s.json/?api_key=%s&results=%s",
+    keys.channel_id, field, keys.write_key, results);
+
+request(url2, {timeout: 10000}, function (error, response, body) {
     if (!error && response.statusCode == 200) {
         console.log(body); 
     } else {
