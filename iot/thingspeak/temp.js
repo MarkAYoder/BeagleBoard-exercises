@@ -3,7 +3,7 @@
 const i2c     = require('i2c-bus');
 const util          = require('util');
 const fs            = require('fs');
-const ms = 15*1000;               // Repeat time
+const ms = 15*60*1000;               // Repeat time
 const mqtt = require('mqtt');
 const client = mqtt.connect('mqtt://mqtt.thingspeak.com');
 
