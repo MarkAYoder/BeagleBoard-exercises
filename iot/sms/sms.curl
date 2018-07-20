@@ -2,7 +2,7 @@
 message=${1-'This is a test'}
 curl 'https://api.twilio.com/2010-04-01/Accounts/AC407ab27aab63fa995dbc24c43a18d204/Messages.json' -X POST \
 --data-urlencode "Body=$message" \
---data-urlencode 'To=+18122333219' \
---data-urlencode 'From=+18122203095' \
+--data-urlencode 'To=+1-812-233-3219' \
+--data-urlencode 'From=+1-812-362-5896' \
 -u AC407ab27aab63fa995dbc24c43a18d204:99e44f31bc8c7981c4ae6d6cf9c65eda
 echo
