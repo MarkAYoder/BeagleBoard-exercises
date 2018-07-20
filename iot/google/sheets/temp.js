@@ -7,7 +7,7 @@ const readline = require('readline');
 const {google} = require('googleapis');
 
 const sheetID = '1BX6R8GhUqUXCKMP2NbJWRahR7Y2RR_ycLzn1Y3z7f7A';
-const ms = 15*60*1000;          // Repeat time
+const ms = 15*1000;          // Repeat time
 
 // Read the i2c temp sensors
 const bus = 2;
@@ -81,6 +81,8 @@ function getNewToken(oAuth2Client, callback) {
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
 
+var tempOld = [];
+
 function recordTemp(auth) {
   const sheets = google.sheets({version: 'v4', auth});
   setTimeout(recordTemp, ms, auth);
@@ -94,26 +96,32 @@ function recordTemp(auth) {
       console.log("temp: %dF (0x%s)", temp[i], tmp101[i].toString(16));
   }
 
-  sheets.spreadsheets.values.append({
-    spreadsheetId: sheetID,
-    range: 'A2',
-    // How the input data should be interpreted.
-    valueInputOption: 'USER_ENTERED',
-    // How the input data should be inserted.
-    insertDataOption: 'INSERT_ROWS', 
-    resource: {
-      values: [   // getTime returs ms.  Convert to days.  25569 is date(1910,1,1), adjust for EST
-          [
-            date.getTime()/1000/60/60/24 + 25569 - 4/24,
-            temp[0],
-            temp[1]
+  if((temp[0] !== tempOld[0]) || (temp[1] !== tempOld[1])) {
+    console.log("Updating from: " + tempOld[0] + " " + tempOld[1]);
+
+    sheets.spreadsheets.values.append({
+      spreadsheetId: sheetID,
+      range: 'A2',
+      // How the input data should be interpreted.
+      valueInputOption: 'USER_ENTERED',
+      // How the input data should be inserted.
+      insertDataOption: 'INSERT_ROWS', 
+      resource: {
+        values: [   // getTime returs ms.  Convert to days.  25569 is date(1910,1,1), adjust for EST
+            [
+              date.getTime()/1000/60/60/24 + 25569 - 4/24,
+              temp[0],
+              temp[1]
+            ]
           ]
-        ]
-    },
-  }, (err, res) => {
-    if (err) return console.log('The API returned an error: ' + err);
-    console.log("res: " + util.inspect(res.data.tableRange));
-  });
-  
+      },
+    }, (err, res) => {
+      if (err) return console.log('The API returned an error: ' + err);
+      console.log("res: " + util.inspect(res.data.tableRange));
+    });
+    
+    tempOld[0] = temp[0];
+    tempOld[1] = temp[1];
+  }
 
 }
