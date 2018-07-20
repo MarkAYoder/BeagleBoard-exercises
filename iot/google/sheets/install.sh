@@ -1,1 +1,1 @@
-npm install googleapis
+npm install googleapis i2c-bus

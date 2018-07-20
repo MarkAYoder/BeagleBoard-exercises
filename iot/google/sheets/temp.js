@@ -1,10 +1,18 @@
 #!/usr/bin/env node
 // From: https://developers.google.com/sheets/api/quickstart/nodejs#step_3_set_up_the_sample
+const i2c     = require('i2c-bus');
 const fs = require('fs');
 const util = require('util');
 const readline = require('readline');
 const {google} = require('googleapis');
+
 const sheetID = '1BX6R8GhUqUXCKMP2NbJWRahR7Y2RR_ycLzn1Y3z7f7A';
+const ms = 15*60*1000;          // Repeat time
+
+// Read the i2c temp sensors
+const bus = 2;
+const tmp101 = [0x48, 0x4a];
+const sensor = i2c.openSync(bus);
 
 // If modifying these scopes, delete credentials.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
@@ -14,7 +22,7 @@ const TOKEN_PATH = 'token.json';
 fs.readFile('credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
   // Authorize a client with credentials, then call the Google Sheets API.
-  authorize(JSON.parse(content), listMajors);
+  authorize(JSON.parse(content), recordTemp);
 });
 
 /**
@@ -72,10 +80,20 @@ function getNewToken(oAuth2Client, callback) {
  * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
-var date = new Date();
 
-function listMajors(auth) {
+function recordTemp(auth) {
   const sheets = google.sheets({version: 'v4', auth});
+  setTimeout(recordTemp, ms, auth);
+  var date = new Date();
+  var temp = [];
+    // Read the temp sensors
+  for(var i=0; i<tmp101.length; i++) {
+      // Convert from C to F
+      temp[i] = sensor.readByteSync(tmp101[i], 0x0)*9/5+32;
+      // temp[i] = Math.random();
+      console.log("temp: %dF (0x%s)", temp[i], tmp101[i].toString(16));
+  }
+
   sheets.spreadsheets.values.append({
     spreadsheetId: sheetID,
     range: 'A2',
@@ -84,16 +102,18 @@ function listMajors(auth) {
     // How the input data should be inserted.
     insertDataOption: 'INSERT_ROWS', 
     resource: {
-      values: [
+      values: [   // getTime returs ms.  Convert to days.  25569 is date(1910,1,1), adjust for EST
           [
-            date.getTime()/86400000,
-            300,
-            3.14
+            date.getTime()/1000/60/60/24 + 25569 - 4/24,
+            temp[0],
+            temp[1]
           ]
         ]
     },
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
-    console.log("res: " + util.inspect(res.data));
+    console.log("res: " + util.inspect(res.data.tableRange));
   });
+  
+
 }
