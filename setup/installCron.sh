@@ -16,6 +16,6 @@ NODE_PATH=/usr/local/lib/node_modules
 
 echo "
 # Remind me that the machine is running
-30 *    * * *   root    /home/yoder/BeagleBoard/exercises/iot/sms/sms.curl Local VM is running
+*  *    * * *   root    /home/yoder/BeagleBoard/exercises/iot/sms/sms.curl \`uname -n\` is running
 " >> /etc/crontab
 
