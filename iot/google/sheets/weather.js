@@ -15,11 +15,13 @@ const barometer = new BMP085({device: '/dev/i2c-2', mode: '2'});
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 const TOKEN_PATH = 'token.json';
 
+var authGlobal;
+
 // Load client secrets from a local file.
 fs.readFile('credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
   // Authorize a client with credentials, then call the Google Sheets API.
-  authorize(JSON.parse(content), recordTemp);
+  authorize(JSON.parse(content), readWeather);
 });
 
 /**
@@ -73,26 +75,32 @@ function getNewToken(oAuth2Client, callback) {
 }
 
 function readWeather(auth) {
-    barometer.read(postTemp, auth);
+    authGlobal = auth;
+    barometer.read(postTemp);
 }
 
-var tempOld = [];
+var tempOld = NaN;
+var pressOld = NaN;
 
-function recordTemp(auth) {
+function postTemp(data) {
+  var auth = authGlobal;
+  setTimeout(readWeather, ms, auth);
+
+  // console.log("auth: " + auth);
   const sheets = google.sheets({version: 'v4', auth});
-  setTimeout(recordTemp, ms, auth);
   var date = new Date();
-  var temp = [];
-    // Read the temp sensors
-  for(var i=0; i<tmp101.length; i++) {
-      // Convert from C to F
-      temp[i] = sensor.readByteSync(tmp101[i], 0x0)*9/5+32;
-      // temp[i] = Math.random();
-      console.log("temp: %dF (0x%s)", temp[i], tmp101[i].toString(16));
-  }
 
-  if((temp[0] !== tempOld[0]) || (temp[1] !== tempOld[1])) {
-    console.log("Updating from: " + tempOld[0] + " " + tempOld[1]);
+  // console.log("data: " + util.inspect(data));
+  const temp = data.temperature*9/5+32;
+  const pressure = data.pressure.toFixed(1)>950?NaN:data.pressure.toFixed(1);
+
+  // logger.debug("temp: " + temp);
+  // logger.debug("pressure: " + pressure);
+  console.log("temp: " + temp);
+  console.log("pressure: " + pressure);
+
+  if((temp !== tempOld) || (pressure !== pressOld)) {
+    console.log("Updating from: " + tempOld + " " + pressOld);
 
     sheets.spreadsheets.values.append({
       spreadsheetId: sheetID,
@@ -105,8 +113,8 @@ function recordTemp(auth) {
         values: [   // getTime returs ms.  Convert to days.  25569 is date(1910,1,1), adjust for EST
             [
               date.getTime()/1000/60/60/24 + 25569 - 4/24,
-              temp[0],
-              temp[1]
+              temp,
+              pressure
             ]
           ]
       },
@@ -115,8 +123,8 @@ function recordTemp(auth) {
       console.log("res: " + util.inspect(res.data.tableRange));
     });
     
-    tempOld[0] = temp[0];
-    tempOld[1] = temp[1];
+    tempOld  = temp;
+    pressOld = pressure;
   }
 
 }
