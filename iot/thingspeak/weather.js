@@ -21,8 +21,8 @@ console.log("url: " + url);
 const barometer = new BMP085({device: '/dev/i2c-2', mode: '2'});
 
 client.on('connect', function() {
-    var tempOld  = 0;
-    var pressOld = 0;
+    var tempOld  = NaN;
+    var pressOld = NaN;
 
     setInterval(readWeather, ms);
     
@@ -43,7 +43,7 @@ client.on('connect', function() {
         console.log("temp: " + temp);
         console.log("pressure: " + pressure);
 
-        if((temp !== tempOld) || (pressure !== pressOld)) {
+        if(temp !== tempOld) {
           console.log("Updating from: " + tempOld + " " + pressOld);
           client.publish(url, util.format("field1=%s&field2=%s", temp, pressure));
           tempOld  = temp;
