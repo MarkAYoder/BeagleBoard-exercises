@@ -90,7 +90,7 @@ function postTemp(data) {
   const sheets = google.sheets({version: 'v4', auth});
   var date = new Date();
 
-  // console.log("data: " + util.inspect(data));
+  console.log("data: " + util.inspect(data));
   const temp = data.temperature*9/5+32;
   const pressure = data.pressure.toFixed(1)>950?NaN:data.pressure.toFixed(1);
 
@@ -99,7 +99,7 @@ function postTemp(data) {
   console.log("temp: " + temp);
   console.log("pressure: " + pressure);
 
-  if((temp !== tempOld) || (pressure !== pressOld)) {
+  if(temp !== tempOld) {
     console.log("Updating from: " + tempOld + " " + pressOld);
 
     sheets.spreadsheets.values.append({
