@@ -5,22 +5,10 @@ http://github.com/zestyping/openpixelcontrol
 
 Runs an LED around in a circle
 
-To run:
-First start the gl simulator using, for example, the included "wall" layout
-
-    make
-    bin/gl_server layouts/wall.json
-
-Then run this script in another shell to send colors to the simulator
-
-    python_clients/example.py
-
 """
 
 import time
-import random
 import opc
-from collections import deque
 
 ADDRESS = 'localhost:7890'
 

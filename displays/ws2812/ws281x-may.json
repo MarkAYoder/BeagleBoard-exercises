@@ -1,9 +1,9 @@
 {
 	"outputMode": "ws281x",
 	"outputMapping": "original-ledscape",
-	"demoMode": "id",
-	"ledsPerStrip": 100,
-	"usedStripCount": 3,
+	"demoMode": "fade",
+	"ledsPerStrip": 16,
+	"usedStripCount": 1,
 	"colorChannelOrder": "BRG",
 	"opcTcpPort": 7890,
 	"opcUdpPort": 7890,
