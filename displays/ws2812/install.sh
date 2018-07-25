@@ -13,8 +13,12 @@ node pinmap.js
 cd ..
 ./opc_server --config ../ws281x-may.json &
 
+# If running circle.py
+ln -s openpixelcontrol/python/opc.py .
+./circle.py
+
 # Start a pattern
-cd openpixelcontrol/python_clients
+cd openpixelcontrol/python
 ./example.py
 
 # Get opc_client for rgp_test_pattern.py
