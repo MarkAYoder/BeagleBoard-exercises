@@ -2,7 +2,7 @@
 git clone https://github.com/Yona-Appletree/LEDscape.git
 
 # Next get openpixel control
-https://github.com/zestyping/openpixelcontrol
+git clone https://github.com/zestyping/openpixelcontrol
 
 # Find which channels are on which pins
 cd LEDscape/pru
@@ -23,7 +23,7 @@ wget https://raw.githubusercontent.com/mens-amplio/mens-amplio/master/modeling/o
 # js version
 npm install -g open-pixel-control
 
-# Adafruit library,, not used at this time.q
+# Adafruit library,, not used at this time.
 # https://learn.adafruit.com/adafruit-neopixel-uberguide
 # https://learn.adafruit.com/adafruit-neopixel-uberguide/neomatrix-library
 wget https://github.com/adafruit/Adafruit_NeoMatrix/archive/master.zip
