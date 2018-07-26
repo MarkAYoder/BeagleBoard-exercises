@@ -35,7 +35,7 @@
 const BMP085        = require('bmp085');
 const util          = require('util');
 const fs            = require('fs');
-const ms = 15*60*1000;               // Repeat time
+const ms = 15*1000;               // Repeat time
 const Cayenne = require('cayennejs');
 
 // console.log(util.inspect(request));
@@ -47,6 +47,9 @@ const keys = JSON.parse(fs.readFileSync(filename));
 const cayenneClient = new Cayenne.MQTT(keys);
 
 const barometer = new BMP085({device: '/dev/i2c-2', mode: '2'});
+
+var tempOld = NaN;
+var pressOld = NaN;
 
 cayenneClient.connect((err, mqttClient) => {
   const test = cayenneClient.getDataTopic(3);
@@ -71,15 +74,20 @@ cayenneClient.connect((err, mqttClient) => {
         console.log("temp: " + temp);
         console.log("pressure: " + pressure);
 
-        // dashboard widget automatically detects datatype & unit
-        cayenneClient.celsiusWrite(3, temp);
-        
-        // sending raw values without datatypes
-        cayenneClient.pascalWrite(4, pressure);
-        
-        // subscribe to data channel for actions (actuators)
-        cayenneClient.on("cmd9", function(data) {
-        console.log(data);
-        });
+        if(temp !== tempOld) {
+          console.log("Updating from: " + tempOld + " " + pressOld);
+          // dashboard widget automatically detects datatype & unit
+          cayenneClient.celsiusWrite(3, temp);
+          
+          // sending raw values without datatypes
+          cayenneClient.pascalWrite(4, pressure);
+          
+          // subscribe to data channel for actions (actuators)
+          cayenneClient.on("cmd9", function(data) {
+          console.log(data);
+          });
+          tempOld  = temp;
+          pressOld = pressure;
+        }
     }
 });
