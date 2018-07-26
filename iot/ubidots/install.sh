@@ -1,1 +1,1 @@
-npm install mqtt
+npm install mqtt i2c-bus
