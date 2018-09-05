@@ -49,7 +49,7 @@ static __u16 neutral_bmp[]=
 static void help(void) __attribute__ ((noreturn));
 
 static void help(void) {
-	fprintf(stderr, "Usage: matrixLEDi2c (hardwired to bus 3, address 0x70)\n");
+	fprintf(stderr, "Usage: matrixLEDi2c (hardwired to bus 2, address 0x70)\n");
 	exit(1);
 }
 
@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
         printf("Running demo %d\n", demo);
     }
 
-	i2cbus = lookup_i2c_bus("1");
+	i2cbus = lookup_i2c_bus("2");
 	printf("i2cbus = %d\n", i2cbus);
 	if (i2cbus < 0)
 		help();
