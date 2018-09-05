@@ -7,10 +7,10 @@
 var b = require('bonescript'),
     fs = require('fs');
     
-var eQEP0 = "/sys/devices/ocp.3/48300000.epwmss/48300180.eqep",
-    eQEP1 = "/sys/devices/ocp.3/48302000.epwmss/48302180.eqep",
-    eQEP2 = "/sys/devices/ocp.3/48304000.epwmss/48304180.eqep",
-    eQEP = eQEP2;
+var eQEP0 = "/sys/devices/platform/ocp/48300000.epwmss/48300180.eqep",
+    eQEP1 = "/sys/devices/platform/ocp/48302000.epwmss/48302180.eqep",
+    eQEP2 = "/sys/devices/platform/ocp/48304000.epwmss/48304180.eqep",
+    eQEP = eQEP1;
 	
 var oldData,			// pervious data read
     period = 10;	// in ms
