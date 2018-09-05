@@ -1,0 +1,3 @@
+cp gen/pru_gpiotoggle.out ~/PRU_gpioToggle.out
+sudo rmmod -f pru_rproc
+sudo insmod /lib/modules/4.4.9-ti-r25/kernel/drivers/remoteproc/pru_rproc.ko

@@ -1,0 +1,44 @@
+/*
+ * This is a template-generated file from BoneScript
+ */
+
+/dts-v1/;
+/plugin/;
+
+/{
+    compatible = "ti,beaglebone", "ti,beaglebone-black";
+    part_number = "AMBIENT-SENSORS-BEAGLEBONE-GPIOS";
+
+    exclusive-use =
+        "P8.12",
+        "pr1_pru0_pru_r30_14",
+        "P8.11",
+        "pr1_pru0_pru_r30_15",
+        "P8.16",
+        "pr1_pru0_pru_r31_14";
+
+    fragment@0 {
+        target = <&am33xx_pinmux>;
+        __overlay__ {
+            bs_pinmode_gpio_pins: pinmux_bs_pinmode_gpio_pins {
+                pinctrl-single,pins = <
+				0x030 0x16  /* P8.12 mode6 output */
+				0x034 0x16  /* P8.11 mode6 output */
+				0x038 0x26  /* P8.16 mode6 input */
+				>;
+            };
+        };
+    };
+
+    fragment@1 {
+        target = <&ocp>;
+        __overlay__ {
+            bs_pinmode_gpio_pins_pinmux {
+                compatible = "bone-pinmux-helper";
+                status = "okay";
+                pinctrl-names = "default";
+                pinctrl-0 = <&bs_pinmode_gpio_pins>;
+            };
+        };
+    };
+};

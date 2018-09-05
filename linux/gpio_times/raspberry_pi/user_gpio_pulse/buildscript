@@ -1,0 +1,1 @@
+cc -o user_pulse user_pulse.c -lbcm2835
