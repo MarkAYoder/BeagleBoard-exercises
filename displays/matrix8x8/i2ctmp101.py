@@ -3,8 +3,8 @@
 
 import smbus
 import time
-bus = smbus.SMBus(1)
-address = 0x49
+bus = smbus.SMBus(2)
+address = 0x48
 
 while True:
     temp = bus.read_byte_data(address, 0)
