@@ -2,10 +2,10 @@
 
 export GPIO=/sys/class/gpio
 export OCP=/sys/devices/platform/ocp
-export LED=49
-export RESET=113    # RESET - V14 - GP0_6
-export DC=116       # D/C - U16 - GP0_3
-export CS=29        # CS - H18
+export LED=51
+export RESET=12 # RESET - P9_20
+export DC=13    # D/C   - P9_19
+export CS=5     # CS    - P9_17
 
 sudo bash << EOF
     # Save contents of framebuffer
@@ -24,7 +24,7 @@ sudo bash << EOF
     echo 1   > $GPIO/gpio$RESET/value
     
     # Remove access so the framebuffer can use it
-    echo $RESET  > $GPIO/unexport # RESET - V14 - GP0_PIN4
+    # echo $RESET  > $GPIO/unexport # RESET - V14 - GP0_PIN4
 
     # Fire up the framebuffer
     echo Firing up framebuffer
