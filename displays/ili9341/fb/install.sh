@@ -44,7 +44,7 @@ sudo apt install imagemagick
 
 # For using spi 0
 MISO    P9_21
-LED     P9_14
+LED     P9_16
 SCK     P9_22
 MOSI    P9_18
 D/C     P9_19
