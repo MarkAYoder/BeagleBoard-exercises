@@ -7,7 +7,7 @@
 # config-pin P9_26 gpio
 # config-pin P9_27 gpio
 
-# SPI0 config
+# SPI_PORT 0 config
 config-pin P9_19 gpio
 config-pin P9_20 gpio
 
