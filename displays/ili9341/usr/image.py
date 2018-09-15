@@ -33,10 +33,10 @@ import Adafruit_GPIO.SPI as SPI
 # SPI_DEVICE = 0
 
 # BeagleBone Black configuration.
-DC  = 'P9_26'
-RST = 'P9_27'
-SPI_PORT = 2
-SPI_DEVICE = 0
+# DC  = 'P9_26'
+# RST = 'P9_27'
+# SPI_PORT = 2
+# SPI_DEVICE = 0
 
 # SPI 0 pins
 DC = 'P9_19'
