@@ -9,3 +9,7 @@ cd Adafruit_Python_ILI9341
 sudo python setup.py install
 
 sudo pip install spidev
+
+
+# python 3
+sudo python3 setup.py install
