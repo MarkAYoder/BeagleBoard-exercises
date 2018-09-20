@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Copyright (c) 2014 Adafruit Industries
 # Author: Tony DiCola
 #
@@ -33,9 +33,15 @@ import Adafruit_GPIO.SPI as SPI
 # SPI_DEVICE = 0
 
 # BeagleBone Black configuration.
-DC  = 'P9_26'
-RST = 'P9_27'
-SPI_PORT = 2
+# DC  = 'P9_26'
+# RST = 'P9_27'
+# SPI_PORT = 2
+# SPI_DEVICE = 0
+
+# SPI 0 pins
+DC = 'P9_19'
+RST = 'P9_20'
+SPI_PORT = 1        # This 1 more than the number in the P9 table
 SPI_DEVICE = 0
 
 # Create TFT LCD display class.
@@ -49,7 +55,7 @@ print('Loading image...')
 image = Image.open('cat.jpg')
 
 # Resize the image and rotate it so it's 240x320 pixels.
-image = image.rotate(-90).resize((240, 320))
+image = image.rotate(90).resize((240, 320))
 
 # Draw the image on the display hardware.
 print('Drawing image')

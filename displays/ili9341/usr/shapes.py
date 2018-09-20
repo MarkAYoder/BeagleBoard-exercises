@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Copyright (c) 2014 Adafruit Industries
 # Author: Tony DiCola
 #
@@ -35,9 +35,15 @@ import Adafruit_GPIO.SPI as SPI
 # SPI_DEVICE = 0
 
 # BeagleBone Black configuration.
-DC = 'P9_26'
-RST = 'P9_27'
-SPI_PORT = 2
+# DC = 'P9_15'
+# RST = 'P9_12'
+# SPI_PORT = 1
+# SPI_DEVICE = 0
+
+# SPI 0 pins
+DC = 'P9_19'
+RST = 'P9_20'
+SPI_PORT = 1        # This 1 more than the number in the P9 table
 SPI_DEVICE = 0
 
 # Create TFT LCD display class.
