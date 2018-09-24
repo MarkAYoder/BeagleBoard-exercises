@@ -1,1 +1,1 @@
-apt-get install linux-headers-`uname -r`
+time sudo apt install linux-headers-`uname -r`
