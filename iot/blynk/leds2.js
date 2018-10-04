@@ -4,17 +4,17 @@ const Blynk = require('blynk-library');
 const b = require('bonescript');
 const util = require('util');
 
-const LEDs = ['GP1_4', 'GREEN', 'RED'];
-const button = 'GP1_3';
+const LEDs = ['USR1', 'USR2', 'USR3'];
+const button = 'P9_25';
 
 var i;
 for(i=0; i<LEDs.length; i++) {
-    // console.log("pinMode: " + i);
+    console.log("pinMode: " + i);
     b.pinMode(LEDs[i], b.OUTPUT);
 }
 b.pinMode(button, b.INPUT);
 
-const AUTH = 'dc1c083949324ca28fbf393231f8cf09';
+const AUTH = '087e4c21298e413ab9d5f87a5279e5c9';
 
 var blynk = new Blynk.Blynk(AUTH);
 
