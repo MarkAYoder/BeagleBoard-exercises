@@ -1,3 +1,4 @@
 #!/bin/sh
+# This code is from Julia Cartwright julia@kernel.org
 
-cyclictest -m -S -p 90 -h 100 -l "${1:-100000}"
+cyclictest -m -S -p 90 -h 400 -l "${1:-100000}"
