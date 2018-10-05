@@ -1,0 +1,3 @@
+#!/bin/sh
+
+cyclictest -m -S -p 90 -h 100 -l "${1:-100000}"
