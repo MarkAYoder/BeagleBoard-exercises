@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# From: https://developers.google.com/sheets/api/quickstart/python
 # Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,12 +25,12 @@ import time, sys
 SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
 
 # The ID and range of a sample spreadsheet.
-SAMPLE_SPREADSHEET_ID = '1hGMHMLwiG3zEDM19zJehpLjTDbVi8LOjVKhD8R0dBO0'
-SAMPLE_RANGE_NAME = 'A2'
+SPREADSHEET_ID = '1hGMHMLwiG3zEDM19zJehpLjTDbVi8LOjVKhD8R0dBO0'
+RANGE_NAME = 'A2'
 
 def main():
     """Shows basic usage of the Sheets API.
-    Prints values from a sample spreadsheet.
+    Writes values to a sample spreadsheet.
     """
     store = file.Storage('tokenPython.json')
     creds = store.get()
@@ -39,29 +40,23 @@ def main():
     service = build('sheets', 'v4', http=creds.authorize(Http()))
 
     # Call the Sheets API
-    SPREADSHEET_ID = '1hGMHMLwiG3zEDM19zJehpLjTDbVi8LOjVKhD8R0dBO0'
-    RANGE_NAME = 'A2'
+    # Compute a timestamp and pass the first two arguments
     values = [ [time.time()/60/60/24+ 25569 - 4/24, sys.argv[1], sys.argv[2]]]
     body = { 'values': values }
     result = service.spreadsheets().values().append(spreadsheetId=SPREADSHEET_ID,
-                                                range=RANGE_NAME,
-                                                #  How the input data should be interpreted.
-                                                valueInputOption='USER_ENTERED',
-                                                # How the input data should be inserted.
-                                                # insertDataOption='INSERT_ROWS'
-                                                body=body
-                                                ).execute()
+                            range=RANGE_NAME,
+                            #  How the input data should be interpreted.
+                            valueInputOption='USER_ENTERED',
+                            # How the input data should be inserted.
+                            # insertDataOption='INSERT_ROWS'
+                            body=body
+                            ).execute()
     
-    values = result.get('values', [])
-    print("%s" % values)
+    updates = result.get('updates', [])
+    # print(updates)
 
-    # if not values:
-    #     print('No data found.')
-    # else:
-    #     print('Name, Major:')
-    #     for row in values:
-    #         # Print columns A and E, which correspond to indices 0 and 4.
-    #         print('%s, %s' % (row[0], row[4]))
+    if not updates:
+        print('Not updated')
 
 if __name__ == '__main__':
     main()
