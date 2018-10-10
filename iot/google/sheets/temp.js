@@ -92,7 +92,6 @@ function recordTemp(auth) {
   for(var i=0; i<tmp101.length; i++) {
       // Convert from C to F
       temp[i] = sensor.readByteSync(tmp101[i], 0x0)*9/5+32;
-      // temp[i] = Math.random();
       console.log("temp: %dF (0x%s)", temp[i], tmp101[i].toString(16));
   }
 

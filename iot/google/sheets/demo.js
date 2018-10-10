@@ -74,12 +74,9 @@ function getNewToken(oAuth2Client, callback) {
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
 
-var tempOld = [];
-
 function recordTemp(auth) {
   const sheets = google.sheets({version: 'v4', auth});
   var date = new Date();
-  var temp = [];
     // Read the variable data
   var var1 = process.argv[2];
   var var2 = process.argv[3];
