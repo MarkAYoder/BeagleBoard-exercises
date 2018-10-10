@@ -18,6 +18,7 @@ from __future__ import print_function
 from googleapiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file, client, tools
+import time, sys
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
@@ -40,7 +41,7 @@ def main():
     # Call the Sheets API
     SPREADSHEET_ID = '1hGMHMLwiG3zEDM19zJehpLjTDbVi8LOjVKhD8R0dBO0'
     RANGE_NAME = 'A2'
-    values = [ [1, 2, 3]]
+    values = [ [time.time()/60/60/24+ 25569 - 4/24, sys.argv[1], sys.argv[2]]]
     body = { 'values': values }
     result = service.spreadsheets().values().append(spreadsheetId=SPREADSHEET_ID,
                                                 range=RANGE_NAME,
