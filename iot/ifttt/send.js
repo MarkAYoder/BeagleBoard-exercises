@@ -2,13 +2,13 @@
 var request = require('request');
 var qs = require('querystring');
 // var event = 'my_test';
-var event = 'my_Web';
+// var event = 'my_Web';
 // var event = 'tweet';
 // var event = 'my_mail';
-// var event = 'sms';
+var event = 'sms';
 // var event = 'notification';
 // var event = 'phone';
-var key = 'bHddeE_oLPxdP0ZKABzAe4';
+var key = 'EG33hBxy7L7W3DvKnNoCh';
 var string = {value1: 'My', value2: 'Test 2', value3: 'BeagleBone'};
 
 var url = 'https://maker.ifttt.com/trigger/' + event + '/with/key/' + key + 
