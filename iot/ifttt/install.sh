@@ -1,2 +1,3 @@
 # From: https://ifttt.com/maker
-npm install -g request
+sudo npm install -g request
+export NODE_PATH=$NODE_PATH:/usr/lib/node_modules
