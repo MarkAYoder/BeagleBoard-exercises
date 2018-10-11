@@ -19,4 +19,7 @@ ip_forward=/proc/sys/net/ipv4/ip_forward
 # Set up IP masquerading on the host so the bone can reach the outside world
 sudo iptables -t nat -A POSTROUTING -s $beagleAddr -o $interface -j MASQUERADE
 # set IP forwarding
-sudo sh -c "echo 1 > $ip_forward"
+# Old way
+# sudo sh -c "echo 1 > $ip_forward"
+# New way
+sudo sysctl net.ipv4.ip_forward=1
