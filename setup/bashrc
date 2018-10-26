@@ -49,6 +49,7 @@ if [[ -e /etc/dogtag ]]
 
 else        # Desktop
     alias go=xdg-open
+    # https://servicedesk.rose-hulman.edu/knowledgebase/article/KA-01093/en-us
     alias vpn='sudo openconnect --juniper sslvpn.rose-hulman.edu'
     # DSP First
     export PATH=$PATH:~/cdrom/support/scripts
