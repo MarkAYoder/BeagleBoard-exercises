@@ -1,0 +1,51 @@
+From 871eae0e32edd30f53ca506533f1626a0a30f782 Mon Sep 17 00:00:00 2001
+From: "Mark A. Yoder" <Mark.A.Yoder@Rose-Hulman.edu>
+Date: Fri, 26 Oct 2018 13:12:14 -0400
+Subject: [PATCH] Changed i2c speed to 100,000 for the BeagleBone
+
+---
+ examples/fbuf.cpp   | 4 ++--
+ examples/interp.cpp | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/examples/fbuf.cpp b/examples/fbuf.cpp
+index c9d611f..a43b323 100644
+--- a/examples/fbuf.cpp
++++ b/examples/fbuf.cpp
+@@ -14,8 +14,8 @@
+ 
+ // Valid frame rates are 1, 2, 4, 8, 16, 32 and 64
+ // The i2c baudrate is set to 1mhz to support these
+-#define FPS 8
+-#define FRAME_TIME_MICROS (1000000/FPS)
++#define FPS 4
++#define FRAME_TIME_MICROS (100000/FPS)
+ 
+ // Despite the framerate being ostensibly FPS hz
+ // The frame is often not ready in time
+diff --git a/examples/interp.cpp b/examples/interp.cpp
+index f4b9455..c3fdef0 100644
+--- a/examples/interp.cpp
++++ b/examples/interp.cpp
+@@ -11,15 +11,15 @@
+ 
+ #define MLX_I2C_ADDR 0x33
+ 
+-#define IMAGE_SCALE 4
++#define IMAGE_SCALE 5
+ 
+ #define OUTPUT_W (int)(24*2)
+ #define OUTPUT_H (int)(32*2)
+ 
+ // Valid frame rates are 1, 2, 4, 8, 16, 32 and 64
+ // The i2c baudrate is set to 1mhz to support these
+-#define FPS 8
+-#define FRAME_TIME_MICROS (1000000/FPS)
++#define FPS 4
++#define FRAME_TIME_MICROS (100000/FPS)
+ 
+ // Despite the framerate being ostensibly FPS hz
+ // The frame is often not ready in time
+-- 
+2.11.0
+

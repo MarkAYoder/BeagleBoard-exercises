@@ -6,6 +6,9 @@
 git clone https://github.com/pimoroni/mlx90640-library.git
 sudo apt install libi2c-dev
 
+cd mlx90640-library
+git apply ../bone.patch     # Sets the i2c speed to 100,000
+
 make I2C_MODE=LINUX
 
 # For Python
