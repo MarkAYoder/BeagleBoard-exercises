@@ -10,9 +10,9 @@ const port = 9090, // Port to listen on
     util  = require('util'),
     qs    = require('querystring'),
     b     = require('bonescript');
-const key = 'bHddeE_oLPxdP0ZKABzAe4';
-const LED = 'GP1_4';
-const button = 'GP1_3';
+const key = 'EG33hBxy7L7W3DvKnNoCh';
+const LED = 'P9_14';
+const button = 'P9_12';
 const event = 'LED';
     
 b.pinMode(LED, b.OUTPUT);

@@ -1,18 +1,11 @@
 #!/usr/bin/env node
 // From: https://developers.google.com/sheets/api/quickstart/nodejs#step_3_set_up_the_sample
-const i2c     = require('i2c-bus');
 const fs = require('fs');
 const util = require('util');
 const readline = require('readline');
 const {google} = require('googleapis');
 
-const sheetID = '1BX6R8GhUqUXCKMP2NbJWRahR7Y2RR_ycLzn1Y3z7f7A';
-const ms = 15*1000;          // Repeat time
-
-// Read the i2c temp sensors
-const bus = 2;
-const tmp101 = [0x48, 0x4a];
-const sensor = i2c.openSync(bus);
+const sheetID = '1hGMHMLwiG3zEDM19zJehpLjTDbVi8LOjVKhD8R0dBO0';
 
 // If modifying these scopes, delete credentials.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
@@ -76,51 +69,38 @@ function getNewToken(oAuth2Client, callback) {
 }
 
 /**
- * Prints the names and majors of students in a sample spreadsheet:
+ * Prints two variables in a sample spreadsheet:
  * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
 
-var tempOld = [];
-
 function recordTemp(auth) {
   const sheets = google.sheets({version: 'v4', auth});
-  setTimeout(recordTemp, ms, auth);
   var date = new Date();
-  var temp = [];
-    // Read the temp sensors
-  for(var i=0; i<tmp101.length; i++) {
-      // Convert from C to F
-      temp[i] = sensor.readByteSync(tmp101[i], 0x0)*9/5+32;
-      console.log("temp: %dF (0x%s)", temp[i], tmp101[i].toString(16));
-  }
+    // Read the variable data
+  var var1 = process.argv[2];
+  var var2 = process.argv[3];
+  console.log('Got: ' + var1 + ", " + var2);
 
-  if((temp[0] !== tempOld[0]) || (temp[1] !== tempOld[1])) {
-    console.log("Updating from: " + tempOld[0] + " " + tempOld[1]);
-
-    sheets.spreadsheets.values.append({
-      spreadsheetId: sheetID,
-      range: 'A2',
-      // How the input data should be interpreted.
-      valueInputOption: 'USER_ENTERED',
-      // How the input data should be inserted.
-      insertDataOption: 'INSERT_ROWS', 
-      resource: {
-        values: [   // getTime returs ms.  Convert to days.  25569 is date(1910,1,1), adjust for EST
-            [
-              date.getTime()/1000/60/60/24 + 25569 - 4/24,
-              temp[0],
-              temp[1]
-            ]
+  sheets.spreadsheets.values.append({
+    spreadsheetId: sheetID,
+    range: 'A2',
+    // How the input data should be interpreted.
+    valueInputOption: 'USER_ENTERED',
+    // How the input data should be inserted.
+    insertDataOption: 'INSERT_ROWS', 
+    resource: {
+      values: [   // getTime returs ms.  Convert to days.  25569 is date(1910,1,1), adjust for EST
+          [
+            date.getTime()/1000/60/60/24 + 25569 - 4/24,
+            var1,
+            var2
           ]
-      },
-    }, (err, res) => {
-      if (err) return console.log('The API returned an error: ' + err);
-      console.log("res: " + util.inspect(res.data.tableRange));
-    });
-    
-    tempOld[0] = temp[0];
-    tempOld[1] = temp[1];
-  }
+        ]
+    },
+  }, (err, res) => {
+    if (err) return console.log('The API returned an error: ' + err);
+    console.log("res: " + util.inspect(res.data.tableRange));
+  });
 
 }
