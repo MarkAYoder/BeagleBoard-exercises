@@ -9,7 +9,16 @@ sudo apt install libi2c-dev
 cd mlx90640-library
 git apply ../bone.patch     # Sets the i2c speed to 100,000
 
-make I2C_MODE=LINUX
+# To autostart
+# sudo cp IRarray.service /lib/systemd/system
+# sudo systemctl start IRarray
+# To make it run on startup
+# sudo systemctl enable IRarray
+
+# You can also
+# sudo systemctl stop IRarray
+# sudo systemctl disenable IRarray
+
 
 # For Python
 # sudo apt install swig
