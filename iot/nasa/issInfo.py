@@ -21,13 +21,14 @@ result = json.loads(response.read())
 location = result['iss_position']
 lat = location['latitude']
 lon = location['longitude']
-print('Latitude: ', lat, ' Longitude: ', lon)
+print('Current Location : ', lat, ', ', lon)
 
 
-url = 'http://api.open-notify.org/iss-pass.json?lat=39.5&lon=-87.2'
+url = 'http://api.open-notify.org/iss-pass.json?lat=39.5&lon=-87.2&n=10'
 response = urllib.request.urlopen(url)
 result = json.loads(response.read())
 # print(result)
 
-over = result['response'][0]['risetime']
-print('Next time overhead: ', time.ctime(over))
+print('Next time overhead: ')
+for over in result['response']:
+    print(time.ctime(over['risetime']))
