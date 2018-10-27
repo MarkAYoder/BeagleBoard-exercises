@@ -1,0 +1,11 @@
+[Unit]
+Description=IRarray server
+
+[Service]
+WorkingDirectory=/home/debian/exercises/sensors/IRArray
+EnvironmentFile=
+ExecStart=/home/debian/exercises/sensors/IRArray/startAll.sh
+SyslogIdentifier=IRarray
+
+[Install]
+WantedBy=multi-user.target
