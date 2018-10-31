@@ -33,5 +33,5 @@ sudo bash << EOF
     sleep 0.1
     
     # Insert the framebuffer modules
-    modprobe fbtft_device name=adafruit28 busnum=1 rotate=90 gpios=reset:$RESET,dc:$DC cs=0
+    modprobe fbtft_device name=adafruit28 busnum=1 rotate=0 gpios=reset:$RESET,dc:$DC cs=0
 EOF
