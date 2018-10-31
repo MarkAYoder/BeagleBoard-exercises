@@ -5,9 +5,13 @@
 export LED=51         # P9_16
 
 # This is for the Black SPI 0
-export RESET=12     # RESET - P9_20
-export DC=13        # D/C   - P9_19
-export CS=5         # CS    - P9_17
+# export RESET=12     # RESET - P9_20
+# export DC=13        # D/C   - P9_19
+# export CS=5         # CS    - P9_17
+# This is for the Pocket SPI 0
+export RESET=57     # RESET - P2.06
+export DC=58        # D/C   - P2.04
+export CS=5         # CS    - P1.06
 
 sudo bash << EOF
     # Remove the framebuffer modules

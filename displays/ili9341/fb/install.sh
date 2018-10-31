@@ -43,15 +43,16 @@ sudo apt install imagemagick
 # 3.  Connect JST-2 to GP0 connector on BeagleBone Blue.
 
 # For using spi 0
-MISO    P9_21
-LED     P9_16
-SCK     P9_22
-MOSI    P9_18
-D/C     P9_19
-RESET   P9_20
-CS      P9_17
-GND     P9_2
-VCC     P9_4
+        Black       Pocket
+MISO    P9_21   3   P1.10
+LED     P9_16   51  P2.01
+SCK     P9_22   2   P1.08
+MOSI    P9_18   4   P1.12
+D/C     P9_19   13  P2.04   58
+RESET   P9_20   12  P2.06   57
+CS      P9_17   5   P1.06
+GND     P9_2        P1.16
+VCC     P9_4        P1.14
 
 # Here's how to install pygame
 sudo apt install mercurial python3-dev python3-numpy libav-tools libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev
