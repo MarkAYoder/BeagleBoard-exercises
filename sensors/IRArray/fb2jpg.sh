@@ -2,7 +2,7 @@
 
 TMP=/tmp/fb2jpg.jpg
 INFILE=${1:-/dev/fb0}
-OUTFILE=${2:-fb2jpg.pjg}
+OUTFILE=${2:-fb2jpg.jpg}
 
 ffmpeg \
   -y -loglevel 0 \
