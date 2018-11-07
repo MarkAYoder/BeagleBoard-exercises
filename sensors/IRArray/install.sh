@@ -41,3 +41,11 @@ dtc -O dtb -o BB-I2C1-FAST-may-00A0.dtbo BB-I2C1-FAST-00A0.dts
 
 # For convering fb images to png
 sudo apt install ffmpeg
+
+# Copy to Google Drive
+sudo apt install rclone
+rclone config
+# I had to install rclone on my host computer and do the configuration.
+# Then I copied the configuration file to the Bone.
+# From the bone.   Note the paths to the config file differ.
+scp host:.config/rclone/rclone.conf ~/.rclone.config
