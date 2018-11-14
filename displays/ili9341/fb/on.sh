@@ -29,9 +29,13 @@ sudo bash << EOF
     
     # LED pin, turn on
     ./backlight.py
-
+    
     sleep 0.1
     
     # Insert the framebuffer modules
-    modprobe fbtft_device name=adafruit28 busnum=1 rotate=0 gpios=reset:$RESET,dc:$DC cs=0
+    modprobe fbtft_device name=adafruit28 busnum=1 rotate=180 gpios=reset:$RESET,dc:$DC cs=0
+
+    # Turn off cursor
+    echo 0 > /sys/class/graphics/fbcon/cursor_blink 
+
 EOF
