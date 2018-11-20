@@ -36,6 +36,12 @@ sudo bash << EOF
     modprobe fbtft_device name=adafruit28 busnum=1 rotate=180 gpios=reset:$RESET,dc:$DC cs=0
 
     # Turn off cursor
+    while [ ! -e /dev/fb0 ]
+    do
+      echo Waiting for /dev/fb0
+      sleep 2
+    done
+
     echo 0 > /sys/class/graphics/fbcon/cursor_blink 
 
 EOF
