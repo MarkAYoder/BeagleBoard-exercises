@@ -15,4 +15,6 @@ do
   sleep 2
 done
 
-mlx90640-library/interp
+mlx90640-library/interp &
+
+./takePicture.py

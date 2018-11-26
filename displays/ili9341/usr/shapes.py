@@ -40,11 +40,17 @@ import Adafruit_GPIO.SPI as SPI
 # SPI_PORT = 1
 # SPI_DEVICE = 0
 
-# SPI 0 pins
+# SPI 0 pins - Black
 DC = 'P9_19'
 RST = 'P9_20'
-SPI_PORT = 1        # This 1 more than the number in the P9 table
+SPI_PORT = 2        # This 1 more than the number in the P9 table
 SPI_DEVICE = 0
+
+# SPI 2 pint - Pocket
+# DC = 'P2_4'
+# RST = 'P2_6'
+# SPI_PORT = 2        # This 1 more than the number in the P9 table
+# SPI_DEVICE = 0
 
 # Create TFT LCD display class.
 disp = TFT.ILI9341(DC, rst=RST, spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE, max_speed_hz=64000000))
