@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<keybindings>
+  <keybinding keycode="t" alt="FALSE" control="FALSE" shift="FALSE" type="TIMING_ADD"/>
+  <keybinding keycode="s" alt="FALSE" control="FALSE" shift="FALSE" type="TIMING_SPLIT"/>
+  <keybinding keycode="+" alt="FALSE" control="FALSE" shift="TRUE" type="ZOOM_IN"/>
+  <keybinding keycode="-" alt="FALSE" control="FALSE" shift="FALSE" type="ZOOM_OUT"/>
+  <keybinding keycode="R" alt="FALSE" control="FALSE" shift="TRUE" type="RANDOM"/>
+  <keybinding keycode="o" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT" effect="On" xLightsVersion="2018.22">E_TEXTCTRL_Eff_On_End=100,E_TEXTCTRL_Eff_On_Start=100</keybinding>
+  <keybinding keycode="u" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT" effect="On" xLightsVersion="2018.22">E_TEXTCTRL_Eff_On_End=100,E_TEXTCTRL_Eff_On_Start=0</keybinding>
+  <keybinding keycode="d" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT" effect="On" xLightsVersion="2018.22">E_TEXTCTRL_Eff_On_End=0,E_TEXTCTRL_Eff_On_Start=100</keybinding>
+  <keybinding keycode="m" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT" effect="Morph" xLightsVersion="2018.22"></keybinding>
+  <keybinding keycode="c" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT" effect="Curtain" xLightsVersion="2018.22"></keybinding>
+  <keybinding keycode="i" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT" effect="Circles" xLightsVersion="2018.22"></keybinding>
+  <keybinding keycode="b" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT" effect="Bars" xLightsVersion="2018.22"></keybinding>
+  <keybinding keycode="y" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT" effect="Butterfly" xLightsVersion="2018.22"></keybinding>
+  <keybinding keycode="f" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT" effect="Fire" xLightsVersion="2018.22"></keybinding>
+  <keybinding keycode="g" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT" effect="Garlands" xLightsVersion="2018.22"></keybinding>
+  <keybinding keycode="p" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT" effect="Pinwheel" xLightsVersion="2018.22"></keybinding>
+  <keybinding keycode="r" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT" effect="Ripple" xLightsVersion="2018.22"></keybinding>
+  <keybinding keycode="x" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT" effect="Text" xLightsVersion="2018.22"></keybinding>
+  <keybinding keycode="S" alt="FALSE" control="FALSE" shift="TRUE" type="EFFECT" effect="Spirals" xLightsVersion="2018.22"></keybinding>
+  <keybinding keycode="w" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT" effect="Color Wash" xLightsVersion="2018.22"></keybinding>
+  <keybinding keycode="n" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT" effect="Snowflakes" xLightsVersion="2018.22"></keybinding>
+  <keybinding keycode="O" alt="FALSE" control="FALSE" shift="TRUE" type="EFFECT" effect="Off" xLightsVersion="2018.22"></keybinding>
+  <keybinding keycode="F" alt="FALSE" control="FALSE" shift="TRUE" type="EFFECT" effect="Fan" xLightsVersion="2018.22"></keybinding>
+  <keybinding keycode="F11" alt="FALSE" control="FALSE" shift="FALSE" type="ALTERNATE_BACKUP"/>
+  <keybinding keycode="F10" alt="FALSE" control="FALSE" shift="FALSE" type="BACKUP"/>
+  <keybinding keycode="END" alt="FALSE" control="FALSE" shift="FALSE" type="END_OF_SONG"/>
+  <keybinding keycode="." alt="FALSE" control="TRUE" shift="FALSE" type="MARK_SPOT"/>
+  <keybinding keycode="n" alt="FALSE" control="TRUE" shift="FALSE" type="NEW_SEQUENCE"/>
+  <keybinding keycode="o" alt="FALSE" control="TRUE" shift="FALSE" type="OPEN_SEQUENCE"/>
+  <keybinding keycode="PAUSE" alt="FALSE" control="TRUE" shift="FALSE" type="PAUSE"/>
+  <keybinding keycode="/" alt="FALSE" control="TRUE" shift="FALSE" type="RETURN_TO_SPOT"/>
+  <keybinding keycode="s" alt="FALSE" control="TRUE" shift="FALSE" type="SAVE_CURRENT_TAB"/>
+  <keybinding keycode="A" alt="FALSE" control="TRUE" shift="TRUE" type="SELECT_ALL"/>
+  <keybinding keycode="a" alt="FALSE" control="TRUE" shift="FALSE" type="SELECT_ALL_NO_TIMING"/>
+  <keybinding keycode="F9" alt="FALSE" control="FALSE" shift="FALSE" type="SELECT_SHOW_FOLDER"/>
+  <keybinding keycode="HOME" alt="FALSE" control="FALSE" shift="FALSE" type="START_OF_SONG"/>
+  <keybinding keycode="SPACE" alt="FALSE" control="FALSE" shift="FALSE" type="TOGGLE_PLAY"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="CLOSE_SEQUENCE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="COLOR_TOGGLE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="COLOR_UPDATE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="DISPLAY_ELEMENTS_TOGGLE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECTS_TOGGLE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT_ALIGN_BOTH"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT_ALIGN_END"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT_ALIGN_START"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT_ASSIST_TOGGLE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT_DESCRIPTION"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT_SETTINGS_TOGGLE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="EFFECT_UPDATE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="GROUP_MODELS"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="HOUSE_PREVIEW_TOGGLE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="INSERT_LAYER_ABOVE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="INSERT_LAYER_BELOW"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="JUKEBOX_TOGGLE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="LAYER_BLENDING_TOGGLE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="LAYER_SETTING_TOGGLE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="LIGHTS_TOGGLE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="LOCK_EFFECT"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="LOCK_MODEL"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="MODEL_ALIGN_BOTTOM"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="MODEL_ALIGN_CENTER_HORIZ"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="MODEL_ALIGN_CENTER_VERT"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="MODEL_ALIGN_LEFT"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="MODEL_ALIGN_RIGHT"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="MODEL_ALIGN_TOP"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="MODEL_DISTRIBUTE_HORIZ"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="MODEL_DISTRIBUTE_VERT"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="MODEL_PREVIEW_TOGGLE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="NODE_LAYOUT"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="PASTE_BY_CELL"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="PASTE_BY_TIME"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="PERSPECTIVES_TOGGLE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="PLAY"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="PLAY_LOOP"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="RENDER_ALL"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="SAVEAS_SEQUENCE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="SAVE_LAYOUT"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="SAVE_SEQUENCE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="SEARCH_TOGGLE"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="SEQUENCE_SETTINGS"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="SHOW_PRESETS"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="STOP"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="TOGGLE_ELEMENT_EXPAND"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="UNLOCK_EFFECT"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="UNLOCK_MODEL"/>
+  <keybinding keycode="" alt="FALSE" control="FALSE" shift="FALSE" type="WIRING_VIEW"/>
+</keybindings>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Networks computer="mark-VirtualBox2">
+  <network ComPort="fpp" BaudRate="1" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="2" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="3" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="4" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="5" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="6" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="7" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="8" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="9" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="10" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="11" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="12" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="13" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="14" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="15" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="16" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="17" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="18" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="19" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="20" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="21" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="22" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="23" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="24" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="25" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="26" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="27" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="28" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="29" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="30" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="31" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="32" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="33" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="34" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="35" NetworkType="E131" MaxChannels="512"/>
+  <network ComPort="fpp" BaudRate="36" NetworkType="E131" MaxChannels="512"/>
+</Networks>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xrgb>
+  <models>
+    <model StringType="RGB Nodes" Antialias="1" Transparency="0" name="Matrix" DisplayAs="Horiz Matrix" LayoutGroup="Default" parm1="32" Dir="L" StartSide="T" parm3="1" PixelSize="2" parm2="384" offsetXpct="0.3163" offsetYpct="0.6778" PreviewScaleX="0.5031" PreviewScaleY="0.4667" PreviewRotation="0" versionNumber="1" StartChannel="1">
+      <ControllerConnection/>
+    </model>
+  </models>
+  <effects version="0006"/>
+  <views/>
+  <palettes/>
+  <modelGroups/>
+  <layoutGroups/>
+  <perspectives current="Default Perspective">
+    <perspective name="Default Perspective" settings="layout2|name=ModelPreview;caption=Model Preview;state=2099196;dir=4;layer=1;row=0;pos=0;prop=100000;bestw=250;besth=250;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=HousePreview;caption=House Preview;state=2099196;dir=4;layer=1;row=0;pos=1;prop=100000;bestw=250;besth=250;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=EffectAssist;caption=Effect Assist;state=2099196;dir=4;layer=1;row=0;pos=2;prop=100000;bestw=250;besth=250;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=DisplayElements;caption=Display Elements;state=2099199;dir=4;layer=0;row=0;pos=0;prop=100000;bestw=283;besth=294;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=0;floaty=0;floatw=291;floath=318|name=Perspectives;caption=Perspectives;state=2099198;dir=4;layer=1;row=0;pos=0;prop=100000;bestw=169;besth=151;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=Effect;caption=Effect Settings;state=2099196;dir=4;layer=1;row=0;pos=3;prop=100000;bestw=494;besth=817;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=SelectEffect;caption=Select Effects;state=2099196;dir=4;layer=1;row=0;pos=4;prop=100000;bestw=404;besth=271;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=EffectDropper;caption=Effects;state=2099196;dir=1;layer=0;row=0;pos=0;prop=100000;bestw=1100;besth=550;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=Jukebox;caption=Jukebox;state=2099196;dir=1;layer=0;row=0;pos=1;prop=100000;bestw=590;besth=1180;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=Color;caption=Color;state=2099196;dir=1;layer=0;row=0;pos=2;prop=100000;bestw=316;besth=348;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=LayerTiming;caption=Layer Blending;state=2099196;dir=1;layer=0;row=0;pos=3;prop=100000;bestw=263;besth=271;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=LayerSettings;caption=Layer Settings;state=2099196;dir=1;layer=0;row=0;pos=4;prop=100000;bestw=326;besth=455;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|name=SequenceVideo;caption=Sequence Video;state=2099199;dir=4;layer=0;row=0;pos=0;prop=100000;bestw=320;besth=191;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=0;floaty=0;floatw=328;floath=215|name=Main Sequencer;caption=Main Sequencer;state=768;dir=5;layer=0;row=0;pos=0;prop=100000;bestw=124;besth=59;minw=-1;minh=-1;maxw=-1;maxh=-1;floatx=-1;floaty=-1;floatw=-1;floath=-1|dock_size(4,1,0)=349|dock_size(1,0,0)=137|dock_size(5,0,0)=126|" version="2.0"/>
+  </perspectives>
+  <settings>
+    <previewWidth value="1280"/>
+    <previewHeight value="720"/>
+  </settings>
+  <colors>
+    <EffectDefault Red="192" Green="192" Blue="192"/>
+    <EffectSelected Red="204" Green="102" Blue="255"/>
+    <EffectSelectedLocked Red="200" Green="0" Blue="0"/>
+    <GridDashes Red="255" Green="255" Blue="0"/>
+    <Gridlines Red="40" Green="40" Blue="40"/>
+    <LabelOutline Red="103" Green="103" Blue="103"/>
+    <Labels Red="255" Green="255" Blue="204"/>
+    <LayoutDashes Red="255" Green="255" Blue="0"/>
+    <ModelDefault Red="211" Green="211" Blue="211"/>
+    <ModelOverlap Red="255" Green="0" Blue="0"/>
+    <ModelSelected Red="255" Green="255" Blue="0"/>
+    <Phonemes Red="255" Green="181" Blue="218"/>
+    <Phrases Red="153" Green="255" Blue="153"/>
+    <ReferenceEffect Red="255" Green="0" Blue="255"/>
+    <ReferenceEffectLocked Red="255" Green="0" Blue="0"/>
+    <RowHeaderSelected Red="130" Green="178" Blue="207"/>
+    <Timing1 Red="0" Green="255" Blue="255"/>
+    <Timing2 Red="255" Green="0" Blue="0"/>
+    <Timing3 Red="0" Green="255" Blue="0"/>
+    <Timing4 Red="0" Green="0" Blue="255"/>
+    <Timing5 Red="255" Green="255" Blue="0"/>
+    <TimingDefault Red="255" Green="255" Blue="255"/>
+    <Waveform Red="130" Green="178" Blue="207"/>
+    <WaveformSelected Red="0" Green="0" Blue="200"/>
+    <Words Red="255" Green="218" Blue="145"/>
+  </colors>
+</xrgb>
