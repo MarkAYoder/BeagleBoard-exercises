@@ -1,6 +1,10 @@
 # Get fpp image here: https://github.com/FalconChristmas/fpp/releases
 # Scroll down past source code to find images
 # In xLights, follow the instructions in the case study in the PRU Cookbook.
+# This will get the newest version
+sudo add-apt-repository ppa:chris-debenham/xlights
+sudo apt update
+sudo apt install xlights
 
 # To get up more than one panel, 
 # In fpp
