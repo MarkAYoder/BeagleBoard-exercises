@@ -59,5 +59,11 @@ for i in range(10):
     threading.Thread(target=skiUpDown).start()
     sleep(2)
     
+print("Done starting threads")
+
+# Keep alive
+while True:
+    sleep(10)
+
 # Close opened file
 # fo.close()
