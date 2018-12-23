@@ -14,8 +14,6 @@ def signal_handler(signal, frame):
     global keepgoing
     print 'You pressed Ctrl+C!'
     keepgoing = False
-#    fo.close()
-#    sys.exit(0)
 signal.signal(signal.SIGINT, signal_handler)
 
 # Update the thread at a regular interval
@@ -60,10 +58,15 @@ for i in range(10):
     last = threading.Thread(target=skiUpDown)
     last.start()
     sleep(random.uniform(.5,3))
+    if not keepgoing:
+        break
 
 print "All threads launched"
 
-last.join()
+# Keep alive
+while True:
+    sleep(1)
+    if not keepgoing:
+        break
 
-print "All Done"
-
+print("Done")
