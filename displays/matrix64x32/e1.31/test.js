@@ -20,14 +20,16 @@ console.log("slotsData: " + slotsData.length);
 
 function cycleColor() {
   // console.log("cycleColor");
-    for(var univ=1; univ<9; univ++) {
+    for(var univ=1; univ<8; univ++) {
 	packet.setUniverse(univ);
 	for (var idx=0; idx<slotsData.length; idx+=3) {
 	    slotsData[idx+0] = 0xff;
 	    slotsData[idx+1] = 0x00;
 	    slotsData[idx+2] = 0x00;
 	}
+	console.log("Sending packet");
 	client.send(packet);
+	console.log("Done sending packet");
     }
 }
 // setInterval(cycleColor, 250);
