@@ -14,7 +14,7 @@ packet.setUniverse(0x01);  // make universe number consistent with the client
 // console.log("packet: ");
 // console.log(packet);
 console.log("slotsData: " + slotsData.length);
-console.log(slotsData); 
+// console.log(slotsData); 
 console.log("looping...");
 // slotsData is a Buffer view, you can use it directly
 var color = 0;
@@ -24,8 +24,6 @@ function cycleColor() {
     slotsData[idx] = color % 0xff;
     color = color + 90;
   }
-  client.send(packet, function () {
-    setTimeout(cycleColor, 125);
-  });
+  client.send(packet);
 }
-cycleColor();
+setInterval(cycleColor, 250);
