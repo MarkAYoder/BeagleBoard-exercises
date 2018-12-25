@@ -6,17 +6,25 @@ import sys
 import math
 from PIL import Image
 
-im = Image.open("sarahSmall.jpg")
-print(im.bits, im.size, im.format, im.mode)
-
-for i in range(48, 58):
-	r, g, b = im.getpixel((i, i))
-	print(r, g, b)
-
 channels = 510	# number of channels per universe
 maxUniv = 74	# Total numbers of universes
 cols = 192
 rows = 64
+
+file = "sarahSmall.jpg"
+if len(sys.argv) == 2:
+    file = sys.argv[1]
+
+im = Image.open(file)
+print(file, im.bits, im.size, im.format, im.mode)
+if im.size > (cols, rows):
+    print("Image too big. Max size is: ", cols, "x", rows)
+    sys.exit(1)
+
+# Center the image
+offset = math.floor((cols-im.size[0])/2)
+print("offset: ", offset)
+
 sender = sacn.sACNsender()  # provide an IP-Address to bind to if you are using Windows and want to use multicast
 sender.start()  # start the sending thread
 # sender[univ].multicast = False  # set multicast to True
@@ -29,21 +37,21 @@ for univ in range(1, maxUniv):
 # Cycle through each pixel one row at a time
 # Fill in each universe and then send it
 lastUniv = 1	# If different than last univ, send
-row = channels*[0]
+row = channels*[0]	# Start with a blank row
 
 for j in range(im.size[1]):
     for i in range(im.size[0]):
-        univ = math.floor(3*(j*cols+i) / channels) + 1	# Univ starts with 1
+        univ = math.floor(3*(j*cols+i+offset) / channels) + 1	# Univ starts with 1
         # print("univ: ", univ)
         if(univ != lastUniv):	# You've switched universes
-            print("New univ: ", univ, i, j)
-            print("lastUniv: ", lastUniv)
+            # print("New univ: ", univ, i, j)
+            # print("lastUniv: ", lastUniv)
             sender[lastUniv].dmx_data = row
             row = channels*[0]
             lastUniv = univ
         rgb = im.getpixel((i, j))
-        idx = (3*(j*cols+i)) % channels
-        print("i, j ", i, j, "idx: ", idx, "univ: ", univ)
+        idx = (3*(j*cols+i+offset)) % channels
+        # print("i, j ", i, j, "idx: ", idx, "univ: ", univ)
         row[idx+0] = rgb[0]
         row[idx+1] = rgb[1]
         row[idx+2] = rgb[2]
