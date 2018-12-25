@@ -36,10 +36,10 @@ def skiUpDown():
     while keepgoing:
         for i in range(0, len):
             fo.write("%d %d %d %d" % (0, 0, 0, i))
-            fo.write("%d %d %d %d" % (max, 0, 0, i+1))
+            fo.write("%d %d %d %d" % (math.ceil(max*i/len), 0, 0, i+1))
             if not keepgoing:
                 break
-            sleep(0.05)
+            sleep(0.2)
         
         for i in range(len, 1, -1):
             fo.write("%d %d %d %d" % (0, 0, 0, i))
@@ -55,9 +55,9 @@ clear(0, 2, 0)
 
 threading.Thread(target=keepDisplaying, args=(0.01,)).start()
 
-for i in range(10):
+for i in range(20):
     threading.Thread(target=skiUpDown).start()
-    sleep(2)
+    sleep(4)
     if not keepgoing:
         break
     
