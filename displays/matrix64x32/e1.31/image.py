@@ -6,6 +6,7 @@ import sys
 import math
 from PIL import Image
 
+bright = 63	# Max brightness
 channels = 510	# number of channels per universe
 maxUniv = 74	# Total numbers of universes
 cols = 192
@@ -31,8 +32,8 @@ sender.start()  # start the sending thread
 # Keep in mind that if multicast is on, unicast is not used
 
 for univ in range(1, maxUniv):
-	sender.activate_output(univ)  # start sending out data in the 1st universe
-	sender[univ].destination = "fpp"  # or provide unicast information.
+    sender.activate_output(univ)  # start sending out data in the 1st universe
+    sender[univ].destination = "fpp"  # or provide unicast information.
 
 # Cycle through each pixel one row at a time
 # Fill in each universe and then send it
@@ -52,9 +53,8 @@ for j in range(im.size[1]):
         rgb = im.getpixel((i, j))
         idx = (3*(j*cols+i+offset)) % channels
         # print("i, j ", i, j, "idx: ", idx, "univ: ", univ)
-        row[idx+0] = rgb[0]
-        row[idx+1] = rgb[1]
-        row[idx+2] = rgb[2]
+        for k in range(3):
+            row[idx+k] = math.floor(rgb[k]*bright/255)
 
 sender[univ].dmx_data = row
 
