@@ -31,7 +31,7 @@ for count in range(1, 10):
 			row.append(color[1])
 			row.append(color[2])
 		sender[univ].dmx_data = row
-	time.sleep(0.04)  # send the data for 10 seconds
+	time.sleep(0.05)  # send the data for 10 seconds
 
 	for univ in range(1, maxUniv):
 		# sender[univ].dmx_data = (0, 255, 0, 255, 0, 0, 255, 255, 255)  # some test DMX data
@@ -41,6 +41,6 @@ for count in range(1, 10):
 			row.append(color[1])
 			row.append(color[0])
 		sender[univ].dmx_data = row
-	time.sleep(0.04)  # send the data for 10 seconds
+	time.sleep(0.05)  # send the data for 10 seconds
 
 sender.stop()  # do not forget to stop the sender
