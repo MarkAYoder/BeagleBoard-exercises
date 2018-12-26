@@ -6,9 +6,9 @@ import sys
 import math
 from PIL import Image
 
-bright = 255	# Max brightness
-channels = 510	# number of channels per universe
-maxUniv = 74	# Total numbers of universes
+bright = 255    # Max brightness
+channels = 510  # number of channels per universe
+maxUniv = 74    # Total numbers of universes
 cols = 192
 rows = 64
 
@@ -40,27 +40,29 @@ for univ in range(1, maxUniv):
 
 # Cycle through each pixel one row at a time
 # Fill in each universe and then send it
-lastUniv = 1	# If different than last univ, send
-row = channels*[0]	# Start with a blank row
 
-for j in range(im.size[1]):
-    for i in range(im.size[0]):
-        univ = math.floor(3*(j*cols+i+offset) / channels) + 1	# Univ starts with 1
-        # print("univ: ", univ)
-        if(univ != lastUniv):	# You've switched universes
-            # print("New univ: ", univ, i, j)
-            # print("lastUniv: ", lastUniv)
-            sender[lastUniv].dmx_data = row
-            row = channels*[0]
-            lastUniv = univ
-        rgb = im.getpixel((i, j))
-        idx = (3*(j*cols+i+offset)) % channels
-        # print("i, j ", i, j, "idx: ", idx, "univ: ", univ)
-        for k in range(3):
-            row[idx+k] = math.floor(rgb[k]*bright/255)
+for l in range(0, offset+1):
+    lastUniv = 1    # If different than last univ, send
+    row = channels*[0]      # Start with a blank row
+    # print("l: ", l)
+    for j in range(im.size[1]):
+        for i in range(im.size[0]):
+            univ = math.floor(3*(j*cols+i+l) / channels) + 1    # Univ starts with 1
+            # print("univ: ", univ)
+            if(univ != lastUniv):       # You've switched universes
+                # print("New univ: ", univ, i, j)
+                # print("lastUniv: ", lastUniv)
+                sender[lastUniv].dmx_data = row
+                row = channels*[0]
+                lastUniv = univ
+            rgb = im.getpixel((i, j))
+            idx = (3*(j*cols+i+l)) % channels
+            # print("i, j ", i, j, "idx: ", idx, "univ: ", univ)
+            for k in range(3):
+                row[idx+k] = math.floor(rgb[k]*bright/255)
 
-sender[univ].dmx_data = row
+    sender[univ].dmx_data = row
 
-time.sleep(0.05)
+    time.sleep(0.008)
 
 sender.stop()  # do not forget to stop the sender
