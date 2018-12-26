@@ -15,10 +15,10 @@ while [ 1 ] ; do
 	    small=$tmp/$(basename -- $file)
 	    # Stick gamma in the file name
 	    gammafile="${small%.*}".gamma."${small#*.}"
-	    if [ ! -f $small ]; then
+	    if [ ! -f $gammafile ]; then
 		echo Resizing $file
-		convert $file -resize $size $small
-		convert $small -level 0%,100%,$gamma  $gammafile
+		# -auto-orient reads the EXIF:Orientation field and rotates accordingly
+		convert $file  -auto-orient -resize $size -level 0%,100%,$gamma  $gammafile
 	    fi
 	    # ./image.py $small
 	    # sleep $time
