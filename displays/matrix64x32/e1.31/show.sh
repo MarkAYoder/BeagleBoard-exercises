@@ -6,10 +6,10 @@ tmp=/tmp
 show=show	# Where the original images are
 size=192x64
 gamma=0.5
-time=3
+time=5
 
 while [ 1 ] ; do
-	for file in $show/*.jpg; do
+	for file in $show/*.JPG; do
 	    # echo $file
 	    # echo $(basename -- $file)
 	    small=$tmp/$(basename -- $file)
