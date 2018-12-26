@@ -6,15 +6,18 @@ import sys
 import math
 from PIL import Image
 
-bright = 63	# Max brightness
+bright = 31	# Max brightness
 channels = 510	# number of channels per universe
 maxUniv = 74	# Total numbers of universes
 cols = 192
 rows = 64
 
 file = "sarahSmall.jpg"
-if len(sys.argv) == 2:
+if len(sys.argv) >= 2:
     file = sys.argv[1]
+
+if len(sys.argv) >= 3:
+    bright = sys.argv[2]
 
 im = Image.open(file)
 print(file, im.bits, im.size, im.format, im.mode)
