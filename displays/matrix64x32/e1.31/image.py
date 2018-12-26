@@ -22,8 +22,8 @@ if im.size > (cols, rows):
     print("Image too big. Max size is: ", cols, "x", rows)
     sys.exit(1)
 
-# Center the image
-offset = math.floor((cols-im.size[0])/2)
+# Right justify the image
+offset = math.floor((cols-im.size[0]))
 print("offset: ", offset)
 
 sender = sacn.sACNsender()  # provide an IP-Address to bind to if you are using Windows and want to use multicast
