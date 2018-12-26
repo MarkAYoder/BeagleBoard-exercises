@@ -20,8 +20,8 @@ while [ 1 ] ; do
 		convert $file -resize $size $small
 		convert $small -level 0%,100%,$gamma  $gammafile
 	    fi
-	    ./image.py $small
-	    sleep $time
+	    # ./image.py $small
+	    # sleep $time
 	    ./image.py $gammafile
 	    sleep $time
 	done
