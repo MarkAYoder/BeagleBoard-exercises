@@ -1,6 +1,8 @@
-# From: https://github.com/rcn-ee/tidl-api/tree/v01.00.00.03-bb.org
+# From: https://github.com/rcn-ee/tidl-api/tree/v01.02.02-bb.org
+#   Check for latest branch
 # See also: http://downloads.ti.com/mctools/esd/docs/tidl-api/index.html
-# And ... http://software-dl.ti.com/processor-sdk-linux/esd/docs/latest/linux/Foundational_Components_TIDL.html
+# and ... http://software-dl.ti.com/processor-sdk-linux/esd/docs/latest/linux/Foundational_Components_TIDL.html
+# and ...  http://downloads.ti.com/mctools/esd/docs/tidl-api/
 
 sudo apt update
 sudo apt install ti-opencl libboost-dev libopencv-core-dev libopencv-imgproc-dev libopencv-highgui-dev libjson-c-dev
@@ -36,3 +38,6 @@ sudo apt install libcanberra-gtk-module libcanberra-gtk3-module
 
 # Image viewer "eye of gnome"
 sudo apt install eog
+
+# Need for Network Viewer
+sudo apt install graphviz
