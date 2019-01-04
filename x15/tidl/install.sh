@@ -24,5 +24,12 @@ sudo apt install libjson-c-dev
 # If you get a cmemk error:
 cd /opt/scripts/tools/ ; git pull ; sudo ./update_kernel.sh ; sudo apt upgrade
 
+# Fix a path error with
+cd /usr/share/ti/tidl
+sudo ln -s ~/exercises/x15/tidl/tidl-api/examples/ .
+
 # Check the temp with
 cat /sys/class/thermal/*/temp
+
+# Gtk-Message: Failed to load module "canberra-gtk-module"
+sudo apt install libcanberra-gtk-module libcanberra-gtk3-module
