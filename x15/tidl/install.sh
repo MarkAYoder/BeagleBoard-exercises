@@ -33,3 +33,6 @@ cat /sys/class/thermal/*/temp
 
 # Gtk-Message: Failed to load module "canberra-gtk-module"
 sudo apt install libcanberra-gtk-module libcanberra-gtk3-module
+
+# Image viewer "eye of gnome"
+sudo apt install eog
