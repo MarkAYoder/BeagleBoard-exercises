@@ -7,7 +7,10 @@
 sudo apt update
 sudo apt install ti-opencl libboost-dev libopencv-core-dev libopencv-imgproc-dev libopencv-highgui-dev libjson-c-dev
 
-# Most were alreay installed and up to date.  Install time 38s
+# Most were already installed and up to date.  Install time 38s
+
+# utils
+git clone git://git.ti.com/tidl/tidl-utils.git
 
 git clone https://github.com/rcn-ee/tidl-api    # 15s
 cd tidl-api/

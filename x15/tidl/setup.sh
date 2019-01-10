@@ -28,7 +28,7 @@ sudo ./imagenet -d 2 -e2 -i IMG_3806.jpg
 # layer_ouput and mcbench look like handy tools.
 
 cd segmentation
-./segmentation -d 2 -e 2  camera0 -w 1200 2> /dev/null
+./segmentation -d 2 -e 2  -i camera0 -w 1200 2> /dev/null
 
 cd ssd_multibox
-./ssd_multibox -d 2 -e 2  camera0 -w 1200 2> /dev/null
+./ssd_multibox -d 2 -e 2  -i camera0 -w 1200 2> /dev/null
