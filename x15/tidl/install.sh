@@ -33,6 +33,9 @@ sudo ln -s ~/exercises/x15/tidl/tidl-api/examples/ .
 # Check the temp with
 cat /sys/class/thermal/*/temp
 
+# Check current cpu speed
+cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq
+
 # Gtk-Message: Failed to load module "canberra-gtk-module"
 sudo apt install libcanberra-gtk-module libcanberra-gtk3-module
 
