@@ -2,7 +2,7 @@
 #   Check for latest branch
 # See also: http://downloads.ti.com/mctools/esd/docs/tidl-api/index.html
 # and ... http://software-dl.ti.com/processor-sdk-linux/esd/docs/latest/linux/Foundational_Components_TIDL.html
-# and ...  http://downloads.ti.com/mctools/esd/docs/tidl-api/
+# and training http://software-dl.ti.com/processor-sdk-linux/esd/docs/latest/linux/Foundational_Components_TIDL.html#training
 
 sudo apt update
 sudo apt install ti-opencl libboost-dev libopencv-core-dev libopencv-imgproc-dev libopencv-highgui-dev libjson-c-dev
