@@ -14,7 +14,7 @@ else
 	echo $1
 	cd ~/BeagleBoard/Images
 	    URL=$SITE/$1/$RELEASE/bone-debian-$VERSION-iot-armhf-$1-4gb.img.xz
-	    wget $URL.sha256sum
+#	    wget $URL.sha256sum
 # Check to see we we found anything, if so, wget the rest of the files.
 # If not, list what you did find.
 	    if [ $? -eq 0 ]
