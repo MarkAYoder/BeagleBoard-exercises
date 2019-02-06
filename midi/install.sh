@@ -1,5 +1,5 @@
-# From: https://sfxpt.wordpress.com/2015/02/02/how-to-play-midi-files-under-ubuntu-linux/
 
-sudo apt-get install freepats timidity timidity-interfaces-extra
+timidity -iA  # Listens on 4 ports
+aplaymidi -p 128:0 bwv538t.mid	# Plays to one of those ports
 
-# More useful info: http://tedfelix.com/linux/linux-midi.html
+sudo apt install kmidimon	# Monitors midi traffice
