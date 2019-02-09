@@ -8,7 +8,9 @@ import time
 # print(mido.get_output_names())
 # print(mido.get_input_names())
 
-outport = mido.open_output("MidiSport 1x1:MidiSport 1x1 MIDI 1 20:0")
+organ = "MidiSport 1x1:MidiSport 1x1 MIDI 1 20:0"
+
+outport = mido.open_output(organ)
 
 msg = mido.Message('note_on', note=60, channel=2)
 # msg.type
@@ -19,19 +21,27 @@ print(msg)
 
 
 # print(outport)
-outport.send(msg)
+# outport.send(msg)
 
-time.sleep(1)
+# time.sleep(1)
 
 # outport.send(mido.Message('note_off', note=60))
 
-# with mido.open_input() as inport:
+# with mido.open_input(organ) as inport:
 #     for msg in inport:
 #         print(msg)
+#         if msg.note == 36:
+#             break
 
-# mid = mido.MidiFile('song.mid')
-# for msg in mid.play():
-#     port.send(msg)
+mid = mido.MidiFile('midifiles/little_f.mid')
+i=0
+for msg in mid.play():
+    if i>200:
+        outport.send(msg)
+        print(msg)
+    i=i+1
+    if i>500:
+        break
 
 # port.panic()
 # Stop all notes
