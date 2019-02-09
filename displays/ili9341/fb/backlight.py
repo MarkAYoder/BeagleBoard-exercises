@@ -5,7 +5,7 @@ import sys
 # Black
 LED = "P9_16"
 # Pocket
-LED = "P2.01"
+# LED = "P2.01"
 
 duty = 100     # Default to 100
 if(len(sys.argv) > 1):
