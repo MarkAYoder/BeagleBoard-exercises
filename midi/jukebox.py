@@ -18,27 +18,33 @@ from os import listdir
 from os.path import isfile, join
 
 files = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+offset = 3  # Number of tabs in to start
 
 files.sort()
 print(files)
 print(len(files))
 
-def lights(count):
+def lightsOn(count):
     print("Sending cancel")
     msg = mido.Message('sysex', data=[0, 74, 79, 72, 65, 83, 127])
     outport.send(msg)
     
-    for i in range(count):
+    for i in range(offset, count+offset):
         msg = mido.Message('program_change', channel=11, program=i)
         # print(msg)
         outport.send(msg)
+
+def lightsOff():
+    print("Sending cancel")
+    msg = mido.Message('sysex', data=[0, 74, 79, 72, 65, 83, 127])
+    outport.send(msg)
 
 with mido.open_input(organ) as inport:
     print(inport)
     for msg in inport:
         print(msg)
         if msg.type == 'note_on' and msg.note == 36 and msg.velocity != 0:
-            lights(len(files))
+            lightsOn(len(files))
             # Wait for messages to pass
             time.sleep(0.2)     # Wait for messages to arrive
             for msg in inport.iter_pending():
@@ -47,11 +53,12 @@ with mido.open_input(organ) as inport:
             print(selection)
             if selection.type == 'program_change':
                 print(selection.program)
-                print("Playing: " + files[selection.program])
+                print("Playing: " + files[selection.program-offset])
 
                 subprocess.run(["./register.py", "p"])
                 subprocess.run(["aplaymidi", "-p", "20.0", 
-                    mypath + "/" + files[selection.program]])
+                    mypath + "/" + files[selection.program-offset]])
+                lightsOff()
 # port.panic()
 # Stop all notes
 outport.reset()
