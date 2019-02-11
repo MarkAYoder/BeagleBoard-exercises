@@ -25,29 +25,8 @@ outport = mido.open_output(organ)
 # msg.copy(channel=2)
 # print(msg)
 
-
 # print(outport)
 # outport.send(msg)
-
-# time.sleep(1)
-
-# outport.send(mido.Message('note_off', note=60))
-
-# with mido.open_input(organ) as inport:
-#     for msg in inport:
-#         print(msg)
-#         if msg.note == 36:
-#             break
-
-# mid = mido.MidiFile(filename)
-# i=0
-# for msg in mid.play():
-#     # if i>200:
-#     outport.send(msg)
-#     print(msg)
-#     i=i+1
-#     if i>500:
-#         break
 
 for msg in mido.MidiFile(filename):
     time.sleep(msg.time)
@@ -62,6 +41,5 @@ for msg in mido.MidiFile(filename):
         print('***')
         print(msg)
 
-# port.panic()
 # Stop all notes
 outport.reset()

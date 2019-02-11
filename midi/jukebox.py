@@ -2,7 +2,7 @@
 # From: https://github.com/mido/mido
 
 import mido
-import time, sys
+import time
 import subprocess
 
 # See what ports are out there
@@ -59,6 +59,3 @@ with mido.open_input(organ) as inport:
                 subprocess.run(["aplaymidi", "-p", "20.0", 
                     mypath + "/" + files[selection.program-offset]])
                 lightsOff()
-# port.panic()
-# Stop all notes
-outport.reset()

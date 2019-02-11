@@ -4,10 +4,6 @@
 import mido
 import sys
 
-# See what ports are out there
-# print(mido.get_output_names())
-# print(mido.get_input_names())
-
 vol = 'pp'
 stops = [4, 17, 18, 33]
 
@@ -39,7 +35,6 @@ organ = "MidiSport 1x1:MidiSport 1x1 MIDI 1 20:0"
 
 outport = mido.open_output(organ)
 
-print("Sending cancel")
 msg = mido.Message('sysex', data=[0, 74, 79, 72, 65, 83, 127])
 outport.send(msg)
 
@@ -47,6 +42,3 @@ for i in stops:
     msg = mido.Message('program_change', channel=11, program=i)
     # print(msg)
     outport.send(msg)
-
-# Stop all notes
-outport.reset()

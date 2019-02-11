@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
 # From: https://github.com/mido/mido
+# Turns off all stops
 
 import mido
-import time
-
-# See what ports are out there
-# print(mido.get_output_names())
-# print(mido.get_input_names())
 
 organ = "MidiSport 1x1:MidiSport 1x1 MIDI 1 20:0"
 

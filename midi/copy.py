@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # From: https://github.com/mido/mido
+# Copies to a new midi file, but doesn't work.
+# Time needs to be fixed.
 
 from mido import Message, MidiFile, MidiTrack
 
@@ -7,12 +9,6 @@ mid = MidiFile()
 track = MidiTrack()
 mid.tracks.append(track)
 
-
-# See what ports are out there
-# print(mido.get_output_names())
-# print(mido.get_input_names())
-
-filename = 'midifiles/brandenb.mid'
 filename = 'midifiles/little_f.mid'
 
 print("Reading file")

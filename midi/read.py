@@ -2,15 +2,8 @@
 # From: https://github.com/mido/mido
 
 import mido
-import time
-
-# See what ports are out there
-# print(mido.get_output_names())
-# print(mido.get_input_names())
 
 organ = "MidiSport 1x1:MidiSport 1x1 MIDI 1 20:0"
-filename = 'midifiles/little_f.mid'
-filename = 'midifiles/brand3.mid'
 
 print("Press a key")
 
