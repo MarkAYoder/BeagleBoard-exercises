@@ -38,6 +38,11 @@ def lightsOff():
     print("Sending cancel")
     msg = mido.Message('sysex', data=[0, 74, 79, 72, 65, 83, 127])
     outport.send(msg)
+    
+def lightsOnOne(light):
+    lightsOff()
+    msg = mido.Message('program_change', channel=11, program=light)
+    outport.send(msg)
 
 with mido.open_input(organ) as inport:
     print(inport)
@@ -58,4 +63,4 @@ with mido.open_input(organ) as inport:
                 subprocess.run(["./register.py", "p"])
                 subprocess.run(["aplaymidi", "-p", "20.0", 
                     mypath + "/" + files[selection.program-offset]])
-                lightsOff()
+                lightsOnOne(selection.program)
