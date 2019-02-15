@@ -54,8 +54,8 @@ with mido.open_input(organ) as inport:
             # See if something is already playing and kill it
             if pro != 0:
                 print("Terminating")
-                # os.killpg(os.getpgid(pro.pid), signal.SIGTERM)
-                pro.terminate()
+                os.killpg(os.getpgid(pro.pid), signal.SIGTERM)
+                # pro.terminate()
                 outport.reset()
                 pro=0
 
@@ -72,6 +72,7 @@ with mido.open_input(organ) as inport:
 
                 pro = subprocess.Popen(["./playMidi.sh", 
                         mypath + "/" + files[selection.program-offset],
-                        str(selection.program)])
+                        str(selection.program)], 
+                        preexec_fn=os.setsid)
                 print(pro)
                 print(pro.pid)
