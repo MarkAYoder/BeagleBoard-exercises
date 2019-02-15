@@ -50,12 +50,9 @@ with mido.open_input(organ) as inport:
     for msg in inport:
         print(msg)
         if msg.type == 'note_on' and msg.note == 36 and msg.velocity != 0:
-            print("What shall I play?")
-            # See if something is already playing and kill it
+             # See if something is already playing and kill it
             if pro != 0:
-                print("Terminating")
                 os.killpg(os.getpgid(pro.pid), signal.SIGTERM)
-                # pro.terminate()
                 outport.reset()
                 pro=0
 
@@ -74,5 +71,4 @@ with mido.open_input(organ) as inport:
                         mypath + "/" + files[selection.program-offset],
                         str(selection.program)], 
                         preexec_fn=os.setsid)
-                print(pro)
-                print(pro.pid)
+                # From: https://stackoverflow.com/questions/4789837/how-to-terminate-a-python-subprocess-launched-with-shell-true
