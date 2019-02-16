@@ -18,3 +18,6 @@ sudo apt install vkeybd
 sudo apt install libcanberra-gtk-module
 
 time sudo apt install vmpk
+
+# For mftext
+apt install abcmidi
