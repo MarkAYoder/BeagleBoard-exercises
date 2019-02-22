@@ -16,6 +16,10 @@
 alias d=pushd
 alias ls='ls -F'
 alias go=xdg-open
+alias vpn='sudo openconnect --quiet --user=yoder --juniper sslvpn.rose-hulman.edu'
+alias gauss='ssh -XC gauss.csse.rose-hulman.edu'
+alias hinton='ssh -XC hinton.csse.rose-hulman.edu'
+
 # alias gedit="gedit $1 >& /dev/null"
 
 # For cross compiling
