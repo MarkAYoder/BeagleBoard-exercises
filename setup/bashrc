@@ -17,7 +17,7 @@ alias d=pushd
 alias ls='ls -F'
 alias go=xdg-open
 alias vpn='sudo openconnect --background --pid-file=/tmp/vpn --quiet --user=yoder --juniper sslvpn.rose-hulman.edu'
-alias vpnoff='sudo kill `cat /tmp/vpn`'
+alias vpnoff='sudo kill -s SIGINT `cat /tmp/vpn`'
 alias gauss='ssh -XC gauss.csse.rose-hulman.edu'
 alias hinton='ssh -XC hinton.csse.rose-hulman.edu'
 
