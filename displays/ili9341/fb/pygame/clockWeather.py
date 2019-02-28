@@ -89,6 +89,7 @@ class pyclock :
         # https://www.wunderground.com/weather/api/d/docs
         key = "ec7eb641373d9256"
         urlWeather = "http://api.wunderground.com/api/" + key + "/conditions/forecast/history/yesterday/q/IN/Brazil.json"
+        urlWeather = "http://api.wunderground.com/api/" + key + "/conditions/forecast/q/IN/Brazil.json"
         # Need to use keyword 'yesterday' so ['history']['dailysummary'][0]['mintempi']
         #  gets yesterdays min and max
 
@@ -224,14 +225,14 @@ class pyclock :
                         textsurface = myfont.render(
                            "Wind: " + tmp['avewind']['dir'] + " " + str(tmp['avewind']['mph']) + " to " + str(tmp['maxwind']['mph']) + "   ",
                             False, (0, 0, 0), backgroundC)
-                        self.screen.blit(textsurface,(0,ymax-2*myfont.get_linesize()))
+                        self.screen.blit(textsurface,(0,ymax-1*myfont.get_linesize()))
                         
-                        textsurface = myfont.render(
-                            "Yesterday: "
-                            +weather['history']['dailysummary'][0]['mintempi']
-                            +"/"+weather['history']['dailysummary'][0]['maxtempi'],
-                            False, (0, 0, 0), backgroundC)
-                        self.screen.blit(textsurface,(0,ymax-myfont.get_linesize()))
+                        # textsurface = myfont.render(
+                        #     "Yesterday: "
+                        #     +weather['history']['dailysummary'][0]['mintempi']
+                        #     +"/"+weather['history']['dailysummary'][0]['maxtempi'],
+                        #     False, (0, 0, 0), backgroundC)
+                        # self.screen.blit(textsurface,(0,ymax-myfont.get_linesize()))
                         
                         # Get the weather icon and display it
                         # https://stackoverflow.com/questions/32853980/temporarily-retrieve-an-image-using-the-requests-library
