@@ -3,7 +3,7 @@
 
 import mido
 import time
-import subprocess
+import subprocess, signal, os
 
 # See what ports are out there
 # print(mido.get_output_names())
@@ -38,12 +38,24 @@ def lightsOff():
     print("Sending cancel")
     msg = mido.Message('sysex', data=[0, 74, 79, 72, 65, 83, 127])
     outport.send(msg)
+    
+def lightsOnOne(light):
+    lightsOff()
+    msg = mido.Message('program_change', channel=11, program=light)
+    outport.send(msg)
 
+pro=0
 with mido.open_input(organ) as inport:
     print(inport)
     for msg in inport:
         print(msg)
         if msg.type == 'note_on' and msg.note == 36 and msg.velocity != 0:
+             # See if something is already playing and kill it
+            if pro != 0:
+                os.killpg(os.getpgid(pro.pid), signal.SIGTERM)
+                outport.reset()
+                pro=0
+
             lightsOn(len(files))
             # Wait for messages to pass
             time.sleep(0.2)     # Wait for messages to arrive
@@ -55,7 +67,8 @@ with mido.open_input(organ) as inport:
                 print(selection.program)
                 print("Playing: " + files[selection.program-offset])
 
-                subprocess.run(["./register.py", "p"])
-                subprocess.run(["aplaymidi", "-p", "20.0", 
-                    mypath + "/" + files[selection.program-offset]])
-                lightsOff()
+                pro = subprocess.Popen(["./playMidi.sh", 
+                        mypath + "/" + files[selection.program-offset],
+                        str(selection.program)], 
+                        preexec_fn=os.setsid)
+                # From: https://stackoverflow.com/questions/4789837/how-to-terminate-a-python-subprocess-launched-with-shell-true
