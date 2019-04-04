@@ -1,0 +1,54 @@
+edgetpu-api (5-2) mendel-beaker; urgency=medium
+
+  * Update libedgetpu binaries
+
+ -- AIY Projects <support-aiyprojects@google.com>  Fri, 08 Mar 2019 14:11:47 -0800
+
+edgetpu-api (4-2) mendel-beaker; urgency=medium
+
+  * Use different working directory for unittests.
+  * Update bazel invocation and io_bazel_rules_closure
+  * Skip bad image when loading test dataset.
+  * Fix coco eval test on glinux + einstein.
+  * Copying .py files is not needed anymore in qa_test.sh.
+  * Reduce test_utils redundancy.
+  * Disable coco test temporarily
+  * Move benchmark code into /benchmarks dir.
+  * Move all unit tests to /tests folder.
+  * beef up edgetpu/classification/engine_test.py
+  * Update package list for enterprise running Python API tests.
+  * Slightly lower test tolerances.
+  * Update QA test script to test default frequency.
+  * Add auto-confirm for test automation.
+
+ -- AIY Projects <support-aiyprojects@google.com>  Wed, 27 Feb 2019 11:00:25 -0800
+
+edgetpu-api (3-2) mendel-beaker; urgency=medium
+
+  * Add LICENSE to package.
+
+ -- AIY Projects <support-aiyprojects@google.com>  Mon, 04 Feb 2019 11:20:13 -0800
+
+edgetpu-api (3-1) mendel-beaker; urgency=medium
+
+  * Replace SeeFood with iNat bird model
+
+ -- AIY Projects <support-aiyprojects@google.com>  Mon, 28 Jan 2019 14:10:00 -0800
+
+edgetpu-api (2-1) mendel-beaker; urgency=medium
+
+  * Update libedgetpu binaries
+
+ -- AIY Projects <support-aiyprojects@google.com>  Tue, 22 Jan 2019 10:42:07 -0800
+
+edgetpu-api (1-1) mendel-beaker; urgency=medium
+
+  * Cut for beaker release and normalization of version.
+
+ -- AIY Projects <support-aiyprojects@google.com>  Wed, 16 Jan 2019 12:00:00 -0800
+
+edgetpu-api (0.1) UNRELEASED; urgency=medium
+
+  * Initial release.
+
+ -- AIY Projects <support-aiyprojects@google.com>  Mon, 04 Jun 2018 16:14:00 -0800

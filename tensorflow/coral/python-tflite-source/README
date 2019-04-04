@@ -1,0 +1,7 @@
+For Raspberry Pi and x86 + Linux, we don't have deb package yet.
+
+To install without compiling, please run:
+ - 'bash ./installation.sh'
+
+In the process you need to input admin password to copy files to /lib
+directory and install dependent libraries.

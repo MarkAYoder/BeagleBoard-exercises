@@ -1,0 +1,73 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+# export DH_VERBOSE=1
+
+ifeq ($(DEB_TARGET_ARCH),armhf)
+LIBEDGETPU_SUFFIX := arm32
+TARGET_ARCH := armhf
+BAZEL_CPU := armeabi-v7a
+endif
+ifeq ($(DEB_TARGET_ARCH),arm64)
+LIBEDGETPU_SUFFIX := arm64
+TARGET_ARCH := aarch64
+BAZEL_CPU := arm64-v8a
+endif
+
+export PYBUILD_NAME=edgetpu
+export PACKAGE_TEST_DATA_DIR=`pwd`/debian/python3-$(PYBUILD_NAME)/usr/lib/python3/dist-packages/edgetpu/test_data/
+export SOURCE_TEST_DATA_DIR=`pwd`/edgetpu/test_data/
+
+MAKEOPTS := \
+	CROSS_COMPILE=$(DEB_HOST_GNU_TYPE)- \
+	TARGET_ARCH=$(TARGET_ARCH) \
+	DESTDIR=`pwd`/debian/python3-$(PYBUILD_NAME) \
+	prefix=/usr
+
+%:
+	dh $@ --with python3 --buildsystem=pybuild
+
+override_dh_auto_build:
+	# Bazel puts caches in ${HOME}/.config, so needs to exist.
+	cd edgetpu/cpp; HOME=/tmp bazel build -c opt --crosstool_top=//tools/arm_compiler:toolchain --cpu=$(BAZEL_CPU) --compiler=clang \
+		//swig:all
+
+override_dh_auto_install:
+	cp edgetpu/cpp/bazel-bin/swig/_edgetpu_cpp_wrapper.so edgetpu/swig/
+	cp edgetpu/cpp/bazel-bin/swig/edgetpu_cpp_wrapper.py edgetpu/swig/
+	mkdir -p `pwd`/debian/libedgetpu/usr/lib/$(DEB_HOST_GNU_TYPE)
+	cp libedgetpu/libedgetpu_$(LIBEDGETPU_SUFFIX).so `pwd`/debian/libedgetpu/usr/lib/$(DEB_HOST_GNU_TYPE)/
+	mkdir -p `pwd`/debian/libedgetpu-dev/usr/include
+	cp libedgetpu/edgetpu.h `pwd`/debian/libedgetpu-dev/usr/include
+	python3 setup.py install --install-layout=deb \
+	  --root $(CURDIR)/debian/python3-edgetpu; \
+	# Install LICENSE.txt to /usr/share/doc
+	install -d `pwd`/debian/python3-$(PYBUILD_NAME)/usr/share/doc/python3-edgetpu/
+	cp `pwd`/LICENSE.txt `pwd`/debian/python3-$(PYBUILD_NAME)/usr/share/doc/python3-edgetpu/
+	# Removes unit test, benchmark and test utils.
+	find `pwd`/debian/python3-$(PYBUILD_NAME) -type f -name benchmark.py -delete
+	find `pwd`/debian/python3-$(PYBUILD_NAME) -type f -name models.py -delete
+	find `pwd`/debian/python3-$(PYBUILD_NAME) -type f -name *_test.py -delete
+	find `pwd`/debian/python3-$(PYBUILD_NAME) -type f -name test_utils.py -delete
+	find `pwd`/debian/python3-$(PYBUILD_NAME) -type f -name extractors.py -delete
+	# Removes classify_capture.py, it is a Raspberry Pi only demo.
+	find `pwd`/debian/python3-$(PYBUILD_NAME) -type f -name classify_capture.py -delete
+	# Keeps models and images for demo.
+	rm -r $(PACKAGE_TEST_DATA_DIR)/*
+	# Keep iNat bird model
+	cp $(SOURCE_TEST_DATA_DIR)/owl.jpg $(PACKAGE_TEST_DATA_DIR)
+	cp $(SOURCE_TEST_DATA_DIR)/parrot.jpg $(PACKAGE_TEST_DATA_DIR)
+	cp $(SOURCE_TEST_DATA_DIR)/mobilenet_v2_1.0_224_inat_bird_quant_edgetpu.tflite $(PACKAGE_TEST_DATA_DIR)
+	cp $(SOURCE_TEST_DATA_DIR)/mobilenet_v2_1.0_224_inat_bird_quant.tflite $(PACKAGE_TEST_DATA_DIR)
+	cp $(SOURCE_TEST_DATA_DIR)/inat_bird_labels.txt $(PACKAGE_TEST_DATA_DIR)
+	# Keep face detection model
+	cp $(SOURCE_TEST_DATA_DIR)/face.jpg $(PACKAGE_TEST_DATA_DIR)
+	cp $(SOURCE_TEST_DATA_DIR)/mobilenet_ssd_v2_face_quant_postprocess_edgetpu.tflite $(PACKAGE_TEST_DATA_DIR)
+	# Keep object detection model
+	cp $(SOURCE_TEST_DATA_DIR)/mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite $(PACKAGE_TEST_DATA_DIR)
+	cp $(SOURCE_TEST_DATA_DIR)/coco_labels.txt $(PACKAGE_TEST_DATA_DIR)
+	# Keep script for downloading imprinting demo dataset.
+	cp $(SOURCE_TEST_DATA_DIR)/open_image_v4_subset.csv $(PACKAGE_TEST_DATA_DIR)
+	cp $(SOURCE_TEST_DATA_DIR)/download_imprinting_test_data.sh $(PACKAGE_TEST_DATA_DIR)
+	cp $(SOURCE_TEST_DATA_DIR)/COPYRIGHT $(PACKAGE_TEST_DATA_DIR)

@@ -1,0 +1,23 @@
+Test images are from Open Images Dataset V4.
+
+License: Attribution 2.0 Generic (CC BY 2.0)
+URL: https://creativecommons.org/licenses/by/2.0/
+
+- face.jpg (1028 * 712)
+  https://storage.googleapis.com/openimages/web/visualizer/index.html?set=train&c=%2Fm%2F0dzct&id=959ec6a16e85dc22
+
+- cat.bmp (600 * 400), cat_720p.jpg (1080 * 720), cat_1080p.jpg (1920 * 1080)
+  https://storage.googleapis.com/openimages/web/visualizer/index.html?set=train&c=%2Fm%2F01yrx&id=02b4196ce8a0e541
+  The size of original image is 3008 * 2000, we resized it for performance tests.
+
+- pets.jpg (2360 * 1983)
+  https://storage.googleapis.com/openimages/web/visualizer/index.html?set=train&c=%2Fm%2F0bt9lr&id=82270c27bacdcaa4
+
+- hot_dog.jpg (3264 * 2448)
+  https://storage.googleapis.com/openimages/web/visualizer/index.html?set=train&c=%2Fm%2F01b9xk&id=1170c58625bec5dc
+
+- parrot.jpg (1688 * 3064)
+  https://c8.staticflickr.com/4/3328/3312518394_51317af95d_o.jpg
+
+- owl.jpg (1600 * 1200)
+  https://c3.staticflickr.com/4/3814/12316266564_0676652bfa_o.jpg

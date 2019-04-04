@@ -1,0 +1,50 @@
+Source: edgetpu-api
+Maintainer: AIY Projects <support-aiyprojects@google.com>
+Build-Depends: bash,
+               bazel:native,
+               ca-certificates,
+               clang-4.0:native,
+               curl,
+               debhelper,
+               dh-python,
+               libc++-dev,
+               libc++-dev:native,
+               libc++abi-dev,
+               libunwind8-dev,
+               libusb-1.0-0-dev,
+               openjdk-8-jdk,
+               python3-all,
+               python3-dev,
+               python3-numpy,
+               python3-setuptools,
+               swig,
+               unzip,
+               xz-utils,
+               zlib1g-dev
+Section: misc
+Priority: optional
+
+Package: python3-edgetpu
+Section: misc
+Priority: optional
+Architecture: any
+Depends: libedgetpu,
+         libunwind8,
+         python3-numpy,
+         python3-pil,
+         ${misc:Depends},
+         ${python3:Depends}
+Description: Miscellaneous tools to support the AIY Board
+
+Package: libedgetpu
+Section: misc
+Priority: optional
+Architecture: any
+Description: Support library for Edge TPU
+
+Package:libedgetpu-dev
+Section: misc
+Priority: optional
+Architecture: any
+Depends: libedgetpu
+Description: Development files for libedgetpu

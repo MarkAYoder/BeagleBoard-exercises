@@ -1,0 +1,7 @@
+include edgetpu/test_data/*.jpg
+include edgetpu/test_data/*.bmp
+include edgetpu/test_data/*.tflite
+include edgetpu/test_data/*.txt
+include edgetpu/test_data/*.csv
+include edgetpu/test_data/*.sh
+include edgetpu/test_data/COPYRIGHT

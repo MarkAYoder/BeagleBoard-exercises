@@ -1,0 +1,11 @@
+Metadata-Version: 1.2
+Name: edgetpu
+Version: 1.2.0
+Summary: EdgeTPU Python API
+Home-page: https://aiyprojects.googlesource.com/python-tflite-source
+Author: AIY Projects
+Author-email: support-aiyprojects@google.com
+License: Apache 2
+Description: UNKNOWN
+Platform: UNKNOWN
+Requires-Python: >=3.5.0
