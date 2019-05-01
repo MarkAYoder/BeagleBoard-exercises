@@ -1,0 +1,10 @@
+coffee_mug
+baseball
+sunglasses
+water_bottle
+pill_bottle
+beer_glass
+tennis_ball
+goldfinch
+house_finch
+chickadee

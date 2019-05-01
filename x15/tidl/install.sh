@@ -19,6 +19,7 @@ debian ALL=(ALL) NOPASSWD: /home/debian/tidl-api/examples/classification/run_cam
 cd ~/tidl-api/examples/classification
 mv run_camera.sh run_camera.sh.orig
 ln -s $HERE/run_camera.sh .
+ln -s $HERE/classlistMAY.txt .
 
 # The rest of this appears to be already installed.
 
