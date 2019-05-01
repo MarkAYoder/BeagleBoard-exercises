@@ -20,6 +20,8 @@ alias vpn='sudo openconnect --background --pid-file=/tmp/vpn --quiet --user=yode
 alias vpnoff='sudo kill -s SIGINT `cat /tmp/vpn`'
 alias gauss='ssh -XC gauss.csse.rose-hulman.edu'
 alias hinton='ssh -XC hinton.csse.rose-hulman.edu'
+# Beagle AI
+alias temp='cat /sys/class/thermal/*/temp'
 
 # alias gedit="gedit $1 >& /dev/null"
 
