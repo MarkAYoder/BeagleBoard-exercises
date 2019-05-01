@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Exec=bash -c "cd /home/debian/tidl-api/examples/classification; sudo ./run_camera.sh" 
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=TIDL Example
+Comment=Just playing
