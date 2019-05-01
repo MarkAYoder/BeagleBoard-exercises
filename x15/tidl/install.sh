@@ -4,6 +4,24 @@
 # and ... http://software-dl.ti.com/processor-sdk-linux/esd/docs/latest/linux/Foundational_Components_TIDL.html
 # and training http://software-dl.ti.com/processor-sdk-linux/esd/docs/latest/linux/Foundational_Components_TIDL.html#training
 
+# This appears to be all preinstalled on the BeagleBone AI
+# To autostart, 
+HERE=$PWD
+mkdir -p ~/.config/autostart
+cd ~/.config/autostart
+ln -s $HERE/tidl.desktop .
+cd $HERE
+
+# Run sudo visudo and add the following line at the end so su password isn't needed
+debian ALL=(ALL) NOPASSWD: /home/debian/tidl-api/examples/classification/run_camera.sh
+
+# Put in our run_camera.sh
+cd ~/tidl-api/examples/classification
+mv run_camera.sh run_camera.sh.orig
+ln -s $HERE/run_camera.sh .
+
+# The rest of this appears to be already installed.
+
 sudo apt update
 sudo apt install ti-opencl libboost-dev libopencv-core-dev libopencv-imgproc-dev libopencv-highgui-dev libjson-c-dev
 
