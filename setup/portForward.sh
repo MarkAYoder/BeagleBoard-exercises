@@ -23,6 +23,8 @@ beagleAddr=192.168.7.2
 
 # Setup port forwards so outside world can reach the bone
 # first get IP address of host outside interface
-IP_ADDR=`ifconfig $interface | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}'`
+# IP_ADDR=`ifconfig $interface | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}'`
+IP_ADDR=`ifconfig $interface | grep "inet " | awk '{print $2}' `
+echo IP_ADDR=$IP_ADDR
 sudo iptables -t nat -A PREROUTING -p tcp -s 0/0 -d $IP_ADDR --dport $port -j DNAT --to $beagleAddr:$port2
 # Replace -A with -D to delete forwarding
