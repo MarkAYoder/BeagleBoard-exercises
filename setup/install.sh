@@ -8,12 +8,12 @@
 #	for remote login without a password.
 # Set root password
 # host$ ssh debian@192.168.7.2, default password is temppwd
-# bone$ sudo root
-# bone$ passwd root
+# bone$ sudo bash
+# bone# passwd
 # While logged onto the Bone as root you may need to edit /etc/shh/sshd_config
 # Find the line that says "PermitRootLogin" and set it to "yes".
 # Then run "systemctl restart sshd"
-# Now exit twice to get mack to the host machine.
+# Now exit twice to get back to the host machine.
 # Now generate an ssh key and copy your id for remote access
 # host$ ssh-keygen  (accpet the default answer to all prompts)
 # host$ ssh-copy-id root@192.168.7.2
