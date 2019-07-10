@@ -39,7 +39,7 @@ echo
 echo rsyncing exercises, this will take a couple of minutes
 echo
 # git clone https://github.com/MarkAYoder/BeagleBoard-exercises.git exercises --depth=1
-time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises $USER@$BONE:.
+# time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises $USER@$BONE:.
 
 # echo rsyncing beaglebone-cookbook, this will take about 2 seconds
 # time rsync -azq ../../beaglebone-cookbook $USER@$BONE:.
@@ -117,7 +117,7 @@ if [ ! -e /usr/local/lib/node_modules/socket.io ] ; then
 fi
 
 # Turn off some services
-systemctl disable apache2
+# systemctl disable apache2
 
 # Set up boneServer to run at boot time
 # cp ~/exercises/realtime/boneServer.service /lib/systemd/system
