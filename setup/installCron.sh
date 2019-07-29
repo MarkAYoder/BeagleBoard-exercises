@@ -11,11 +11,12 @@ echo "
 NODE_PATH=/usr/local/lib/node_modules
 58 5  * * *   root    /home/debian/exercises/setup/ledTrigger.js
 2 21  * * *   root    /home/debian/exercises/setup/ledTrigger.js off
-* * * * * root /home/debian/exercises/iot/phant/recordPing.js 2>&1 | logger
 " >> /etc/crontab
 
-echo "
+# * * * * * root /home/debian/exercises/iot/phant/recordPing.js 2>&1 | logger
+
+# echo "
 # Remind me that the machine is running
-*  *    * * *   root    /home/yoder/BeagleBoard/exercises/iot/sms/sms.curl \`uname -n\` is running
-" >> /etc/crontab
+# *  *    * * *   root    /home/yoder/BeagleBoard/exercises/iot/sms/sms.curl \`uname -n\` is running
+# " >> /etc/crontab
 
