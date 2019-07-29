@@ -6,9 +6,6 @@ if ! id | grep -q root; then
         exit
 fi
 
-groupadd remoteproc
-usermod -a -G remoteproc debian
-
-cp /home/debian/exercises/setup/86-remoteproc-noroot.rules /etc/udev/rules.d
+cp ~/repos/bb-customizations/suite/buster/debian/86-rpmsg-noroot.rules /etc/udev/rules.d
 
 echo Please reboot
