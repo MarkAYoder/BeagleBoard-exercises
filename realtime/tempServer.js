@@ -17,26 +17,12 @@ var port = 9090, // Port to listen on
     server,
     connectCount = 0,	// Number of connections to server
     errCount = 0;	// Counts the AIN errors.
-    
-//  Audio
-    var frameCount = 0,     // Counts the frames from arecord
-        lastFrame = 0,      // Last frame sent to browser
-        audioData,          // all data from arecord is saved here and sent
-			                // to the client when requested.
-        audioChild = 0,     // Process for arecord
-        audioRate = 8000;
-        
-        // PWM
-        var pwm = 'P9_21';
 
 // Initialize various IO things.
 function initIO() {
     // Make sure gpios 7 and 20 are available.
     b.pinMode('P9_12', b.INPUT);
     b.pinMode('P9_14', b.INPUT);
-    b.pinMode(pwm,     b.ANALOG_OUTPUT);    // PWM
-    
-    // Initialize pwm
 }
 
 function send404(res) {
@@ -82,27 +68,12 @@ io.sockets.on('connection', function (socket) {
     // now that we have our connected 'socket' object, we can 
     // define its event handlers
 
-    // Send value every time a 'message' is received.
-//     socket.on('ain', function (err, ainNum) {
-//         b.analogRead(ainNum, function(x) {
-//             if(x.err && errCount++<5) console.log("AIN read error");
-//             if(typeof x.value !== 'number' || x.value === "NaN") {
-//                 console.log('x.value = ' + x.value);
-//             } else {
-//                 socket.emit('ain', {pin:ainNum, value:x.value});
-//             }
-// //            if(ainNum === "P9_38") {
-// //                console.log('emitted ain: ' + x.value + ', ' + ainNum);
-// //            }
-//         });
-//     });
-
     socket.on('gpio', function (gpioNum) {
         // console.log('gpio' + gpioNum);
         b.digitalRead(gpioNum, function(err, value) {
             if (err) throw err;
             socket.emit('gpio', {pin:gpioNum, value:value});
-            console.log('emitted gpio: ' + value + ', ' + gpioNum);
+            // console.log('emitted gpio: ' + value + ', ' + gpioNum);
         });
     });
 
@@ -136,31 +107,6 @@ io.sockets.on('connection', function (socket) {
         }
     });
     
-    // Send a packet of data every time a 'audio' is received.
-    socket.on('audio', function () {
-//        console.log("Received message: " + message + 
-//            " - from client " + socket.id);
-        if(audioChild === 0) {
-            startAudio();
-        }
-        socket.emit('audio', sendAudio() );
-    });
-    
-    socket.on('matrix.bs', function (i2cNum) {
-        var i;
-        var line = new Array(16);
-        // console.log('Got i2c request:' + i2cNum);
-        b.i2cOpen(bus, 0x70);
-        for(i=0; i<16; i++) {
-            // Can only read one byte at a time.  Something's wrong
-            line[i] = b.i2cReadBytes(bus, i, 1)[0].toString(16);
-            // console.log("line: " + JSON.stringify(line[i]));
-        }
-        console.log(line.join(' '));
-        socket.emit('matrix', line.join(' '));
-    });
-
-
     socket.on('disconnect', function () {
         console.log("Connection " + socket.id + " terminated.");
         connectCount--;
@@ -170,13 +116,3 @@ io.sockets.on('connection', function (socket) {
     connectCount++;
     console.log("connectCount = " + connectCount);
 });
-
-function sendAudio() {
-//        console.log("Sending data");
-    if(frameCount === lastFrame) {
-//            console.log("Already sent frame " + lastFrame);
-    } else {
-        lastFrame = frameCount;
-    }
-    return(audioData);
-}

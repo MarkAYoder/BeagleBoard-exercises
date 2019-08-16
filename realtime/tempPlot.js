@@ -2,25 +2,18 @@
     var firstconnect = true,
         samples = 100,          // Number of values to plot
         gpioNum = ["P9_12", "P9_14"],   // GPIO pins to plot
-        ainNum  = ["P9_37", "P9_35"],   // Analog ins to plot
         plotTop, plotBot,
         topTimer, botTimer,     // The setInterval timers
         gpioData = [], igpio = [],  // The data to plot and the current index
-        ainData  = [], iain  = [],
         i;
-        var updateBotInterval = 1000;    // Update interval in ms
+        var updateBotInterval = 100;    // Update interval in ms
         // var updateTopInterval = 100;
 
-    // Initialize gpioData and ainData to be an array of arrays
+    // Initialize gpioData to be an array of arrays
     for (i = 0; i < gpioNum.length; i++) {
         gpioData[i] = [0];         // Put an array in
         gpioData[i][samples] = 0;  // Preallocate sample elements
         igpio[i] = 0;
-    }
-    for(i=0; i<ainNum.length; i++) {
-        ainData[i] = [0];
-        ainData[i][samples] = 0;
-        iain[i] = 0;
     }
     
     function connect() {
@@ -40,7 +33,6 @@
         socket.on('reconnect_failed', function()
             { status_update("Reconnect Failed"); });
 
-        // socket.on('ain',  ain);
         socket.on('gpio', gpio);
 
         firstconnect = false;
@@ -69,21 +61,6 @@
     }
 
     // When new data arrives, convert it and plot it.
-//     function ain(data) {
-//         var idx = ainNum.indexOf(data.pin); // Find position in ainNum array
-// //        var num = data[0];
-// //        data = data.value;
-// //        status_update("ain" + num + "(" + idx + "): " + data + ", iain: " + iain[idx]);
-//         ainData[idx][iain[idx]] = [iain[idx], data.value];
-//         iain[idx]++;
-//         if(iain[idx] >= samples) {
-//             iain[idx] = 0;
-//             ainData[idx] = [];
-//         }
-//         plotTop.setData(ainData);
-//         plotTop.draw();
-//         setTimeout(function(){socket.emit("ain", data.pin);}, updateTopInterval);
-//     }
 
     function gpio(data) {
 	    var idx = gpioNum.indexOf(data.pin);
@@ -105,19 +82,10 @@
       document.getElementById('status').innerHTML = txt;
     }
 
-    // Request data every updateInterval ms
-    // function updateTop() {
-    //     var i;
-    //     for(i=0; i<ainNum.length; i++) {
-    //         socket.emit("ain", ainNum[i]);
-    //     }
-    // }
-    //topTimer = setInterval(updateTop, updateTopInterval);
-
     function updateBot() {
         var i;
         for (i = 0; i < gpioNum.length; i++) {
-            socket.emit("gpio", {err:0, gpioNum:gpioNum[i]});
+            socket.emit("gpio", gpioNum[i]);
         }
     }
     botTimer = setInterval(updateBot, updateBotInterval);
@@ -134,10 +102,6 @@ $(function () {
     }
 
     // setup control widget
-    $("#ainNum").val(ainNum).change(function () {
-        ainNum = $(this).val().split(",");
-        updateTop();
-    });
 
     $("#gpioNum").val(gpioNum).change(function () {
         gpioNum = $(this).val().split(",");
