@@ -8,12 +8,12 @@
 #	for remote login without a password.
 # Set root password
 # host$ ssh debian@192.168.7.2, default password is temppwd
-# bone$ sudo root
-# bone$ passwd root
+# bone$ sudo bash
+# bone# passwd
 # While logged onto the Bone as root you may need to edit /etc/shh/sshd_config
 # Find the line that says "PermitRootLogin" and set it to "yes".
 # Then run "systemctl restart sshd"
-# Now exit twice to get mack to the host machine.
+# Now exit twice to get back to the host machine.
 # Now generate an ssh key and copy your id for remote access
 # host$ ssh-keygen  (accpet the default answer to all prompts)
 # host$ ssh-copy-id root@192.168.7.2
@@ -39,7 +39,7 @@ echo
 echo rsyncing exercises, this will take a couple of minutes
 echo
 # git clone https://github.com/MarkAYoder/BeagleBoard-exercises.git exercises --depth=1
-time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises $USER@$BONE:.
+# time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises $USER@$BONE:.
 
 # echo rsyncing beaglebone-cookbook, this will take about 2 seconds
 # time rsync -azq ../../beaglebone-cookbook $USER@$BONE:.
