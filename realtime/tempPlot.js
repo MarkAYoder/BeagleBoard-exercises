@@ -131,8 +131,8 @@ $(function () {
             updateBotInterval = +v;
             if (updateBotInterval < 10)
                 updateBotInterval = 10;
-            if (updateBotInterval > 2000)
-                updateBotInterval = 2000;
+            if (updateBotInterval > 10000)
+                updateBotInterval = 10000;
             $(this).val("" + updateBotInterval);
         }
         // Reset timer
@@ -173,9 +173,15 @@ $(function () {
     plotBot = $.plot($("#plotBot"), 
         [ 
           { data:  initPlotData(),
-            label: "P9_12"},
+            label: "zone 0"},
           { data:  initPlotData(),
-            label: "P9_14"}
+            label: "zone 1"},
+          { data:  initPlotData(),
+            label: "zone 2"},
+          { data:  initPlotData(),
+            label: "zone 3"},
+          { data:  initPlotData(),
+            label: "zone 4"}
         ],
             optionsBot);
 });
