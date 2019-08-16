@@ -12,8 +12,7 @@ var port = 9090, // Port to listen on
     b = require('bonescript'),
     child_process = require('child_process'),
     server,
-    connectCount = 0,	// Number of connections to server
-    errCount = 0;	// Counts the AIN errors.
+    connectCount = 0;	// Number of connections to server
 
 // Initialize various IO things.
 function initIO() {
@@ -71,6 +70,15 @@ io.sockets.on('connection', function (socket) {
             if (err) throw err;
             socket.emit('gpio', {pin:gpioNum, value:value});
             // console.log('emitted gpio: ' + value + ', ' + gpioNum);
+        });
+    });
+
+    socket.on('temp', function (tempNum) {
+        console.log('temp' + tempNum);
+        var temp = fs.readFileSync("/sys/class/thermal/thermal_zone" + tempNum);
+            if (err) throw err;
+            socket.emit('temp', {zone:tempNum, value:temp});
+            console.log('emitted temp: ' + value + ', ' + tempNum);
         });
     });
 
