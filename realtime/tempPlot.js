@@ -1,12 +1,12 @@
     var socket;
     var firstconnect = true,
         samples = 100,          // Number of values to plot
-        gpioNum = ["P9_12", "P9_14"],   // GPIO pins to plot
+        gpioNum = [0, 1, 2, 3, 4],   // GPIO pins to plot
         plotTop, plotBot,
         topTimer, botTimer,     // The setInterval timers
         gpioData = [], igpio = [],  // The data to plot and the current index
         i;
-        var updateBotInterval = 100;    // Update interval in ms
+        var updateBotInterval = 1000;    // Update interval in ms
         // var updateTopInterval = 100;
 
     // Initialize gpioData to be an array of arrays
@@ -33,7 +33,7 @@
         socket.on('reconnect_failed', function()
             { status_update("Reconnect Failed"); });
 
-        socket.on('gpio', gpio);
+        socket.on('temp', temp);
 
         firstconnect = false;
         updateTop();
@@ -62,14 +62,14 @@
 
     // When new data arrives, convert it and plot it.
 
-    function gpio(data) {
-	    var idx = gpioNum.indexOf(data.pin);
-//        var num = data[0];
-//        data = atob(data[1]);
-//        data = data[1];
+    function temp(data) {
+	    var idx = data.zone;
+        // var num = data[0];
+        // data = atob(data[1]);
+        // data = data[1];
         gpioData[idx][igpio[idx]] = [igpio[idx], data.value];
         igpio[idx]++;
-//        status_update("gpio" + num + "(" + idx + "): " + data + " igpio: " + igpio[idx]);
+        status_update("temp(" + idx + "): " + data.value + " igpio: " + igpio[idx]);
         if(igpio[idx] >= samples) {
             igpio[idx] = 0;
             gpioData[idx] = [];
@@ -84,8 +84,11 @@
 
     function updateBot() {
         var i;
+        // for (i = 0; i < gpioNum.length; i++) {
+        //     socket.emit("gpio", gpioNum[i]);
+        // }
         for (i = 0; i < gpioNum.length; i++) {
-            socket.emit("gpio", gpioNum[i]);
+            socket.emit("temp", gpioNum[i]);
         }
     }
     botTimer = setInterval(updateBot, updateBotInterval);
@@ -163,7 +166,7 @@ $(function () {
             points: { show: false},
             lines:  { show: true, lineWidth: 5}
         }, 
-        yaxis:	{ min: 0, max: 2 },
+        yaxis:	{ min: 35, max: 60 },
         xaxis:	{ show: true },
         legend:	{ position: "ne" }
     };

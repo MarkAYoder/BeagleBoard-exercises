@@ -17,8 +17,8 @@ var port = 9090, // Port to listen on
 // Initialize various IO things.
 function initIO() {
     // Make sure gpios 7 and 20 are available.
-    b.pinMode('P9_12', b.INPUT);
-    b.pinMode('P9_14', b.INPUT);
+    // b.pinMode('P9_12', b.INPUT);
+    // b.pinMode('P9_14', b.INPUT);
 }
 
 function send404(res) {
@@ -74,13 +74,13 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('temp', function (tempNum) {
-        console.log('temp' + tempNum);
-        var temp = fs.readFileSync("/sys/class/thermal/thermal_zone" + tempNum);
-            if (err) throw err;
-            socket.emit('temp', {zone:tempNum, value:temp});
-            console.log('emitted temp: ' + value + ', ' + tempNum);
+        // console.log('temp' + tempNum);
+        var temp = fs.readFileSync("/sys/class/thermal/thermal_zone" + 
+                tempNum + "/temp");
+        temp = temp.slice(0, -1)/1000;   // Remove last char, convert to degrees
+        socket.emit('temp', {zone:tempNum, value:temp});
+        console.log('emitted temp: ' + temp + ', ' + tempNum);
         });
-    });
 
     socket.on('led', function (ledNum) {
         var ledPath = "/sys/class/leds/beaglebone:green:usr" + ledNum + "/brightness";
