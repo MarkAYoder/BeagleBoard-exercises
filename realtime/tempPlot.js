@@ -129,10 +129,10 @@ $(function () {
         var v = $(this).val();
         if (v && !isNaN(+v)) {
             updateBotInterval = +v;
-            if (updateBotInterval < 10)
-                updateBotInterval = 10;
-            if (updateBotInterval > 10000)
-                updateBotInterval = 10000;
+            if (updateBotInterval < 100)
+                updateBotInterval = 100;
+            if (updateBotInterval > 100000)
+                updateBotInterval = 100000;
             $(this).val("" + updateBotInterval);
         }
         // Reset timer
@@ -166,22 +166,22 @@ $(function () {
             points: { show: false},
             lines:  { show: true, lineWidth: 5}
         }, 
-        yaxis:	{ min: 35, max: 60 },
+        yaxis:	{ min: 40, max: 70 },
         xaxis:	{ show: true },
         legend:	{ position: "ne" }
     };
     plotBot = $.plot($("#plotBot"), 
         [ 
           { data:  initPlotData(),
-            label: "zone 0"},
+            label: "cpu_thermal"},
           { data:  initPlotData(),
-            label: "zone 1"},
+            label: "gpu_thermal"},
           { data:  initPlotData(),
-            label: "zone 2"},
+            label: "core_thermal"},
           { data:  initPlotData(),
-            label: "zone 3"},
+            label: "dspeve_thermal"},
           { data:  initPlotData(),
-            label: "zone 4"}
+            label: "iva_thermal"}
         ],
             optionsBot);
 });
