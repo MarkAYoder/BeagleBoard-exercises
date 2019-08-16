@@ -6,9 +6,6 @@
 "use strict";
 
 var port = 9090, // Port to listen on
-    bus = '/dev/i2c-1',
-    busNum = 1,     // i2c bus number
-    i2cNum = 0,             // Remembers the address of the last request
     http = require('http'),
     url = require('url'),
     fs = require('fs'),
