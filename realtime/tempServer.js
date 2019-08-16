@@ -97,23 +97,22 @@ io.sockets.on('connection', function (socket) {
 //         });
 //     });
 
-    socket.on('gpio', function (xx) {
-        var gpioNum = xx.gpioNum;
-    console.log('gpio' + gpioNum);
-        b.digitalRead(gpioNum, function(x) {
-            if (x.err) throw x.err;
-            socket.emit('gpio', {pin:gpioNum, value:x.value});
-            console.log('emitted gpio: ' + x.value + ', ' + gpioNum);
+    socket.on('gpio', function (gpioNum) {
+        // console.log('gpio' + gpioNum);
+        b.digitalRead(gpioNum, function(err, value) {
+            if (err) throw err;
+            socket.emit('gpio', {pin:gpioNum, value:value});
+            console.log('emitted gpio: ' + value + ', ' + gpioNum);
         });
     });
 
     socket.on('led', function (ledNum) {
         var ledPath = "/sys/class/leds/beaglebone:green:usr" + ledNum + "/brightness";
-//        console.log('LED: ' + ledPath);
+        console.log('LED: ' + ledPath);
         fs.readFile(ledPath, 'utf8', function (err, data) {
             if(err) throw err;
             data = data.substring(0,1) === "1" ? "0" : "1";
-//            console.log("LED%d: %s", ledNum, data);
+            console.log("LED%d: %s", ledNum, data);
             fs.writeFile(ledPath, data);
         });
     });
