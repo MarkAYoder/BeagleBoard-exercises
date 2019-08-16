@@ -117,7 +117,7 @@ if [ ! -e /usr/local/lib/node_modules/socket.io ] ; then
 fi
 
 # Turn off some services
-systemctl disable apache2
+# systemctl disable apache2
 
 # Set up boneServer to run at boot time
 # cp ~/exercises/realtime/boneServer.service /lib/systemd/system
