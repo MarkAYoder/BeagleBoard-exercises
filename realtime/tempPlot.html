@@ -18,18 +18,10 @@
     <button id="connect" onClick='connect()'/>Connect</button>
     <button id="disconnect" onClick='disconnect()'>Disconnect</button>
     <span style="position:relative; left:125px">
-    Analog: <input id="ainNum" type="text" value="" style="text-align: right; width:6em">
     gpio: <input id="gpioNum" type="text" value="" style="text-align: right; width:6em">
     </span>
 <!--    <button id="send" onClick='send()'/>Send Message</button> -->
 <table>
-<tr>
-    <td><div id="plotTop" style="width:550px;height:150px;"></div>
-<center>samples</center></td>
-<td>
-    Update: <input id="updateTopInterval" type="text" value="" style="text-align: right; width:3em"> ms
-</td>
-</tr>
 <tr>
     <td><div id="plotBot" style="width:550px;height:150px;"></div>
 <center>samples</center></td>
@@ -37,6 +29,15 @@
     Update: <input id="updateBotInterval" type="text" value="" style="text-align: right; width:3em"> ms
 </td>
 </tr>
+
+<tr>
+    <td><div id="plotTop" style="width:550px;height:150px;"></div>
+<center>samples</center></td>
+<td>
+    Update: <input id="updateTopInterval" type="text" value="" style="text-align: right; width:3em"> ms
+</td>
+</tr>
+
 </table>
 <div id="leds">
 <button id="led0" onClick='led(0)'/>LED 0</button>
@@ -63,13 +64,7 @@ By <i>Mark A. Yoder</i>
 <div id="setup">
 <b>Setup</b>:
 <ol>
-<li><i>Analog In</i>: Attach the wiper of a 10k&Omega; potentiometer to AIN6 (P9_36).  Attach the other ends to VDD_ACD (P9_32) and GNDA_ADC (P9_34).
-</li>
-<li><i>gpio</i>: Attach a switch between gpio0_7 (P9_42) and GND (P9_1).
-</li>
-<li><i>i2c</i>: Attach a TMP101 temperature sensor. Pin 1 (SCL) goes to P9_19 (i2c2_scl), Pin 2 (GND) to P9_2 (DGND), Pin 3 (ALERT) no connection, Pin 4 ((SDA) to P9_20 (i2c2_sda), Pin 5 (ADD0) to Pin P9_2 (GND) so address will be 0x48, Pin 6 (V+) to P9_3 (VDD_3V3).
-</li>
-<li><i>LED Brightnes</i>: Attach an LED in series with a 220&Omega; resistor between P9_1 (DGND) and P9_14 (ehrpwm1A).
+<li><i>gpio</i>: Attach a switch between P9_12 and GND (P9_1).
 </li>
 </ol>
 </div>
