@@ -36,6 +36,7 @@ From https://www.ridgerun.com/developer/wiki/index.php/Gpio-int-test.c
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
+#include <sys/stat.h>		// For stat()
 
 /****************************************************************
  * gpio_export
@@ -43,17 +44,28 @@ From https://www.ridgerun.com/developer/wiki/index.php/Gpio-int-test.c
 int gpio_export(unsigned int gpio)
 {
 	int fd, len;
-	char buf[MAX_BUF];
- 
+	char filename[MAX_BUF];
+	struct stat statBuffer;
+
+	// Check to see if it's already exported.
+	len = snprintf(filename, sizeof(filename), "%s/gpio%d", SYSFS_GPIO_DIR , gpio);
+	if(stat(filename, &statBuffer) == 0) {		// It's already exported, return
+		printf("gpio%d is already exported.", gpio);
+		return 0;
+	}
+	
 	fd = open(SYSFS_GPIO_DIR "/export", O_WRONLY);
 	if (fd < 0) {
 		perror("gpio/export");
 		return fd;
 	}
  
-	len = snprintf(buf, sizeof(buf), "%d", gpio);
-	write(fd, buf, len);
+	// Write the number to export
+	len = snprintf(filename, sizeof(filename), "%d", gpio);
+	write(fd, filename, len);
 	close(fd);
+	
+	usleep(100000);		// Sleep a bit while gpio is created
  
 	return 0;
 }
