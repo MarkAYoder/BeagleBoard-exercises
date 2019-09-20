@@ -17,8 +17,8 @@ http://cep.xor.aps.anl.gov/software/qt4-x11-4.2.2/qtopiacore-testingframebuffer.
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 
-#include "/opt/source/Robotics_Cape_Installer/libraries/rc_usefulincludes.h"
-#include "/opt/source/Robotics_Cape_Installer/libraries/roboticscape.h"
+#include "/opt/source/librobotcontrol/library/include/rc_usefulincludes.h"
+#include "/opt/source/librobotcontrol/library/include/roboticscape.h"
 
 int main()
 {
