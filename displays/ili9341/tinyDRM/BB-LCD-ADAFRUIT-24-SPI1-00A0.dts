@@ -15,6 +15,7 @@
  * --------------
  * This file was copied from src/arm/BB-SPIDEV1-00A0.dts and modified
  * by Drew Fustini based on an exmample from David Lechner.
+ * Later modified by Mark A. Yoder for the 2.4" LCD.
  *
  * This is the Adafruit 2.4" TFT LCD:
  * https://www.adafruit.com/product/2478
@@ -22,30 +23,27 @@
  * It should be connected to BeagleBone SPI1 bus:
  *
  *   P9.12 <--> reset
- *   P9.14 <--> lite (pwm) [OPTIONAL]
+ *   P9.16 <--> lite (pwm) [OPTIONAL]
  *   P9.15 <--> dc
  *   P9.23 <--> lite (gpio) [OPTIONAL]
  *   P9.28 <--> tft_cs
  *   P9.30 <--> mosi
  *   P9.31 <--> clk
  *
- * This overlay will load the mainline tinydrm st7735r driver by David Lechner:
- * https://github.com/torvalds/linux/blob/master/drivers/gpu/drm/tinydrm/st7735r.c
+ * This overlay will load the mainline tinydrm ili9341 driver by David Lechner:
+ * https://github.com/torvalds/linux/blob/master/drivers/gpu/drm/tiny/ili9341.c
  *
- * Tested with 4.16.0-rc2-bone3 kernel on Debian 9.3 image
+ * Tested with 4.19.59-ti-r26 kernel on Debian 10.1 image
  *
  * Run libdrm modetest for colorbar test based on instructions from:
  * https://github.com/notro/tinydrm/wiki/Development#modetest
  *
- * modetest -M "st7735r" -c #this will display connector id
- * modetest -M "st7735r" -s 28:128x160 #connector id and resolution
+ * modetest -M "ili9341" -c #this will display connector id
+ * modetest -M "ili9341" -s 28:128x160 #connector id and resolution
  * # you should now see a color bar on the LCD
  *
  * Mailing list post with more information:
  * https://groups.google.com/d/msg/beagleboard/GuMQIP_XCW0/b3lxbx_8AwAJ
- *
- * GitHub Gist with testing results:
- * https://gist.github.com/pdp7/aee5664598059c9b9a9020f107957f80
  *
  * Discussion with notro on how to test tinydrm driver:
  * https://github.com/notro/tinydrm/issues/1#issuecomment-367279037
@@ -107,9 +105,9 @@
 
 			backlight_pwm_pins: pinmux_backlight_pwm_pins {
 				pinctrl-single,pins = <
-					BONE_P9_14 0x06 /* gpmc_a2.ehrpwm1a, OMAP_MUX_MODE6 | AM33XX_PIN_OUTPUT */
+					BONE_P9_16 0x06 /* gpmc_a2.ehrpwm1b, OMAP_MUX_MODE6 | AM33XX_PIN_OUTPUT */
 				>;
-			};  /* gpmc_a2.ehrpwm1a */
+			};  /* gpmc_a2.ehrpwm1b */
 		};
 	};
 
@@ -153,10 +151,12 @@
 			 * echo 0 > /sys/devices/platform/backlight_pwm/backlight/backlight_pwm/bl_power
 			 */
 			backlight_pwm: backlight_pwm {
-				// P9.14 <--> lite (pwm-backlight EHRPWM1A)
+				// P9.16 <--> lite (pwm-backlight EHRPWM1A)
 				status = "okay";
 				compatible = "pwm-backlight";
-				pwms = <&ehrpwm1 0 500000 0>;
+				pwms = <&ehrpwm1 1 500000 0>;	// First digit: 0 for A side of pwm, 1 for B side
+												// 500000 is the PWM period in ns
+												// https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/pwm/pwm.txt
 				brightness-levels = <
 					0  1  2  3  4  5  6  7  8  9
 					10 11 12 13 14 15 16 17 18 19
@@ -190,16 +190,16 @@
 				status = "okay";
 				compatible = "adafruit,yx240qv29", "ilitek,ili9341";
 				reg = <0>;
-				spi-max-frequency = <32000000>;	// 16?
+				spi-max-frequency = <32000000>;
 				dc-gpios    = <&gpio3 19 0>;   // lcd dc    P9.27 gpio3[19]
 				reset-gpios = <&gpio3 21 0>;   // lcd reset P9.25 gpio3[21]
 				// backlight is optional
 				// choose either pwm or gpio control
 				//backlight = <&backlight_gpio>; // lcd lite  P9.23 gpio1[17]
-				//backlight = <&backlight_pwm>;    // lcd lite  P9.14 gpmc_a2.ehrpwm1a
+				backlight = <&backlight_pwm>;    // lcd lite  P9.16 gpmc_a2.ehrpwm1b
 				// refer to https://elinux.org/Beagleboard:Cape_Expansion_Headers
 				// rotation is optional
-				// rotation = <270>;
+				rotation = <180>;
 			};
 		};
 	};
