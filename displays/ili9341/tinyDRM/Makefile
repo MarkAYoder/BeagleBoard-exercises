@@ -8,7 +8,7 @@ dtc_cpp_flags  = -x assembler-with-cpp -nostdinc         \
 
 DTCINCLUDES = -i /opt/source/dtb-4.19-ti/include
 
-DTBO := BB-LCD-ADAFRUIT-24-SPI1-00A0.dtbo
+DTBO := BB-LCD-ADAFRUIT-24-SPI0-00A0.dtbo BB-LCD-ADAFRUIT-24-SPI1-00A0.dtbo
 
 all:	$(DTBO)
 
