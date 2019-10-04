@@ -97,7 +97,7 @@
 			/* See page 1446 of am35xx TRM */
 			bb_spi0_pins: pinmux_bb_spi0_pins {
 				pinctrl-single,pins = <
-					0x195 0x30	/* mcasp0_aclkx.spi0_sclk, INPUT_PULLUP | MODE0 */
+					0x150 0x30	/* mcasp0_aclkx.spi0_sclk, INPUT_PULLUP | MODE0 */
 					0x154 0x30	/* mcasp0_fsx.spi0_d0, INPUT_PULLUP | MODE0 */
 					0x158 0x10	/* mcasp0_axr0.spi0_d1, OUTPUT_PULLUP | MODE0 */
 					0x15c 0x10	/* mcasp0_ahclkr.spi0_cs0, OUTPUT_PULLUP | MODE0 */
@@ -193,8 +193,8 @@
 				compatible = "adafruit,yx240qv29", "ilitek,ili9341";
 				reg = <0>;
 				spi-max-frequency = <32000000>;
-				dc-gpios    = <&gpio3 19 0>;   // lcd dc    P9.27 gpio3[19]
-				reset-gpios = <&gpio3 21 0>;   // lcd reset P9.25 gpio3[21]
+				dc-gpios    = <&gpio0 13 0>;   // lcd dc    P9.19 gpio0[13]
+				reset-gpios = <&gpio0 12 0>;   // lcd reset P9.20 gpio0[12]
 				// backlight is optional
 				// choose either pwm or gpio control
 				//backlight = <&backlight_gpio>; // lcd lite  P9.23 gpio1[17]
