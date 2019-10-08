@@ -22,11 +22,12 @@
  *
  * It should be connected to BeagleBone SPI1 bus:
  *
- *   P9.12 <--> reset
+ *   P9.25 <--> reset
  *   P9.16 <--> lite (pwm) [OPTIONAL]
- *   P9.15 <--> dc
+ *   P9.27 <--> dc
  *   P9.23 <--> lite (gpio) [OPTIONAL]
  *   P9.28 <--> tft_cs
+ *   P9.29 <--> miso
  *   P9.30 <--> mosi
  *   P9.31 <--> clk
  *
@@ -93,11 +94,12 @@
 		target = <&am33xx_pinmux>;
 		__overlay__ {
 			/* default state has all gpios released and mode set to uart1 */
+			/* See page 1446 of am35xx TRM */
 			bb_spi1_pins: pinmux_bb_spi1_pins {
 				pinctrl-single,pins = <
-					0x190 0x33	/* mcasp0_aclkx.spi1_sclk, INPUT_PULLUP | MODE3 */
-					0x194 0x33	/* mcasp0_fsx.spi1_d0, INPUT_PULLUP | MODE3 */
-					0x198 0x13	/* mcasp0_axr0.spi1_d1, OUTPUT_PULLUP | MODE3 */
+					0x190 0x33	/* mcasp0_aclkx.spi1_sclk,  INPUT_PULLUP | MODE3 */
+					0x194 0x33	/* mcasp0_fsx.spi1_d0,      INPUT_PULLUP | MODE3 */
+					0x198 0x13	/* mcasp0_axr0.spi1_d1,    OUTPUT_PULLUP | MODE3 */
 					0x19c 0x13	/* mcasp0_ahclkr.spi1_cs0, OUTPUT_PULLUP | MODE3 */
 					// 0x164 0x12	/* eCAP0_in_PWM0_out.spi1_cs1 OUTPUT_PULLUP | MODE2 */
 				>;
@@ -148,10 +150,10 @@
 
 			/*
 			 * Turn the PWM backlight on by setting bl_power to 0:
-			 * echo 0 > /sys/devices/platform/backlight_pwm/backlight/backlight_pwm/bl_power
+			 * echo 0 > /sys/class/backlight/backlight_pwm/bl_power
 			 */
 			backlight_pwm: backlight_pwm {
-				// P9.16 <--> lite (pwm-backlight EHRPWM1A)
+				// P9.16 <--> lite (pwm-backlight EHRPWM1B)
 				status = "okay";
 				compatible = "pwm-backlight";
 				pwms = <&ehrpwm1 1 500000 0>;	// First digit: 0 for A side of pwm, 1 for B side

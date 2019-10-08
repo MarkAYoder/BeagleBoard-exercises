@@ -76,6 +76,7 @@
 	/*
 	 * Free up the pins used by the cape from the pinmux helpers.
 	 */
+/*
 	fragment@1 {
 		target = <&ocp>;
 		__overlay__ {
@@ -89,6 +90,7 @@
 			P9_22_pinmux { status = "disabled"; };	/* spi0_sclk */
 		};
 	};
+*/
 
 	fragment@2 {
 		target = <&am33xx_pinmux>;
@@ -97,9 +99,9 @@
 			/* See page 1446 of am35xx TRM */
 			bb_spi0_pins: pinmux_bb_spi0_pins {
 				pinctrl-single,pins = <
-					0x150 0x30	/* mcasp0_aclkx.spi0_sclk, INPUT_PULLUP | MODE0 */
-					0x154 0x30	/* mcasp0_fsx.spi0_d0, INPUT_PULLUP | MODE0 */
-					0x158 0x10	/* mcasp0_axr0.spi0_d1, OUTPUT_PULLUP | MODE0 */
+					0x150 0x30	/* mcasp0_aclkx.spi0_sclk,  INPUT_PULLUP | MODE0 */
+					0x154 0x30	/* mcasp0_fsx.spi0_d0,      INPUT_PULLUP | MODE0 */
+					0x158 0x10	/* mcasp0_axr0.spi0_d1,    OUTPUT_PULLUP | MODE0 */
 					0x15c 0x10	/* mcasp0_ahclkr.spi0_cs0, OUTPUT_PULLUP | MODE0 */
 					// 0x164 0x12	/* eCAP0_in_PWM0_out.spi0_cs1 OUTPUT_PULLUP | MODE2 */
 				>;
@@ -150,7 +152,7 @@
 
 			/*
 			 * Turn the PWM backlight on by setting bl_power to 0:
-			 * echo 0 > /sys/devices/platform/backlight_pwm/backlight/backlight_pwm/bl_power
+			 * echo 0 > /sys/class/backlight/backlight_pwm/bl_power
 			 */
 			backlight_pwm: backlight_pwm {
 				// P9.16 <--> lite (pwm-backlight EHRPWM1A)
