@@ -76,7 +76,7 @@
 	/*
 	 * Free up the pins used by the cape from the pinmux helpers.
 	 */
-/*
+
 	fragment@1 {
 		target = <&ocp>;
 		__overlay__ {
@@ -90,7 +90,6 @@
 			P9_22_pinmux { status = "disabled"; };	/* spi0_sclk */
 		};
 	};
-*/
 
 	fragment@2 {
 		target = <&am33xx_pinmux>;
