@@ -8,22 +8,24 @@ export LED=51         # P9_16
 export RESET=12     # RESET - P9_20
 export DC=13        # D/C   - P9_19
 export CS=5         # CS    - P9_17
-export BUS=1        # SPI bus 0
+export BUS=0        # SPI bus 0
 # This is for the Black SPI 1
 # export RESET=117    # RESET - P9_25
 # export DC=115       # D/C   - P9_27
 # export CS=113       # CS    - P9_28
-# export BUS=2        # SPI bus 1
+# export BUS=1        # SPI bus 1
 # This is for the AI SPI 2 & 3
 # export RESET=177    # RESET - P9_25
 # export DC=111       # D/C   - P9_27
 # export CS=207       # CS    - P9_28
-# export BUS=3        # SPI bus 2 or 3
+# export BUS=2        # SPI bus 2 or 3
 # This is for the Pocket SPI 0
 # export RESET=57     # RESET - P2.06
 # export DC=58        # D/C   - P2.04
 # export CS=5         # CS    - P1.06
-# export BUS=1        # SPI bus 0
+# export BUS=0        # SPI bus 0
+
+echo SPI $BUS
 
 sudo bash << EOF
     # Remove the framebuffer modules
@@ -47,7 +49,7 @@ sudo bash << EOF
     # config-pin P9_29 spi    # spi 1_d0 MISO
     # config-pin P9_31 spi_sclk # spi 1_sclk
     # config-pin P9_28 spi_cs # spi 1_cs0
-    
+
     # LED pin, turn on
     ./LCD-backlight.py
     
