@@ -4,7 +4,7 @@
 CC		:= gcc
 LINKER		:= gcc -o
 CFLAGS		:= -Wall -O2
-LFLAGS		:= -L /opt/source/Robotics_Cape_Installer/libraries -lm -lrt -lpthread -lroboticscape
+LFLAGS		:= -L /opt/source/librobotcontrol/library/include -lm -lrt -lpthread -lroboticscape
 
 etch-a-sketch:	etch-a-sketch.c
 	$(CC) $(CFLAGS) $(LFLAGS) $^ -o $@
