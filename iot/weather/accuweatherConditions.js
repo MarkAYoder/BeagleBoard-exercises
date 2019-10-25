@@ -8,7 +8,7 @@ const zip = 47834;
 
 // See https://developer.accuweather.com/apis for features
 // try 'currentconditions', 'forecasts'
-const feature = 'forecasts/v1/daily/5day';
+const feature = 'currentconditions/v1';
 
 // const locationURL = util.format('http://dataservice.accuweather.com/locations/v1/postalcodes/search?apikey=%s&q=%s',
 //                         apiKey, zip);
@@ -34,16 +34,12 @@ const url = util.format('http://dataservice.accuweather.com/%s/%s?apikey=%s',
 
 request(url, function (error, response, body) {
   if (!error && response.statusCode == 200) {
-    const weather = JSON.parse(body);
-    console.log(body);
-    for(var i=0; i<5; i++) {
-      var forecast = weather.DailyForecasts[i];
-      console.log(util.format('Day: %s: Min: %d, Max: %s, Night: %s, %s',
-          forecast.Day.IconPhrase,
-          forecast.Temperature.Minimum.Value, forecast.Temperature.Maximum.Value,
-          forecast.Night.IconPhrase, forecast.Night.PrecipitationIntensity, 
-          )); 
-    }
+    const weather = JSON.parse(body)[0];
+    // console.log(body);
+    console.log(util.format('%s: %s%s',
+        weather.WeatherText,
+        weather.Temperature.Imperial.Value,
+        weather.Temperature.Imperial.Unit)); 
   } else {
     console.log("error=" + error + " response=" + JSON.stringify(response));
   }
