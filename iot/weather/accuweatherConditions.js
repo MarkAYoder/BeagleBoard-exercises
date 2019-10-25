@@ -1,31 +1,17 @@
 #!/usr/bin/env node
+// Return Current conditions from accuweather.com
 const request = require('request');
 const util    = require('util');
 
 const apiKey = '6NqTqNvkopaCjP0JiQPEeKt7AJPcVCsk';
-const zip = 47834;
 // Run the commented out code below to get the location code.  Assign it to location
 
 // See https://developer.accuweather.com/apis for features
 // try 'currentconditions', 'forecasts'
 const feature = 'currentconditions/v1';
 
-// const locationURL = util.format('http://dataservice.accuweather.com/locations/v1/postalcodes/search?apikey=%s&q=%s',
-//                         apiKey, zip);
-// Look up location apiKey
-// request(locationURL, function (error, response, body) {
-//   if (!error && response.statusCode == 200) {
-//     const weather = JSON.parse(body)[0];
-//     // console.log(body);
-//     console.log('City: ' + util.inspect(weather.LocalizedName)); 
-//     location = weather.ParentCity.Key;
-//     console.log('Key: ' + util.inspect(location)); 
-//   } else {
-//     console.log("error=" + error + " response=" + JSON.stringify(response));
-//   }
-// });
-
-const location = '332887';  // Run the above code to get this value
+// Run accuweatherLocation.js to get location key
+const location = '332887'; 
 
 // Look up conditions
 const url = util.format('http://dataservice.accuweather.com/%s/%s?apikey=%s',

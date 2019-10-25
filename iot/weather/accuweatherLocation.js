@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Run the code to get the location code. Use it in other script.
+// Run the code to get the location code. Use it in other scripts.
 // See https://developer.accuweather.com/apis 
 
 const request = require('request');

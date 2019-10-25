@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// Returns 5 day forcast from accuweather.com
 const request = require('request');
 const util    = require('util');
 
@@ -8,7 +9,7 @@ const apiKey = '6NqTqNvkopaCjP0JiQPEeKt7AJPcVCsk';
 const feature = 'forecasts/v1/daily/5day';
 
 // Run accuweatherLocation.js to get location key
-const locationKey = '332887';  // Run the above code to get this value
+const locationKey = '332887'; 
 
 // Look up conditions
 const url = util.format('http://dataservice.accuweather.com/%s/%s?apikey=%s',
