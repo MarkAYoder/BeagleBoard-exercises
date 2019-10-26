@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // From: https://developers.google.com/sheets/api/quickstart/nodejs#step_3_set_up_the_sample
-// const i2c     = require('i2c-bus');
+const child_process = require('child_process');
 const fs = require('fs');
 const util = require('util');
 const readline = require('readline');
@@ -9,20 +9,24 @@ const {google} = require('googleapis');
 const sheetID = '1c8Qdph81ySof-2FkRSXIaajVXKNj2o6Abm1YnTz68h8';
 const ms = 15*1000;          // Repeat time
 
-// // Read the i2c temp sensors
-// const bus = 2;
-// const tmp101 = [0x48, 0x4a];
-// const sensor = i2c.openSync(bus);
-
 // If modifying these scopes, delete credentials.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 const TOKEN_PATH = 'token.json';
+
+// Read site to ping from command line, or default to rose-hulman.edu
+var ping = 'ping -c1 -i1 ';
+if(process.argv.length > 2) {
+    ping += process.argv[2];
+} else {
+    ping += "rose-hulman.edu";
+}
+console.log("Ping: %s", ping);
 
 // Load client secrets from a local file.
 fs.readFile('credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
   // Authorize a client with credentials, then call the Google Sheets API.
-  authorize(JSON.parse(content), recordTemp);
+  authorize(JSON.parse(content), recordPing);
 });
 
 /**
@@ -83,43 +87,49 @@ function getNewToken(oAuth2Client, callback) {
 
 var tempOld = [];
 
-function recordTemp(auth) {
-  const sheets = google.sheets({version: 'v4', auth});
-  setTimeout(recordTemp, ms, auth);
-  var date = new Date();
-  // var temp = [];
-    // Read the temp sensors
-  // for(var i=0; i<tmp101.length; i++) {
-  //     // Convert from C to F
-  //     temp[i] = sensor.readByteSync(tmp101[i], 0x0)*9/5+32;
-  //     console.log("temp: %dF (0x%s)", temp[i], tmp101[i].toString(16));
-  // }
+function recordPing(auth) {
+  const sheets = google.sheets({ version: 'v4', auth });
+  setTimeout(recordPing, ms, auth);
 
-  // if((temp[0] !== tempOld[0]) || (temp[1] !== tempOld[1])) {
-  // console.log("Updating from: " + tempOld[0] + " " + tempOld[1]);
+  child_process.exec(ping,
+    function(error, stdout, stderr) {
+      console.log('ping: ' + stdout);
+      var time = [0]; // Report time=0 if an error.
+      if (error || stderr) {
+        console.log('error: ' + error);
+        console.log('stderr: ' + stderr);
+      }
+      else {
+        time = stdout.match(/time=[0-9.]* /mg); //  Pull the time out of the return string
+        console.log("time: " + time);
+        for (var i = 0; i < time.length; i++) {
+          time[i] = time[i].substring(5, time[i].length-1); // Strip off the leading time= and trailing black
+        }
+      }
 
-  sheets.spreadsheets.values.append({
-    spreadsheetId: sheetID,
-    range: 'A2',
-    // How the input data should be interpreted.
-    valueInputOption: 'USER_ENTERED',
-    // How the input data should be inserted.
-    insertDataOption: 'INSERT_ROWS', 
-    resource: {
-      values: [   // getTime returs ms.  Convert to days.  25569 is date(1910,1,1), adjust for EST
-          [
-            date.getTime()/1000/60/60/24 + 25569 - 4/24,
-            20
+      console.log("time: \"" + time[0] + "\"");
+      var date = new Date();
+
+      sheets.spreadsheets.values.append({
+        spreadsheetId: sheetID,
+        range: 'A2',
+        // How the input data should be interpreted.
+        valueInputOption: 'USER_ENTERED',
+        // How the input data should be inserted.
+        insertDataOption: 'INSERT_ROWS',
+        resource: {
+          values: [ // getTime returs ms.  Convert to days.  25569 is date(1910,1,1), adjust for EST
+            [
+              date.getTime() / 1000 / 60 / 60 / 24 + 25569 - 4 / 24,
+              time[0]
+            ]
           ]
-        ]
-    },
-  }, (err, res) => {
-    if (err) return console.log('The API returned an error: ' + err);
-    console.log("res: " + util.inspect(res.data.tableRange));
-  });
-  
-  // tempOld[0] = temp[0];
-  // tempOld[1] = temp[1];
-  // }
+        },
+      }, (err, res) => {
+        if (err) return console.log('The API returned an error: ' + err);
+        console.log("res: " + util.inspect(res.data.tableRange));
+      });
+    }
+  );
 
 }
