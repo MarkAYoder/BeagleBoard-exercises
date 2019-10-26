@@ -6,6 +6,7 @@ const util = require('util');
 const readline = require('readline');
 const {google} = require('googleapis');
 
+// Ping times
 const sheetID = '1c8Qdph81ySof-2FkRSXIaajVXKNj2o6Abm1YnTz68h8';
 const ms = 15*1000;          // Repeat time
 
@@ -20,7 +21,7 @@ if(process.argv.length > 2) {
 } else {
     ping += "rose-hulman.edu";
 }
-console.log("Ping: %s", ping);
+// console.log("Ping: %s", ping);
 
 // Load client secrets from a local file.
 fs.readFile('credentials.json', (err, content) => {
@@ -80,9 +81,7 @@ function getNewToken(oAuth2Client, callback) {
 }
 
 /**
- * Prints the names and majors of students in a sample spreadsheet:
- * @see https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
- * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
+ * Runs "ping" and records the time it returns
  */
 
 var tempOld = [];
@@ -93,7 +92,7 @@ function recordPing(auth) {
 
   child_process.exec(ping,
     function(error, stdout, stderr) {
-      console.log('ping: ' + stdout);
+      // console.log('ping: ' + stdout);
       var time = [0]; // Report time=0 if an error.
       if (error || stderr) {
         console.log('error: ' + error);
@@ -101,13 +100,11 @@ function recordPing(auth) {
       }
       else {
         time = stdout.match(/time=[0-9.]* /mg); //  Pull the time out of the return string
-        console.log("time: " + time);
-        for (var i = 0; i < time.length; i++) {
-          time[i] = time[i].substring(5, time[i].length-1); // Strip off the leading time= and trailing black
-        }
+        // console.log("time: " + time);
+        time = time[0].substring(5, time[0].length-1); // Strip off the leading time= and trailing black
       }
 
-      console.log("time: \"" + time[0] + "\"");
+      console.log("time: \"" + time + "\"");
       var date = new Date();
 
       sheets.spreadsheets.values.append({
@@ -121,13 +118,13 @@ function recordPing(auth) {
           values: [ // getTime returs ms.  Convert to days.  25569 is date(1910,1,1), adjust for EST
             [
               date.getTime() / 1000 / 60 / 60 / 24 + 25569 - 4 / 24,
-              time[0]
+              time
             ]
           ]
         },
       }, (err, res) => {
         if (err) return console.log('The API returned an error: ' + err);
-        console.log("res: " + util.inspect(res.data.tableRange));
+        // console.log("res: " + util.inspect(res.data.tableRange));
       });
     }
   );
