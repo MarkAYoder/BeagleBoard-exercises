@@ -8,7 +8,7 @@ const {google} = require('googleapis');
 
 // Ping times
 const sheetID = '1c8Qdph81ySof-2FkRSXIaajVXKNj2o6Abm1YnTz68h8';
-const ms = 15*1000;          // Repeat time
+const ms = 60*1000;          // Repeat time
 
 // If modifying these scopes, delete credentials.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
@@ -87,13 +87,12 @@ function getNewToken(oAuth2Client, callback) {
 var tempOld = [];
 
 function recordPing(auth) {
-  const sheets = google.sheets({ version: 'v4', auth });
   setTimeout(recordPing, ms, auth);
 
   child_process.exec(ping,
     function(error, stdout, stderr) {
       // console.log('ping: ' + stdout);
-      var time = [0]; // Report time=0 if an error.
+      var time = 0; // Report time=0 if an error.
       if (error || stderr) {
         console.log('error: ' + error);
         console.log('stderr: ' + stderr);
@@ -107,6 +106,7 @@ function recordPing(auth) {
       console.log("time: \"" + time + "\"");
       var date = new Date();
 
+      const sheets = google.sheets({ version: 'v4', auth });
       sheets.spreadsheets.values.append({
         spreadsheetId: sheetID,
         range: 'A2',
