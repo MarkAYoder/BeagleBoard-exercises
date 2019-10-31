@@ -1,0 +1,23 @@
+Volages measure with o'scope.
+LCD7 cape
+					BBAI_P8_45A	/* vout1_d0.vout1_d0 */
+					BBAI_P8_46A	/* vout1_d1.vout1_d1 */
+					BBAI_P8_43	/* vout1_d2.vout1_d2 */
+					BBAI_P8_44	/* vout1_d3.vout1_d3 */
+					BBAI_P8_41	/* vout1_d4.vout1_d4 */
+					BBAI_P8_42	/* vout1_d5.vout1_d5 */
+					BBAI_P8_39	/* vout1_d6.vout1_d6 */
+					BBAI_P8_40	/* vout1_d7.vout1_d7 */
+					BBAI_P8_37A	/* vout1_d8.vout1_d8 */
+					BBAI_P8_38A	/* vout1_d9.vout1_d9 */
+					BBAI_P8_36A	/* vout1_d10.vout1_d10 */
+					BBAI_P8_34A	/* vout1_d11.vout1_d11 */
+					BBAI_P8_35A	/* vout1_d12.vout1_d12 */
+-0.4, 3.6			BBAI_P8_33A	/* vout1_d13.vout1_d13 */
+-0.3, 3.6			BBAI_P8_31A	/* vout1_d14.vout1_d14 */
+1.25, 3.5			BBAI_P8_32A	/* vout1_d15.vout1_d15 */
+
+0, 3.3				BBAI_P8_27A	/* vout1_vsync.vout1_vsync */
+0, 2.3				BBAI_P8_29A	/* vout1_hsync.vout1_hsync */
+-0.3, 2				BBAI_P8_28A	/* vout1_clk.vout1_clk */
+-0.3, 2				BBAI_P8_30A	/* vout1_de.vout1_de */
