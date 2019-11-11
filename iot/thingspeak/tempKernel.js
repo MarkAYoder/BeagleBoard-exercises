@@ -16,15 +16,20 @@ const fs      = require('fs');
 const ms = 15*60*1000;               // Repeat time in minutes
 const mqtt = require('mqtt');
 const client = mqtt.connect('mqtt://mqtt.thingspeak.com');
+const bus = 1;    // i2c bus
+const addr = '49';
 
 // Read the i2c temp sensors
-const tmp101 = ['/sys/class/i2c-adapter/i2c-2/2-0048/hwmon/hwmon0/temp1_input'];
+const tmp101 = ['/sys/class/i2c-adapter/i2c-' + bus + 
+      '/' + bus + '-00' + addr + '/hwmon/hwmon0/temp1_input'];
+      
+console.log("tmp101: " + tmp101);
 
 // console.log(util.inspect(request));
 // request.debug = true;
 
 // Initiate MQTT API
-const filename = "/home/debian/exercises/iot/thingspeak/keys_office.json";
+const filename = "/home/debian/exercises/iot/thingspeak/keys_home.json";
 const keys = JSON.parse(fs.readFileSync(filename));
 const url = "channels/" + keys.channel_id + "/publish/" + keys.write_key;
 // console.log("url: " + url);

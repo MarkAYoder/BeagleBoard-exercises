@@ -1,5 +1,5 @@
 VERS=0.9.3b
-http://fritzing.org/download/$VERS/linux-64bit/fritzing-$VERS.linux.AMD64.tar.bz2
+wget http://fritzing.org/download/$VERS/linux-64bit/fritzing-$VERS.linux.AMD64.tar.bz2
 tar xvjf fritzing-$VERS.linux.AMD64.tar.bz2
 
 # Get Adafruit library 
@@ -11,5 +11,5 @@ unzip master
 cd fritzing-$VERS.linux.AMD64
 ./Fritzing
 
-# Follow Adafruit instructions
+# Follow Adafruit instructions: https://learn.adafruit.com/using-the-adafruit-library-with-fritzing
 # Pin Fritzing to task bar
