@@ -2,7 +2,9 @@
 % From: https://adventofcode.com/2019/day/4
 
 % Allocate here so we only do it once.
-nums = zeros(1, 6);
+global nums
+nums = zeros(1, 6+1);
+nums(7) = 'x';    % Put a non digit here so strings of numbers won't match it.
 
 cnt = 0;
 for pass = 356261:846303
