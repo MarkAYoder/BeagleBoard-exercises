@@ -37,7 +37,7 @@ for ii = 1:length(wire1)
 %    disp('Right')
     x += str2num(substr(wire1{ii}, 2));
   end
-  disp(sprintf('x=%d, y=%d', x, y))
+%  disp(sprintf('x=%d, y=%d', x, y))
   path1x(ii+1) = x;
   path1y(ii+1) = y;
 end
@@ -76,6 +76,7 @@ P = InterX([path1x(2:length(path1x));path1y(2:length(path1y))], ...
            [path2x(2:length(path2x));path2y(2:length(path2y))]);
 plot(path1x,path1y,path2x,path2y,P(1,:),P(2,:),'ro', 0, 0, 'x')
 
-crossings = sum(abs(P))
+P
+crossings = sum(abs(P));
 length(crossings)
 min(sum(abs(P)))
