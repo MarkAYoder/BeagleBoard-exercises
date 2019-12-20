@@ -2,7 +2,7 @@
 # Here are the extra things I install on the bone.
 # Run this on the Bone
 # --Mark
-# 18_dec-2019
+# 18-Dec-2019
 
 set -e
 BONE=${1:-192.168.7.2}
@@ -10,24 +10,25 @@ BONE_NAME=bone
 USER=debian
 
 # Work from home directory
-cd
+# cd
 
-echo
-echo rsyncing exercises, this will take a couple of minutes
-echo
+# echo
+# echo rsyncing exercises, this will take a couple of minutes
+# echo
 # git clone https://github.com/MarkAYoder/BeagleBoard-exercises.git exercises --depth=1
+# git clone https://github.com/MarkAYoder/ece312.git
 
 # vi settings
 echo 'syntax on' >>~/.vimrc
 
 # Set up github
-ln -s --backup=numbered ~/exercises/setup/gitconfig .gitconfig
+ln -s --backup=numbered ~/exercises/setup/gitconfig ~/.gitconfig
 
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
-ln -s --backup=numbered ~/exercises/setup/bashrc .bashrc
+ln -s --backup=numbered ~/exercises/setup/bashrc ~/.bashrc
 
 # Set the default sound card to NOT be HDMI
-ln -s --backup=numbered ~/exercises/setup/asoundrc .asoundrc
+ln -s --backup=numbered ~/exercises/setup/asoundrc ~/.asoundrc
 
 # Set language
 export LANG=en_US.UTF-8
@@ -44,4 +45,4 @@ sudo mv /etc/issue.net /etc/issue.net.orig
 sudo mv /etc/motd /etc/motd.orig
 
 # Set the time zone to Indiana
-timedatectl set-timezone America/Indiana/Indianapolis
+sudo timedatectl set-timezone America/Indiana/Indianapolis
