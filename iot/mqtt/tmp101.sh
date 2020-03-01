@@ -1,7 +1,11 @@
 # This reads the current temp from a TMP101 sensor on i2c bus 1 at 0x49 and publishes it.
 
-TMP101bus=1
-TMP101addr=0x49
+# TMP101 sensor
+# TMP101bus=1
+# TMP101addr=0x49
+# Some other sensor
+TMP101bus=0
+TMP101addr=0x34
 
 i=0
 
