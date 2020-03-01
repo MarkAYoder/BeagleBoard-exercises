@@ -3,8 +3,11 @@
 TMP101bus=1
 TMP101addr=0x49
 
+i=0
+
 while true; do
     TEMP=`i2cget -y $TMP101bus $TMP101addr`
-    mosquitto_pub -t 'temp' -m $TEMP
-    sleep 10
+    mosquitto_pub -t 'temp' -m "`date`, $i: $TEMP"
+    i=$[$i+1]
+    sleep 15
 done
