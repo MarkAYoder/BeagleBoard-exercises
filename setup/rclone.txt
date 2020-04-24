@@ -1,0 +1,1 @@
+rclone mount --daemon onedrive: onedrive
