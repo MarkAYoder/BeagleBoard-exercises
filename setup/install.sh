@@ -50,6 +50,11 @@ ssh $USER@$BONE "
 # vi settings
 echo 'syntax on' >>~/.vimrc
 
+# Set up bin/
+cd bin
+ln -s /opt/scripts/device/bone/show-pins.pl .
+cd ..
+
 # Set up github
 ln -s --backup=numbered exercises/setup/gitconfig .gitconfig
 
