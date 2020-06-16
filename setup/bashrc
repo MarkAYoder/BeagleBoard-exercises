@@ -12,6 +12,9 @@
 # This is so node.js can find it's libraries
 # export NODE_PATH=/usr/local/lib/node_modules
 
+# This is for MATLAB
+export GTK_PATH=/usr/lib/x86_64-linux-gnu/gtk-2.0
+
 # alias syn='synergyc yoder-9.dhcp.rose-hulman.edu'
 alias d=pushd
 alias ls='ls -F'
