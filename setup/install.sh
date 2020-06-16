@@ -58,6 +58,15 @@ cd ..
 # Set up github
 ln -s --backup=numbered exercises/setup/gitconfig .gitconfig
 
+# github for cloud9
+cd /var/lib/cloud9
+git config user.name 'Mark A. Yoder'
+git config user.email Mark.A.Yoder@beagleboard.org
+git fetch
+# Use next versions branch
+git checkout v2020.08
+cd
+
 # Fix postBuffer size
 # cd beaglebone-cookbook/.git
 # mv config config.orig
