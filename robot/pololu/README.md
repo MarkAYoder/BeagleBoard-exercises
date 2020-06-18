@@ -22,10 +22,13 @@ wget http://users.ece.utexas.edu/~valvano/arm/tirslk_max_1_00_00.zip
 
 |P1_36 |J4 - PWMR
 |P2_1  |J4 - PWML
-|P2_3  |J2 - ERB
-|P2_4  |J2 - ELB
 |P1_34 |J3 - DIRR
 |P2_8  |J3 - DIRL 
+
+|P1_13 |J5 - ELA
+|P2_34 |J2 - ELB
+|P2_24 |J5 - ERA
+|P2_33 |J2 - ERB
 
 # Controlling with librobotcontrol.
 

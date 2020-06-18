@@ -7,15 +7,15 @@ import time
 #PWM.start(channel, duty, freq=2000, polarity=0)
 pwmR = "P1_36"      # J4
 pwmL = "P2_1"       # J4 
-ERB  = "P2_2"
-ELB  = "P2_4"
+# ERB  = "P2_2"
+# ELB  = "P2_4"
 DIRR = "P1_34"
 DIRL = "P2_8"
 
 BMP0 = "P1_26"
 
-GPIO.setup(ELB,  GPIO.IN)
-GPIO.setup(ERB,  GPIO.IN)
+# GPIO.setup(ELB,  GPIO.IN)
+# GPIO.setup(ERB,  GPIO.IN)
 GPIO.setup(BMP0, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(DIRR, GPIO.OUT)
 GPIO.setup(DIRL, GPIO.OUT)
@@ -48,11 +48,11 @@ try:
     GPIO.output(DIRL, 1)
     time.sleep(2)
     
-    GPIO.output(DIRR, 1)
+    GPIO.output(DIRR, 0)
     GPIO.output(DIRL, 0)
     time.sleep(2)
     
-    GPIO.output(DIRR, 0)
+    GPIO.output(DIRR, 1)
     GPIO.output(DIRL, 0)
     time.sleep(2)
     
