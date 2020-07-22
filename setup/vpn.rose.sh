@@ -6,7 +6,7 @@ sudo apt install ./GlobalProtect_deb_arm-5.1.1.0-17.deb
 
 globalprotect
 
->> connect
+>> connect -p gp.rose-hulman.edu -u username@rose-hulman.edu
 >> quit
 
 ip a show gpd0
@@ -15,4 +15,6 @@ ip a show gpd0
     inet 137.112.193.177/32 scope global gpd0
        valid_lft forever preferred_lft forever
 
+globalprotect
 >> disconnect
+>> quit
