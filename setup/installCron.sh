@@ -8,8 +8,8 @@ fi
 # and sending sms message when running
 echo "
 # Turn off LED triggers at night
-58 5  * * *   root    /home/debian/exercises/setup/ledTrigger.sh on
-2 21  * * *   root    /home/debian/exercises/setup/ledTrigger.sh off
+58 5  * * *   debian    /home/debian/exercises/setup/ledTrigger.sh on
+2 21  * * *   debian    /home/debian/exercises/setup/ledTrigger.sh off
 " >> /etc/crontab
 
 # * * * * * root /home/debian/exercises/iot/phant/recordPing.js 2>&1 | logger
