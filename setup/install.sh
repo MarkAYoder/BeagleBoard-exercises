@@ -75,7 +75,7 @@ cd
 
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
 ln -s --backup=numbered exercises/setup/bashrc .bashrc
-# ln -s --backup=numbered exercises/setup/x11vncrc .x11vncrc
+ln -s --backup=numbered exercises/setup/vimrc .vimrc
 
 # Set the default sound card to NOT be HDMI
 ln -s --backup=numbered exercises/setup/asoundrc .asoundrc
@@ -112,6 +112,7 @@ mv /etc/motd /etc/motd.orig
 
 # Copy the .bashrc and .x11vncrc files from github so bash and x11vnc will use them
 ln -s --backup=numbered ~$USER/exercises/setup/bashrc .bashrc
+ln -s --backup=numbered ~$USER/exercises/setup/vimrc .vimrc
 
 # Set the time zone to Indiana
 timedatectl set-timezone America/Indiana/Indianapolis
