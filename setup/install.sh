@@ -47,9 +47,6 @@ echo
 # time rsync -azq ../../libsoc $USER@$BONE:.
 
 ssh $USER@$BONE "
-# vi settings
-echo 'syntax on' >>~/.vimrc
-
 # Set up bin/
 cd bin
 ln -s /opt/scripts/device/bone/show-pins.pl .
