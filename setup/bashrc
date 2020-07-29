@@ -195,4 +195,4 @@ if [ -f '/home/yoder/google-cloud-sdk/path.bash.inc' ]; then source '/home/yoder
 if [ -f '/home/yoder/google-cloud-sdk/completion.bash.inc' ]; then source '/home/yoder/google-cloud-sdk/completion.bash.inc'; fi
 
 # added by Anaconda3 installer
-export PATH="/home/yoder/anaconda3/bin:$PATH"
+export PATH="/home/debian/.local/bin:$PATH"
