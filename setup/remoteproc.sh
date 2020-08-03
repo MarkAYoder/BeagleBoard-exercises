@@ -11,6 +11,7 @@ chown root:remoteproc $FW
 chmod g+w $FW
 
 # Set up remoteproc links
-cd /dev/remoteproc/
+mkdir -p /dev/remoteproc
+cd /dev/remoteproc
 ln -s /sys/class/remoteproc/remoteproc1 pruss-core0
 ln -s /sys/class/remoteproc/remoteproc2 pruss-core1
