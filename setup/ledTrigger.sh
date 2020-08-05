@@ -7,6 +7,7 @@ if [ x$1 == "xoff" ]; then
     for led in {0..3}
     do
         echo none > ${LEDpath}${led}/trigger
+        echo    0 > ${LEDpath}${led}/brightness
     done
 else
     for led in {0..3}
