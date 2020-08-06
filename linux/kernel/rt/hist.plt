@@ -1,7 +1,7 @@
 # This code is from Julia Cartwright julia@kernel.org
 
 set terminal png medium size 800,600
-set output "out.png"
+set output "cyclictest.png"
 set datafile commentschars "#"
 
 set logscale y
