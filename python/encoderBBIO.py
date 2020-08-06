@@ -5,6 +5,7 @@ import time
 
 # Instantiate the class to access channel eQEP2, and initialize
 # that channel
+print('Hit ^C to stop')
 
 myEncoder = RotaryEncoder(eQEP2)
 myEncoder.setAbsolute()
@@ -13,8 +14,8 @@ myEncoder.enable()
 print('frequency ' + str(myEncoder.frequency))
 
 # Get the current position
-for i in range(1,50):
-    print(myEncoder.position)
+while True:
+    print(myEncoder.position, end='    \r', flush=True)
     time.sleep(0.1)
     
 cur_position = myEncoder.position
