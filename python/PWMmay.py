@@ -44,7 +44,6 @@ pwm_table = [
   [ "timer5", 0, 0, 1, "", "", "", "dmtimer-pwm-5", "P1_28" ],
   [ "timer7", 0, 0, 5, "", "", "", "dmtimer-pwm-7", "P2_27" ],
   [ "timer4", 0, 0, 2, "", "", "", "dmtimer-pwm-4", "P2_31" ],
-#   [ NULL, 0, 0, 0, NULL, NULL, NULL, NULL, NULL ]
 ]
 
 # print(pwm_table[2][t_key])
@@ -54,27 +53,30 @@ def get_pwm_key(channel):
     for i in range(len(pwm_table)):
         if pwm_table[i][t_key] == channel:
             return pwm_table[i]
+    print(channel + ': Not Found')
+    return None
 
 def get_pwm_path(channel):
     x = get_pwm_key(channel)
-    if x != None:
-        pwmPath =  glob.glob("/sys/devices/platform/ocp/" + x[t_chip] + ".epwmss/" 
-                + x[t_addr] + ".pwm/pwm/*")[0]
-        # print(pwmPath)
-        return [pwmPath, x[t_index]]
-
-#PWM.start(channel, duty, freq=2000, polarity=0)
+    if x == None:
+        return None
+    pwmPath =  glob.glob("/sys/devices/platform/ocp/" + x[t_chip] + ".epwmss/" 
+            + x[t_addr] + ".pwm/pwm/*")[0]
+    # print(pwmPath)
+    return [pwmPath, x[t_index]]
 
 def start(channel, duty, freq=2000, polarity=0):
+    print(channel)
     path = get_pwm_path(channel)
+    if path == None:
+        return None
     # /sys/devices/platform/ocp/48302000.epwmss/48302200.pwm/pwm/pwmchip4/pwm-4:0
     pathpwm = path[0] + "/pwm-" + path[0][-1] + ':' + str(path[1])
-    print(pathpwm)
+    # print(pathpwm)
 
     period_ns = 1e9 / freq
     duty_ns = period_ns * (duty / 100.0)
-    print(duty_ns)
-    
+
     # export
     try:
         fd = open(path[0] + "/export", 'w')
@@ -84,10 +86,15 @@ def start(channel, duty, freq=2000, polarity=0):
         pass
     time.sleep(0.05)    # Give export a chance
     
-    # Duty Cycle
-    fd = open(pathpwm + "/duty_cycle", 'w')
-    fd.write('0')
-    fd.close()
+    set_pin_mode(channel, 'pwm')
+    
+    # Duty Cycle - Set to 0 so period can be changed
+    try:
+        fd = open(pathpwm + "/duty_cycle", 'w')
+        fd.write('0')
+        fd.close()
+    except:
+        pass
 
     # Period
     fd = open(pathpwm + "/period", 'w')
@@ -103,6 +110,8 @@ def start(channel, duty, freq=2000, polarity=0):
     fd = open(pathpwm + "/enable", 'w')
     fd.write('1')
     fd.close()
+    
+    return 'Started'
 
 def set_frequency(channel, freq):
     path = get_pwm_path(channel)
@@ -122,9 +131,9 @@ def set_frequency(channel, freq):
     period_ns = 1e9 / freq                  # compute new period
     duty_cycle_ns = period_ns*duty_cycle # compute new duty cycle as fraction of period
 
-    print('duty_cycle: ' + str(duty_cycle))
-    print('period_ns: ' + str(period_ns))
-    print('duty_cycle_ns: ' + str(duty_cycle_ns))
+    # print('duty_cycle: ' + str(duty_cycle))
+    # print('period_ns: ' + str(period_ns))
+    # print('duty_cycle_ns: ' + str(duty_cycle_ns))
 
     # Duty Cycle - Set to 0
     fd = open(pathpwm + "/duty_cycle", 'w')
@@ -169,3 +178,13 @@ def stop(channel):
     fd = open(path[0] + "/unexport", 'w')
     fd.write(str(path[1])) 
     fd.close()
+    
+    set_pin_mode(channel, 'gpio')
+
+def set_pin_mode(channel, mode):
+    path = '/sys/devices/platform/ocp/ocp:' + channel + '_pinmux/state'
+    fd = open(path, 'w')
+    fd.write(mode)
+    fd.close()
+
+    return path
