@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 
 import glob
-import PWMmay
+import PWMmay as PWM
 
-# print(PWMmay.get_pwm_key("P9_14"))
+channel = "P9_14"
 
-# print(PWMmay.get_pwm_path("P9_14"))
+# print(PWM.get_pwm_key(channel))
 
-print(PWMmay.start("P9_14", 20, freq=1000))
+# print(PWM.get_pwm_path(channel))
 
-print(PWMmay.stop("P9_14"))
+print(PWM.start(channel, 50, freq=1000))
+
+print(PWM.set_frequency(channel, 10000))
+
+# print(PWM.stop(channel))

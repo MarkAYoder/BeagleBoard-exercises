@@ -67,36 +67,78 @@ def get_pwm_path(channel):
 
 def start(channel, duty, freq=2000, polarity=0):
     path = get_pwm_path(channel)
+    # /sys/devices/platform/ocp/48302000.epwmss/48302200.pwm/pwm/pwmchip4/pwm-4:0
+    pathpwm = path[0] + "/pwm-" + path[0][-1] + ':' + str(path[1])
+    print(pathpwm)
+
     period_ns = 1e9 / freq
     duty_ns = period_ns * (duty / 100.0)
     print(duty_ns)
     
     # export
     try:
-        file1 = open(path[0] + "/export", 'w')
-        file1.write(str(path[1])) 
-        file1.close()
+        fd = open(path[0] + "/export", 'w')
+        fd.write(str(path[1])) 
+        fd.close()
     except:
         pass
     time.sleep(0.05)    # Give export a chance
     
-    # /sys/devices/platform/ocp/48302000.epwmss/48302200.pwm/pwm/pwmchip4/pwm-4:0
-    pathpwm = path[0] + "/pwm-" + path[0][-1] + ':' + str(path[1])
-    print(pathpwm)
     # Duty Cycle
-    file1 = open(pathpwm + "/duty_cycle", 'w')
-    file1.write(str(int(duty_ns)))
-    file1.close()
+    fd = open(pathpwm + "/duty_cycle", 'w')
+    fd.write('0')
+    fd.close()
 
     # Period
-    file1 = open(pathpwm + "/period", 'w')
-    file1.write(str(int(period_ns)))
-    file1.close()
+    fd = open(pathpwm + "/period", 'w')
+    fd.write(str(int(period_ns)))
+    fd.close()
+
+    # Duty Cycle
+    fd = open(pathpwm + "/duty_cycle", 'w')
+    fd.write(str(int(duty_ns)))
+    fd.close()
 
     # Enable
-    file1 = open(pathpwm + "/enable", 'w')
-    file1.write('1')
-    file1.close()
+    fd = open(pathpwm + "/enable", 'w')
+    fd.write('1')
+    fd.close()
+
+def set_frequency(channel, freq):
+    path = get_pwm_path(channel)
+    # /sys/devices/platform/ocp/48302000.epwmss/48302200.pwm/pwm/pwmchip4/pwm-4:0
+    pathpwm = path[0] + "/pwm-" + path[0][-1] + ':' + str(path[1])
+
+    # compute current duty cycle
+    fd = open(pathpwm + "/duty_cycle", 'r')
+    duty_cycle_ns = int(fd.read()[:-1] )       # Remove \n at end
+    fd.close()
+    fd = open(pathpwm + "/period", 'r')
+    period_ns = int(fd.read()[:-1])
+    fd.close()
+    
+    duty_cycle = duty_cycle_ns/period_ns          # compute current duty cycle as fraction
+    period_ns = 1e9 / freq                  # compute new period
+    duty_cycle_ns = period_ns*duty_cycle # compute new duty cycle as fraction of period
+
+    print('duty_cycle: ' + str(duty_cycle))
+    print('period_ns: ' + str(period_ns))
+    print('duty_cycle_ns: ' + str(duty_cycle_ns))
+
+    # Duty Cycle - Set to 0
+    fd = open(pathpwm + "/duty_cycle", 'w')
+    fd.write('0')
+    fd.close()
+    
+    # Period
+    fd = open(pathpwm + "/period", 'w')
+    fd.write(str(int(period_ns)))
+    fd.close()
+
+    # Duty Cycle
+    fd = open(pathpwm + "/duty_cycle", 'w')
+    fd.write(str(int(duty_cycle_ns)))
+    fd.close()
 
     
 def stop(channel):
@@ -104,11 +146,11 @@ def stop(channel):
     pathpwm = path[0] + "/pwm-" + path[0][-1] + ':' + str(path[1])
    
     # Disable
-    file1 = open(pathpwm + "/enable", 'w')
-    file1.write('0')
-    file1.close()
+    fd = open(pathpwm + "/enable", 'w')
+    fd.write('0')
+    fd.close()
 
     # unexport
-    file1 = open(path[0] + "/unexport", 'w')
-    file1.write(str(path[1])) 
-    file1.close()
+    fd = open(path[0] + "/unexport", 'w')
+    fd.write(str(path[1])) 
+    fd.close()
