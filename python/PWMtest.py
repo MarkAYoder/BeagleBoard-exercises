@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import glob
 import PWMmay as PWM
 
 channel = "P9_14"
@@ -9,7 +8,9 @@ channel = "P9_14"
 
 # print(PWM.get_pwm_path(channel))
 
-print(PWM.start(channel, 50, freq=1000))
+err = PWM.start(channel, 50, freq=1000)
+if err == None:
+    exit()
 
 print(PWM.set_frequency(channel, 10000))
 
