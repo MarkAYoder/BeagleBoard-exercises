@@ -160,3 +160,6 @@ exit
 # cd exercises/realtime
 # ln -s ~/FullScreenMario .
 "
+
+echo git clone https://github.com/MarkAYoder/BeagleBoard-exercises.git exercises --depth=1
+
