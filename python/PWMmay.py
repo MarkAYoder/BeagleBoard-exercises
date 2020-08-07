@@ -113,6 +113,7 @@ def set_frequency(channel, freq):
     fd = open(pathpwm + "/duty_cycle", 'r')
     duty_cycle_ns = int(fd.read()[:-1] )       # Remove \n at end
     fd.close()
+    
     fd = open(pathpwm + "/period", 'r')
     period_ns = int(fd.read()[:-1])
     fd.close()
@@ -140,6 +141,20 @@ def set_frequency(channel, freq):
     fd.write(str(int(duty_cycle_ns)))
     fd.close()
 
+def set_duty_cycle(channel, duty):
+    path = get_pwm_path(channel)
+    # /sys/devices/platform/ocp/48302000.epwmss/48302200.pwm/pwm/pwmchip4/pwm-4:0
+    pathpwm = path[0] + "/pwm-" + path[0][-1] + ':' + str(path[1])
+
+    fd = open(pathpwm + "/period", 'r')
+    period_ns = int(fd.read()[:-1])
+    fd.close()
+
+    duty_cycle_ns = duty/100 * period_ns
+    # Duty Cycle
+    fd = open(pathpwm + "/duty_cycle", 'w')
+    fd.write(str(int(duty_cycle_ns)))
+    fd.close()
     
 def stop(channel):
     path = get_pwm_path(channel)
