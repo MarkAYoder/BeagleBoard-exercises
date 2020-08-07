@@ -64,8 +64,11 @@ def get_pwm_path(channel):
 
 #PWM.start(channel, duty, freq=2000, polarity=0)
 
-def start(channel, duty):
+def start(channel, duty, freq=2000, polarity=0):
     path = get_pwm_path(channel)
+    period_ns = 1e9 / freq
+    duty_ns = period_ns * (duty / 100.0)
+    print(duty_ns)
     
     # export
     try:
@@ -75,7 +78,19 @@ def start(channel, duty):
     except:
         pass
 
-    unit = path[-1]
+    # /sys/devices/platform/ocp/48302000.epwmss/48302200.pwm/pwm/pwmchip4/pwm-4:0
+    pathpwm = path[0] + "/pwm-" + path[0][-1] + ':' + str(path[1])
+    print(pathpwm)
+    # Duty Cycle
+    file1 = open(pathpwm + "/duty_cycle", 'w')
+    file1.write(str(int(duty_ns)))
+    file1.close()
+
+    # Period
+    file1 = open(pathpwm + "/period", 'w')
+    file1.write(str(int(period_ns)))
+    file1.close()
+
     
 def stop(channel):
     path = get_pwm_path(channel)
