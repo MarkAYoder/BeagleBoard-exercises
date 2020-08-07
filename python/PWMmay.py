@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import glob
+import time
 
 t_NULL=0
 t_module = 0
@@ -77,7 +78,8 @@ def start(channel, duty, freq=2000, polarity=0):
         file1.close()
     except:
         pass
-
+    time.sleep(0.05)    # Give export a chance
+    
     # /sys/devices/platform/ocp/48302000.epwmss/48302200.pwm/pwm/pwmchip4/pwm-4:0
     pathpwm = path[0] + "/pwm-" + path[0][-1] + ':' + str(path[1])
     print(pathpwm)
@@ -91,10 +93,21 @@ def start(channel, duty, freq=2000, polarity=0):
     file1.write(str(int(period_ns)))
     file1.close()
 
+    # Enable
+    file1 = open(pathpwm + "/enable", 'w')
+    file1.write('1')
+    file1.close()
+
     
 def stop(channel):
     path = get_pwm_path(channel)
+    pathpwm = path[0] + "/pwm-" + path[0][-1] + ':' + str(path[1])
    
+    # Disable
+    file1 = open(pathpwm + "/enable", 'w')
+    file1.write('0')
+    file1.close()
+
     # unexport
     file1 = open(path[0] + "/unexport", 'w')
     file1.write(str(path[1])) 

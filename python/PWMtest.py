@@ -9,4 +9,4 @@ import PWMmay
 
 print(PWMmay.start("P9_14", 20, freq=1000))
 
-# print(PWMmay.stop("P9_14"))
+print(PWMmay.stop("P9_14"))
