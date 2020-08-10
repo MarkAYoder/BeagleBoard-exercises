@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 		goto release_line;
 	}
 
-	/* Blink 20 times */
+	/* Blink */
 	val = 0;
 	while(1) {
 		if(val) {
@@ -50,7 +50,7 @@ int main(int argc, char **argv)
 		}
 
 		// printf("Output %u on line #%u\n", val, line_num);
-		// sleep(1);
+		usleep(100000);
 		val = !val;
 	}
 
