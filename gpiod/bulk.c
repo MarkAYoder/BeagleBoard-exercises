@@ -10,14 +10,14 @@
 
 int main(int argc, char **argv)
 {
-	char *chipname = "gpiochip1";
+	int chipnumber = 1;
 	unsigned int line_num[NUMLINES] = {18, 19};	// GPIO Pins P9_14 and P9_16
 	unsigned int val;
 	struct gpiod_chip *chip;
 	struct gpiod_line_bulk line[NUMLINES];
 	int i, ret;
 
-	chip = gpiod_chip_open_by_name(chipname);
+	chip = gpiod_chip_open_by_number(chipnumber);
 	if (!chip) {
 		perror("Open chip failed\n");
 		goto end;
