@@ -6,14 +6,15 @@
 #ifndef	CONSUMER
 #define	CONSUMER	"Consumer"
 #endif
+#define NUMLINES 2
 
 int main(int argc, char **argv)
 {
 	char *chipname = "gpiochip1";
-	unsigned int line_num[] = {18, 19};	// GPIO Pins P9_14 and P9_16
+	unsigned int line_num[NUMLINES] = {18, 19};	// GPIO Pins P9_14 and P9_16
 	unsigned int val;
 	struct gpiod_chip *chip;
-	struct gpiod_line_bulk line[2];
+	struct gpiod_line_bulk line[NUMLINES];
 	int i, ret;
 
 	chip = gpiod_chip_open_by_name(chipname);
@@ -22,35 +23,31 @@ int main(int argc, char **argv)
 		goto end;
 	}
 
-	int err = gpiod_chip_get_lines(chip, line_num, 2, line);
+	int err = gpiod_chip_get_lines(chip, line_num, NUMLINES, line);
 	if (err) {
 		perror("Get line failed\n");
 		goto close_chip;
 	}
 
-	int off_values[] = {0, 0};
-	int  on_values[] = {1, 1};
+	int off_values[NUMLINES] = {0, 0};
+	int  on_values[NUMLINES] = {1, 1};
 	ret = gpiod_line_request_bulk_output(line, CONSUMER, off_values);
 	if (ret < 0) {
 		perror("Request line as output failed\n");
 		goto release_line;
 	}
 
-	/* Blink */
+	/* Blink 20 times */
 	val = 0;
 	while(1) {
-		if(val) {
-			ret = gpiod_line_set_value_bulk(line, on_values);
-		} else {
-			ret = gpiod_line_set_value_bulk(line, off_values);
-		}
+		ret = gpiod_line_set_value_bulk(line, val ? on_values : off_values);
 		if (ret < 0) {
 			perror("Set line output failed\n");
 			goto release_line;
 		}
 
 		// printf("Output %u on line #%u\n", val, line_num);
-		usleep(100000);
+		// usleep(100000);
 		val = !val;
 	}
 
