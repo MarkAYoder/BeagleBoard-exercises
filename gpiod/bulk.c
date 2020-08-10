@@ -41,17 +41,14 @@ int main(int argc, char **argv)
 	while(1) {
 		if(val) {
 			ret = gpiod_line_set_value_bulk(line, on_values);
-			if (ret < 0) {
-				perror("Set line output failed\n");
-				goto release_line;
-			}
-		} else{
+		} else {
 			ret = gpiod_line_set_value_bulk(line, off_values);
-			if (ret < 0) {
-				perror("Set line output failed\n");
-				goto release_line;
-			}
 		}
+		if (ret < 0) {
+			perror("Set line output failed\n");
+			goto release_line;
+		}
+
 		// printf("Output %u on line #%u\n", val, line_num);
 		// sleep(1);
 		val = !val;
