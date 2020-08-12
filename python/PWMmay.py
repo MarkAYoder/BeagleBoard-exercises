@@ -46,6 +46,12 @@ pwm_table = [
   [ "timer4", 0, 0, 2, "", "", "", "dmtimer-pwm-4", "P2_31" ],
 ]
 
+# This is needed to access the timer pwm's
+# uboot_overlay_addr0=/lib/firmware/BB-PWM-TIMER-P8.07.dtbo
+# uboot_overlay_addr1=/lib/firmware/BB-PWM-TIMER-P8.08.dtbo
+# uboot_overlay_addr2=/lib/firmware/BB-PWM-TIMER-P8.09.dtbo
+# uboot_overlay_addr3=/lib/firmware/BB-PWM-TIMER-P8.10.dtbo
+
 # print(pwm_table[2][t_key])
 # print(len(pwm_table))
 
