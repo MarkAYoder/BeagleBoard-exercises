@@ -9,6 +9,8 @@ import time
 
 # CHANNEL='P9_14'
 CHANNEL='GPMC_A2'       # P9_14
+INPUT="GPMC_AD10"       # P8_14
+
 GPIO.setup(CHANNEL, GPIO.OUT)
 # while True:
 GPIO.output(CHANNEL, [GPIO.HIGH])     # You can also write 1 instead.
@@ -28,11 +30,11 @@ GPIO.output(CHANNEL, [GPIO.HIGH])     # You can also write 1 instead.
 
 
 # You can also set pins as inputs as follows:
-GPIO.setup("GPMC_AD10", GPIO.IN)
+GPIO.setup(INPUT, GPIO.IN)
 
 # Once you've done that, you can access the input value in a few different ways. 
 # The first, and easiest way is just polling the inputs, such as in a loop that keeps checking them:
-if GPIO.input("GPMC_AD10")[0]:  # P8_14
+if GPIO.input(INPUT)[0]:  # P8_14
     print("HIGH")
 else:
     print("LOW")
@@ -44,7 +46,7 @@ else:
 
 # The wait_for_edge method is blocking, and will wait until something happens:
 # print("waiting for edge...", end='')
-GPIO.wait_for_edge("GPMC_AD10", GPIO.BOTH, timeout=5)
+GPIO.wait_for_edge(INPUT, GPIO.BOTH, timeout=5000)
 # print("got it.")
 
 # Another option, that is non-blocking is to add an event to detect. 
@@ -52,7 +54,7 @@ GPIO.wait_for_edge("GPMC_AD10", GPIO.BOTH, timeout=5)
 # program will do, and later on, you can check if that event was detected.
 
 # # A simple example of this is as follows:
-# GPIO.add_event_detect("P8_14", GPIO.FALLING)
+# GPIO.add_event_detect(INPUT, GPIO.FALLING)
 # #your amazing code here
 # #detect wherever:
 # time.sleep(5)

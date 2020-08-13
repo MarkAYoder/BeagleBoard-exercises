@@ -100,7 +100,7 @@ def input(channel):
     # print(channel)
     return ports[channel][0].get_values()
 
-def wait_for_edge(channel, edge, timeout=0):
+def wait_for_edge(channel, edge, timeout=-1):
     """Wait for an edge.
     
     channel - gpio channel
@@ -129,7 +129,36 @@ def wait_for_edge(channel, edge, timeout=0):
     
     line.request(consumer=CONSUMER, type=ev_edge)
     
-    return line.event_wait(sec=timeout)
+    return line.event_wait(sec=int(timeout/1000))
+
+# def add_event_detect(channel, edge):
+#     """Enable edge detection events for a particular GPIO channel.
+    
+#     channel      - board pin number.
+#     edge         - RISING, FALLING or BOTH
+#     [callback]   - A callback function for the event (optional)
+#     [bouncetime] - Switch bounce timeout in ms for callback"""
+    
+#     line=ports[channel][0]
+
+#     if edge == RISING:
+#         ev_edge = gpiod.LINE_REQ_EV_RISING_EDGE
+#     elif edge == FALLING:
+#         ev_edge = gpiod.LINE_REQ_EV_FALLING_EDGE
+#     elif edge == BOTH:
+#         ev_edge = gpiod.LINE_REQ_EV_BOTH_EDGES
+#     else:
+#         print("Unknown edge type: " + str(edge))
+
+#     line.add_event_detect(channel, ev_edge)
+    
+# def event_detected(channel):
+#     """Returns True if an edge has occured on a given GPIO.  
+    
+#     You need to enable edge detection using add_event_detect() first.
+#     channel - gpio channel"""
+#     line=ports[channel][0]
+#     return line.event_detected(channel)
         
 def cleanup():
     """Clean up by resetting all GPIO channels that have been used by 
