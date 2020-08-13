@@ -91,7 +91,14 @@ def output(channel, vals):
     ret = ports[channel][0].set_values(vals)
     if ret:
         print(ret)
-    
+
+def input(channel):
+    """Input from a GPIO channel.  Returns HIGH=1=True or LOW=0=False
+    gpio - gpio channel"""
+    print("input()")
+    print(channel)
+    return ports[channel][0].get_values()
+
 def cleanup():
     """Clean up by resetting all GPIO channels that have been used by 
     this program to INPUT with no pullup/pulldown and no event detection."""
@@ -104,6 +111,6 @@ def cleanup():
         if ret:
             print(ret)
         ret = val[1].close()
-        ir ret:
+        if ret:
             print(ret)
         ports={}
