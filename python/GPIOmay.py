@@ -64,32 +64,33 @@ def setup(channel, direction):
         print(channel + ': Not found')
         sys.exit(1)
     
-    # chip = gpiod.Chip(channel[0])
     print(chip)
     
     lines = chip.get_lines([offset])
-    # lines = chip.get_lines([channel[1]])
     print(lines)
     if direction == IN:
-        lines.request(consumer=CONSUMER, type=gpiod.LINE_REQ_DIR_IN)
+        ret = lines.request(consumer=CONSUMER, type=gpiod.LINE_REQ_DIR_IN)
     elif direction == OUT:
-        lines.request(consumer=CONSUMER, type=gpiod.LINE_REQ_DIR_OUT)
+        ret = lines.request(consumer=CONSUMER, type=gpiod.LINE_REQ_DIR_OUT)
     else:
         print("Unknown direction: " + str(direction))
         sys.exit(1)
-        
+    
+    if ret:
+        print(ret)    
     ports[channel] = [lines, chip]
-    print(ports)
+    # print(ports)
 
 def output(channel, vals):
     """Output to a GPIO channel
     
     gpio  - gpio channel
     value - 0/1 or False/True or LOW/HIGH"""
-    print("output()")
-    print(channel)
+    # print("output()")
+    # print(channel)
     ret = ports[channel][0].set_values(vals)
-    print(ret)
+    if ret:
+        print(ret)
     
 def cleanup():
     """Clean up by resetting all GPIO channels that have been used by 
@@ -99,8 +100,10 @@ def cleanup():
     print(ports)
     for channel, val in ports.items():
         print(channel)
-        val[0].release()
-        val[1].close()
-        
-        sys.exit(130)
-    
+        ret = val[0].release()
+        if ret:
+            print(ret)
+        ret = val[1].close()
+        ir ret:
+            print(ret)
+        ports={}
