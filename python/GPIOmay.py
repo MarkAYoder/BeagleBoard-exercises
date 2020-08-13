@@ -64,10 +64,10 @@ def setup(channel, direction):
         print(channel + ': Not found')
         sys.exit(1)
     
-    print(chip)
+    # print(chip)
     
     lines = chip.get_lines([offset])
-    print(lines)
+    # print(lines)
     if direction == IN:
         ret = lines.request(consumer=CONSUMER, type=gpiod.LINE_REQ_DIR_IN)
     elif direction == OUT:
@@ -77,14 +77,15 @@ def setup(channel, direction):
         sys.exit(1)
     
     if ret:
-        print(ret)    
+        print(ret)
+        
     ports[channel] = [lines, chip]
     # print(ports)
 
 def output(channel, vals):
     """Output to a GPIO channel
     
-    gpio  - gpio channel
+    channel  - gpio channel
     value - 0/1 or False/True or LOW/HIGH"""
     # print("output()")
     # print(channel)
@@ -95,10 +96,41 @@ def output(channel, vals):
 def input(channel):
     """Input from a GPIO channel.  Returns HIGH=1=True or LOW=0=False
     gpio - gpio channel"""
-    print("input()")
-    print(channel)
+    # print("input()")
+    # print(channel)
     return ports[channel][0].get_values()
 
+def wait_for_edge(channel, edge, timeout=0):
+    """Wait for an edge.
+    
+    channel - gpio channel
+    edge - RISING, FALLING or BOTH
+    timeout (optional) - time to wait in miliseconds. -1 will wait forever (default)"""
+    # print("wait_for_edge()")
+
+    # print(ports)
+    line=ports[channel][0]
+    chip=ports[channel][1]
+    
+    if edge == RISING:
+        ev_edge = gpiod.LINE_REQ_EV_RISING_EDGE
+    elif edge == FALLING:
+        ev_edge = gpiod.LINE_REQ_EV_FALLING_EDGE
+    elif edge == BOTH:
+        ev_edge = gpiod.LINE_REQ_EV_BOTH_EDGES
+    else:
+        print("Unknown edge type: " + str(edge))
+    
+    # Try releasing the line and requesting again
+    
+    offset = line.to_list()[0].offset()
+    line.release()
+    line = chip.get_lines([offset])
+    
+    line.request(consumer=CONSUMER, type=ev_edge)
+    
+    return line.event_wait(sec=timeout)
+        
 def cleanup():
     """Clean up by resetting all GPIO channels that have been used by 
     this program to INPUT with no pullup/pulldown and no event detection."""
