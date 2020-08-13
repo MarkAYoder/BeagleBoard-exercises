@@ -4,10 +4,13 @@
 
 # To setup a digital pin as an output, set the output value HIGH, and then cleanup after you're done:
 import Adafruit_BBIO.GPIO as GPIO
+# import GPIOmay as GPIO
 import time
 
-GPIO.setup("P8_10", GPIO.OUT)
-GPIO.output("P8_10", GPIO.HIGH)     # You can also write 1 instead.
+CHANNEL='P8_10'
+# CHANNEL='P9_14'
+GPIO.setup(CHANNEL, GPIO.OUT)
+GPIO.output(CHANNEL, GPIO.HIGH)     # You can also write 1 instead.
 GPIO.cleanup()
 
 # You can also refer to the pin names:
