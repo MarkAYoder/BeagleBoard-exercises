@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+"""PWM functionality of a BeagleBone using Python."""
 import glob
 import time
 
@@ -46,6 +46,13 @@ pwm_table = [
   [ "timer4", 0, 0, 2, "", "", "", "dmtimer-pwm-4", "P2_31" ],
 ]
 
+# This is needed to access the timer pwm's
+# uboot_overlay_addr0=/lib/firmware/BB-PWM-TIMER-P8.07.dtbo
+# uboot_overlay_addr1=/lib/firmware/BB-PWM-TIMER-P8.08.dtbo
+# uboot_overlay_addr2=/lib/firmware/BB-PWM-TIMER-P8.09.dtbo
+# uboot_overlay_addr3=/lib/firmware/BB-PWM-TIMER-P8.10.dtbo
+# https://github.com/adafruit/adafruit-beaglebone-io-python/issues/229
+
 # print(pwm_table[2][t_key])
 # print(len(pwm_table))
 
@@ -66,6 +73,9 @@ def get_pwm_path(channel):
     return [pwmPath, x[t_index]]
 
 def start(channel, duty, freq=2000, polarity=0):
+    """Set up and start the PWM channel.
+    
+    channel can be in the form of 'P8_10', or 'EHRPWM2A'"""
     print(channel)
     path = get_pwm_path(channel)
     if path == None:
@@ -114,6 +124,9 @@ def start(channel, duty, freq=2000, polarity=0):
     return 'Started'
 
 def set_frequency(channel, freq):
+    """Change the frequency
+    
+    frequency - frequency in Hz (freq > 0.0)"""
     path = get_pwm_path(channel)
     # /sys/devices/platform/ocp/48302000.epwmss/48302200.pwm/pwm/pwmchip4/pwm-4:0
     pathpwm = path[0] + "/pwm-" + path[0][-1] + ':' + str(path[1])
@@ -151,6 +164,9 @@ def set_frequency(channel, freq):
     fd.close()
 
 def set_duty_cycle(channel, duty):
+    """Change the duty cycle.
+    
+    dutycycle - between 0.0 and 100.0"""
     path = get_pwm_path(channel)
     # /sys/devices/platform/ocp/48302000.epwmss/48302200.pwm/pwm/pwmchip4/pwm-4:0
     pathpwm = path[0] + "/pwm-" + path[0][-1] + ':' + str(path[1])
@@ -166,6 +182,9 @@ def set_duty_cycle(channel, duty):
     fd.close()
     
 def stop(channel):
+    """Stop the PWM channel.
+    
+    channel can be in the form of 'P8_10', or 'EHRPWM2A'"""
     path = get_pwm_path(channel)
     pathpwm = path[0] + "/pwm-" + path[0][-1] + ':' + str(path[1])
    
