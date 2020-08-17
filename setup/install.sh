@@ -47,6 +47,9 @@ echo
 # time rsync -azq ../../libsoc $USER@$BONE:.
 
 ssh $USER@$BONE "
+# Set up root
+ln -s / root
+
 # Set up bin/
 cd bin
 ln -s /opt/scripts/device/bone/show-pins.pl .
@@ -61,7 +64,7 @@ git config user.name 'Mark A. Yoder'
 git config user.email Mark.A.Yoder@beagleboard.org
 git fetch
 # Use next versions branch
-git checkout v2020.08
+# git checkout v2020.08
 cd
 
 # Fix postBuffer size
