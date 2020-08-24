@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-// Pings google until it gets a response and then beeps.
-// apt-get install flite
+// Pings google and turns on a RGB light according to the response time.
 
 var child = require('child_process');
 var b     = require('bonescript');
