@@ -30,5 +30,5 @@ print(value)
 
 while True:
     value = ADC.read("P9_38")
-    print(value)
-    time.sleep(1)
+    print('{0:.2f}'.format(value), end='\r')
+    time.sleep(0.1)
