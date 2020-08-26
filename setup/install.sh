@@ -49,11 +49,12 @@ echo
 ssh $USER@$BONE "
 # Set up root
 ln -s / root
+mkdir host
 
 # Set up bin/
-cd bin
+cd ~/bin
 ln -s /opt/scripts/device/bone/show-pins.pl .
-cd ..
+cd
 
 # Set up github
 ln -s --backup=numbered exercises/setup/gitconfig .gitconfig
@@ -62,7 +63,7 @@ ln -s --backup=numbered exercises/setup/gitconfig .gitconfig
 cd /var/lib/cloud9
 git config user.name 'Mark A. Yoder'
 git config user.email Mark.A.Yoder@beagleboard.org
-git fetch
+# git fetch
 # Use next versions branch
 # git checkout v2020.08
 cd
@@ -86,6 +87,8 @@ export LANG=en_US.UTF-8
 # Set up cloud9
 # ln -s --backup=numbered /opt/cloud9/.c9 .
 
+# Add mouse to tmux
+# git clone https://github.com/gpakosz/.tmux
 "
 
 # Now do root things
