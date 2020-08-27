@@ -159,7 +159,6 @@ fi
 # echo \"APT::Default-Release \\"\"stable\\"\";\" > /etc/apt/apt.conf.d/local
 
 "
-
 echo git clone https://github.com/MarkAYoder/BeagleBoard-exercises.git exercises --depth=1
 
 exit
@@ -168,5 +167,4 @@ exit
 # git clone https://github.com/Diogenesthecynic/FullScreenMario.git
 # cd exercises/realtime
 # ln -s ~/FullScreenMario .
-"
-
+# "
