@@ -7,3 +7,8 @@ sudo apt install libfreetype6-dev libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer
 sudo python3 -m pip install pygame      # 9m18
 
 sudo pip3 install requests  pillow      # 6m22
+
+
+# This may be all that's needed:
+sudo apt install python3-pygame
+sudo apt install python3-tk
