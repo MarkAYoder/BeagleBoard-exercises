@@ -14,9 +14,9 @@ class pyclock :
         "Ininitializes a new pygame screen using the framebuffer"
         # Based on "Python GUI in Linux frame buffer"
         # http://www.karoltomala.com/blog/?p=679
-        disp_no = os.getenv("DISPLAY")
-        if disp_no:
-            print("I'm running under X display = " + format(disp_no))
+        # disp_no = os.getenv("DISPLAY")
+        # if disp_no:
+        #     print("I'm running under X display = " + format(disp_no))
         
         # Check which frame buffer drivers are available
         # Start with fbcon since directfb hangs with composite output
