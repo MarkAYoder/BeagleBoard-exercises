@@ -4,9 +4,9 @@
 export FRAMEBUFFER=/dev/fb0
 
 # Display an image
-fbi -noverbose -T 1 -a tux.png
+sudo fbi -noverbose -T 1 -a tux.png
 # Cycle between several images
-fbi -t 5 -blend 1000 -noverbose -T 1 -a Matthias.jpg Malachi.jpg Alan.jpg Louis.jpg
+sudo fbi -t 5 -blend 1000 -noverbose -T 1 -a Matthias.jpg Malachi.jpg Alan.jpg Louis.jpg
 
 # Play a movie
 SDL_VIDEODRIVER=fbcon 
