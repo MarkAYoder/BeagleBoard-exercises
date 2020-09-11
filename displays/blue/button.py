@@ -10,8 +10,9 @@ button="PAUSE"  # PAUSE or MODE
 LED   ="USR3"
 
 # Set the GPIO pins:
+# (PUD_OFF (default), PUD_UP or PUD_DOWN)
 GPIO.setup(LED,    GPIO.OUT)
-GPIO.setup(button, GPIO.IN)
+GPIO.setup(button, GPIO.IN, PUD_DOWN)
 
 print("Running...")
 
