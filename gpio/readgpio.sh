@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # From http://wh1t3s.com/2009/05/14/reading-beagleboard-gpio/
 #
 # Read a GPIO input
@@ -14,7 +14,9 @@ cleanup() { # Release the GPIO port
 
 # Open the GPIO port
 #
-echo "$GPIO" > /sys/class/gpio/export
+if [ ! -e /sys/class/gpio/gpio${GPIO} ]; then
+    echo "$GPIO" > /sys/class/gpio/export
+fi
 echo "in" > /sys/class/gpio/gpio${GPIO}/direction
 
 trap cleanup SIGINT # call cleanup on Ctrl-C
