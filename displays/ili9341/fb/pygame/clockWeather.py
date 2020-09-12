@@ -89,11 +89,11 @@ class pyclock :
             self.screen.blit(image, (xmax-image.get_width(), yCount*image.get_height()))
                 
         # https://www.wunderground.com/weather/api/d/docs
-        key = "ec7eb641373d9256"
-        urlWeather = "http://api.wunderground.com/api/" + key + "/conditions/forecast/history/yesterday/q/IN/Brazil.json"
-        urlWeather = "http://api.wunderground.com/api/" + key + "/conditions/forecast/q/IN/Brazil.json"
-        # Need to use keyword 'yesterday' so ['history']['dailysummary'][0]['mintempi']
-        #  gets yesterdays min and max
+        key = "6a2db5c8171494bce131dc69af6f34b9"
+        city='brazil,indiana'
+        lat='39.52'
+        lon='-87.12'
+        urlWeather = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + key
 
         xmax = pygame.display.Info().current_w
         ymax = pygame.display.Info().current_h
@@ -203,12 +203,12 @@ class pyclock :
                         # print("High: ", weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'])
                         # print("forecast: ", weather['forecast'])
                         textsurface = myfontBig.render(
-                            str(weather['current_observation']['temp_f']) + "  ",
+                            str(weather['main']['temp']) + "  ",
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0, 0))
                         
                         textsurface = myfont.render(
-                            str(weather['current_observation']['relative_humidity']),
+                            str(weather['main']['humidity']),
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0, myfontBig.get_linesize()))
                         
