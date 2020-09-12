@@ -9,8 +9,9 @@ sudo fbi -noverbose -T 1 -a tux.png
 sudo fbi -t 5 -blend 1000 -noverbose -T 1 -a Matthias.jpg Malachi.jpg Alan.jpg Louis.jpg
 
 # Play a movie
-SDL_VIDEODRIVER=fbcon 
-SDL_FBDEV=/dev/fb0
+export SDL_VIDEODRIVER=fbcon 
+export SDL_FBDEV=/dev/fb0
+
 mplayer -vf-add rotate=4 -framedrop hst_1.mpg
 
 # Look at the framebuffer settings
