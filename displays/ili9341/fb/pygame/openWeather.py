@@ -18,8 +18,11 @@ from datetime import datetime
 # Get outdoor temp and forcast from wunderground
 key='6a2db5c8171494bce131dc69af6f34b9'
 city='brazil,indiana'
+lat='39.52'
+lon='-87.12'
 
-urlWeather = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial" + "&appid=" + key
+urlWeather = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&exclude=daily,hourly,minutely&units=imperial' + '&appid=' + key
+print(urlWeather)
 try:
     r = requests.get(urlWeather)
     if(r.status_code==200):
@@ -44,7 +47,7 @@ try:
         set  = weather['sys']['sunset'] + weather['timezone']
         print("sunset:  " + datetime.utcfromtimestamp(set).strftime('%Y-%m-%d %H:%M:%S'))
 
-        # print("All : ", weather)
+        print("All : ", weather)
     else:
         print("status_code: ", r.status_code)
 except:
