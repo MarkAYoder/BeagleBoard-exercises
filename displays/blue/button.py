@@ -6,13 +6,13 @@
 import Adafruit_BBIO.GPIO as GPIO
 import time
 
-button="PAUSE"  # PAUSE or MODE
+button="P9_42"  # PAUSE or MODE
 LED   ="USR3"
 
 # Set the GPIO pins:
 # (PUD_OFF (default), PUD_UP or PUD_DOWN)
 GPIO.setup(LED,    GPIO.OUT)
-GPIO.setup(button, GPIO.IN, PUD_DOWN)
+GPIO.setup(button, GPIO.IN, GPIO.PUD_DOWN)
 
 print("Running...")
 
