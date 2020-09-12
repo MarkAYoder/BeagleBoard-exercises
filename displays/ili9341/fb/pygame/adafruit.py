@@ -20,6 +20,8 @@ class pyscope :
         # Start with fbcon since directfb hangs with composite output
         drivers = ['fbcon', 'directfb', 'svgalib']
         found = False
+        # os.putenv('SDL_FBDEV',   '/dev/fb0')
+        os.putenv('SDL_NOMOUSE', '1')
         for driver in drivers:
             # Make sure that SDL_VIDEODRIVER is set
             if not os.getenv('SDL_VIDEODRIVER'):
