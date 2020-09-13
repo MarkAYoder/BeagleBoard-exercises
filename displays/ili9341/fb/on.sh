@@ -57,7 +57,7 @@ sudo bash << EOF
     
     # Insert the framebuffer modules
     # Change busnum to the SPI bus number PLUS 1
-    modprobe fbtft_device name=adafruit28 busnum=$BUS rotate=180 gpios=reset:$RESET,dc:$DC cs=0
+    modprobe fbtft_device name=adafruit28 busnum=$BUS rotate=90 gpios=reset:$RESET,dc:$DC cs=0
 
     # Turn off cursor
     while [ ! -e /dev/fb0 ]
