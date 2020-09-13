@@ -210,29 +210,29 @@ class pyclock :
                         print("High: ", weather['daily'][0]['temp']['max'])
                         print("forecast: ", weather['daily'][0])
                         textsurface = myfontBig.render(
-                            str(weather['current']['temp']) + "  ",
+                            str(round(weather['current']['temp'])) + "  ",
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0, 0))
                         
                         textsurface = myfont.render(
-                            str(weather['current']['humidity']),
+                            str(round(weather['current']['humidity'])),
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0, myfontBig.get_linesize()))
                         
                         textsurface = myfont.render(
                             # "Time: " + weather['current_observation']['local_time_rfc822'] +
-                            "Lo: "+str(weather['daily'][0]['temp']['min']),
+                            "Lo: "+str(round(weather['daily'][0]['temp']['min'])),
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+myfont.get_linesize()))
                         
                         textsurface = myfont.render(
-                            "Hi: " +str(weather['daily'][0]['temp']['max']),
+                            "Hi: " +str(round(weather['daily'][0]['temp']['max'])),
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+2*myfont.get_linesize()))
                         
                         # tmp = weather['forecast']['simpleforecast']['forecastday'][0]
                         textsurface = myfont.render(
-                           "Wind: " + str(weather['current']['wind_deg']) + " " + str(weather['current']['wind_speed']) + "   ",
+                           "Wind: " + str(weather['current']['wind_deg']) + " " + str(round(weather['current']['wind_speed'])) + "   ",
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0,ymax-1*myfont.get_linesize()))
                         
