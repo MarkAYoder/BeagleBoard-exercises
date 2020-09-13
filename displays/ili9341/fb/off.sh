@@ -8,6 +8,6 @@ sudo bash << EOF
     if lsmod | grep -q 'fbtft '        ; then rmmod --force fbtft;         fi
 
     # Turn off LED
-    ./backlight.py 0
+    ./LCD-backlight.py 0
         
 EOF
