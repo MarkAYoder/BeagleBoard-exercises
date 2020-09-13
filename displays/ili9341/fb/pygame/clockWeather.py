@@ -89,11 +89,14 @@ class pyclock :
             self.screen.blit(image, (xmax-image.get_width(), yCount*image.get_height()))
                 
         # https://www.wunderground.com/weather/api/d/docs
-        key = "6a2db5c8171494bce131dc69af6f34b9"
-        city='brazil,indiana'
-        lat='39.52'
-        lon='-87.12'
-        urlWeather = "http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + key
+        params = {
+            'appid': '6a2db5c8171494bce131dc69af6f34b9',
+            'city': 'brazil,indiana',
+            'lat':  '39.52',
+            'lon': '-87.12',
+            'units': 'imperial'
+            }
+        urlWeather = "http://api.openweathermap.org/data/2.5/weather"
 
         xmax = pygame.display.Info().current_w
         ymax = pygame.display.Info().current_h
@@ -190,7 +193,7 @@ class pyclock :
                 print("Getting weather")
 
                 try:
-                    r = requests.get(urlWeather)
+                    r = requests.get(urlWeather, params=params)
                     if(r.status_code==200):
                         # Print the weather on the LCD
                         # print("headers: ", r.headers)

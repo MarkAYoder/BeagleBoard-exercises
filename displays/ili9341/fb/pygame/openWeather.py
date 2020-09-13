@@ -16,39 +16,43 @@ import sys
 from datetime import datetime
 
 # Get outdoor temp and forcast from wunderground
-key='6a2db5c8171494bce131dc69af6f34b9'
-city='brazil,indiana'
-lat='39.52'
-lon='-87.12'
-
-urlWeather = 'https://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + lon + '&exclude=daily,hourly,minutely&units=imperial' + '&appid=' + key
+params = {
+    'appid': '6a2db5c8171494bce131dc69af6f34b9',
+    # 'city': 'brazil,indiana',
+    'exclude': "minutely,hourly",
+    'lat':  '39.52',
+    'lon': '-87.12',
+    'units': 'imperial'
+    }
+urlWeather = "http://api.openweathermap.org/data/2.5/onecall"
 print(urlWeather)
 try:
-    r = requests.get(urlWeather)
+    r = requests.get(urlWeather, params=params)
     if(r.status_code==200):
         # print("headers: ", r.headers)
         # print("text: ", r.text)
         # print("json: ", r.json())
         weather = r.json()
-        print(weather['name'], "Summary: ", weather['weather'][0]['description'])
-        print("Temp: ", weather['main']['temp'])
-        print("Max: ", weather['main']['temp_min'])
-        print("Min: ", weather['main']['temp_max'])
-        print("Humid:", weather['main']['humidity'])
-        # print("Low:  ", weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'])
-        # print("High: ", weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'])
-        print("Wind:\n\tAve: ", weather['wind']['speed'])
-        print("\tDirection: ", weather['wind']['deg'])
+        print("Summary: ", weather['current']['weather'][0]['description'])
+        print("Temp: ", weather['current']['temp'])
+        print("Humid:", weather['current']['humidity'])
+        print("Wind:\n\tAve: ", weather['current']['wind_speed'])
+        print("\tDirection: ", weather['current']['wind_deg'])
+        print("High: ", weather['daily'][0]['temp']['max'])
+        print("Low: ", weather['daily'][0]['temp']['min'])
 
-# if you encounter a "year is out of range" error the timestamp
-# may be in milliseconds, try `ts /= 1000` in that case
-        rise = weather['sys']['sunrise'] + weather['timezone']
+        rise = weather['current']['sunrise'] + weather['timezone_offset']
         print("sunrise: " + datetime.utcfromtimestamp(rise).strftime('%Y-%m-%d %H:%M:%S'))
-        set  = weather['sys']['sunset'] + weather['timezone']
+        set  = weather['current']['sunset'] + weather['timezone_offset']
         print("sunset:  " + datetime.utcfromtimestamp(set).strftime('%Y-%m-%d %H:%M:%S'))
 
-        print("All : ", weather)
+        # print("All : ", weather)
     else:
         print("status_code: ", r.status_code)
-except:
+    # print(r.url)
+except Exception as e:
+    print("Oops!", e.__class__, "occurred.")
     print("Unexpected error:", sys.exc_info()[0])
+    print(r)
+    print(r.url)
+        
