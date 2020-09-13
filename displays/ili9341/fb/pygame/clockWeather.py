@@ -91,12 +91,13 @@ class pyclock :
         # https://www.wunderground.com/weather/api/d/docs
         params = {
             'appid': '6a2db5c8171494bce131dc69af6f34b9',
-            'city': 'brazil,indiana',
+            # 'city': 'brazil,indiana',
+            'exclude': "minutely,hourly",
             'lat':  '39.52',
             'lon': '-87.12',
             'units': 'imperial'
             }
-        urlWeather = "http://api.openweathermap.org/data/2.5/weather"
+        urlWeather = "http://api.openweathermap.org/data/2.5/onecall"
 
         xmax = pygame.display.Info().current_w
         ymax = pygame.display.Info().current_h
@@ -200,35 +201,35 @@ class pyclock :
                         # print("text: ", r.text)
                         # print("json: ", r.json())
                         weather = r.json()
-                        # print("Temp: ", weather['current_observation']['temp_f'])
+                        print("Temp: ", weather['current']['temp'])
                         # print("Humid:", weather['current_observation']['relative_humidity'])
                         # print("Low:  ", weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'])
                         # print("High: ", weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'])
                         # print("forecast: ", weather['forecast'])
                         textsurface = myfontBig.render(
-                            str(weather['main']['temp']) + "  ",
+                            str(weather['current']['temp']) + "  ",
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0, 0))
                         
                         textsurface = myfont.render(
-                            str(weather['main']['humidity']),
+                            str(weather['current']['humidity']),
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0, myfontBig.get_linesize()))
                         
                         textsurface = myfont.render(
                             # "Time: " + weather['current_observation']['local_time_rfc822'] +
-                            "Lo: "+str(weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit']),
+                            "Lo: "+str(weather['daily'][0]['temp']['min']),
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+myfont.get_linesize()))
                         
                         textsurface = myfont.render(
-                            "Hi: " +str(weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit']),
+                            "Hi: " +str(weather['daily'][0]['temp']['max']),
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+2*myfont.get_linesize()))
                         
-                        tmp = weather['forecast']['simpleforecast']['forecastday'][0]
+                        # tmp = weather['forecast']['simpleforecast']['forecastday'][0]
                         textsurface = myfont.render(
-                           "Wind: " + tmp['avewind']['dir'] + " " + str(tmp['avewind']['mph']) + " to " + str(tmp['maxwind']['mph']) + "   ",
+                           "Wind: " + str(weather['current']['wind_deg']) + " " + str(weather['current']['wind_speed']) + "   ",
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0,ymax-1*myfont.get_linesize()))
                         
@@ -241,15 +242,16 @@ class pyclock :
                         
                         # Get the weather icon and display it
                         # https://stackoverflow.com/questions/32853980/temporarily-retrieve-an-image-using-the-requests-library
-                        displayIcon(weather['current_observation']['icon_url'], "Now", 0)
+                        # displayIcon(weather['current_observation']['icon_url'], "Now", 0)
                         # Forecast has both day and night.  Here I skip half of them.
                         for i in range(0, 4, 1):
                             # displayIcon(weather['forecast']['txt_forecast']['forecastday'][i]['icon_url'], 
                             # weather['forecast']['txt_forecast']['forecastday'][i]['title'], 
                             #     i/2+1)
-                            displayIcon(weather['forecast']['simpleforecast']['forecastday'][i]['icon_url'], 
-                            weather['forecast']['simpleforecast']['forecastday'][i]['date']['weekday_short'], 
-                                i+1)
+                            # displayIcon(weather['forecast']['simpleforecast']['forecastday'][i]['icon_url'], 
+                            # weather['forecast']['simpleforecast']['forecastday'][i]['date']['weekday_short'], 
+                            #     i+1)
+                            pass
         
                     else:
                         print("status_code: ", r.status_code)
