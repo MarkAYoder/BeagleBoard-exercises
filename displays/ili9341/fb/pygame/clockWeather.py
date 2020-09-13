@@ -77,7 +77,7 @@ class pyclock :
                 r = requests.get(icon, stream=True)
                 r.raw.decode_content = True # handle spurious Content-Encoding
                 im = Image.open(r.raw)
-                # print(im.format, im.mode, im.size)
+                print(im.format, im.mode, im.size)
                 im.save(file)
                 image = pygame.image.load(file)
 
@@ -206,9 +206,11 @@ class pyclock :
                         weather = r.json()
                         print("Temp: ", weather['current']['temp'])
                         print("Humid:", weather['current']['humidity'])
-                        print("Low:  ",weather['daily'][0]['temp']['min'])
+                        print("Low:  ", weather['daily'][1]['temp']['min'])
                         print("High: ", weather['daily'][0]['temp']['max'])
-                        print("forecast: ", weather['daily'][0])
+                        # print("weather: ", weather['daily'][1])
+                        print("icon: ", weather['current']['weather'][0]['icon'])
+                        print()
                         textsurface = myfontBig.render(
                             str(round(weather['current']['temp'])) + "  ",
                             False, (0, 0, 0), backgroundC)
@@ -221,7 +223,7 @@ class pyclock :
                         
                         textsurface = myfont.render(
                             # "Time: " + weather['current_observation']['local_time_rfc822'] +
-                            "Lo: "+str(round(weather['daily'][0]['temp']['min'])),
+                            "Lo: "+str(round(weather['daily'][1]['temp']['min'])),
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+myfont.get_linesize()))
                         
