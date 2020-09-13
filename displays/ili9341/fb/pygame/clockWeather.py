@@ -234,7 +234,9 @@ class pyclock :
                         
                         # tmp = weather['forecast']['simpleforecast']['forecastday'][0]
                         textsurface = myfont.render(
-                           "Wind: " + str(weather['current']['wind_deg']) + " " + str(round(weather['current']['wind_speed'])) + "   ",
+                           "Wind: " + str(weather['current']['wind_deg']) + "   " + 
+                           str(round(weather['current']['wind_speed'])) + "   "   +
+                           str(weather['current']['weather'][0]['description']),
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0,ymax-1*myfont.get_linesize()))
                         
