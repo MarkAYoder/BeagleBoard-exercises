@@ -3,11 +3,14 @@
 # Also displays current weather and forcast
 # From: https://learn.adafruit.com/pi-video-output-using-pygame/pointing-pygame-to-the-framebuffer
 
+import sys
+import getpass
+if getpass.getuser() != 'root':
+    sys.exit("Must be run as root.")
 import os
 import pygame
 import time
 import math
-import sys
 
 import requests     # For getting weather
 from PIL import Image
@@ -187,8 +190,8 @@ class pyclock :
             # Print time centered at top of screen
             self.screen.blit(textsurface,(xmax/2-textsurface.get_width()/2, 0))
 
-            # Get outdoor temp and forcast from wunderground
-            if first or ((minute%15 == 0) and (second%60==5)):
+            # Get outdoor temp and forecast from OpenWeather
+            if first or ((minute%5 == 0) and (second%60==5)):
                 first = False
             # if True:
                 print("Getting weather")
@@ -202,10 +205,10 @@ class pyclock :
                         # print("json: ", r.json())
                         weather = r.json()
                         print("Temp: ", weather['current']['temp'])
-                        # print("Humid:", weather['current_observation']['relative_humidity'])
-                        # print("Low:  ", weather['forecast']['simpleforecast']['forecastday'][0]['low']['fahrenheit'])
-                        # print("High: ", weather['forecast']['simpleforecast']['forecastday'][0]['high']['fahrenheit'])
-                        # print("forecast: ", weather['forecast'])
+                        print("Humid:", weather['current']['humidity'])
+                        print("Low:  ",weather['daily'][0]['temp']['min'])
+                        print("High: ", weather['daily'][0]['temp']['max'])
+                        print("forecast: ", weather['daily'][0])
                         textsurface = myfontBig.render(
                             str(weather['current']['temp']) + "  ",
                             False, (0, 0, 0), backgroundC)
