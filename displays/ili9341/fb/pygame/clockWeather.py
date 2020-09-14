@@ -69,7 +69,9 @@ class pyclock :
             #         image.get_width(), yCount*image.get_height()), 0)
             # print("title: " + title)
             textsurface = myfont.render(title[:3]+"   ", False, (0, 0, 0), backgroundC)
-            self.screen.blit(textsurface,(xmax-80, 0.75*yCount*image.get_height()))
+            self.screen.blit(textsurface,(xmax-80, 0.75*0.75*yCount*image.get_height()))
+            # Make icons a bit small so more can be shown
+            image = pygame.transform.scale(image, (75, 75))
             # print("Size: " + str(image.get_size()))
             self.screen.blit(image, (xmax-image.get_width(), 0.75*yCount*image.get_height()))
                 
@@ -173,7 +175,7 @@ class pyclock :
             self.screen.blit(textsurface,(xmax/2-textsurface.get_width()/2, 0))
 
             # Get outdoor temp and forecast from OpenWeather
-            if first or ((minute%5 == 0) and (second%60==5)):
+            if first or ((minute%15 == 0) and (second%60==5)):
                 first = False
             # if True:
                 print("Getting weather")
@@ -236,7 +238,7 @@ class pyclock :
                         # https://stackoverflow.com/questions/32853980/temporarily-retrieve-an-image-using-the-requests-library
                         # displayIcon(weather['current_observation']['icon_url'], "Now", 0)
                         # Forecast has both day and night.  Here I skip half of them.
-                        for i in range(0, 3, 1):
+                        for i in range(0, 4, 1):
                             day = datetime.utcfromtimestamp(
                                 weather['daily'][i]['dt']+weather['timezone_offset']).strftime('%a')
                             # print(day)
