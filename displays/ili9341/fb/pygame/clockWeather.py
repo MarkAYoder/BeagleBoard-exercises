@@ -59,7 +59,7 @@ class pyclock :
                 r = requests.get(iconUrl, stream=True)
                 r.raw.decode_content = True # handle spurious Content-Encoding
                 im = Image.open(r.raw)
-                print(im.format, im.mode, im.size)
+                # print(im.format, im.mode, im.size)
                 im.save(file)
                 image = pygame.image.load(file)
 
@@ -200,29 +200,41 @@ class pyclock :
                         # print("icon: ", weather['current']['weather'][0]['icon'])
                         print()
                         textsurface = myfontBig.render(
-                            str(round(weather['current']['temp'])) + "  ",
+                            str(round(weather['current']['temp'])) + u"\u00b0  ",
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0, 0))
                         
                         textsurface = myfont.render(
-                            str(round(weather['current']['humidity'])),
+                            str(round(weather['current']['humidity'])) + "%  ",
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0, myfontBig.get_linesize()))
                         
                         textsurface = myfont.render(
                             # "Time: " + weather['current_observation']['local_time_rfc822'] +
-                            "Lo: "+str(round(weather['daily'][1]['temp']['min'])),
+                            "Lo: "+ str(round(weather['daily'][1]['temp']['min'])) + u"\u00b0",
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+myfont.get_linesize()))
                         
                         textsurface = myfont.render(
-                            "Hi: " +str(round(weather['daily'][0]['temp']['max'])),
+                            "Hi: " + str(round(weather['daily'][0]['temp']['max'])) + u"\u00b0",
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+2*myfont.get_linesize()))
                         
-                        # tmp = weather['forecast']['simpleforecast']['forecastday'][0]
+                        # From bottom
+                        dayR = weather['daily'][0]['sunrise']+weather['timezone_offset']
                         textsurface = myfont.render(
-                           "Wind: " + str(weather['current']['wind_deg']) + " " + 
+                           datetime.utcfromtimestamp(dayR).strftime('%-I:%M%p'),
+                            False, (0, 0, 0), backgroundC)
+                        self.screen.blit(textsurface,(0,ymax-3*myfont.get_linesize()))
+
+                        dayS = weather['daily'][0]['sunset'] +weather['timezone_offset']
+                        textsurface = myfont.render(
+                           datetime.utcfromtimestamp(dayS).strftime('%-I:%M%p'),
+                            False, (0, 0, 0), backgroundC)
+                        self.screen.blit(textsurface,(0,ymax-2*myfont.get_linesize()))
+
+                        textsurface = myfont.render(
+                           "Wind: " + str(weather['current']['wind_deg']) + u"\u00b0 " + 
                            str(round(weather['current']['wind_speed'])) + " mph    ",
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0,ymax-1*myfont.get_linesize()))
