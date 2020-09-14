@@ -11,6 +11,7 @@ import os
 import pygame
 import time
 import math
+from datetime import datetime
 
 import requests     # For getting weather
 from PIL import Image
@@ -45,16 +46,17 @@ class pyclock :
         # icon is the url for the icon to be displayed
         # yCount is how many icons down to display.  I'm assuming all icon are the same height
         def displayIcon(icon, title, yCount):
-            print("displayIcon(" + icon + ", " + str(yCount) + ")")
-            file = "/tmp/" + icon.split('/')[-1]
+            iconUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png"
+            # print("displayIcon(" + iconUrl + ", " + str(yCount) + ")")
+            file = "/tmp/" + icon + ".png"
             # See if icon is already in /tmp
-            # print("Getting: " + icon)
+            # print("Getting: " + file)
             try:
                 image = pygame.image.load(file)
-                print("Found in: " + file)
+                # print("Found in: " + file)
             # We don't have it already, so get it from the weather site
             except:
-                r = requests.get(icon, stream=True)
+                r = requests.get(iconUrl, stream=True)
                 r.raw.decode_content = True # handle spurious Content-Encoding
                 im = Image.open(r.raw)
                 print(im.format, im.mode, im.size)
@@ -62,14 +64,14 @@ class pyclock :
                 image = pygame.image.load(file)
 
             # Blank out background
-            pygame.draw.rect(self.screen, backgroundC, 
-                    (xmax-image.get_width(), yCount*image.get_height(),
-                    image.get_width(), yCount*image.get_height()), 0)
+            # pygame.draw.rect(self.screen, backgroundC, 
+            #         (xmax-image.get_width(), yCount*image.get_height(),
+            #         image.get_width(), yCount*image.get_height()), 0)
             # print("title: " + title)
             textsurface = myfont.render(title[:3]+"   ", False, (0, 0, 0), backgroundC)
-            self.screen.blit(textsurface,(xmax-80, yCount*image.get_height()))
+            self.screen.blit(textsurface,(xmax-80, 0.75*yCount*image.get_height()))
             # print("Size: " + str(image.get_size()))
-            self.screen.blit(image, (xmax-image.get_width(), yCount*image.get_height()))
+            self.screen.blit(image, (xmax-image.get_width(), 0.75*yCount*image.get_height()))
                 
         # https://www.wunderground.com/weather/api/d/docs
         params = {
@@ -185,11 +187,15 @@ class pyclock :
                         # print("json: ", r.json())
                         weather = r.json()
                         print("Temp: ", weather['current']['temp'])
-                        print("Humid:", weather['current']['humidity'])
-                        print("Low:  ", weather['daily'][1]['temp']['min'])
-                        print("High: ", weather['daily'][0]['temp']['max'])
-                        # print("weather: ", weather['daily'][1])
-                        print("icon: ", weather['current']['weather'][0]['icon'])
+                        # print("Humid:", weather['current']['humidity'])
+                        # print("Low:  ", weather['daily'][1]['temp']['min'])
+                        # print("High: ", weather['daily'][0]['temp']['max'])
+                        # day = weather['daily'][0]['sunrise']-weather['timezone_offset']
+                        # print("sunrise: " + datetime.utcfromtimestamp(day).strftime('%Y-%m-%d %H:%M:%S'))
+                        # print("Day: " + datetime.utcfromtimestamp(day).strftime('%a'))
+                        # # print("weather: ", weather['daily'][1])
+                        # # print("weather: ", weather)
+                        # print("icon: ", weather['current']['weather'][0]['icon'])
                         print()
                         textsurface = myfontBig.render(
                             str(round(weather['current']['temp'])) + "  ",
@@ -214,9 +220,8 @@ class pyclock :
                         
                         # tmp = weather['forecast']['simpleforecast']['forecastday'][0]
                         textsurface = myfont.render(
-                           "Wind: " + str(weather['current']['wind_deg']) + "   " + 
-                           str(round(weather['current']['wind_speed'])) + "   "   +
-                           str(weather['current']['weather'][0]['description']),
+                           "Wind: " + str(weather['current']['wind_deg']) + " " + 
+                           str(round(weather['current']['wind_speed'])) + " mph    ",
                             False, (0, 0, 0), backgroundC)
                         self.screen.blit(textsurface,(0,ymax-1*myfont.get_linesize()))
                         
@@ -231,15 +236,12 @@ class pyclock :
                         # https://stackoverflow.com/questions/32853980/temporarily-retrieve-an-image-using-the-requests-library
                         # displayIcon(weather['current_observation']['icon_url'], "Now", 0)
                         # Forecast has both day and night.  Here I skip half of them.
-                        for i in range(0, 4, 1):
-                            # displayIcon(weather['forecast']['txt_forecast']['forecastday'][i]['icon_url'], 
-                            # weather['forecast']['txt_forecast']['forecastday'][i]['title'], 
-                            #     i/2+1)
-                            # displayIcon(weather['forecast']['simpleforecast']['forecastday'][i]['icon_url'], 
-                            # weather['forecast']['simpleforecast']['forecastday'][i]['date']['weekday_short'], 
-                            #     i+1)
-                            pass
-        
+                        for i in range(0, 3, 1):
+                            day = datetime.utcfromtimestamp(
+                                weather['daily'][i]['dt']+weather['timezone_offset']).strftime('%a')
+                            # print(day)
+                            # print(weather['daily'][i]['weather'][0]['icon'])
+                            displayIcon(weather['daily'][i]['weather'][0]['icon'], day, i)
                     else:
                         print("status_code: ", r.status_code)
                 except:
