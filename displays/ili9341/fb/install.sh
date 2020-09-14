@@ -55,7 +55,4 @@ GND     P9_2        P1.16
 VCC     P9_4        P1.14
 
 # Here's how to install pygame
-sudo apt install mercurial python3-dev python3-numpy libav-tools libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev
-sudo apt install libsmpeg-dev libsdl1.2-dev  libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev
-sudo apt install libfreetype6-dev
-sudo python3 -m pip install pygame
+sudo apt install python3-pygame python3-tk
