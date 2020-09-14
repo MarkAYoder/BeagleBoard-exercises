@@ -23,31 +23,11 @@ class pyclock :
         "Ininitializes a new pygame screen using the framebuffer"
         # Based on "Python GUI in Linux frame buffer"
         # http://www.karoltomala.com/blog/?p=679
-        disp_no = os.getenv("DISPLAY")
-        if disp_no:
-            print("I'm running under X display = " + format(disp_no))
-        
-        # Check which frame buffer drivers are available
-        # Start with fbcon since directfb hangs with composite output
-        drivers = ['fbcon', 'directfb', 'svgalib']
-        found = False
         # os.putenv('SDL_FBDEV',   '/dev/fb0')
+        # os.putenv('SDL_VIDEODRIVER', driver)
         os.putenv('SDL_NOMOUSE', '1')
-        for driver in drivers:
-            # Make sure that SDL_VIDEODRIVER is set
-            if not os.getenv('SDL_VIDEODRIVER'):
-                os.putenv('SDL_VIDEODRIVER', driver)
-            try:
-                pygame.display.init()
-            except pygame.error:
-                print('Driver: ' + format(driver) + ' failed.')
-                continue
-            found = True
-            break
-    
-        if not found:
-            raise Exception('No suitable video driver found!')
-        
+        pygame.display.init()
+
         size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
         print("Framebuffer size: ", size[0], "x", size[1])
         self.screen = pygame.display.set_mode(size, pygame.FULLSCREEN)
