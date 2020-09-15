@@ -1,31 +1,35 @@
-<!DOCTYPE html>
-   <head>
-      <title>GPIO Control</title>
-      <link rel="stylesheet" href='../static/style.css'/>
-   </head>
-   <body>
-		<h1>Actuators</h1>
-		<h2> Status </h2>
-		<h3> RED LED ==>  {{ ledRed  }}</h3>
-		<h3> YLW LED ==>  {{ ledYlw  }}</h3>
-		<h3> GRN LED ==>  {{ ledGrn  }}</h3>
-		<br>
-		<h2> Commands </h2>
-		<h3> 
-			RED LED Ctrl ==> 
-			<a href="/ledRed/on" class="button">TURN ON</a>  
-			<a href="/ledRed/off"class="button">TURN OFF</a>
-		</h3>
-		<h3> 
-			YLW LED Ctrl ==> 
-			<a href="/ledYlw/on" class="button">TURN ON</a>  
-			<a href="/ledYlw/off"class="button">TURN OFF</a>
-		</h3>
-		<h3> 
-			GRN LED Ctrl ==> 
-			<a href="/ledGrn/on" class="button">TURN ON</a>  
-			<a href="/ledGrn/off"class="button">TURN OFF</a>
-		</h3>
-		
-   </body>
+<!DOCTYPE html> 
+  <head> 
+     <title>GPIO Control</title> 
+     <link rel="stylesheet" href='../static/master.css'/> 
+  </head> 
+  <body> 
+		<h1>RPi GPIO Control</h1> 
+		<h2> Sensor Status </h2> 
+		<h3> BUTTON ==>  {{ button  }}</h3> 
+		<h3> MOTION ==>  {{ senPIR  }}</h3> 
+		<br> 
+		<h2> Actuator Status & Control </h2> 
+		<h3> RED LED ==>  {{ ledRed  }}  ==>   
+			{% if  ledRed   == 1 %} 
+				<a href="/ledRed/off"class="button">TURN OFF</a> 
+			{% else %} 
+				<a href="/ledRed/on" class="button">TURN ON</a>  
+			{% endif %}	 
+		</h3> 
+		<h3> YLW LED ==>  {{ ledYlw  }}  ==>   
+			{% if  ledYlw   == 1 %} 
+				<a href="/ledYlw/off"class="button">TURN OFF</a> 
+			{% else %} 
+				<a href="/ledYlw/on" class="button">TURN ON</a>  
+			{% endif %}	 
+		</h3> 
+		<h3> GRN LED ==>  {{ ledGrn  }}  ==>   
+			{% if  ledGrn   == 1 %} 
+				<a href="/ledGrn/off"class="button">TURN OFF</a> 
+			{% else %} 
+				<a href="/ledGrn/on" class="button">TURN ON</a>  
+			{% endif %}	 
+		</h3> 
+  </body> 
 </html>
