@@ -48,7 +48,7 @@ int main(int argc, char** argv)
 	gpio_set_dir(gpio, "out");
 	printf("...direction set to output\n");
 			
-	gpio_fd = gpio_fd_open(gpio, O_RDONLY);
+	gpio_fd = gpio_fd_open(gpio, O_WRONLY);
 
 	//Run an infinite loop - will require Ctrl-C to exit this program
 	while(1)
