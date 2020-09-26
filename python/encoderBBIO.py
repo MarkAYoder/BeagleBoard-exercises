@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 # From: https://adafruit-beaglebone-io-python.readthedocs.io/en/latest/Encoder.html
+# From: https://adafruit-beaglebone-io-python.readthedocs.io/en/latest/Encoder.html
+# Channel   Pin A	Pin B	Notes
+# eQEP0     P9.27	P9.42	 
+# eQEP1     P8.33	P8.35	Only available with video disabled
+# eQEP2     P8.11	P8.12	Only available with eQEP2b unused (same channel)
+# eQEP2b	P8.41	P8.42	Only available with video disabled and eQEP2 unused
 from Adafruit_BBIO.Encoder import RotaryEncoder, eQEP2
 import time
 
