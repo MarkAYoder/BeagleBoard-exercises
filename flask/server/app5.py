@@ -43,7 +43,6 @@ def action(deviceName, action):
 	if action == "off":
 		GPIO.output(actuator, GPIO.LOW)
 	if action == "toggle":
-		print("toggle")
 		GPIO.output(actuator, not GPIO.input(actuator))
 		     
 	buttonSts = GPIO.input(button)
