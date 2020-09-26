@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # From: https://towardsdatascience.com/python-webserver-with-flask-and-raspberry-pi-398423cc6f5d
 '''
-	Beagle GPIO Status and Control
+	Beagle GPIO Status and Control - with toggle
 '''
 import Adafruit_BBIO.GPIO as GPIO
 from flask import Flask, render_template, request
@@ -11,7 +11,7 @@ app = Flask(__name__)
 #define sensors GPIOs
 button = "P9_11"
 #define actuators GPIOs
-ledRed = "P9_15"
+ledRed = "P9_14"
 #initialize GPIO status variables
 buttonSts = 0
 ledRedSts = 0
@@ -31,7 +31,7 @@ def index():
       		'button'  : buttonSts,
       		'ledRed'  : ledRedSts,
       	}
-	return render_template('index.html', **templateData)
+	return render_template('index5.html', **templateData)
 	
 @app.route("/<deviceName>/<action>")
 def action(deviceName, action):
@@ -42,6 +42,9 @@ def action(deviceName, action):
 		GPIO.output(actuator, GPIO.HIGH)
 	if action == "off":
 		GPIO.output(actuator, GPIO.LOW)
+	if action == "toggle":
+		print("toggle")
+		GPIO.output(actuator, not GPIO.input(actuator))
 		     
 	buttonSts = GPIO.input(button)
 	ledRedSts = GPIO.input(ledRed)
@@ -50,6 +53,6 @@ def action(deviceName, action):
 	 	'button'  : buttonSts,
   		'ledRed'  : ledRedSts,
 	}
-	return render_template('index.html', **templateData)
+	return render_template('index5.html', **templateData)
 if __name__ == "__main__":
    app.run(host='0.0.0.0', port=8081, debug=True)

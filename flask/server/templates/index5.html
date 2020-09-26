@@ -1,0 +1,21 @@
+<!DOCTYPE html> 
+  <head> 
+     <title>GPIO Control</title> 
+     <link rel="stylesheet" href='../static/style.css'/> 
+  </head> 
+  <body> 
+		<h1>GPIO Control</h1> 
+		<h2> Sensor Status </h2> 
+		<h3> BUTTON ==>  {{ button  }}</h3> 
+		<h2> Actuator Status & Control </h2> 
+		<h3> RED LED ==>  {{ ledRed  }}  ==>   
+			{% if  ledRed   == 1 %} 
+				<a href="/ledRed/off"class="button">TURN OFF</a> 
+			{% else %} 
+				<a href="/ledRed/on" class="button">TURN ON</a>  
+			{% endif %}	 
+			<a href="/ledRed/toggle" class="button">TOGGLE</a>  
+		</h3> 
+		</h3> 
+  </body> 
+</html>
