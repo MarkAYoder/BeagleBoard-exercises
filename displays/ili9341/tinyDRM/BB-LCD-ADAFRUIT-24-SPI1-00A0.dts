@@ -201,7 +201,7 @@
 				backlight = <&backlight_pwm>;    // lcd lite  P9.16 gpmc_a2.ehrpwm1b
 				// refer to https://elinux.org/Beagleboard:Cape_Expansion_Headers
 				// rotation is optional
-				rotation = <180>;
+				rotation = <270>;
 			};
 		};
 	};
