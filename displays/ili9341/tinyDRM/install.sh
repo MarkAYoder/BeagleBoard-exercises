@@ -6,7 +6,7 @@
 sudo apt install fbset
 
 # Get framebuffer imageviewer
-sudo apt install fbi
+sudo apt install fbi fim
 
 # Load if using JavaScript mmap
 sudo npm install -g mmap.js
