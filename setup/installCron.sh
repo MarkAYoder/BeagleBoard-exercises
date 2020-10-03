@@ -19,3 +19,8 @@ echo "
 # *  *    * * *   root    /home/yoder/BeagleBoard/exercises/iot/sms/sms.curl \`uname -n\` is running
 # " >> /etc/crontab
 
+echo "
+# Dim LCD
+58 5  * * *   debian    echo 50 > /sys/class/backlight/backlight_pwm/brightness
+2 21  * * *   debian    echo  5 > /sys/class/backlight/backlight_pwm/brightness
+" >> /etc/crontab
