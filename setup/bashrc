@@ -20,8 +20,8 @@ export GTK_PATH=/usr/lib/x86_64-linux-gnu/gtk-2.0
 alias d=pushd
 alias ls='ls -F'
 alias go=xdg-open
-alias vpn='sudo openconnect --background --pid-file=/tmp/vpn --quiet --user=yoder --juniper sslvpn.rose-hulman.edu'
-alias vpnoff='sudo kill -s SIGINT `cat /tmp/vpn`'
+alias vpn='sudo openconnect --pid-file=/tmp/oc.pid --background --user=yoder@rose-hulman.edu --protocol gp gp.rose-hulman.edu'
+alias vpnoff='sudo kill -s SIGINT `cat /tmp/oc.pid`'
 alias gauss='ssh -XC gauss.csse.rose-hulman.edu'
 alias hinton='ssh -XC hinton.csse.rose-hulman.edu'
 # Beagle AI
