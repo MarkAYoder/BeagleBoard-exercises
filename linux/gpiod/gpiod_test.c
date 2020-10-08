@@ -28,11 +28,11 @@ static irqreturn_t btn1_pushed_irq_handler(int irq, void *dev_id)
     int state;
 
     /* read the button value and change the led state */
-    state = gpiod_get_value(btn2);
+    state = gpiod_get_value(btn1);
     gpiod_set_value(red, state);
     gpiod_set_value(green, state);
 
-    pr_info("btn1 interrupt: Interrupt! btn2 state is %d)\n", state);
+    pr_info("btn1 interrupt: Interrupt! btn1 state is %d)\n", state);
     return IRQ_HANDLED;
 }
 
@@ -47,6 +47,7 @@ static int my_pdrv_probe (struct platform_device *pdev)
     int retval;
     struct device *dev = &pdev->dev;
 
+    pr_info("Hello! device probed at start!\n");
     /*
      * We use gpiod_get/gpiod_get_index() along with the flags
      * in order to configure the GPIO direction and an initial
@@ -56,8 +57,8 @@ static int my_pdrv_probe (struct platform_device *pdev)
      *  red = gpiod_get_index(dev, "led", 0);
      *  gpiod_direction_output(red, 0);
      */
-    red = gpiod_get_index(dev, "led", 0, GPIOD_OUT_LOW);
-    green = gpiod_get_index(dev, "led", 1, GPIOD_OUT_LOW);
+    red   = gpiod_get_index(dev, "P9_14", 0, GPIOD_OUT_LOW);
+    // green = gpiod_get_index(dev, "P9_15", 1, GPIOD_OUT_LOW);
 
     /*
      * Configure Button GPIOs as input
@@ -67,15 +68,14 @@ static int my_pdrv_probe (struct platform_device *pdev)
      * For example, to debounce  a button with a delay of 200ms
      *  gpiod_set_debounce(btn1, 200);
      */
-    btn1 = gpiod_get(dev, "btn1", GPIOD_IN);
-    btn2 = gpiod_get(dev, "btn2", GPIOD_IN);
+    btn1 = gpiod_get(dev, "P9_13", GPIOD_IN);
+    // btn2 = gpiod_get(dev, "P9_12", GPIOD_IN);
 
     irq = gpiod_to_irq(btn1);
     retval = request_threaded_irq(irq, NULL,
                             btn1_pushed_irq_handler,
                             IRQF_TRIGGER_LOW | IRQF_ONESHOT,
                             "gpio-descriptor-sample", NULL);
-    printk("Hello! device probed!\n");
     pr_info("Hello! device probed!\n");
     return 0;
 }
@@ -84,9 +84,9 @@ static int my_pdrv_remove(struct platform_device *pdev)
 {
     free_irq(irq, NULL);
     gpiod_put(red);
-    gpiod_put(green);
+    // gpiod_put(green);
     gpiod_put(btn1);
-    gpiod_put(btn2);
+    // gpiod_put(btn2);
     pr_info("good bye reader!\n");
     return 0;
 }
