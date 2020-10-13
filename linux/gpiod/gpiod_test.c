@@ -1,3 +1,4 @@
+//  This never worked.  13-Oct-2020
 // From: https://www.embedded.com/linux-device-driver-development-the-descriptor-based-gpio-interface/0
 #include <linux/init.h>
 #include <linux/module.h>
