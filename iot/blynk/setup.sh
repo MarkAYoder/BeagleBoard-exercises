@@ -1,0 +1,1 @@
+export BLYNK_AUTH='087e4c21298e413ab9d5f87a5279e5c9'
