@@ -36,7 +36,7 @@ def pushed(channel):
     print('Edge detected on channel {}, value={}'.format(channel, state))
     # Write it out
     GPIO.output(LED, state)     # Physical LED
-    blynk.virtual_write(10, 255*state)  # Virtual LED
+    blynk.virtual_write(10, 255*state)  # Virtual LED: 255 max brightness
 
 # This is a non-blocking event 
 GPIO.add_event_detect(button, GPIO.BOTH, callback=pushed) 
