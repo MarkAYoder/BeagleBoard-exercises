@@ -2,7 +2,7 @@
 # From: https://github.com/blynkkk/lib-python
 # Blink the USR3 LED in response to a V0 input.
 import blynklib
-import os
+import os, sys
 import Adafruit_BBIO.GPIO as GPIO
 
 # Setup the LED
@@ -16,7 +16,10 @@ GPIO.setup(button, GPIO.IN)
 # print("button: " + str(GPIO.input(button)))
 
 # Get the autherization code (See setup.sh)
-BLYNK_AUTH = os.getenv('BLYNK_AUTH')
+BLYNK_AUTH = os.getenv('BLYNK_AUTH', default="")
+if(BLYNK_AUTH == ""):
+    print("BLYNK_AUTH is not set")
+    sys.exit()
 
 # Initialize Blynk
 blynk = blynklib.Blynk(BLYNK_AUTH)
