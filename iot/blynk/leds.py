@@ -28,7 +28,7 @@ def my_write_handler(pin, value):
     print('Current V{} value: {}'.format(pin, value))
     GPIO.output(LED, int(value[0])) 
     
-# This calback is called everytime the button changes
+# This callback is called every time the button changes
 # channel is the name of the pin that changed
 def pushed(channel):
     # Read the current value of the input
