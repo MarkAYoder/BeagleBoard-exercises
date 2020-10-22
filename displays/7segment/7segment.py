@@ -13,17 +13,36 @@ bus.write_byte_data(matrix, 0x21, 0)   # Start oscillator (p10)
 bus.write_byte_data(matrix, 0x81, 0)   # Disp on, blink off (p11)
 bus.write_byte_data(matrix, 0xe7, 0)   # Full brightness (page 15)
 
+def map2seven(str):
+    to7seg = {
+      "0": 0x3f,
+      "1": 0x06,
+      "2": 0x5b,
+      "3": 0x4f,
+      "4": 0x66,
+      "5": 0x6d,
+      "6": 0x7d,
+      "7": 0x07,
+      "8": 0x7f,
+      "9": 0x7f,
+      ":": 0x02,
+      ".": 0x03,
+    }
+    
+    data = []
+    for c in str:
+        if c == '.':    # if . add to previous number
+            data[-2] = data[-2] | 0x80
+        else:
+            data = data + [to7seg[c]] +[0x00]
+    print(data)
+    bus.write_i2c_block_data(matrix, 0, data)
+
+map2seven('5.6:78')
 # The first byte is GREEN, the second is RED.
-smile = [0x00, 0x3c, 0x00, 0x42, 0x28, 0x89, 0x04, 0x85,
-    0x04, 0x85, 0x28, 0x89, 0x00, 0x42, 0x00, 0x3c
-]
 frown = [0x81, 0x00, 0x02, 0x00, 0x03, 0x00, 0x04, 0x00, 0x05, 0x00,
 ]
-neutral = [0x3c, 0x3c, 0x42, 0x42, 0xa9, 0xa9, 0x89, 0x89,
-    0x89, 0x89, 0xa9, 0xa9, 0x42, 0x42, 0x3c, 0x3c
-]
 
-bus.write_i2c_block_data(matrix, 0, frown)
 # for fade in range(0xef, 0xe0, -1):
 #     bus.write_byte_data(matrix, fade, 0)
 #     time.sleep(delay/10)
