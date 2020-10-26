@@ -1,5 +1,6 @@
 # Setup for tempKernel.js
-ADDR=49     # TMP101 address
+ADDR1=48     # TMP101 address
+ADDR2=49     # TMP101 address
 BUS=2       # i2c bus
 echo Setting up ADDR=0x$ADDR and BUS=$BUS
 
@@ -18,12 +19,14 @@ fi
 
 # Tell the kernel
 dev=/sys/class/i2c-adapter/i2c-$BUS
-echo tmp101 0x$ADDR > "$dev/new_device"
+echo tmp101 0x$ADDR1 > "$dev/new_device"
+echo tmp101 0x$ADDR2 > "$dev/new_device"
 
 # Give it time to appear
 sleep 0.1
 
-cat "$dev/$BUS-00$ADDR/hwmon/hwmon0/temp1_input"
+cat "$dev/$BUS-00$ADDR1/hwmon/hwmon0/temp1_input"
+cat "$dev/$BUS-00$ADDR2/hwmon/hwmon1/temp1_input"
 
 # https://thingspeak.com/channels/538706/api_keys
 export THING_KEY=VKBLZME68539A9HX
