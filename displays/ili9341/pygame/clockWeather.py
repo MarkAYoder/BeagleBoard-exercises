@@ -108,8 +108,8 @@ class pyclock :
         faceC = (0, 0, 255)
 
         # https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
-        myfont = pygame.font.SysFont('FreeSerif', 25, True)
-        myfontBig = pygame.font.SysFont('FreeSerif', 40, True)
+        myfont = pygame.font.SysFont('FreeSerif', 35, True)
+        myfontBig = pygame.font.SysFont('FreeSerif', 75, True)
 
         self.screen.fill(backgroundC)
         # Draw face
