@@ -1,24 +1,49 @@
 #!/usr/bin/env python3
-# if you install it from pip, else use `from Blynk import *`
-from blynkapi import Blynk
-import time
+# From: https://github.com/blynkkk/lib-python
+# Blink the USR3 LED in response to a V0 input.
+import blynklib
+import os, sys
+import Adafruit_BBIO.GPIO as GPIO
 
-# vars
-auth_token = "dc1c083949324ca28fbf393231f8cf09"
+# Setup the LED
+LED = 'USR3'
+GPIO.setup(LED, GPIO.OUT)
+GPIO.output(LED, 1) 
 
-# create objects
-v0 =  Blynk(auth_token, pin = "V0" )
-v10 = Blynk(auth_token, pin = "V10")
+# Setup the button
+button = 'P9_11'
+GPIO.setup(button, GPIO.IN)
+# print("button: " + str(GPIO.input(button)))
 
-# get current status
-res = v0.get_val()
-print(res)
+# Get the autherization code (See setup.sh)
+BLYNK_AUTH = os.getenv('BLYNK_AUTH', default="")
+if(BLYNK_AUTH == ""):
+    print("BLYNK_AUTH is not set")
+    sys.exit()
 
-# set pin value to 1
-print("V10 on")
-v10.set_val(255)
-# set pin value to 0
-time.sleep(10)
+# Initialize Blynk
+blynk = blynklib.Blynk(BLYNK_AUTH)
 
-print("V10 off")
-v10.off()
+# Register Virtual Pins
+# The V* says to response to all virtual pins
+@blynk.handle_event('write V*')
+def my_write_handler(pin, value):
+    print('Current V{} value: {}'.format(pin, value))
+    GPIO.output(LED, int(value[0])) 
+    
+# This callback is called every time the button changes
+# channel is the name of the pin that changed
+def pushed(channel):
+    # Read the current value of the input
+    state = GPIO.input(channel)
+    print('Edge detected on channel {}, value={}'.format(channel, state))
+    # Write it out
+    GPIO.output(LED, state)     # Physical LED
+    blynk.virtual_write(10, 255*state)  # Virtual LED: 255 max brightness
+
+# This is a non-blocking event 
+GPIO.add_event_detect(button, GPIO.BOTH, callback=pushed) 
+
+
+while True:
+    blynk.run()

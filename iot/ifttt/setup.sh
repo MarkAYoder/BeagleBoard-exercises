@@ -1,0 +1,1 @@
+export IFTTT_KEY='dOrEASTRA8Got81s5kpJH_'

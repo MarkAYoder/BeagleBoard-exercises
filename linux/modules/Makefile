@@ -10,13 +10,9 @@ KDIR := /lib/modules/$(shell uname -r)/build
 endif
 
 ifeq ($(KERNELRELEASE),)
-obj-$(CONFIG_EXAMPLES) += hello1.o
-obj-$(CONFIG_EXAMPLES) += hello2.o
-obj-$(CONFIG_EXAMPLES) += hello3.o
+obj-$(CONFIG_EXAMPLES) += hello1.o hello2.o hello3.o
 else
-obj-m += hello1.o
-obj-m += hello2.o
-obj-m += hello3.o
+obj-m += hello1.o hello2.o hello3.o
 endif
 
 all:

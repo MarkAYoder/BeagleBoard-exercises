@@ -1,6 +1,7 @@
 # Setup for tempKernel.js
-ADDR=49     # TMP101 address
-BUS=1       # i2c bus
+ADDR1=48     # TMP101 address
+ADDR2=49     # TMP101 address
+BUS=2       # i2c bus
 echo Setting up ADDR=0x$ADDR and BUS=$BUS
 
 if [ $BUS = 1 ]; then
@@ -17,13 +18,15 @@ if [ $BUS = 2 ]; then
 fi
 
 # Tell the kernel
-cd /sys/class/i2c-adapter/i2c-$BUS
-sudo chgrp debian *
-sudo chmod g+w delete_device new_device
-echo tmp101 0x$ADDR > new_device
+dev=/sys/class/i2c-adapter/i2c-$BUS
+echo tmp101 0x$ADDR1 > "$dev/new_device"
+echo tmp101 0x$ADDR2 > "$dev/new_device"
 
 # Give it time to appear
 sleep 0.1
 
-cd $BUS-00$ADDR/hwmon/hwmon0
-cat temp1_input
+cat "$dev/$BUS-00$ADDR1/hwmon/hwmon0/temp1_input"
+cat "$dev/$BUS-00$ADDR2/hwmon/hwmon1/temp1_input"
+
+# https://thingspeak.com/channels/538706/api_keys
+export THING_KEY=VKBLZME68539A9HX
