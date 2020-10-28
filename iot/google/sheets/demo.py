@@ -27,7 +27,7 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 # The ID and range of a sample spreadsheet.
 SAMPLE_SPREADSHEET_ID = '1hGMHMLwiG3zEDM19zJehpLjTDbVi8LOjVKhD8R0dBO0'
-SAMPLE_RANGE_NAME = 'A2:E'
+SAMPLE_RANGE_NAME = 'A2'
 
 def main():
     """Shows basic usage of the Sheets API.
@@ -47,7 +47,8 @@ def main():
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
                 'credentials.json', SCOPES)
-            creds = flow.run_local_server(port=0)
+            # creds = flow.run_local_server(port=0)
+            creds = flow.run_console()
         # Save the credentials for the next run
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
