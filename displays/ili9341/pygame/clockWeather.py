@@ -17,6 +17,19 @@ import requests     # For getting weather
 from PIL import Image
 # import shutil
 
+# This signal handler is added so we can start with systemd
+# From: https://stackoverflow.com/questions/39198961/pygame-init-fails-when-run-with-systemd
+# import signal
+# def handler(signum, frame):
+#     print("signum: " + signum)
+#     pass
+
+# try:
+#     signal.signal(signal.SIGHUP, handler)
+# except AttributeError:
+#     # Windows compatibility
+#     pass
+
 class pyclock :
     screen = None
 
@@ -75,7 +88,7 @@ class pyclock :
             # print("Size: " + str(image.get_size()))
             self.screen.blit(image, (xmax-image.get_width(), 0.75*yCount*image.get_height()))
                 
-        # https://www.wunderground.com/weather/api/d/docs
+        # http://api.openweathermap.org/data/2.5/onecall
         params = {
             'appid': '6a2db5c8171494bce131dc69af6f34b9',
             # 'city': 'brazil,indiana',

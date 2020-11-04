@@ -1,0 +1,19 @@
+[Unit]
+Description=clockWeather.py server
+
+[Service]
+# User=root
+Type=simple
+# Environment="SDL_FBDEV=/dev/fb0"
+# Environment="SDL_VIDEODRIVER=driver"
+Environment="SDL_NOMOUSE=1"
+
+WorkingDirectory=/home/debian/exercises/displays/ili9341/pygame
+StandardOutput=file:/tmp/clock.log
+StandardError=file:/tmp/clock.log
+# ExecStartPre=/bin/sh -c 'until ping -c1 google.com; do sleep 1; done;'
+ExecStart=/usr/bin/python3 /home/debian/exercises/displays/ili9341/pygame/clockWeather.py
+SyslogIdentifier=clockWeather Server
+
+[Install]
+WantedBy=multi-user.target
