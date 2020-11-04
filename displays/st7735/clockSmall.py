@@ -55,11 +55,11 @@ class pyclock :
         hourScale = 0.5
         width = 2           # Width of hands
         
-        rad = 100   # Radius
-        len = 15    # Length of ticks
+        rad = 40    # Radius
+        len =  5    # Length of ticks
         
-        backgroundC = (173,216,230)
-        faceC = (0, 0, 255)
+        backgroundC = (173,230,216)
+        faceC = (0, 255, 0)
 
         self.screen.fill(backgroundC)
         # Draw face
