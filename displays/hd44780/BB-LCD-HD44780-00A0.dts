@@ -68,8 +68,8 @@
 			P8_26_pinmux { status = "disabled"; };	/* D5 */
 			P8_28_pinmux { status = "disabled"; };	/* D4 */
 			
-			P8_30_pinmux { status = "disabled"; };  /* E */
-			P8_32_pinmux { status = "disabled"; };	/* RS */
+			P8_32_pinmux { status = "disabled"; };  /* E */
+			P8_34_pinmux { status = "disabled"; };	/* RS */
 		};
 	};
 
@@ -85,8 +85,8 @@
 					BONE_P8_26 0x17	/* GPIO    OUTPUT_PULLUP | MODE7 */
 					BONE_P8_28 0x17	/* GPIO    OUTPUT_PULLUP | MODE7 */
 					
-					BONE_P8_30 0x17	/* GPIO    OUTPUT_PULLUP | MODE7 */
 					BONE_P8_32 0x17	/* GPIO    OUTPUT_PULLUP | MODE7 */
+					BONE_P8_34 0x17	/* GPIO    OUTPUT_PULLUP | MODE7 */
 				>;
 			};
 
@@ -174,8 +174,8 @@
                              <&gpio1 29 0>,		//	P8_26
                              <&gpio1  1 0>,		//	P8_24
                              <&gpio1  5 0>;		//	P8_22
-                enable-gpios = <&gpio2 25 0>;	//	P8_30
-                rs-gpios = <&gpi0o 11 0>;		//	P8_32
+                enable-gpios = <&gpio0 11 0>;	//	P8_32
+                rs-gpios = <&gpio2 17 0>;		//	P8_34
 
                 display-height-chars = <2>;
                 display-width-chars = <16>;
