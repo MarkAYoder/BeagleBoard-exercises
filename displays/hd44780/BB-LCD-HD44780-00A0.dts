@@ -170,12 +170,12 @@
             lcd_screen: auxdisplay {
                 compatible = "hit,hd44780";
 
-                data-gpios = <&gpio2 24 0>,		//	P8_28
-                             <&gpio1 29 0>,		//	P8_26
-                             <&gpio1  1 0>,		//	P8_24
-                             <&gpio1  5 0>;		//	P8_22
-                enable-gpios = <&gpio0 11 0>;	//	P8_32
-                rs-gpios = <&gpio2 17 0>;		//	P8_34
+                data-gpios = <&gpio2 24 GPIO_ACTIVE_HIGH,		//	P8_28
+                             <&gpio1 29 GPIO_ACTIVE_HIGH>,		//	P8_26
+                             <&gpio1  1 GPIO_ACTIVE_HIGH>,		//	P8_24
+                             <&gpio1  5 GPIO_ACTIVE_HIGH>;		//	P8_22
+                enable-gpios = <&gpio0 11 GPIO_ACTIVE_HIGH>;	//	P8_32
+                rs-gpios = <&gpio2 17 GPIO_ACTIVE_HIGH>;		//	P8_34
 
                 display-height-chars = <2>;
                 display-width-chars = <16>;
