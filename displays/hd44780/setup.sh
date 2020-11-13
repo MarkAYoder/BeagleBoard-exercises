@@ -5,4 +5,4 @@ ls -ls $LCD
 
 echo "Hello\nWorld" > $LCD
 
-# while [ 1 ]; do echo "hello, world!" > $LCD ; sleep 0.5; done
+echo "while [ 1 ]; do echo "hello, world!" > $LCD ; sleep 0.5; done"

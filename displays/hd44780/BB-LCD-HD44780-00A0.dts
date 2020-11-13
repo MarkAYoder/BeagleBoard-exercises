@@ -2,6 +2,7 @@
  * Copyright (C) 2013 CircuitCo
  * Copyright (C) 2018 Drew Fustini <drew@beagleboard.org>
  * Copyright (C) 2020 Mark A. Yoder <mark.a.yoder@beagleboard.org>
+ *  13-Nov-2020:  I never got this to work.  --may
  *
  * Basic 16x2 Character LCD with HD4470 driver
  *
@@ -29,6 +30,7 @@
  *	D8	P8_22
  *	E	P8_32
  *	RS	P8_34
+ *	RW	P8_36 (optinal)
  *
  * Tested with 4.19.59-ti-r26 kernel on Debian 10.1 image
  *
@@ -70,6 +72,7 @@
 			
 			P8_32_pinmux { status = "disabled"; };  /* E */
 			P8_34_pinmux { status = "disabled"; };	/* RS */
+			P8_36_pinmux { status = "disabled"; };	/* RW */
 		};
 	};
 
@@ -87,6 +90,7 @@
 					
 					BONE_P8_32 0x17	/* GPIO    OUTPUT_PULLUP | MODE7 */
 					BONE_P8_34 0x17	/* GPIO    OUTPUT_PULLUP | MODE7 */
+					BONE_P8_36 0x17	/* GPIO    OUTPUT_PULLUP | MODE7 */
 				>;
 			};
 
@@ -176,6 +180,7 @@
                              <&gpio1  5 GPIO_ACTIVE_HIGH>;		//	P8_22
                 enable-gpios = <&gpio0 11 GPIO_ACTIVE_HIGH>;	//	P8_32
                 rs-gpios = <&gpio2 17 GPIO_ACTIVE_HIGH>;		//	P8_34
+                rw-gpios = <&gpio2 16 GPIO_ACTIVE_HIGH>;		//	P8_36
 
                 display-height-chars = <2>;
                 display-width-chars = <16>;
