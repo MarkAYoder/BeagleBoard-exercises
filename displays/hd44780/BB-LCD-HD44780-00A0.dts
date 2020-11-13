@@ -170,7 +170,7 @@
             lcd_screen: auxdisplay {
                 compatible = "hit,hd44780";
 
-                data-gpios = <&gpio2 24 GPIO_ACTIVE_HIGH,		//	P8_28
+                data-gpios = <&gpio2 24 GPIO_ACTIVE_HIGH>,		//	P8_28
                              <&gpio1 29 GPIO_ACTIVE_HIGH>,		//	P8_26
                              <&gpio1  1 GPIO_ACTIVE_HIGH>,		//	P8_24
                              <&gpio1  5 GPIO_ACTIVE_HIGH>;		//	P8_22
