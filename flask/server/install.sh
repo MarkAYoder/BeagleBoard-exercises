@@ -2,3 +2,6 @@
 wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-arm.zip
 unzip ngrok-stable-linux-arm.zip
 sudo mv ngrok ~/.local/bin
+
+mkdir -p ~/.ngrok2
+cp ngrok.yml ~/.ngrok2
