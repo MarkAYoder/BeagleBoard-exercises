@@ -81,7 +81,7 @@ class pyclock :
             #         (xmax-image.get_width(), yCount*image.get_height(),
             #         image.get_width(), yCount*image.get_height()), 0)
             # print("title: " + title)
-            textsurface = myfont.render(title[:3]+"   ", False, (0, 0, 0), backgroundC)
+            textsurface = myfont.render(title[:3]+"   ", False, fontC, backgroundC)
             self.screen.blit(textsurface,(xmax-80, 0.75*0.75*yCount*image.get_height()))
             # Make icons a bit small so more can be shown
             image = pygame.transform.scale(image, (75, 75))
@@ -117,12 +117,15 @@ class pyclock :
         rad = 70   # Radius
         len = 15    # Length of ticks
         
-        backgroundC = (173,216,230)
-        faceC = (0, 0, 255)
+        # backgroundC = (173,216,230)
+        # faceC = (0, 0, 255)
+        backgroundC = (0, 128, 0)
+        faceC = (127, 0, 0)
+        fontC = (127, 255, 127)
 
         # https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
-        myfont = pygame.font.SysFont('FreeSerif', 35, True)
-        myfontBig = pygame.font.SysFont('FreeSerif', 75, True)
+        myfont = pygame.font.SysFont('FreeSerif', 24, True)
+        myfontBig = pygame.font.SysFont('FreeSerif', 60, True)
 
         self.screen.fill(backgroundC)
         # Draw face
@@ -183,7 +186,7 @@ class pyclock :
             # print("myfont.get_linesize(): " + str(myfont.get_linesize()))
             # print("Time: " + time.strftime("%I:%M:%S"))
             textsurface = myfont.render(
-                time.strftime("%I:%M:%S")+"  ", False, (0, 0, 0), backgroundC)
+                time.strftime("%I:%M:%S")+"  ", False, fontC, backgroundC)
             # Print time centered at top of screen
             self.screen.blit(textsurface,(xmax/2-textsurface.get_width()/2, 0))
 
@@ -214,49 +217,49 @@ class pyclock :
                         print()
                         textsurface = myfontBig.render(
                             str(round(weather['current']['temp'])) + u"\u00b0  ",
-                            False, (0, 0, 0), backgroundC)
+                            False, fontC, backgroundC)
                         self.screen.blit(textsurface,(0, 0))
                         
                         textsurface = myfont.render(
                             str(round(weather['current']['humidity'])) + "%  ",
-                            False, (0, 0, 0), backgroundC)
+                            False, fontC, backgroundC)
                         self.screen.blit(textsurface,(0, myfontBig.get_linesize()))
                         
                         textsurface = myfont.render(
                             # "Time: " + weather['current_observation']['local_time_rfc822'] +
                             "Lo: "+ str(round(weather['daily'][1]['temp']['min'])) + u"\u00b0",
-                            False, (0, 0, 0), backgroundC)
+                            False, fontC, backgroundC)
                         self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+myfont.get_linesize()))
                         
                         textsurface = myfont.render(
                             "Hi: " + str(round(weather['daily'][0]['temp']['max'])) + u"\u00b0",
-                            False, (0, 0, 0), backgroundC)
+                            False, fontC, backgroundC)
                         self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+2*myfont.get_linesize()))
                         
                         # From bottom
                         dayR = weather['daily'][0]['sunrise']+weather['timezone_offset']
                         textsurface = myfont.render(
                            datetime.utcfromtimestamp(dayR).strftime('%-I:%M%p'),
-                            False, (0, 0, 0), backgroundC)
+                            False, fontC, backgroundC)
                         self.screen.blit(textsurface,(0,ymax-3*myfont.get_linesize()))
 
                         dayS = weather['daily'][0]['sunset'] +weather['timezone_offset']
                         textsurface = myfont.render(
                            datetime.utcfromtimestamp(dayS).strftime('%-I:%M%p'),
-                            False, (0, 0, 0), backgroundC)
+                            False, fontC, backgroundC)
                         self.screen.blit(textsurface,(0,ymax-2*myfont.get_linesize()))
 
                         textsurface = myfont.render(
                            "Wind: " + str(weather['current']['wind_deg']) + u"\u00b0 " + 
                            str(round(weather['current']['wind_speed'])) + " mph    ",
-                            False, (0, 0, 0), backgroundC)
+                            False, fontC, backgroundC)
                         self.screen.blit(textsurface,(0,ymax-1*myfont.get_linesize()))
                         
                         # textsurface = myfont.render(
                         #     "Yesterday: "
                         #     +weather['history']['dailysummary'][0]['mintempi']
                         #     +"/"+weather['history']['dailysummary'][0]['maxtempi'],
-                        #     False, (0, 0, 0), backgroundC)
+                        #     False, fontC, backgroundC)
                         # self.screen.blit(textsurface,(0,ymax-myfont.get_linesize()))
                         
                         # Get the weather icon and display it
