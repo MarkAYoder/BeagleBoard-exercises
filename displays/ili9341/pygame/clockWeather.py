@@ -119,9 +119,9 @@ class pyclock :
         
         # backgroundC = (173,216,230)
         # faceC = (0, 0, 255)
-        backgroundC = (0, 128, 0)
-        faceC = (127, 0, 0)
-        fontC = (127, 255, 127)
+        backgroundC = (0, 63, 0)
+        faceC = (255, 0, 0)
+        fontC = (200, 255, 200)
 
         # https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
         myfont = pygame.font.SysFont('FreeSerif', 24, True)
