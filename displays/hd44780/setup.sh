@@ -1,6 +1,6 @@
 export LCD=/dev/lcd
 sudo chown debian:debian /$LCD
-sudo chmod g+rw $LCD
+sudo chmod 777 $LCD
 ls -ls $LCD
 
 echo "Hello\nWorld" > $LCD
