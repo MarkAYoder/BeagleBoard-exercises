@@ -124,7 +124,7 @@ class pyclock :
         fontC = (200, 255, 200)
 
         # https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
-        myfont = pygame.font.SysFont('FreeSerif', 24, True)
+        myfont = pygame.font.SysFont('FreeSerif', 36, True)
         myfontBig = pygame.font.SysFont('FreeSerif', 60, True)
 
         self.screen.fill(backgroundC)
