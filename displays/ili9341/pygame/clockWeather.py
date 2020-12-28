@@ -229,7 +229,7 @@ class pyclock :
                         tmp101="/sys/class/hwmon/hwmon0/temp1_input"
                         fd= open(tmp101, "r")
                         textsurface = myfont.render(
-                            str(round(float(fd.read())/1000*9/5+32)) + u"\u00b0",
+                            str(round(float(fd.read())/1000*9/5+32, 2)) + u"\u00b0",
                             False, fontC, backgroundC)
                         self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+myfont.get_linesize()))
                         fd.close()
