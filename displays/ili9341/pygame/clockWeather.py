@@ -225,14 +225,18 @@ class pyclock :
                             False, fontC, backgroundC)
                         self.screen.blit(textsurface,(0, myfontBig.get_linesize()))
                         
+                        # Get the room temperature
+                        tmp101="/sys/class/hwmon/hwmon0/temp1_input"
+                        fd= open(tmp101, "r")
                         textsurface = myfont.render(
-                            # "Time: " + weather['current_observation']['local_time_rfc822'] +
-                            "Lo: "+ str(round(weather['daily'][1]['temp']['min'])) + u"\u00b0",
+                            str(round(float(fd.read())/1000*9/5+32)) + u"\u00b0",
                             False, fontC, backgroundC)
                         self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+myfont.get_linesize()))
+                        fd.close()
                         
                         textsurface = myfont.render(
-                            "Hi: " + str(round(weather['daily'][0]['temp']['max'])) + u"\u00b0",
+                            str(round(weather['daily'][1]['temp']['min'])) + "/" 
+                            + str(round(weather['daily'][0]['temp']['max'])) + u"\u00b0",
                             False, fontC, backgroundC)
                         self.screen.blit(textsurface,(0,  myfontBig.get_linesize()+2*myfont.get_linesize()))
                         
