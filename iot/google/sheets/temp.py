@@ -32,8 +32,9 @@ SAMPLE_RANGE_NAME = 'A2'
 
 BUS="i2c-1"
 ADDR="0x40"
-PATH="/sys/class/i2c-adapter/" + BUS + "/1-0040/iio:device1/"
-sleepTime=1*60
+siPATH="/sys/class/i2c-adapter/" + BUS + "/1-0040/iio:device1/"
+tmpPATH="/sys/class/hwmon/hwmon0/"
+sleepTime=15*60
 
 def main():
     """Shows basic usage of the Sheets API.
@@ -66,15 +67,22 @@ def main():
     
     while True:
         # Get current temp and humidity
-        fd = open(PATH + "in_temp_raw")
-        temp = str(float(fd.read().replace('\n', ''))/100)
+        # Temp seems a bit low, add an offset
+        offset = 2.8
+        fd = open(siPATH + "in_temp_raw")
+        temp = str(float(fd.read().replace('\n', ''))/100 + offset)
         fd.close()
         
-        fd = open(PATH + "in_humidityrelative_raw")
+        fd = open(siPATH + "in_humidityrelative_raw")
         humid = str(float(fd.read().replace('\n', ''))/100)
         fd.close()
     
-        values = [ [time.time()/60/60/24+ 25569 - 4/24, temp, humid]]
+        fd = open(tmpPATH + "temp1_input")
+        temp2 = float(fd.read().replace('\n', ''))/1000
+        temp2 = 9/5*temp2 + 32
+        fd.close()
+    
+        values = [ [time.time()/60/60/24+ 25569 - 5/24, temp, humid, temp2]]
         body = {'values': values}
         result = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID,
                                     range=SAMPLE_RANGE_NAME,
