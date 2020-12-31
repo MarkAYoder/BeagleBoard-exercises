@@ -10,9 +10,10 @@ echo $DEV $ADDR > new_device
 dmesg -H | tail -2
 
 cd 1-0040/iio\:device1
-ls
-# Temp appear to be degrees F
-cat in_temp_raw
+# Temp appear to be degrees F times 100
+temp=`cat in_temp_raw`
+echo $(( temp/100 ))
 
 # Print humidity
-cat in_humidityrelative_raw
+humid=`cat in_humidityrelative_raw`
+echo $(( humid/100 ))
