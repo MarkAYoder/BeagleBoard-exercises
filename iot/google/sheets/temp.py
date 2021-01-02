@@ -34,7 +34,7 @@ BUS="i2c-1"
 ADDR="0x40"
 siPATH="/sys/class/i2c-adapter/" + BUS + "/1-0040/iio:device1/"
 tmpPATH="/sys/class/hwmon/hwmon0/"
-sleepTime=15*60
+sleepTime=60*60
 
 def main():
     """Shows basic usage of the Sheets API.
@@ -65,9 +65,20 @@ def main():
     # Call the Sheets API
     sheet = service.spreadsheets()
     
+    firstTime = True
     while True:
         # Get current temp and humidity
         # Temp seems a bit low, add an offset
+        # output Nan if frst time to graphs will be disconnected.
+        if firstTime:
+            firstTime = False
+            values = [ [time.time()/60/60/24+ 25569 - 5/24, "NaN", "NaN", "NaN"]]
+            body = {'values': values}
+            result = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+                                        range=SAMPLE_RANGE_NAME,
+                                        valueInputOption='USER_ENTERED', 
+                                        body=body
+                                        ).execute()
         offset = 2.8
         fd = open(siPATH + "in_temp_raw")
         temp = str(float(fd.read().replace('\n', ''))/100 + offset)
