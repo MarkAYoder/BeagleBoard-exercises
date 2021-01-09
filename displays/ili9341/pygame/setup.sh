@@ -8,6 +8,8 @@ cd /sys/class/i2c-adapter/i2c-1
 
 # Create the device
 echo tmp101 0x49 > new_device
+# Wait to temp1_input to appear
+sleep 1
 
 # Check the temp (in mC)
 cat /sys/class/hwmon/hwmon0/temp1_input
