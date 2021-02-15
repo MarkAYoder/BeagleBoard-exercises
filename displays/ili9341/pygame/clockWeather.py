@@ -278,6 +278,9 @@ class pyclock :
                             displayIcon(weather['daily'][i]['weather'][0]['icon'], day, i)
                     else:
                         print("status_code: ", r.status_code)
+                except IOError:
+                    print("File not found: " + tmp101)
+                    print("Have you run setup.sh?")
                 except:
                     print("Unexpected error:", sys.exc_info())
                     textsurface = myfont.render(
