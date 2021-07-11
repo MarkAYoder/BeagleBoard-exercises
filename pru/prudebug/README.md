@@ -62,6 +62,7 @@ arm-none-linux-gnueabi-gcc).  The binary is called prudebug.
 
 USAGE
 ---------------------------------------------------------------------
+```
 Usage: prudebug [-a pruss-address] [-u] [-m] [-p processor]
     -a - pruss-address is the memory address of the PRU in ARM memory space
     -u - force the use of UIO to map PRU memory space
@@ -70,6 +71,9 @@ Usage: prudebug [-a pruss-address] [-u] [-m] [-p processor]
     -p - select processor to use (sets the PRU memory locations)
         AM1707 - AM1707
         AM335X - AM335x
+        AM57X1 - AM57x1
+        AM57X2 - AM57x2
+```
 
 Generally the -a option should not be used.  If it is used, then prudebug will use the -a address for the PRU base with
 the selected processor as the various PRU subsystem offsets.  -u and -m control the way the PRU base address is mapped for
