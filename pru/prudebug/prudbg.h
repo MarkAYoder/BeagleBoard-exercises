@@ -10,14 +10,15 @@
 #define PRUDBG_H
 
 // default processor to use if none is specified on the command line when prudebug is started
-#define DEFAULT_PROCESSOR_INDEX	AM335x
+#define DEFAULT_PROCESSOR_INDEX	AM57x1
 
 // list of processors to use in the define above (DEFAULT_PROCESSOR_INDEX)
 // value for define must match the array index in the processor structure
 // in the prudbg.c file.
 #define AM1707			0
 #define AM335x			1
-
+#define AM57x1			2
+#define AM57x2			3
 
 // general settings
 #define MAX_CMD_LEN		25
