@@ -24,6 +24,10 @@ alias vpnon='sudo openconnect --pid-file=/tmp/oc.pid --background --user=yoder@r
 alias vpnoff='sudo kill -s SIGINT `cat /tmp/oc.pid`'
 alias gauss='ssh -XC gauss.csse.rose-hulman.edu'
 alias hinton='ssh -XC hinton.csse.rose-hulman.edu'
+myrclone()
+{
+rclone mount --daemon $1: $1
+}
 # Beagle AI
 alias temp='cat /sys/class/thermal/*/temp'
 
