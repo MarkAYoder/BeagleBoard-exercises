@@ -103,6 +103,44 @@ struct pdb_tag {
 			}
 		}
 	},
+	{
+		.processor              = "AM57x1",
+		.short_name     = "AM57X1",
+		.pruss_address  = 0x4b200000,
+		.pruss_len              = 0x80000,
+		.num_of_pruss   = 2,
+		.offsets        = {
+			{
+				.pruss_inst     = 0x34000,
+				.pruss_data     = 0x00000,
+				.pruss_ctrl     = 0x22000
+			},
+			{
+				.pruss_inst     = 0x38000,
+				.pruss_data     = 0x02000,
+				.pruss_ctrl     = 0x24000
+			}
+		}
+	},
+	{
+		.processor              = "AM57x2",
+		.short_name     = "AM57X2",
+		.pruss_address  = 0x4b280000,
+		.pruss_len              = 0x80000,
+		.num_of_pruss   = 2,
+		.offsets        = {
+			{
+				.pruss_inst     = 0x34000,
+				.pruss_data     = 0x00000,
+				.pruss_ctrl     = 0x22000
+			},
+			{
+				.pruss_inst     = 0x38000,
+				.pruss_data     = 0x02000,
+				.pruss_ctrl     = 0x24000
+			}
+		}
+	},
 	{	// end marker
 		.processor	= "NONE",
 		.short_name	= "NONE",
