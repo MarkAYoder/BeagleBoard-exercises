@@ -22,6 +22,10 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 import time, sys
+import subprocess, re
+
+pingCmd = ['ping', '-c1', '-i1', 'rose-hulman.edu']
+p = re.compile('time=[0-9.]*')      # We'll search for time= followed by digits and .
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
@@ -58,7 +62,13 @@ def main():
 
     # Call the Sheets API
     sheet = service.spreadsheets()
-    values = [ [time.time()/60/60/24+ 25569 - 4/24, sys.argv[1], sys.argv[2]]]
+    returned_output = subprocess.check_output(pingCmd, stderr=subprocess.STDOUT).decode("utf-8")
+    # print(returned_output)
+    # Find the time in ms
+    timems = float(p.search(returned_output).group()[5:])
+    print(timems)
+
+    values = [ [time.time()/60/60/24+ 25569 - 4/24, timems]]
     body = {'values': values}
     result = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID,
                                 range=SAMPLE_RANGE_NAME,
