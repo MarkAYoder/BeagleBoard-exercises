@@ -72,17 +72,18 @@ def main():
             timems = float(p.search(returned_output).group()[5:])
             print(timems)
         
-            values = [ [time.time()/60/60/24+ 25569 - 4/24, timems]]
-            body = {'values': values}
-            result = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                                        range=SAMPLE_RANGE_NAME,
-                                        valueInputOption='USER_ENTERED', 
-                                        body=body
-                                        ).execute()
-            # print(result)
         except subprocess.CalledProcessError as err:
+            timems = 0
             print('ERROR:', err)
             
+        values = [ [time.time()/60/60/24+ 25569 - 4/24, timems]]
+        body = {'values': values}
+        result = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+                                    range=SAMPLE_RANGE_NAME,
+                                    valueInputOption='USER_ENTERED', 
+                                    body=body
+                                    ).execute()
+        # print(result)
         time.sleep(ms/1000)
 
 if __name__ == '__main__':
