@@ -32,7 +32,6 @@ p = re.compile('time=[0-9.]*')      # We'll search for time= followed by digits 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 # The ID and range of a sample spreadsheet.
-# SAMPLE_SPREADSHEET_ID = '1hGMHMLwiG3zEDM19zJehpLjTDbVi8LOjVKhD8R0dBO0'
 SAMPLE_SPREADSHEET_ID = '1c8Qdph81ySof-2FkRSXIaajVXKNj2o6Abm1YnTz68h8'
 SAMPLE_RANGE_NAME = 'A2'
 
@@ -66,20 +65,24 @@ def main():
     sheet = service.spreadsheets()
     
     while True:
-        returned_output = subprocess.check_output(pingCmd, stderr=subprocess.STDOUT).decode("utf-8")
-        # print(returned_output)
-        # Find the time in ms
-        timems = float(p.search(returned_output).group()[5:])
-        print(timems)
-    
-        values = [ [time.time()/60/60/24+ 25569 - 4/24, timems]]
-        body = {'values': values}
-        result = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                                    range=SAMPLE_RANGE_NAME,
-                                    valueInputOption='USER_ENTERED', 
-                                    body=body
-                                    ).execute()
-        # print(result)
+        try:
+            returned_output = subprocess.check_output(pingCmd, stderr=subprocess.STDOUT).decode("utf-8")
+            # print(returned_output)
+            # Find the time in ms
+            timems = float(p.search(returned_output).group()[5:])
+            print(timems)
+        
+            values = [ [time.time()/60/60/24+ 25569 - 4/24, timems]]
+            body = {'values': values}
+            result = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+                                        range=SAMPLE_RANGE_NAME,
+                                        valueInputOption='USER_ENTERED', 
+                                        body=body
+                                        ).execute()
+            # print(result)
+        except subprocess.CalledProcessError as err:
+            print('ERROR:', err)
+            
         time.sleep(ms/1000)
 
 if __name__ == '__main__':
