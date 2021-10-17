@@ -24,7 +24,7 @@ from google.auth.transport.requests import Request
 import time, sys
 import subprocess, re
 
-ms = 15000          # Repeat time in ms.
+ms = 60*1000          # Repeat time in ms.
 pingCmd = ['ping', '-c1', '-i1', 'rose-hulman.edu']
 p = re.compile('time=[0-9.]*')      # We'll search for time= followed by digits and .
 
@@ -74,15 +74,19 @@ def main():
         
         except subprocess.CalledProcessError as err:
             timems = 0
-            print('ERROR:', err)
+            print('ping ERROR:', err)
             
         values = [ [time.time()/60/60/24+ 25569 - 4/24, timems]]
         body = {'values': values}
-        result = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID,
-                                    range=SAMPLE_RANGE_NAME,
-                                    valueInputOption='USER_ENTERED', 
-                                    body=body
-                                    ).execute()
+        try:
+            result = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID,
+                                        range=SAMPLE_RANGE_NAME,
+                                        valueInputOption='USER_ENTERED', 
+                                        body=body
+                                        ).execute()
+        except:
+             print('sheet ERROR:')
+           
         # print(result)
         time.sleep(ms/1000)
 
