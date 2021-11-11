@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# // Displays temp and humidity and forecast from wunderground
+# // Displays temp and humidity and forecast from openweathermap
 # // 
 # // Gets data from weather underground.
 # // Displays as
@@ -8,14 +8,14 @@
 # //  lo:
 # //  hi:
 # //      time
-# // Where Temp is the outdoor temp from wunderground and lo and hi are the 
+# // Where Temp is the outdoor temp from openweathermap and lo and hi are the 
 # //  forecasted low and hi temps.
 
 import requests
 import sys
 from datetime import datetime
 
-# Get outdoor temp and forcast from wunderground
+# Get outdoor temp and forcast from openweathermap
 params = {
     'appid': '6a2db5c8171494bce131dc69af6f34b9',
     # 'city': 'brazil,indiana',
