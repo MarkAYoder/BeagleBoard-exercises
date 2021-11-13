@@ -33,7 +33,7 @@ SAMPLE_RANGE_NAME = 'A2'
 
 BUS="i2c-1"
 tmpPATH="/sys/class/hwmon/"
-sleepTime=5*60
+sleepTime=15*60
 
 def main():
     """Shows basic usage of the Sheets API.
