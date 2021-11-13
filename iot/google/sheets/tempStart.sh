@@ -1,7 +1,7 @@
-# Restarts temp.py when it stops
-echo Starting temp.py
-until ./temp.py ; do
+# Restarts tempio.py when it stops
+echo Starting tempio.py
+until ./tempio.py ; do
     date
-    echo "Restarting exit code $?. " >&2
+    echo "Restarting tmpio exit code $?. " >&2
     sleep 1
 done
