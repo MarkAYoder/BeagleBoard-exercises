@@ -49,7 +49,7 @@ while True:
             current = current + 1
             if current >= len(hist):
                 current=0
-            print('ping: time = {0:0.2f}, average = {0:0.2f}'.format(timems, average))
+            print('ping: time = %5.2f, average = %5.2f}' % (timems, average))
             if timems > 1.1*average:
                 GPIO.output(red,   1)
                 GPIO.output(green, 1)

@@ -9,6 +9,7 @@ DEV=si7020
 cd /sys/class/i2c-adapter/$BUS/
 echo $DEV $ADDR > new_device
 echo tmp101 0x49 > new_device
+echo tmp101 0x4a > new_device
 dmesg -H | tail -2
 
 cd 1-0040/iio\:device1
