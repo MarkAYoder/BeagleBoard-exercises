@@ -76,7 +76,7 @@ def main():
             timems = 0
             print('ping ERROR:', err)
             
-        values = [ [time.time()/60/60/24+ 25569 - 4/24, timems]]
+        values = [ [time.time()/60/60/24+ 25569 - 5/24, timems]]
         body = {'values': values}
         try:
             result = sheet.values().append(spreadsheetId=SAMPLE_SPREADSHEET_ID,
