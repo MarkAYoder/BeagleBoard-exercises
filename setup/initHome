@@ -1,0 +1,7 @@
+#!/bin/bash
+if xwininfo -root | grep -q 3840x2160; then
+	gnome-terminal --geometry=120x24+850-20
+	gnome-terminal --geometry=80x24+70-12
+	gnome-terminal --geometry=80x60+92+525
+	gnome-system-monitor
+fi
