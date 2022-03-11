@@ -1,0 +1,11 @@
+https://serverfault.com/questions/362529/how-can-i-sniff-the-traffic-of-remote-machine-with-wireshark
+
+
+# Create a named pipe:
+host$ mkfifo /tmp/remote
+
+Sta# rt wireshark from the command line
+host$ wireshark -k -i /tmp/remote
+
+# Run tcpdump over ssh on your remote machine and redirect the packets to the named pipe:
+host$ ssh root@bone "tcpdump -s 0 -U -n -w - -i eth0 not port 22" > /tmp/remote
