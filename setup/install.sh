@@ -51,9 +51,6 @@ ssh $USER@$BONE "
 ln -s / root
 mkdir host
 
-# Set up bin/
-cd ~/bin
-ln -s /opt/scripts/device/bone/show-pins.pl .
 cd
 
 # Set up github
