@@ -35,9 +35,9 @@ ssh root@$BONE "date -s \"$DATE\""
 # Do things are debian first.
 
 # Copy local copy of exercises to bone and then pull
-echo
-echo rsyncing exercises, this will take a couple of minutes
-echo
+# echo
+# echo rsyncing exercises, this will take a couple of minutes
+# echo
 # git clone https://github.com/MarkAYoder/BeagleBoard-exercises.git exercises --depth=1
 # time rsync -azq --exclude "*.o" --exclude "*.ko" --exclude esc-media --exclude c6run_build --exclude ssh ../../exercises $USER@$BONE:.
 
@@ -57,13 +57,13 @@ cd
 ln -s --backup=numbered exercises/setup/gitconfig .gitconfig
 
 # github for cloud9
-cd /var/lib/cloud9
-git config user.name 'Mark A. Yoder'
-git config user.email Mark.A.Yoder@beagleboard.org
+# cd /var/lib/cloud9
+# git config user.name 'Mark A. Yoder'
+# git config user.email Mark.A.Yoder@beagleboard.org
 # git fetch
 # Use next versions branch
 # git checkout v2020.08
-cd
+# cd
 
 # Fix postBuffer size
 # cd beaglebone-cookbook/.git
@@ -124,12 +124,12 @@ export LANG=en_US.UTF-8
 # sed -i -e 's:CAPE=cape-bone-proto:#CAPE=cape-bone-proto:g' /etc/default/capemgr
 
 # Make socket.io appear where others can use it
-if [ ! -e /usr/local/lib/node_modules/socket.io ] ; then
-	cd /usr/local/lib/node_modules/
-	ln -s bonescript/node_modules/socket.io/ .
-	ln -s bonescript/node_modules/i2c/ .
-	ln -s bonescript/node_modules/serialport/ .
-fi
+# if [ ! -e /usr/local/lib/node_modules/socket.io ] ; then
+# 	cd /usr/local/lib/node_modules/
+# 	ln -s bonescript/node_modules/socket.io/ .
+# 	ln -s bonescript/node_modules/i2c/ .
+# 	ln -s bonescript/node_modules/serialport/ .
+# fi
 
 # Turn off some services
 # systemctl disable apache2
@@ -158,7 +158,7 @@ fi
 "
 echo git clone https://github.com/MarkAYoder/BeagleBoard-exercises.git exercises --depth=1
 
-exit
+# exit
 
 # Load Full Screen Mario
 # git clone https://github.com/Diogenesthecynic/FullScreenMario.git
