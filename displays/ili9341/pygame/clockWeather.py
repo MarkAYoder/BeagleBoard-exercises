@@ -115,7 +115,7 @@ class pyclock :
         width = 3           # Width of hands
         
         rad = 70   # Radius
-        len = 15    # Length of ticks
+        length = 15    # Length of ticks
         
         # backgroundC = (173,216,230)
         # faceC = (0, 0, 255)
@@ -134,7 +134,7 @@ class pyclock :
         for i in range(12):
             ang = i*math.pi/6
             out_pos= (int(xcent+rad*math.cos(ang)),       int(ycent-rad*math.sin(ang)))
-            in_pos = (int(xcent+(rad-len)*math.cos(ang)), int(ycent-(rad-len)*math.sin(ang)))
+            in_pos = (int(xcent+(rad-length)*math.cos(ang)), int(ycent-(rad-length)*math.sin(ang)))
             pygame.draw.line(self.screen, faceC, in_pos, out_pos, 2)
 
         oldAngS = 0     # Remeber where hands were so they can be removed
@@ -151,7 +151,7 @@ class pyclock :
             
             # Erase second hand
             pygame.draw.line(self.screen, backgroundC, (xcent, ycent), 
-                (int(xcent+(rad-len)*math.cos(oldAngS)), int(ycent-(rad-len)*math.sin(oldAngS))), 
+                (int(xcent+(rad-length)*math.cos(oldAngS)), int(ycent-(rad-length)*math.sin(oldAngS))), 
                 width)
             # Erase minute hand
             pygame.draw.line(self.screen, backgroundC, (xcent, ycent), 
@@ -165,7 +165,7 @@ class pyclock :
             # Draw second hand
             angS = math.pi/2-2*math.pi*second/60
             pygame.draw.line(self.screen, faceC, (xcent, ycent), 
-                (int(xcent+(rad-len)*math.cos(angS)), int(ycent-(rad-len)*math.sin(angS))), 
+                (int(xcent+(rad-length)*math.cos(angS)), int(ycent-(rad-length)*math.sin(angS))), 
                 width)
             # minute hand
             angM = math.pi/2-2*math.pi*minute/60 + angS/60
