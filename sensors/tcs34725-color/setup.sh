@@ -14,17 +14,20 @@ echo 0 > duty_cycle
 echo $period > period
 echo $duty_cycle > duty_cycle
 echo 1 > enable
+sleep 0.5
 
 cd /dev/bone/pwm/0/a
 echo 0 > duty_cycle
 echo $period > period
 echo $duty_cycle > duty_cycle
 echo 1 > enable
+sleep 0.5
 
 cd /dev/bone/pwm/0/b
 # period is tied to 'a' side
 echo $duty_cycle > duty_cycle
 echo 1 > enable
+sleep 0.5
 
 # Configure color sensor
 # https://www.adafruit.com/product/1334?gclid=CjwKCAjwvNaYBhA3EiwACgndgodIwKtxyYJGMfqf98T8Z18HmrOJUGHnm9o0RJIdcyDkijxt0h7S9RoCMEQQAvD_BwE
