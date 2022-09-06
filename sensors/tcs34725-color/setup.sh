@@ -8,18 +8,22 @@ config-pin P9_21 pwm
 config-pin P9_22 pwm
 
 cd /dev/bone/pwm/1/a
-echo 1000000000 > period
-echo  500000000 > duty_cycle
+period=32768
+duty_cycle=16000
+echo 0 > duty_cycle
+echo $period > period
+echo $duty_cycle > duty_cycle
 echo 1 > enable
 
 cd /dev/bone/pwm/0/a
-echo 1000000000 > period
-echo  500000000 > duty_cycle
+echo 0 > duty_cycle
+echo $period > period
+echo $duty_cycle > duty_cycle
 echo 1 > enable
 
 cd /dev/bone/pwm/0/b
-echo 1000000000 > period
-echo  500000000 > duty_cycle
+# period is tied to 'a' side
+echo $duty_cycle > duty_cycle
 echo 1 > enable
 
 # Configure color sensor

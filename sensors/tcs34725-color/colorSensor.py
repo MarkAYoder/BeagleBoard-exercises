@@ -4,6 +4,7 @@ import time
 ms = 250    # Read time in ms
 
 PATH = '/sys/bus/i2c/devices/i2c-2/2-0029/iio:device1'
+PWMPATH = '/dev/bone/pwm'
 
 if (not os.path.exists(PATH)):
     print (PATH+': Not found')
@@ -12,6 +13,8 @@ if (not os.path.exists(PATH)):
 print("Hi")
 
 data = [0,0,0]
+
+pwmr = open(PWMPATH+"/1/a/duty_cycle", "w")
 
 fr = open(PATH+"/in_intensity_red_raw",   "r")
 fg = open(PATH+"/in_intensity_green_raw", "r")
@@ -24,4 +27,8 @@ while True:
     data[1] = fg.read()[:-1]
     data[2] = fb.read()[:-1]
     print(" ".join(data))
+
+    pwmr.seek(0)
+    pwmr.write(data[0])
+
     time.sleep(ms/1000)
