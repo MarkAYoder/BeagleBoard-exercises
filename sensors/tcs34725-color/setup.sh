@@ -27,3 +27,4 @@ echo 1 > enable
 cd /sys/bus/i2c/devices/i2c-2
 echo tcs3472 0x29 > new_device
 dmesg -H | tail -2
+
