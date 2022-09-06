@@ -15,6 +15,8 @@ print("Hi")
 data = [0,0,0]
 
 pwmr = open(PWMPATH+"/1/a/duty_cycle", "w")
+pwmg = open(PWMPATH+"/0/b/duty_cycle", "w")
+pwmb = open(PWMPATH+"/0/a/duty_cycle", "w")
 
 fr = open(PATH+"/in_intensity_red_raw",   "r")
 fg = open(PATH+"/in_intensity_green_raw", "r")
@@ -30,5 +32,9 @@ while True:
 
     pwmr.seek(0)
     pwmr.write(data[0])
+    pwmg.seek(0)
+    pwmg.write(data[1])
+    pwmb.seek(0)
+    pwmb.write(data[2])
 
     time.sleep(ms/1000)
