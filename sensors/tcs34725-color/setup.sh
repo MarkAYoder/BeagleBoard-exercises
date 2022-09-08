@@ -1,4 +1,4 @@
-# Wire
+# Color PIN    PWM
 # Red   P9_14, 1a
 # Green P9_21, 0b
 # Blue  P9_22, 0a
@@ -8,6 +8,7 @@ config-pin P9_21 pwm
 config-pin P9_22 pwm
 
 cd /dev/bone/pwm/1/a
+# max value returned by color sensor
 period=32768
 duty_cycle=16000
 echo 0 > duty_cycle
@@ -24,7 +25,7 @@ echo 1 > enable
 sleep 0.1
 
 cd /dev/bone/pwm/0/b
-# period is tied to 'a' side
+# period is tied to 'a' side, no need to set
 echo $duty_cycle > duty_cycle
 echo 1 > enable
 sleep 0.1
