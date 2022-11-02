@@ -82,11 +82,11 @@ class pyclock :
             #         image.get_width(), yCount*image.get_height()), 0)
             # print("title: " + title)
             textsurface = myfont.render(title[:3]+"   ", False, fontC, backgroundC)
-            self.screen.blit(textsurface,(xmax-80, 0.75*0.75*yCount*image.get_height()))
+            self.screen.blit(textsurface,(xmax-80, int(0.75*0.75*yCount*image.get_height())))
             # Make icons a bit small so more can be shown
             image = pygame.transform.scale(image, (75, 75))
             # print("Size: " + str(image.get_size()))
-            self.screen.blit(image, (xmax-image.get_width(), 0.75*yCount*image.get_height()))
+            self.screen.blit(image, (xmax-image.get_width(), int(0.75*yCount*image.get_height())))
                 
         # http://api.openweathermap.org/data/2.5/onecall
         params = {
@@ -115,7 +115,7 @@ class pyclock :
         width = 3           # Width of hands
         
         rad = 70   # Radius
-        len = 15    # Length of ticks
+        length = 15    # Length of ticks
         
         # backgroundC = (173,216,230)
         # faceC = (0, 0, 255)
@@ -124,8 +124,8 @@ class pyclock :
         fontC = (200, 255, 200)
 
         # https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
-        myfont = pygame.font.SysFont('FreeSerif', 36, True)
-        myfontBig = pygame.font.SysFont('FreeSerif', 60, True)
+        myfont = pygame.font.SysFont('FreeSerif', 28, True)
+        myfontBig = pygame.font.SysFont('FreeSerif', 48, True)
 
         self.screen.fill(backgroundC)
         # Draw face
@@ -133,8 +133,8 @@ class pyclock :
         # Put tick marks inside the circle
         for i in range(12):
             ang = i*math.pi/6
-            out_pos= (xcent+rad*math.cos(ang),       ycent-rad*math.sin(ang))
-            in_pos = (xcent+(rad-len)*math.cos(ang), ycent-(rad-len)*math.sin(ang))
+            out_pos= (int(xcent+rad*math.cos(ang)),       int(ycent-rad*math.sin(ang)))
+            in_pos = (int(xcent+(rad-length)*math.cos(ang)), int(ycent-(rad-length)*math.sin(ang)))
             pygame.draw.line(self.screen, faceC, in_pos, out_pos, 2)
 
         oldAngS = 0     # Remeber where hands were so they can be removed
@@ -151,31 +151,31 @@ class pyclock :
             
             # Erase second hand
             pygame.draw.line(self.screen, backgroundC, (xcent, ycent), 
-                (xcent+(rad-len)*math.cos(oldAngS), ycent-(rad-len)*math.sin(oldAngS)), 
+                (int(xcent+(rad-length)*math.cos(oldAngS)), int(ycent-(rad-length)*math.sin(oldAngS))), 
                 width)
             # Erase minute hand
             pygame.draw.line(self.screen, backgroundC, (xcent, ycent), 
-                (xcent+minScale*rad*math.cos(oldAngM), ycent-minScale*rad*math.sin(oldAngM)), 
+                (int(xcent+minScale*rad*math.cos(oldAngM)), int(ycent-minScale*rad*math.sin(oldAngM))), 
                 width)
             # Erase hour hand
             pygame.draw.line(self.screen, backgroundC, (xcent, ycent), 
-                (xcent+hourScale*rad*math.cos(oldAngH), ycent-hourScale*rad*math.sin(oldAngH)), 
+                (int(xcent+hourScale*rad*math.cos(oldAngH)), int(ycent-hourScale*rad*math.sin(oldAngH))), 
                 width)
                 
             # Draw second hand
             angS = math.pi/2-2*math.pi*second/60
             pygame.draw.line(self.screen, faceC, (xcent, ycent), 
-                (xcent+(rad-len)*math.cos(angS), ycent-(rad-len)*math.sin(angS)), 
+                (int(xcent+(rad-length)*math.cos(angS)), int(ycent-(rad-length)*math.sin(angS))), 
                 width)
             # minute hand
             angM = math.pi/2-2*math.pi*minute/60 + angS/60
             pygame.draw.line(self.screen, faceC, (xcent, ycent), 
-                (xcent+minScale*rad*math.cos(angM), ycent-minScale*rad*math.sin(angM)), 
+                (int(xcent+minScale*rad*math.cos(angM)), int(ycent-minScale*rad*math.sin(angM))), 
                 width)
             # hour hand
             angH = math.pi/2-2*math.pi*hour/12 + angM/12
             pygame.draw.line(self.screen, faceC, (xcent, ycent), 
-                (xcent+hourScale*rad*math.cos(angH), ycent-hourScale*rad*math.sin(angH)), 
+                (int(xcent+hourScale*rad*math.cos(angH)), int(ycent-hourScale*rad*math.sin(angH))), 
                 width)
 
             oldAngS = angS      # Remember current locations
@@ -188,7 +188,7 @@ class pyclock :
             textsurface = myfont.render(
                 time.strftime("%I:%M:%S")+"  ", False, fontC, backgroundC)
             # Print time centered at top of screen
-            self.screen.blit(textsurface,(xmax/2-textsurface.get_width()/2, 0))
+            self.screen.blit(textsurface,(int(xmax/2-textsurface.get_width()/2), 0))
 
             # Get outdoor temp and forecast from OpenWeather
             if first or ((minute%15 == 0) and (second%60==5)):

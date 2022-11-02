@@ -1,0 +1,1 @@
+Set up the frame buffer as shown in ../tinyDRM

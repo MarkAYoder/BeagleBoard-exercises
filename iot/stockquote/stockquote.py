@@ -4,4 +4,4 @@ import ystockquote
 
 tickerSymbol = 'AAPL'
 allInfo = ystockquote.get_all(tickerSymbol)
-print tickerSymbol + " Price = " + allInfo["price"]
+print(tickerSymbol + " Price = " + allInfo["price"])
