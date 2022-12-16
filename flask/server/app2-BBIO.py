@@ -1,26 +1,26 @@
 #!/usr/bin/env python3
 # From: https://towardsdatascience.com/python-webserver-with-flask-and-raspberry-pi-398423cc6f5d
 
-import gpiod
-CHIP = '0'		# P9_11
-offsets=[30]
-
+'''
+	Raspberry Pi GPIO Status and Control
+'''
+import Adafruit_BBIO.GPIO as GPIO
 from flask import Flask, render_template
 app = Flask(__name__)
 
-chip = gpiod.Chip(CHIP)
-lines = chip.get_lines(offsets)
+button = "P9_11"
+buttonSts = GPIO.LOW
 
 # Set button as an input
-lines.request(consumer="app2.py", type=gpiod.LINE_REQ_DIR_IN)
+GPIO.setup(button, GPIO.IN)   
 
 @app.route("/")
 def index():
 	# Read Button Status
-	vals = lines.get_values()
+	buttonSts = GPIO.input(button)
 	templateData = {
       'title' : 'GPIO input Status!',
-      'button'  : vals,
+      'button'  : buttonSts,
       }
 	return render_template('index2.html', **templateData)
 if __name__ == "__main__":
