@@ -1,55 +1,68 @@
 #!/usr/bin/env python3
 # From: https://towardsdatascience.com/python-webserver-with-flask-and-raspberry-pi-398423cc6f5d
-'''
-	Beagle GPIO Status and Control
-'''
-import Adafruit_BBIO.GPIO as GPIO
+import gpiod
+import sys
+# import Adafruit_BBIO.GPIO as GPIO
 from flask import Flask, render_template, request
 app = Flask(__name__)
 # GPIO.setmode(GPIO.BCM)
 # GPIO.setwarnings(False)
 #define sensors GPIOs
-button = "P9_11"
+getoffsets=[14] # P8_16
+# button = "P9_11"
 #define actuators GPIOs
-ledRed = "P9_15"
+setoffests=[18] # P9_14
+# ledRed = "P9_15"
 #initialize GPIO status variables
 buttonSts = 0
 ledRedSts = 0
+CHIP='1'
 # Define button and PIR sensor pins as an input
-GPIO.setup(button, GPIO.IN)   
+chip = gpiod.Chip(CHIP)
+getlines = chip.get_lines(getoffsets)
+getlines.request(consumer="app4.py", type=gpiod.LINE_REQ_DIR_IN)
+# GPIO.setup(button, GPIO.IN)   
 # Define led pins as output
-GPIO.setup(ledRed, GPIO.OUT)   
+setlines = chip.get_lines(setoffests)
+setlines.request(consumer="app4.py", type=gpiod.LINE_REQ_DIR_OUT)
+# GPIO.setup(ledRed, GPIO.OUT)   
 # turn leds OFF 
-GPIO.output(ledRed, GPIO.LOW)
+setlines.set_values([0])
+# GPIO.output(ledRed, GPIO.LOW)
 
 @app.route("/")
 def index():
 	# Read GPIO Status
-	buttonSts = GPIO.input(button)
-	ledRedSts = GPIO.input(ledRed)
+	vals = getlines.get_values()
+	# buttonSts = GPIO.input(button)
+	# ledRedSts = GPIO.input(ledRed)
 	templateData = {
-      		'button'  : buttonSts,
-      		'ledRed'  : ledRedSts,
-      	}
+		'button'  : buttonSts,
+		'ledRed'  : '0',
+    }
 	return render_template('index.html', **templateData)
 	
 @app.route("/<deviceName>/<action>")
 def action(deviceName, action):
 	if deviceName == 'ledRed':
-		actuator = ledRed
+		actuator = "0"
 
 	if action == "on":
-		GPIO.output(actuator, GPIO.HIGH)
+		setlines.set_values([1])
+		# GPIO.output(actuator, GPIO.HIGH)
 	if action == "off":
-		GPIO.output(actuator, GPIO.LOW)
+		setlines.set_values([0])
+		# GPIO.output(actuator, GPIO.LOW)
 		     
-	buttonSts = GPIO.input(button)
-	ledRedSts = GPIO.input(ledRed)
+	vals = getlines.get_values()
+	# setlines.set_values(vals)
+	# buttonSts = GPIO.input(button)
+	# ledRedSts = GPIO.input(ledRed)
 
 	templateData = {
-	 	'button'  : buttonSts,
-  		'ledRed'  : ledRedSts,
+	 	'button'  : vals,
+  		'ledRed'  : vals,
 	}
-	return render_template('index.html', **templateData)
+	return render_template('index3.html', **templateData)
 if __name__ == "__main__":
    app.run(host='0.0.0.0', port=8081, debug=True)
