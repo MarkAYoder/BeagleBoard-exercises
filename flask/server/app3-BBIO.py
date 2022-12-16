@@ -1,28 +1,22 @@
 #!/usr/bin/env python3
 # From: https://towardsdatascience.com/python-webserver-with-flask-and-raspberry-pi-398423cc6f5d
-import gpiod
-import sys
-# import Adafruit_BBIO.GPIO as GPIO
+import Adafruit_BBIO.GPIO as GPIO
+
 from flask import Flask, render_template, request
 app = Flask(__name__)
-
 #define LED GPIOs
-CHIP='1'
-setoffests=[18] # P9_14, red LED
 ledRed = "P9_14"
 #initialize GPIO status variable
 ledRedSts = 0
 # Define led pins as output
-chip = gpiod.Chip(CHIP)
-setlines = chip.get_lines(setoffests)
-setlines.request(consumer="app3.py", type=gpiod.LINE_REQ_DIR_OUT)
-# turn led OFF 
-setlines.set_values([0])
+GPIO.setup(ledRed, GPIO.OUT)   
+# turn leds OFF 
+GPIO.output(ledRed, GPIO.HIGH)
 
 @app.route("/")
 def index():
 	# Read Sensors Status
-	ledRedSts = '2'
+	ledRedSts = GPIO.input(ledRed)
 	templateData = {
               'title' : 'GPIO output Status!',
               'ledRed'  : ledRedSts,
@@ -35,11 +29,11 @@ def action(deviceName, action):
 		actuator = ledRed
 
 	if action == "on":
-		setlines.set_values([1])
+		GPIO.output(actuator, GPIO.HIGH)
 	if action == "off":
-		setlines.set_values([0])
+		GPIO.output(actuator, GPIO.LOW)
 		     
-	# ledRedSts = GPIO.input(ledRed)
+	ledRedSts = GPIO.input(ledRed)
 
 	templateData = {
               'ledRed'  : ledRedSts,
