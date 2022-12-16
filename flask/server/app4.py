@@ -25,26 +25,21 @@ def index():
 	# Read GPIO Status
 	vals = getlines.get_values()
 	templateData = {
-		'button'  : '0',
-		'ledRed'  : '0',
+	 	'button'  : getlines.get_values()[0],
+  		'ledRed'  : setlines.get_values()[0]
     }
 	return render_template('index.html', **templateData)
 	
 @app.route("/<deviceName>/<action>")
 def action(deviceName, action):
-	if deviceName == 'ledRed':
-		actuator = "0"
-
 	if action == "on":
 		setlines.set_values([1])
 	if action == "off":
 		setlines.set_values([0])
 		     
-	vals = getlines.get_values()
-
 	templateData = {
-	 	'button'  : vals,
-  		'ledRed'  : vals,
+	 	'button'  : getlines.get_values()[0],
+  		'ledRed'  : setlines.get_values()[0]
 	}
 	return render_template('index3.html', **templateData)
 if __name__ == "__main__":

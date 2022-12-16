@@ -1,56 +1,50 @@
 #!/usr/bin/env python3
 # From: https://towardsdatascience.com/python-webserver-with-flask-and-raspberry-pi-398423cc6f5d
-'''
-	Beagle GPIO Status and Control - with toggle
-'''
-import Adafruit_BBIO.GPIO as GPIO
+import gpiod
+import sys
 from flask import Flask, render_template, request
 app = Flask(__name__)
-# GPIO.setmode(GPIO.BCM)
-# GPIO.setwarnings(False)
 #define sensors GPIOs
-button = "P9_11"
+getoffsets=[14] # P8_16
 #define actuators GPIOs
-ledRed = "P9_14"
+setoffests=[18] # P9_14
 #initialize GPIO status variables
-buttonSts = 0
-ledRedSts = 0
+CHIP='1'
 # Define button and PIR sensor pins as an input
-GPIO.setup(button, GPIO.IN)   
+chip = gpiod.Chip(CHIP)
+getlines = chip.get_lines(getoffsets)
+getlines.request(consumer="app4.py", type=gpiod.LINE_REQ_DIR_IN)
 # Define led pins as output
-GPIO.setup(ledRed, GPIO.OUT)   
+setlines = chip.get_lines(setoffests)
+setlines.request(consumer="app4.py", type=gpiod.LINE_REQ_DIR_OUT)
 # turn leds OFF 
-GPIO.output(ledRed, GPIO.LOW)
+setlines.set_values([0])
 
 @app.route("/")
 def index():
 	# Read GPIO Status
-	buttonSts = GPIO.input(button)
-	ledRedSts = GPIO.input(ledRed)
+	vals = getlines.get_values()
 	templateData = {
-      		'button'  : buttonSts,
-      		'ledRed'  : ledRedSts,
-      	}
+	 	'button'  : getlines.get_values()[0],
+  		'ledRed'  : setlines.get_values()[0]
+    }
 	return render_template('index5.html', **templateData)
 	
 @app.route("/<deviceName>/<action>")
 def action(deviceName, action):
-	if deviceName == 'ledRed':
-		actuator = ledRed
-
 	if action == "on":
-		GPIO.output(actuator, GPIO.HIGH)
+		setlines.set_values([1])
 	if action == "off":
-		GPIO.output(actuator, GPIO.LOW)
+		setlines.set_values([0])
 	if action == "toggle":
-		GPIO.output(actuator, not GPIO.input(actuator))
-		     
-	buttonSts = GPIO.input(button)
-	ledRedSts = GPIO.input(ledRed)
+		if setlines.get_values() == [0]:
+			setlines.set_values([1])
+		else:
+			setlines.set_values([0])
 
 	templateData = {
-	 	'button'  : buttonSts,
-  		'ledRed'  : ledRedSts,
+	 	'button'  : getlines.get_values()[0],
+  		'ledRed'  : setlines.get_values()[0]
 	}
 	return render_template('index5.html', **templateData)
 if __name__ == "__main__":
