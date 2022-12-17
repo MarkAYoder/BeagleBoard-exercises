@@ -13,10 +13,10 @@ CHIP='1'
 # Define button and PIR sensor pins as an input
 chip = gpiod.Chip(CHIP)
 getlines = chip.get_lines(getoffsets)
-getlines.request(consumer="app4.py", type=gpiod.LINE_REQ_DIR_IN)
+getlines.request(consumer="app5 in", type=gpiod.LINE_REQ_DIR_IN)
 # Define led pins as output
 setlines = chip.get_lines(setoffests)
-setlines.request(consumer="app4.py", type=gpiod.LINE_REQ_DIR_OUT)
+setlines.request(consumer="app5 out", type=gpiod.LINE_REQ_DIR_OUT)
 # turn leds OFF 
 setlines.set_values([0])
 
