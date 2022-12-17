@@ -10,8 +10,6 @@ app = Flask(__name__)
 CHIP='1'
 setoffests=[18] # P9_14, red LED
 ledRed = "P9_14"
-#initialize GPIO status variable
-ledRedSts = 0
 # Define led pins as output
 chip = gpiod.Chip(CHIP)
 setlines = chip.get_lines(setoffests)
@@ -22,27 +20,22 @@ setlines.set_values([0])
 @app.route("/")
 def index():
 	# Read Sensors Status
-	ledRedSts = '2'
 	templateData = {
               'title' : 'GPIO output Status!',
-              'ledRed'  : ledRedSts,
+              'ledRed'  : setlines.get_values(),
         }
 	return render_template('index3.html', **templateData)
 	
 @app.route("/<deviceName>/<action>")
 def action(deviceName, action):
-	if deviceName == 'ledRed':
-		actuator = ledRed
-
 	if action == "on":
 		setlines.set_values([1])
 	if action == "off":
 		setlines.set_values([0])
 		     
-	# ledRedSts = GPIO.input(ledRed)
-
 	templateData = {
-              'ledRed'  : ledRedSts,
+        'title' : 'GPIO output Status!',
+        'ledRed'  : setlines.get_values(),
 	}
 	return render_template('index3.html', **templateData)
 if __name__ == "__main__":
