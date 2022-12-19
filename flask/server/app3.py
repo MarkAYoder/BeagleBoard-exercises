@@ -22,10 +22,10 @@ setlines.set_values([0])
 @app.route("/")
 def index():
 	# Read Sensors Status
-	ledRedSts = '2'
+	ledRedSts = '0'
 	templateData = {
               'title' : 'GPIO output Status!',
-              'ledRed'  : ledRedSts,
+              'ledRed'  : setlines.get_values()[0]
         }
 	return render_template('index3.html', **templateData)
 	
@@ -36,11 +36,11 @@ def action(deviceName, action):
 
 	if action == "on":
 		setlines.set_values([1])
+		ledRedSts = '1'
 	if action == "off":
 		setlines.set_values([0])
+		ledRedSts = '0'
 		     
-	# ledRedSts = GPIO.input(ledRed)
-
 	templateData = {
               'ledRed'  : ledRedSts,
 	}
