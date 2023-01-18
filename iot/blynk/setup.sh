@@ -7,3 +7,7 @@ echo $BLYNK_AUTH
 
 # I2C=/sys/class/i2c-adapter/i2c-2
 # echo bmp085 0x77 > $I2C/new_device
+
+#define BLYNK_TEMPLATE_ID "TMPLIbpCAure"
+#define BLYNK_DEVICE_NAME "Quickstart Device"
+#define BLYNK_AUTH_TOKEN "P3TAAZMcQNn7xXgemQEQfPXdI5_GQnCM"
