@@ -8,18 +8,19 @@ BB-I2C2-MPU6050.dtbo
 
 Edit /boot/uEnv.txt and add
 
- ###Additional custom capes
+` ###Additional custom capes`
 
-uboot_overlay_addr5=BB-I2C2-MPU6050.dtbo
+`uboot_overlay_addr5=BB-I2C2-MPU6050.dtbo`
 
 Reboot and check:
-ls /proc/device-tree/chosen/overlays/
-BB-ADC-00A0.kernel  BB-BONE-eMMC1-01-00A0.kernel  BB-I2C2-MPU6050.kernel  name
+`ls /proc/device-tree/chosen/overlays/`
+
+`BB-ADC-00A0.kernel  BB-BONE-eMMC1-01-00A0.kernel  BB-I2C2-MPU6050.kernel  name`
 
 Read the device
 
-cd /sys/bus/iio/devices/iio\:device1
- ls
+`/sys/class/i2c-adapter/i2c-2/2-0068/iio:device1`
+ls
 buffer                    in_accel_z_raw              in_temp_raw
 current_timestamp_clock   in_anglvel_mount_matrix     in_temp_scale
 dev                       in_anglvel_scale            name
