@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# sudo apt install python-pip
+# sudo pip install twilio
 # Download the helper library from https://www.twilio.com/docs/python/install
 import os
 from twilio.rest import Client
