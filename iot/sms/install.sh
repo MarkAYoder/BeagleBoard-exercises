@@ -1,1 +1,1 @@
-npm install -g twilio
+pip install twilio
