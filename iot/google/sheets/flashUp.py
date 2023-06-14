@@ -14,7 +14,7 @@ thresh = 40.0      # If time is above this, turn on warning light
 hist = 10* [thresh]  # Keep track of the last 10 values
 current = 0        # Insert next value here 
 red   = 'P9_11'
-green = 'P9_15'
+green = 'P9_17'
 blue  = 'P9_13'
 
 # Turn all LEDs off
