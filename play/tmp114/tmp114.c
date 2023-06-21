@@ -2,9 +2,10 @@
 /*
  * Digital temperature sensor with integrated Non-volatile memory
  * Copyright (c) 2021 Puranjay Mohan <puranjay12@gmail.com>
+ * Converted from TMP117 to TMP114 by Mark A. Yoder <yoder@rose-hulman.edu>
  *
- * Driver for the Texas Instruments TMP117 Temperature Sensor
- * (7-bit I2C slave address (0x48 - 0x4B), changeable via ADD pins)
+ * Driver for the Texas Instruments TMP114 Temperature Sensor
+ * (7-bit I2C slave address (0x4B))
  *
  * Note: This driver assumes that the sensor has been calibrated beforehand.
  */
@@ -20,34 +21,34 @@
 
 #include <linux/iio/iio.h>
 
-#define TMP117_REG_TEMP			0x0
-#define TMP117_REG_CFGR			0x3
-#define TMP117_REG_HIGH_LIM		0x5
-#define TMP117_REG_LOW_LIM		0x4
-#define TMP117_REG_TEMP_OFFSET		0x7
-#define TMP117_REG_DEVICE_ID		0xB
+#define TMP114_REG_TEMP			0x0
+#define TMP114_REG_CFGR			0x3
+#define TMP114_REG_LOW_LIM		0x4
+#define TMP114_REG_HIGH_LIM		0x5
+#define TMP114_REG_TEMP_OFFSET	0x7
+#define TMP114_REG_DEVICE_ID	0xB
 
-#define TMP117_RESOLUTION_10UC		78125
+#define TMP114_RESOLUTION_10UC		78125
 #define MICRODEGREE_PER_10MILLIDEGREE	10000
 
 #define TMP114_DEVICE_ID		0x1114
 
-struct tmp117_data {
+struct tmp114_data {
 	struct i2c_client *client;
 	s16 calibbias;
 };
 
-static int tmp117_read_raw(struct iio_dev *indio_dev,
+static int tmp114_read_raw(struct iio_dev *indio_dev,
 			   struct iio_chan_spec const *channel, int *val,
 			   int *val2, long mask)
 {
-	struct tmp117_data *data = iio_priv(indio_dev);
+	struct tmp114_data *data = iio_priv(indio_dev);
 	s32 ret;
 
 	switch (mask) {
 	case IIO_CHAN_INFO_RAW:
 		ret = i2c_smbus_read_word_swapped(data->client,
-						  TMP117_REG_TEMP);
+						  TMP114_REG_TEMP);
 		if (ret < 0)
 			return ret;
 		*val = sign_extend32(ret, 15);
@@ -55,7 +56,7 @@ static int tmp117_read_raw(struct iio_dev *indio_dev,
 
 	case IIO_CHAN_INFO_CALIBBIAS:
 		ret = i2c_smbus_read_word_swapped(data->client,
-						  TMP117_REG_TEMP_OFFSET);
+						  TMP114_REG_TEMP_OFFSET);
 		if (ret < 0)
 			return ret;
 		*val = sign_extend32(ret, 15);
@@ -66,8 +67,8 @@ static int tmp117_read_raw(struct iio_dev *indio_dev,
 		 * Conversion from 10s of uC to mC
 		 * as IIO reports temperature in mC
 		 */
-		*val = TMP117_RESOLUTION_10UC / MICRODEGREE_PER_10MILLIDEGREE;
-		*val2 = (TMP117_RESOLUTION_10UC %
+		*val = TMP114_RESOLUTION_10UC / MICRODEGREE_PER_10MILLIDEGREE;
+		*val2 = (TMP114_RESOLUTION_10UC %
 					MICRODEGREE_PER_10MILLIDEGREE) * 100;
 
 		return IIO_VAL_INT_PLUS_MICRO;
@@ -77,10 +78,10 @@ static int tmp117_read_raw(struct iio_dev *indio_dev,
 	}
 }
 
-static int tmp117_write_raw(struct iio_dev *indio_dev, struct iio_chan_spec
+static int tmp114_write_raw(struct iio_dev *indio_dev, struct iio_chan_spec
 			    const *channel, int val, int val2, long mask)
 {
-	struct tmp117_data *data = iio_priv(indio_dev);
+	struct tmp114_data *data = iio_priv(indio_dev);
 	s16 off;
 
 	switch (mask) {
@@ -90,14 +91,14 @@ static int tmp117_write_raw(struct iio_dev *indio_dev, struct iio_chan_spec
 			return 0;
 		data->calibbias = off;
 		return i2c_smbus_write_word_swapped(data->client,
-						TMP117_REG_TEMP_OFFSET, off);
+						TMP114_REG_TEMP_OFFSET, off);
 
 	default:
 		return -EINVAL;
 	}
 }
 
-static const struct iio_chan_spec tmp117_channels[] = {
+static const struct iio_chan_spec tmp114_channels[] = {
 	{
 		.type = IIO_TEMP,
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |
@@ -114,18 +115,18 @@ static const struct iio_chan_spec tmp116_channels[] = {
 	},
 };
 
-static const struct iio_info tmp117_info = {
-	.read_raw = tmp117_read_raw,
-	.write_raw = tmp117_write_raw,
+static const struct iio_info tmp114_info = {
+	.read_raw = tmp114_read_raw,
+	.write_raw = tmp114_write_raw,
 };
 
-static int tmp117_identify(struct i2c_client *client)
+static int tmp114_identify(struct i2c_client *client)
 {
 	// const struct i2c_device_id *id;
 	unsigned long match_data;
 	int dev_id;
 
-	dev_id = i2c_smbus_read_word_swapped(client, TMP117_REG_DEVICE_ID);
+	dev_id = i2c_smbus_read_word_swapped(client, TMP114_REG_DEVICE_ID);
 	if (dev_id < 0)
 		return dev_id;
 
@@ -133,8 +134,6 @@ static int tmp117_identify(struct i2c_client *client)
 
 	switch (dev_id) {
 	case TMP114_DEVICE_ID:
-	// case TMP116_DEVICE_ID:
-	// case TMP117_DEVICE_ID:
 		return dev_id;
 	}
 
@@ -154,16 +153,16 @@ static int tmp117_identify(struct i2c_client *client)
 	return -ENODEV;
 }
 
-static int tmp117_probe(struct i2c_client *client)
+static int tmp114_probe(struct i2c_client *client)
 {
-	struct tmp117_data *data;
+	struct tmp114_data *data;
 	struct iio_dev *indio_dev;
 	int ret, dev_id;
 	
 	if (!i2c_check_functionality(client->adapter, I2C_FUNC_SMBUS_WORD_DATA))
 		return -EOPNOTSUPP;
 
-	ret = tmp117_identify(client);
+	ret = tmp114_identify(client);
 	if (ret < 0)
 		return ret;
 
@@ -180,7 +179,7 @@ static int tmp117_probe(struct i2c_client *client)
 	data->calibbias = 0;
 
 	indio_dev->modes = INDIO_DIRECT_MODE;
-	indio_dev->info = &tmp117_info;
+	indio_dev->info = &tmp114_info;
 
 	switch (dev_id) {
 	case TMP114_DEVICE_ID:
@@ -193,27 +192,27 @@ static int tmp117_probe(struct i2c_client *client)
 	return devm_iio_device_register(&client->dev, indio_dev);
 }
 
-static const struct of_device_id tmp117_of_match[] = {
+static const struct of_device_id tmp114_of_match[] = {
 	{ .compatible = "ti,tmp114", .data = (void *)TMP114_DEVICE_ID },
 	{ }
 };
-MODULE_DEVICE_TABLE(of, tmp117_of_match);
+MODULE_DEVICE_TABLE(of, tmp114_of_match);
 
-static const struct i2c_device_id tmp117_id[] = {
+static const struct i2c_device_id tmp114_id[] = {
 	{ "tmp114", TMP114_DEVICE_ID },
 	{ }
 };
-MODULE_DEVICE_TABLE(i2c, tmp117_id);
+MODULE_DEVICE_TABLE(i2c, tmp114_id);
 
-static struct i2c_driver tmp117_driver = {
+static struct i2c_driver tmp114_driver = {
 	.driver = {
 		.name	= "tmp114",
-		.of_match_table = tmp117_of_match,
+		.of_match_table = tmp114_of_match,
 	},
-	.probe_new	= tmp117_probe,
-	.id_table	= tmp117_id,
+	.probe_new	= tmp114_probe,
+	.id_table	= tmp114_id,
 };
-module_i2c_driver(tmp117_driver);
+module_i2c_driver(tmp114_driver);
 
 MODULE_AUTHOR("Puranjay Mohan <puranjay12@gmail.com>");
 MODULE_DESCRIPTION("TI TMP114 Temperature sensor driver");
