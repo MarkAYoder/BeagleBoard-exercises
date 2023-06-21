@@ -1,0 +1,8 @@
+tmp114.mod.c
+.Module.*
+.modules.*
+.tmp114.*
+*.symvers
+*.order
+*.ko
+*.mod

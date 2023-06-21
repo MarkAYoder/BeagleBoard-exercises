@@ -25,10 +25,9 @@
 #define TMP114_REG_CFGR			0x3
 #define TMP114_REG_LOW_LIM		0x4
 #define TMP114_REG_HIGH_LIM		0x5
-#define TMP114_REG_TEMP_OFFSET	0x7
 #define TMP114_REG_DEVICE_ID	0xB
 
-#define TMP114_RESOLUTION_10UC		78125
+#define TMP114_RESOLUTION_10UC	78125
 #define MICRODEGREE_PER_10MILLIDEGREE	10000
 
 #define TMP114_DEVICE_ID		0x1114
@@ -54,14 +53,6 @@ static int tmp114_read_raw(struct iio_dev *indio_dev,
 		*val = sign_extend32(ret, 15);
 		return IIO_VAL_INT;
 
-	case IIO_CHAN_INFO_CALIBBIAS:
-		ret = i2c_smbus_read_word_swapped(data->client,
-						  TMP114_REG_TEMP_OFFSET);
-		if (ret < 0)
-			return ret;
-		*val = sign_extend32(ret, 15);
-		return IIO_VAL_INT;
-
 	case IIO_CHAN_INFO_SCALE:
 		/*
 		 * Conversion from 10s of uC to mC
@@ -81,18 +72,7 @@ static int tmp114_read_raw(struct iio_dev *indio_dev,
 static int tmp114_write_raw(struct iio_dev *indio_dev, struct iio_chan_spec
 			    const *channel, int val, int val2, long mask)
 {
-	struct tmp114_data *data = iio_priv(indio_dev);
-	s16 off;
-
 	switch (mask) {
-	case IIO_CHAN_INFO_CALIBBIAS:
-		off = clamp_t(int, val, S16_MIN, S16_MAX);
-		if (off == data->calibbias)
-			return 0;
-		data->calibbias = off;
-		return i2c_smbus_write_word_swapped(data->client,
-						TMP114_REG_TEMP_OFFSET, off);
-
 	default:
 		return -EINVAL;
 	}
@@ -102,15 +82,7 @@ static const struct iio_chan_spec tmp114_channels[] = {
 	{
 		.type = IIO_TEMP,
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |
-				      BIT(IIO_CHAN_INFO_CALIBBIAS) |
-				      BIT(IIO_CHAN_INFO_SCALE),
-	},
-};
-
-static const struct iio_chan_spec tmp116_channels[] = {
-	{
-		.type = IIO_TEMP,
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |
+				    //   BIT(IIO_CHAN_INFO_CALIBBIAS) |
 				      BIT(IIO_CHAN_INFO_SCALE),
 	},
 };
@@ -183,9 +155,9 @@ static int tmp114_probe(struct i2c_client *client)
 
 	switch (dev_id) {
 	case TMP114_DEVICE_ID:
-		indio_dev->channels = tmp116_channels;
-		indio_dev->num_channels = ARRAY_SIZE(tmp116_channels);
-		indio_dev->name = "tmp116";
+		indio_dev->channels = tmp114_channels;
+		indio_dev->num_channels = ARRAY_SIZE(tmp114_channels);
+		indio_dev->name = "tmp114";
 		break;
 	}
 
