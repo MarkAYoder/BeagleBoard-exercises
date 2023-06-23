@@ -1,0 +1,36 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * Copyright (C) 2022 Robert Nelson <robertcnelson@gmail.com>
+ */
+
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/pinctrl/am33xx.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+
+/*
+ * Helper to show loaded overlays under: /proc/device-tree/chosen/overlays/
+ */
+&{/chosen} {
+	overlays {
+		BB-I2C5-qwiic-joystick = __TIMESTAMP__;
+	};
+};
+
+&i2c5 {
+	status = "okay";
+
+	clock-frequency = <400000>;
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	imu@20 {
+		pinctrl-names = "default";
+//		pinctrl-0 = <&mpu6050_pins>;
+		compatible = "sparkfun,qwiic-joystick";
+		reg = <0x20>;
+	};
+};
