@@ -34,7 +34,6 @@
 
 struct tmp114_data {
 	struct i2c_client *client;
-	s16 calibbias;
 };
 
 static int tmp114_read_raw(struct iio_dev *indio_dev,
@@ -156,7 +155,6 @@ static int tmp114_probe(struct i2c_client *client)
 
 	data = iio_priv(indio_dev);
 	data->client = client;
-	data->calibbias = 0;
 
 	indio_dev->modes = INDIO_DIRECT_MODE;
 	indio_dev->info = &tmp114_info;
