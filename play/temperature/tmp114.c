@@ -50,7 +50,15 @@ static int tmp114_read_raw(struct iio_dev *indio_dev,
 						  TMP114_REG_TEMP);
 		if (ret < 0)
 			return ret;
-		*val = sign_extend32(ret, 15);
+		*val = sign_extend32(ret, 15) >> 1;
+		return IIO_VAL_INT;
+
+	case IIO_CHAN_INFO_PROCESSED:
+		ret = i2c_smbus_read_word_swapped(data->client,
+						  TMP114_REG_TEMP);
+		if (ret < 0)
+			return ret;
+		*val   = (sign_extend32(ret, 15) * TMP114_RESOLUTION_10UC / MICRODEGREE_PER_10MILLIDEGREE) >> 1;
 		return IIO_VAL_INT;
 
 	case IIO_CHAN_INFO_SCALE:
@@ -82,7 +90,7 @@ static const struct iio_chan_spec tmp114_channels[] = {
 	{
 		.type = IIO_TEMP,
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |
-				    //   BIT(IIO_CHAN_INFO_CALIBBIAS) |
+				      BIT(IIO_CHAN_INFO_PROCESSED) |
 				      BIT(IIO_CHAN_INFO_SCALE),
 	},
 };
