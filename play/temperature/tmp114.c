@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /*
- * Digital temperature sensor with integrated Non-volatile memory
+ * Digital temperature sensor
  * Copyright (c) 2021 Puranjay Mohan <puranjay12@gmail.com>
- * Converted from TMP117 to TMP114 by Mark A. Yoder <yoder@rose-hulman.edu>
+ * Converted from TMP117 to TMP114 by Mark A. Yoder <Mark.A.Yoder@Rose-Hulman.edu>
  *
  * Driver for the Texas Instruments TMP114 Temperature Sensor
  * (7-bit I2C slave address (0x4B))
- *
- * Note: This driver assumes that the sensor has been calibrated beforehand.
  */
 
 #include <linux/err.h>
