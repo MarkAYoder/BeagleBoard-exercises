@@ -1,4 +1,4 @@
-obj-m += as621.o
+obj-m += as621.o tmp114.o
 
 KDIR ?= /lib/modules/$(shell uname -r)/build
 PWD := $(CURDIR)
