@@ -1,14 +1,16 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /*
  * Copyright (C) 2022 Robert Nelson <robertcnelson@gmail.com>
+ * Ported to qwiic Joystick by Mark A. Yoder <Mark.A.Yoder@Rose-Hullman.edu>
  */
 
 /dts-v1/;
 /plugin/;
 
-#include <dt-bindings/pinctrl/am33xx.h>
+#include <dt-bindings/pinctrl/k3.h>
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/board/k3-j721e-bone-pins.h>
 
 /*
  * Helper to show loaded overlays under: /proc/device-tree/chosen/overlays/
@@ -19,7 +21,7 @@
 	};
 };
 
-&i2c5 {
+&bone_i2c_5 {
 	status = "okay";
 
 	clock-frequency = <400000>;
@@ -29,8 +31,10 @@
 
 	imu@20 {
 		pinctrl-names = "default";
-//		pinctrl-0 = <&mpu6050_pins>;
+		// pinctrl-0 = <&P9_12_gpio_pin>;
 		compatible = "sparkfun,qwiic-joystick";
 		reg = <0x20>;
+		// interrupt-parent = <&main_gpio0>;
+		// interrupts = <45 IRQ_TYPE_EDGE_RISING>;
 	};
 };
