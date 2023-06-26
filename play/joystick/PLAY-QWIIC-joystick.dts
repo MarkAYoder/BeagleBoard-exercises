@@ -21,16 +21,17 @@
 	};
 };
 
-&bone_i2c_5 {
+&mcu_i2c0 {
 	status = "okay";
 
-	clock-frequency = <400000>;
+	clock-frequency = <10000>;
 
 	#address-cells = <1>;
 	#size-cells = <0>;
 
 	imu@20 {
 		pinctrl-names = "default";
+		pinctrl-0 = <&i2c_qwiic_pins_default>;
 		// pinctrl-0 = <&P9_12_gpio_pin>;
 		compatible = "sparkfun,qwiic-joystick";
 		reg = <0x20>;
