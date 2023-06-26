@@ -17,7 +17,7 @@
  */
 &{/chosen} {
 	overlays {
-		BB-I2C5-qwiic-joystick = __TIMESTAMP__;
+		PLAY-QWIIC-joystick = __TIMESTAMP__;
 	};
 };
 
