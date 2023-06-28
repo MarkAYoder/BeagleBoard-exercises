@@ -4,7 +4,7 @@
  * Copyright (c) 2021 Puranjay Mohan <puranjay12@gmail.com>
  * Converted from TMP117 to STTS22H by Mark A. Yoder <Mark.A.Yoder@Rose-Hulman.edu>
  *
- * Driver for the Texas Instruments STTS22H Temperature Sensor
+ * Driver for the ST STTS22H Temperature Sensor
  * (7-bit I2C slave address (0x4B))
  */
 
@@ -27,12 +27,10 @@
 #define STTS22H_REG_TEMP_L		0x6
 #define STTS22H_REG_TEMP_H		0x7
 
-#define STTS22H_REG_FREERUN		0x34
-
-#define STTS22H_RESOLUTION_10UC	78125
-#define MICRODEGREE_PER_10MILLIDEGREE	10000
-
+#define STTS22H_REG_FREERUN		0x34	// Freerun and 200 Hz ODR
 #define STTS22H_DEVICE_ID		0xA0
+
+#define MICRODEGREE_PER_10MILLIDEGREE	10000
 
 struct stts22h_data {
 	struct i2c_client *client;
@@ -63,9 +61,8 @@ static int stts22h_read_raw(struct iio_dev *indio_dev,
 		 * Conversion from 10s of uC to mC
 		 * as IIO reports temperature in mC
 		 */
-		*val = STTS22H_RESOLUTION_10UC / MICRODEGREE_PER_10MILLIDEGREE;
-		*val2 = (STTS22H_RESOLUTION_10UC %
-					MICRODEGREE_PER_10MILLIDEGREE) * 100;
+		*val = 0;
+		*val2 = MICRODEGREE_PER_10MILLIDEGREE;
 
 		return IIO_VAL_INT_PLUS_MICRO;
 
