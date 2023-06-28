@@ -45,7 +45,7 @@ static int tmp114_read_raw(struct iio_dev *indio_dev,
 	s32 lo;
 
 	switch (mask) {
-	case IIO_CHAN_INFO_RAW:
+	case IIO_CHAN_INFO_PROCESSED:
 		hi = i2c_smbus_read_byte_data(data->client, TMP114_REG_TEMP_H);
 		if (hi < 0)
 			return hi;
@@ -54,14 +54,6 @@ static int tmp114_read_raw(struct iio_dev *indio_dev,
 			return lo;
 
 		*val = sign_extend32(hi<<8 | lo, 15);
-		return IIO_VAL_INT;
-
-	case IIO_CHAN_INFO_PROCESSED:
-		hi = i2c_smbus_read_byte_data(data->client,
-						  TMP114_REG_TEMP_L);
-		if (hi < 0)
-			return hi;
-		*val   = (sign_extend32(hi, 15) * TMP114_RESOLUTION_10UC / MICRODEGREE_PER_10MILLIDEGREE);
 		return IIO_VAL_INT;
 
 	case IIO_CHAN_INFO_SCALE:
@@ -92,8 +84,7 @@ static int tmp114_write_raw(struct iio_dev *indio_dev, struct iio_chan_spec
 static const struct iio_chan_spec tmp114_channels[] = {
 	{
 		.type = IIO_TEMP,
-		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |
-				      BIT(IIO_CHAN_INFO_PROCESSED) |
+		.info_mask_separate = BIT(IIO_CHAN_INFO_PROCESSED) |
 				      BIT(IIO_CHAN_INFO_SCALE),
 	},
 };
@@ -196,6 +187,6 @@ static struct i2c_driver tmp114_driver = {
 };
 module_i2c_driver(tmp114_driver);
 
-MODULE_AUTHOR("Puranjay Mohan <puranjay12@gmail.com>");
-MODULE_DESCRIPTION("TI TMP114 Temperature sensor driver");
+MODULE_AUTHOR("Mark A. Yoder <Mark.A.Yoder@Rose-Hulman.edu>");
+MODULE_DESCRIPTION("ST stts22h Temperature sensor driver");
 MODULE_LICENSE("GPL");
