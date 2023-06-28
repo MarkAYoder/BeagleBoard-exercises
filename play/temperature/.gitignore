@@ -1,4 +1,4 @@
-tmp114.mod.c
+*.mod.c
 .Module.*
 .modules.*
 .tmp114.*
@@ -6,3 +6,4 @@ tmp114.mod.c
 *.order
 *.ko
 *.mod
+*.cmd
