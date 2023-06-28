@@ -20,12 +20,14 @@
 #include <linux/iio/iio.h>
 
 #define STTS22H_REG_DEVICE_ID	0x1
-#define STTS22H_REG_HIGH_LIM		0x2
+#define STTS22H_REG_HIGH_LIM	0x2
 #define STTS22H_REG_LOW_LIM		0x3
-#define STTS22H_REG_CFGR			0x4
+#define STTS22H_REG_CFGR		0x4
 #define STTS22H_REG_STATUS		0x5
 #define STTS22H_REG_TEMP_L		0x6
 #define STTS22H_REG_TEMP_H		0x7
+
+#define STTS22H_REG_FREERUN		0x34
 
 #define STTS22H_RESOLUTION_10UC	78125
 #define MICRODEGREE_PER_10MILLIDEGREE	10000
@@ -161,6 +163,11 @@ static int stts22h_probe(struct i2c_client *client)
 		indio_dev->name = "stts22h";
 		break;
 	}
+	// Enable temperture reading
+	ret = i2c_smbus_write_byte_data(data->client,
+						STTS22H_REG_CFGR, STTS22H_REG_FREERUN);
+	if(ret < 0)
+		return ret;
 
 	return devm_iio_device_register(&client->dev, indio_dev);
 }
