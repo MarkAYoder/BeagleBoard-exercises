@@ -1,4 +1,6 @@
 #!/bin/bash
+# Changes the kernel version for the Play.
+# By Mark A. Yoder, 12-July-2023
 if [ "$(id -u)" != "0" ]; then
    echo "This script must be run as root" 1>&2
    exit 1
