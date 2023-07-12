@@ -5,8 +5,9 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 vm=/boot/vmlinuz-
-version=$(whiptail --menu "Choose a Kernel" 25 78 16 $(ls ${vm}* | sed "s,$vm,,g" | \
-    sed "s/\(.*\)/\1 ./g") 3>&1 1>&2 2>&3)
+version=$(whiptail --menu "Choose a Kernel" 25 78 16 \
+    $(ls ${vm}* | sed "s,$vm,,g" | sed "s/\(.*\)/\1 ./g") \
+    3>&1 1>&2 2>&3)
 
 [ -z "$version" ] && echo "Canceled" && exit
 
