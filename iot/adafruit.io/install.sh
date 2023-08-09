@@ -5,4 +5,7 @@ cd adafruit-io-basics/raspberry-pi
 npm install
 
 # For mqtt
-apt-get install mosquitto-clients
+sudo apt install mosquitto-clients
+
+
+pip install adafruit-io
