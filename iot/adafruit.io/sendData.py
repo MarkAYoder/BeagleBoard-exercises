@@ -23,5 +23,5 @@ test = aio.feeds('light')
 aio.send_data(test.key, 98.6)
 
 # Create a data item with value 30 in the 'button' feed.
-data =Data(value=30)
+data = Data(value=30)
 aio.create_data('button', data)
