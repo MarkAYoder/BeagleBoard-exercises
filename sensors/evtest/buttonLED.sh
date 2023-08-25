@@ -2,6 +2,7 @@
 #//////////////////////////////////////
 #	buttonLED.sh
 #	Blinks a USR LED when USR button is pressed
+#       Polls the button
 #	Wiring:	
 #	Setup:	
 #	See:	
@@ -9,7 +10,7 @@
 
 LED="3"
  
-BUTTONPATH='/dev/input/event1'
+BUTTONPATH='/dev/input/by-path/platform-gpio-keys-event'
 LEDPATH='/sys/class/leds/beaglebone:green:usr'
  
 while true ; do
