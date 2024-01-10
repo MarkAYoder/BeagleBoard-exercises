@@ -5,3 +5,6 @@ sudo mv ngrok ~/.local/bin
 
 mkdir -p ~/.ngrok2
 cp ngrok.yml ~/.ngrok2
+
+sudo apt install python3-flask
+
