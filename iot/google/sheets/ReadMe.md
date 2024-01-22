@@ -1,5 +1,7 @@
 Sheets IOT
 ==========
+Be sure to run pip install -r requirements.txt as shown in install.sh
+to have the correct versions installed.
 
 Source setup.sh before running to install the i2c temperature sensors.
 
