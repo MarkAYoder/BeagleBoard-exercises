@@ -23,6 +23,7 @@
 # This is for setting up the access point: /etc/default$ echo bb-wl18xx 
 set -e
 BONE=${1:-192.168.7.2}
+BONE=${1:-192.168.7.2}
 BONE_NAME=bone
 USER=debian
 
