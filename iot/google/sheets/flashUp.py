@@ -48,7 +48,7 @@ while True:
             current = current + 1
             if current >= len(hist):
                 current=0
-            print('ping: time = %5.2f, average = %5.2f}' % (timems, average))
+            print('ping: time = %5.2f, average = %5.2f' % (timems, average))
             if timems > 1.1*average:
                 lines.set_values([1, 1, 0])     # red and green
             else:
