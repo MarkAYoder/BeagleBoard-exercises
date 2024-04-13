@@ -53,8 +53,8 @@ def main():
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
                 'credentials.json', SCOPES)
-            creds = flow.run_local_server(port=0)
-            # creds = flow.run_console()
+            # creds = flow.run_local_server(port=0)
+            creds = flow.run_console()
         # Save the credentials for the next run
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
@@ -92,7 +92,7 @@ def main():
         temp1 = 9/5*temp1 + 32
         fd.close()
     
-        fd = open(tmpPATH + "hwmon1/temp1_input")
+        fd = open(tmpPATH + "hwmon0/temp1_input")
         temp2 = float(fd.read().replace('\n', ''))/1000
         temp2 = 9/5*temp2 + 32
         fd.close()
