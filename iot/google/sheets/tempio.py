@@ -28,7 +28,7 @@ import time, sys
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 # The ID and range of a sample spreadsheet.
-SAMPLE_SPREADSHEET_ID = '1nPnQwM3iIv_sPfPvym8HwHy0m3oA6febnFqjfDrjxmA'
+SAMPLE_SPREADSHEET_ID = '15o8khH1gKubjyZxZFr166JLKpAY5sjQu-8t1WlQ0eqI'
 SAMPLE_RANGE_NAME = 'A2'
 
 BUS="i2c-1"
@@ -92,7 +92,7 @@ def main():
         temp1 = 9/5*temp1 + 32
         fd.close()
     
-        fd = open(tmpPATH + "hwmon0/temp1_input")
+        fd = open(tmpPATH + "hwmon1/temp1_input")
         temp2 = float(fd.read().replace('\n', ''))/1000
         temp2 = 9/5*temp2 + 32
         fd.close()
