@@ -4,14 +4,13 @@
 config-pin P9_24 i2c
 config-pin P9_26 i2c
 
-pushd /sys/class/i2c-adapter/i2c-1
+I2CPATH=/sys/class/i2c-adapter/i2c-1
 
 # Create the device
-echo tmp101 0x49 > new_device
+echo tmp101 0x49 > $I2CPATH/new_device
 # Wait to temp1_input to appear
 sleep 1
 
 # Check the temp (in mC)
 cat /sys/class/hwmon/hwmon0/temp1_input
 
-popd
