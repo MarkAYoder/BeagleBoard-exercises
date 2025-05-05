@@ -22,7 +22,7 @@ lines.request(consumer='blue.py', type=gpiod.LINE_REQ_DIR_OUT)
 print("blue on")
 lines.set_values([1])     # blue LED on
 
-while True:
+def control_led_based_on_distance():
     try:
         # Get the current location of the ISS
         response = urllib.request.urlopen(url)
@@ -46,7 +46,10 @@ while True:
             print("Distance > 1000 miles")
             lines.set_values([0])
 
-        time.sleep(60)  # Wait for 60 seconds before checking again
-
     except Exception as err:
         print('ERROR:', err)
+
+# Main loop
+while True:
+    control_led_based_on_distance()
+    time.sleep(60)  # Wait for 60 seconds before checking again
