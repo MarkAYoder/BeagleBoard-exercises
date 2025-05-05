@@ -37,7 +37,7 @@ while True:
         brazil = (39.525000, -87.127500)
         # haversine returns distance in miles between two points
         distance = haversine(iss, brazil, unit=Unit.MILES)
-        print('Distance from ISS to Brazil : ', int(distance), 'miles')
+        print('Distance from ISS to Brazil : ', int(distance), 'miles, ', int(distance*1.60934), 'km')
 
         if distance < 1000:
             print("Distance < 1000 miles")
