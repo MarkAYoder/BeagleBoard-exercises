@@ -1,11 +1,21 @@
 #!/usr/bin/env python3
 # From: https://codeclubprojects.org/en-GB/python/iss/
 # pip install haversine
+# pip install geopy
 import gpiod
 import json
 import urllib.request
 import time
 from haversine import haversine, Unit
+from geopy.geocoders import Nominatim
+
+# calling the Nominatim tool and create Nominatim class
+loc = Nominatim(user_agent="Geopy Library")
+# entering the location name
+getLoc = loc.geocode("Brazil Indiana USA")
+# printing address
+print(getLoc.address)
+brazil = (getLoc.latitude, getLoc.longitude)
 
 url = 'http://api.open-notify.org/iss-now.json'
 
@@ -34,7 +44,6 @@ def control_led_based_on_distance():
         print('Current Location : ', iss)
 
         # Get the distance from the ISS to Brazil Indiana
-        brazil = (39.525000, -87.127500)
         # haversine returns distance in miles between two points
         distance = haversine(iss, brazil, unit=Unit.MILES)
         print('Distance from ISS to Brazil : ', int(distance), 'miles, ', int(distance*1.60934), 'km')
