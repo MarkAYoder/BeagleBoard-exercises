@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# Usage: issNear.py [address]
+# This program will turn on the blue LED if the ISS is within 1000 miles of the given address.
 # From: https://codeclubprojects.org/en-GB/python/iss/
 # pip install haversine
 # pip install geopy
@@ -8,22 +10,26 @@ import urllib.request
 import time
 from haversine import haversine, Unit
 from geopy.geocoders import Nominatim
+import sys
 
 # calling the Nominatim tool and create Nominatim class
 loc = Nominatim(user_agent="Geopy Library")
 # entering the location name
-getLoc = loc.geocode("Brazil Indiana USA")
-# printing address
+if len(sys.argv) > 1:
+    address = sys.argv[1] 
+else:
+    address = "Brazil Indiana USA"
+getLoc = loc.geocode(address)
+
 print(getLoc.address)
-brazil = (getLoc.latitude, getLoc.longitude)
+city = (getLoc.latitude, getLoc.longitude)
 
 url = 'http://api.open-notify.org/iss-now.json'
 
+# Set up GPIO for blue LED
 LED_CHIP = 'gpiochip1'
 blue   = 18 # 'P9_19'
-
 LED_LINE_OFFSET = [blue]
-
 chip = gpiod.Chip(LED_CHIP)
 lines = chip.get_lines(LED_LINE_OFFSET)
 lines.request(consumer='blue.py', type=gpiod.LINE_REQ_DIR_OUT)
@@ -43,10 +49,10 @@ def control_led_based_on_distance():
         iss = (float(location['latitude']), float(location['longitude']))
         print('Current Location : ', iss)
 
-        # Get the distance from the ISS to Brazil Indiana
+        # Get the distance from the ISS to city
         # haversine returns distance in miles between two points
-        distance = haversine(iss, brazil, unit=Unit.MILES)
-        print('Distance from ISS to Brazil : ', int(distance), 'miles, ', int(distance*1.60934), 'km')
+        distance = haversine(iss, city, unit=Unit.MILES)
+        print('Distance from ISS to City : ', int(distance), 'miles, ', int(distance*1.60934), 'km')
 
         if distance < 1000:
             print("Distance < 1000 miles")
