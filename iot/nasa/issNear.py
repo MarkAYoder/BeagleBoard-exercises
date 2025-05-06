@@ -2,14 +2,14 @@
 # Usage: issNear.py [address]
 # This program will turn on the blue LED if the ISS is within 1000 miles of the given address.
 # From: https://codeclubprojects.org/en-GB/python/iss/
-# pip install haversine
 # pip install geopy
 import gpiod
 import json
 import urllib.request
 import time
-from haversine import haversine, Unit
 from geopy.geocoders import Nominatim
+from geopy.distance import geodesic
+
 import sys
 
 # calling the Nominatim tool and create Nominatim class
@@ -50,8 +50,8 @@ def control_led_based_on_distance():
         print('Current Location : ', iss)
 
         # Get the distance from the ISS to city
-        # haversine returns distance in miles between two points
-        distance = haversine(iss, city, unit=Unit.MILES)
+        # geodesic returns distance in miles between two points
+        distance = geodesic(iss, city).miles
         print('Distance from ISS to City : ', int(distance), 'miles, ', int(distance*1.60934), 'km')
 
         if distance < 1000:
