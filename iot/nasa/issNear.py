@@ -8,19 +8,20 @@ import json
 import urllib.request
 import time
 from geopy.geocoders import Nominatim
-from geopy.distance import geodesic
+from geopy.distance  import geodesic
 
 import sys
 
 # calling the Nominatim tool and create Nominatim class
 loc = Nominatim(user_agent="Geopy Library")
-# entering the location name
+
+# Pass location on the command line
 if len(sys.argv) > 1:
     address = sys.argv[1] 
 else:
     address = "Brazil Indiana USA"
+print("Looking up address: ", address)
 getLoc = loc.geocode(address)
-
 print(getLoc.address)
 city = (getLoc.latitude, getLoc.longitude)
 
