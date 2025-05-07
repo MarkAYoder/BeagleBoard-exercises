@@ -7,6 +7,8 @@ import gpiod
 import json
 import urllib.request
 import time
+import datetime  # Import datetime module
+
 from geopy.geocoders import Nominatim
 from geopy.distance  import geodesic
 
@@ -39,8 +41,24 @@ lines.request(consumer='blue.py', type=gpiod.LINE_REQ_DIR_OUT)
 print("blue on")
 lines.set_values([1])     # blue LED on
 
+# Function to check if it's nighttime
+def is_nighttime():
+    current_time = datetime.datetime.now().time()
+    # Define nighttime as between 10:00 PM and 6:00 AM
+    night_start = datetime.time(22, 0)  # 10:00 PM
+    night_end = datetime.time(5, 0)    # 5:00 AM
+
+    # Check if the current time is within the nighttime range
+    return current_time >= night_start or current_time <= night_end
+
 def control_led_based_on_distance():
     try:
+        # Check if it's nighttime
+        if is_nighttime():
+            # print("It's nighttime. Turning off the LED.")
+            lines.set_values([0])  # Turn off LED
+            return
+        
         # Get the current location of the ISS
         response = urllib.request.urlopen(url)
         result = json.loads(response.read())
