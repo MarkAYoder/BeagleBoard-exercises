@@ -7,7 +7,8 @@ import gpiod
 import json
 import urllib.request
 import time
-import datetime  # Import datetime module
+import datetime
+import threading
 
 from geopy.geocoders import Nominatim
 from geopy.distance  import geodesic
@@ -38,7 +39,7 @@ lines = chip.get_lines(LED_LINE_OFFSET)
 lines.request(consumer='blue.py', type=gpiod.LINE_REQ_DIR_OUT)
 
 # Turn on blue LED
-print("blue on")
+print("blue LED on")
 lines.set_values([1])     # blue LED on
 
 # Function to check if it's nighttime
@@ -51,11 +52,24 @@ def is_nighttime():
     # Check if the current time is within the nighttime range
     return current_time >= night_start or current_time <= night_end
 
+# Global variable to control the blinking thread
+blinking = False
+
+def blink_led():
+    global blinking
+    while blinking:
+        lines.set_values([1])  # Turn on LED
+        time.sleep(0.5)        # Wait 0.5 seconds
+        lines.set_values([0])  # Turn off LED
+        time.sleep(0.5)        # Wait 0.5 seconds
+
 def control_led_based_on_distance():
+    global blinking
     try:
         # Check if it's nighttime
         if is_nighttime():
-            print("It's nighttime. Turning off the LED.")
+            # print("It's nighttime. Turning off the LED.")
+            blinking = False  # Stop blinking
             lines.set_values([0])  # Turn off LED
             return
         
@@ -75,16 +89,15 @@ def control_led_based_on_distance():
 
         if distance < 500:
             print("Distance < 500 miles")
-            for _ in range(25):  # Blink 25 times
-                lines.set_values([1])  # Turn on LED
-                time.sleep(0.5)       # Wait 0.5 seconds
-                lines.set_values([0])  # Turn off LED
-                time.sleep(0.5)       # Wait 0.5 seconds
-            lines.set_values([1])
+            if not blinking:
+                blinking = True
+                threading.Thread(target=blink_led, daemon=True).start()
         elif distance < 1000:
-            print("Distance < 1000 miles")
+            blinking = False  # Stop blinking
+            print("Distance < 1000 miles")  # On steady
             lines.set_values([1])
         else:
+            blinking = False  # Stop blinking
             print("Distance > 1000 miles")
             lines.set_values([0])
 
