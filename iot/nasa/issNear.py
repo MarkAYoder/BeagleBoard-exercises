@@ -44,8 +44,8 @@ lines.set_values([1])     # blue LED on
 # Function to check if it's nighttime
 def is_nighttime():
     current_time = datetime.datetime.now().time()
-    # Define nighttime as between 10:00 PM and 6:00 AM
-    night_start = datetime.time(22, 0)  # 10:00 PM
+    # Define nighttime as between 10:00 PM and 5:00 AM
+    night_start = datetime.time(21, 0)  # 10:00 PM
     night_end = datetime.time(5, 0)    # 5:00 AM
 
     # Check if the current time is within the nighttime range
@@ -55,7 +55,7 @@ def control_led_based_on_distance():
     try:
         # Check if it's nighttime
         if is_nighttime():
-            # print("It's nighttime. Turning off the LED.")
+            print("It's nighttime. Turning off the LED.")
             lines.set_values([0])  # Turn off LED
             return
         
@@ -73,7 +73,15 @@ def control_led_based_on_distance():
         distance = geodesic(iss, city).miles
         print('Distance from ISS to City : ', int(distance), 'miles, ', int(distance*1.60934), 'km')
 
-        if distance < 1000:
+        if distance < 500:
+            print("Distance < 500 miles")
+            for _ in range(25):  # Blink 50 times
+                lines.set_values([1])  # Turn on LED
+                time.sleep(0.5)       # Wait 0.5 seconds
+                lines.set_values([0])  # Turn off LED
+                time.sleep(0.5)       # Wait 0.5 seconds
+            lines.set_values([1])
+        elif distance < 1000:
             print("Distance < 1000 miles")
             lines.set_values([1])
         else:
