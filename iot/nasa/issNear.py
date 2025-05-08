@@ -25,7 +25,12 @@ else:
     address = "Brazil Indiana USA"
 print("Looking up address: ", address)
 getLoc = loc.geocode(address)
-print(getLoc.address)
+# Check if the address is valid
+if getLoc is None:
+    print(f"Error: Unable to find location for address '{address}'. Please provide a valid address.")
+    sys.exit(1)  # Exit the program with an error code
+
+print("Address found: ", getLoc.address)
 city = (getLoc.latitude, getLoc.longitude)
 
 url = 'http://api.open-notify.org/iss-now.json'
@@ -85,8 +90,11 @@ def control_led_based_on_distance():
         # Get the distance from the ISS to city
         # geodesic returns distance in miles between two points
         distance = geodesic(iss, city).miles
-        print('Distance from ISS to City : ', int(distance), 'miles, ', int(distance*1.60934), 'km')
+        cleaned_address = getLoc.address.replace("United States", "").strip()
+        print('Distance from ISS to ', cleaned_address, ':', 
+              int(distance), 'miles, ', int(distance*1.60934), 'km')
 
+        # Check the distance and control the LED
         if distance < 500:
             print("Distance < 500 miles")
             if not blinking:
