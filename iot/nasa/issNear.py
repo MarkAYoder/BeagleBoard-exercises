@@ -75,7 +75,7 @@ def control_led_based_on_distance():
 
         if distance < 500:
             print("Distance < 500 miles")
-            for _ in range(25):  # Blink 50 times
+            for _ in range(25):  # Blink 25 times
                 lines.set_values([1])  # Turn on LED
                 time.sleep(0.5)       # Wait 0.5 seconds
                 lines.set_values([0])  # Turn off LED
