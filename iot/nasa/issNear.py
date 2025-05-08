@@ -90,7 +90,7 @@ def control_led_based_on_distance():
         # Get the distance from the ISS to city
         # geodesic returns distance in miles between two points
         distance = geodesic(iss, city).miles
-        cleaned_address = getLoc.address.replace("United States", "").strip()
+        cleaned_address = getLoc.address.replace(", United States", "").strip()
         print('Distance from ISS to ', cleaned_address, ':', 
               int(distance), 'miles, ', int(distance*1.60934), 'km')
 
