@@ -1,33 +1,39 @@
 #!/usr/bin/env python3
 
-# This script shortens tmp101_data.db to keep only the most recent 31 days of data.
-# It deletes all records older than 31 days from the most recent timestamp.
+# This script shortens tmp101_data.db to keep only the most recent N days of data.
+# It deletes all records older than N days from the most recent timestamp.
 
 import sqlite3
+import argparse
 from datetime import datetime, timedelta
 
 DB_PATH = "tmp101_data.db"
 
-def shorten_database():
+def shorten_database(days=31):
     try:
         conn = sqlite3.connect(DB_PATH)
         c = conn.cursor()
         
-        # Get the most recent timestamp
-        c.execute("SELECT MAX(timestamp) FROM readings")
+        # Get the most recent and oldest timestamps
+        c.execute("SELECT MAX(timestamp), MIN(timestamp) FROM readings")
         result = c.fetchone()
         
-        if result[0] is None:
+        if result[0] is None or result[1] is None:
             print("No data found in database.")
             conn.close()
             return
         
         most_recent = datetime.fromisoformat(result[0])
-        cutoff_date = most_recent - timedelta(days=31)
+        oldest = datetime.fromisoformat(result[1])
+        days_saved = (most_recent - oldest).days
+        
+        cutoff_date = most_recent - timedelta(days=days)
         cutoff_str = cutoff_date.isoformat()
         
+        print(f"Oldest timestamp: {oldest.isoformat()}")
         print(f"Most recent timestamp: {most_recent.isoformat()}")
-        print(f"Cutoff date (31 days earlier): {cutoff_str}")
+        print(f"Days currently saved: {days_saved}")
+        print(f"Cutoff date ({days} days earlier): {cutoff_str}")
         
         # Count records to be deleted
         c.execute("SELECT COUNT(*) FROM readings WHERE timestamp < ?", (cutoff_str,))
@@ -53,7 +59,7 @@ def shorten_database():
             conn.commit()
             print("Database vacuumed successfully.")
         else:
-            print("No records to delete. Database already contains only the most recent 31 days.")
+            print(f"No records to delete. Database already contains only the most recent {days} days.")
         
         conn.close()
         print("Done.")
@@ -64,4 +70,14 @@ def shorten_database():
         print(f"Error: {e}")
 
 if __name__ == "__main__":
-    shorten_database()
+    parser = argparse.ArgumentParser(
+        description="Shorten tmp101_data.db to keep only the most recent N days of data."
+    )
+    parser.add_argument(
+        '--days',
+        type=int,
+        default=31,
+        help='Number of days of data to keep (default: 31)'
+    )
+    args = parser.parse_args()
+    shorten_database(days=args.days)
