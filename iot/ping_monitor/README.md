@@ -11,7 +11,7 @@ python ping_monitor.py
 Options:
 
 - `--target HOST` — Host or IP to ping (default: `google.com`)
-- `--interval N` — Seconds between pings (default: `60`)
+- `--interval N` — Seconds between pings (default: `15`)
 - `--db PATH` — Path to SQLite database file (default: `./ping_failures.db`)
 
 Example: ping every 30 seconds and use a custom DB path:

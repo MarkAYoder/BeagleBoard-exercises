@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Serve ping failures from SQLite on a web page with a chart.
-Usage: python3 serve_failures.py [--db path] [--port 8000]
+Usage: python3 serve_failures.py [--db path] [--port 5002]
 """
 
 import argparse
