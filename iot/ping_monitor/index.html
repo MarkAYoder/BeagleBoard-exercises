@@ -42,10 +42,12 @@
     th { background: #414868; color: #7aa2f7; font-weight: 600; }
     tr:nth-child(even) { background: #1f2335; }
     .empty { color: #565f89; font-style: italic; }
+    .last-refreshed { color: #565f89; font-size: 0.875rem; margin-top: 0.25rem; }
   </style>
 </head>
 <body>
   <h1>Ping failures</h1>
+  <p class="last-refreshed" id="last-refreshed" aria-live="polite"></p>
   <div class="chart-container">
     <h2>Failures vs. time</h2>
     <canvas id="chart-time"></canvas>
@@ -243,12 +245,18 @@
       return div.innerHTML;
     }
 
+    function updateLastRefreshed() {
+      const el = document.getElementById('last-refreshed');
+      if (el) el.textContent = 'Last refreshed: ' + new Date().toLocaleString();
+    }
+
     async function refresh() {
       const failures = await loadFailures();
       renderTimeChart(failures);
       renderDailyChart(failures);
       renderReasonChart(failures);
       renderTable(failures);
+      updateLastRefreshed();
     }
 
     async function init() {
