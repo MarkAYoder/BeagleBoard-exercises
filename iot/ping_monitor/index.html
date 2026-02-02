@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ping failures</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      background: #1a1b26;
+      color: #c0caf5;
+    }
+    h1 { color: #7aa2f7; margin-top: 0; }
+    .chart-container {
+      position: relative;
+      height: 280px;
+      margin-bottom: 2rem;
+      background: #24283b;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .chart-container h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #9ece6a;
+      margin: 0 0 0.5rem 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #24283b;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td { padding: 0.5rem 0.75rem; text-align: left; }
+    th { background: #414868; color: #7aa2f7; font-weight: 600; }
+    tr:nth-child(even) { background: #1f2335; }
+    .empty { color: #565f89; font-style: italic; }
+  </style>
+</head>
+<body>
+  <h1>Ping failures</h1>
+  <div class="chart-container">
+    <h2>Failures vs. time</h2>
+    <canvas id="chart-time"></canvas>
+  </div>
+  <div class="chart-container">
+    <h2>Failures per day</h2>
+    <canvas id="chart-daily"></canvas>
+  </div>
+  <div class="chart-container">
+    <h2>By reason</h2>
+    <canvas id="chart-reason"></canvas>
+  </div>
+  <h2 style="font-size: 1rem; color: #9ece6a;">Recent failures</h2>
+  <table>
+    <thead>
+      <tr><th>Time (UTC)</th><th>Target</th><th>Reason</th></tr>
+    </thead>
+    <tbody id="table-body"></tbody>
+  </table>
+
+  <script>
+    async function loadFailures() {
+      const r = await fetch('/api/failures');
+      if (!r.ok) return [];
+      return r.json();
+    }
+
+    function failuresVsTime(failures) {
+      const sorted = [...failures].sort((a, b) => (a.checked_at || '').localeCompare(b.checked_at || ''));
+      const times = sorted.map(f => f.checked_at || null).filter(Boolean);
+      const cumulative = times.map((_, i) => i + 1);
+      return { times, cumulative };
+    }
+
+    function groupByDay(failures) {
+      const byDay = {};
+      for (const f of failures) {
+        const day = (f.checked_at || '').slice(0, 10);
+        if (!day) continue;
+        byDay[day] = (byDay[day] || 0) + 1;
+      }
+      const days = Object.keys(byDay).sort();
+      return { labels: days, values: days.map(d => byDay[d]) };
+    }
+
+    function groupByReason(failures) {
+      const byReason = {};
+      for (const f of failures) {
+        const r = f.reason || 'unknown';
+        byReason[r] = (byReason[r] || 0) + 1;
+      }
+      const reasons = Object.keys(byReason);
+      return { labels: reasons, values: reasons.map(r => byReason[r]) };
+    }
+
+    const chartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(255,255,255,0.06)' },
+          ticks: { color: '#a9b1d6' }
+        },
+        y: {
+          beginAtZero: true,
+          grid: { color: 'rgba(255,255,255,0.06)' },
+          ticks: { color: '#a9b1d6' }
+        }
+      }
+    };
+
+    const barColor = '#7aa2f7';
+    const barHover = '#89b4fa';
+
+    function renderTimeChart(failures) {
+      const { times } = failuresVsTime(failures);
+      const ctx = document.getElementById('chart-time').getContext('2d');
+      new Chart(ctx, {
+        type: 'scatter',
+        data: {
+          datasets: [{
+            label: 'Failure',
+            data: times.map(t => ({ x: t, y: 1 })),
+            borderColor: barColor,
+            backgroundColor: barColor,
+            pointRadius: 5,
+            pointHoverRadius: 8,
+            showLine: false
+          }]
+        },
+        options: {
+          ...chartOptions,
+          scales: {
+            x: {
+              type: 'time',
+              time: { unit: 'day', displayFormats: { minute: 'HH:mm', hour: 'HH:mm', day: 'MMM d', week: 'MMM d', month: 'MMM yyyy' } },
+              grid: { color: 'rgba(255,255,255,0.06)' },
+              ticks: { color: '#a9b1d6', maxTicksLimit: 10 }
+            },
+            y: {
+              min: 0.5,
+              max: 1.5,
+              grid: { color: 'rgba(255,255,255,0.06)' },
+              ticks: { color: '#a9b1d6', callback: () => '' }
+            }
+          }
+        }
+      });
+    }
+
+    function renderDailyChart(failures) {
+      const { labels, values } = groupByDay(failures);
+      const ctx = document.getElementById('chart-daily').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Failures',
+            data: values,
+            backgroundColor: barColor,
+            hoverBackgroundColor: barHover
+          }]
+        },
+        options: chartOptions
+      });
+    }
+
+    function renderReasonChart(failures) {
+      const { labels, values } = groupByReason(failures);
+      const ctx = document.getElementById('chart-reason').getContext('2d');
+      const colors = ['#7aa2f7', '#f7768e', '#ff9e64', '#9ece6a', '#e0af68', '#bb9af7'];
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels,
+          datasets: [{
+            data: values,
+            backgroundColor: labels.map((_, i) => colors[i % colors.length]),
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: '#a9b1d6' } }
+          }
+        }
+      });
+    }
+
+    function renderTable(failures) {
+      const tbody = document.getElementById('table-body');
+      const recent = failures.slice(-50).reverse();
+      if (recent.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="3" class="empty">No failures recorded.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = recent.map(f =>
+        `<tr><td>${f.checked_at || ''}</td><td>${escapeHtml(f.target || '')}</td><td>${escapeHtml(f.reason || '')}</td></tr>`
+      ).join('');
+    }
+
+    function escapeHtml(s) {
+      const div = document.createElement('div');
+      div.textContent = s;
+      return div.innerHTML;
+    }
+
+    async function init() {
+      const failures = await loadFailures();
+      if (failures.length > 0) {
+        renderTimeChart(failures);
+        renderDailyChart(failures);
+        renderReasonChart(failures);
+      } else {
+        document.getElementById('chart-time').parentElement.innerHTML += '<p class="empty">No data yet.</p>';
+        document.getElementById('chart-daily').parentElement.innerHTML += '<p class="empty">No data yet.</p>';
+        document.getElementById('chart-reason').parentElement.innerHTML += '<p class="empty">No data yet.</p>';
+      }
+      renderTable(failures);
+    }
+
+    init();
+  </script>
+</body>
+</html>
