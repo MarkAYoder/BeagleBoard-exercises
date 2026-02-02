@@ -123,15 +123,25 @@
     const barColor = '#7aa2f7';
     const barHover = '#89b4fa';
 
+    let timeChart = null;
+    let dailyChart = null;
+    let reasonChart = null;
+
     function renderTimeChart(failures) {
       const { times } = failuresVsTime(failures);
+      const data = times.map(t => ({ x: t, y: 1 }));
+      if (timeChart) {
+        timeChart.data.datasets[0].data = data;
+        timeChart.update();
+        return;
+      }
       const ctx = document.getElementById('chart-time').getContext('2d');
-      new Chart(ctx, {
+      timeChart = new Chart(ctx, {
         type: 'scatter',
         data: {
           datasets: [{
             label: 'Failure',
-            data: times.map(t => ({ x: t, y: 1 })),
+            data,
             borderColor: barColor,
             backgroundColor: barColor,
             pointRadius: 5,
@@ -161,8 +171,14 @@
 
     function renderDailyChart(failures) {
       const { labels, values } = groupByDay(failures);
+      if (dailyChart) {
+        dailyChart.data.labels = labels;
+        dailyChart.data.datasets[0].data = values;
+        dailyChart.update();
+        return;
+      }
       const ctx = document.getElementById('chart-daily').getContext('2d');
-      new Chart(ctx, {
+      dailyChart = new Chart(ctx, {
         type: 'bar',
         data: {
           labels,
@@ -177,17 +193,25 @@
       });
     }
 
+    const reasonColors = ['#7aa2f7', '#f7768e', '#ff9e64', '#9ece6a', '#e0af68', '#bb9af7'];
     function renderReasonChart(failures) {
       const { labels, values } = groupByReason(failures);
+      const bgColors = labels.map((_, i) => reasonColors[i % reasonColors.length]);
+      if (reasonChart) {
+        reasonChart.data.labels = labels;
+        reasonChart.data.datasets[0].data = values;
+        reasonChart.data.datasets[0].backgroundColor = bgColors;
+        reasonChart.update();
+        return;
+      }
       const ctx = document.getElementById('chart-reason').getContext('2d');
-      const colors = ['#7aa2f7', '#f7768e', '#ff9e64', '#9ece6a', '#e0af68', '#bb9af7'];
-      new Chart(ctx, {
+      reasonChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
           labels,
           datasets: [{
             data: values,
-            backgroundColor: labels.map((_, i) => colors[i % colors.length]),
+            backgroundColor: bgColors,
             borderWidth: 0
           }]
         },
@@ -219,21 +243,20 @@
       return div.innerHTML;
     }
 
-    async function init() {
+    async function refresh() {
       const failures = await loadFailures();
-      if (failures.length > 0) {
-        renderTimeChart(failures);
-        renderDailyChart(failures);
-        renderReasonChart(failures);
-      } else {
-        document.getElementById('chart-time').parentElement.innerHTML += '<p class="empty">No data yet.</p>';
-        document.getElementById('chart-daily').parentElement.innerHTML += '<p class="empty">No data yet.</p>';
-        document.getElementById('chart-reason').parentElement.innerHTML += '<p class="empty">No data yet.</p>';
-      }
+      renderTimeChart(failures);
+      renderDailyChart(failures);
+      renderReasonChart(failures);
       renderTable(failures);
     }
 
+    async function init() {
+      await refresh();
+    }
+
     init();
+    setInterval(refresh, 1 * 60 * 1000);
   </script>
 </body>
 </html>
