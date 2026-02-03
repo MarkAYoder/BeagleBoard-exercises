@@ -170,12 +170,7 @@
             x: {
               type: 'time',
               time: {
-                unit: 'hour',
-                displayFormats: {
-                  hour: 'MMM d HH:mm',
-                  day: 'MMM d',
-                  month: 'MMM yyyy'
-                }
+                unit: 'hour'
               },
               grid: { color: 'rgba(255,255,255,0.06)' },
               ticks: {
@@ -183,13 +178,10 @@
                 maxTicksLimit: 10,
                 callback: (value) => {
                   const d = new Date(value);
-                  return new Intl.DateTimeFormat('en-US', {
-                    timeZone: EST_TIMEZONE,
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                  }).format(d);
+                  const day = new Intl.DateTimeFormat('en-US', { timeZone: EST_TIMEZONE, day: 'numeric' }).format(d);
+                  const mon = new Intl.DateTimeFormat('en-US', { timeZone: EST_TIMEZONE, month: 'short' }).format(d);
+                  const hour = new Intl.DateTimeFormat('en-US', { timeZone: EST_TIMEZONE, hour: 'numeric', hour12: true }).format(d);
+                  return `${day}-${mon} ${hour}`;
                 }
               }
             }
@@ -258,15 +250,16 @@
       if (!isoString) return '';
       const d = new Date(isoString);
       if (Number.isNaN(d.getTime())) return isoString;
-      return new Intl.DateTimeFormat('en-US', {
+      const day = new Intl.DateTimeFormat('en-US', { timeZone: EST_TIMEZONE, day: 'numeric' }).format(d);
+      const mon = new Intl.DateTimeFormat('en-US', { timeZone: EST_TIMEZONE, month: 'short' }).format(d);
+      const time = new Intl.DateTimeFormat('en-US', {
         timeZone: EST_TIMEZONE,
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
+        hour: 'numeric',
         minute: '2-digit',
-        second: '2-digit'
+        second: '2-digit',
+        hour12: true
       }).format(d);
+      return `${day}-${mon} ${time}`;
     }
 
     function renderTable(failures) {
