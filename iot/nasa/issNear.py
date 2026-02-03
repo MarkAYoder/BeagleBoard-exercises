@@ -79,9 +79,9 @@ lines.set_values([1])     # blue LED on
 # Function to check if it's nighttime
 def is_nighttime():
     current_time = datetime.datetime.now().time()
-    # Define nighttime as between 11:00 PM and 5:00 AM
+    # Define nighttime as between 10:00 PM and 5:00 AM
     night_start = datetime.time(22, 0)  # 10:00 PM
-    night_end = datetime.time(5, 0)    # 5:00 AM
+    night_end = datetime.time(6, 0)    # 6:00 AM
 
     # Check if the current time is within the nighttime range
     return current_time >= night_start or current_time <= night_end
