@@ -9,7 +9,6 @@ import sys
 import time
 import logging
 from logging.handlers import RotatingFileHandler
-import gpiod
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -48,7 +47,7 @@ def get_wind_direction(degrees):
 def control_led(cloud_cover):
     """
     Control LED brightness using backlight PWM control
-    Write 1-cloud_cover to /sys/class/backlight/backlight_pwm/brightness
+    Write 100-cloud_cover to /sys/class/backlight/backlight_pwm/brightness
     """
     try:
         # Calculate brightness inversely proportional to cloud cover
