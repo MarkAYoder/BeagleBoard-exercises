@@ -49,7 +49,7 @@
   <h1>Ping failures</h1>
   <p class="last-refreshed" id="last-refreshed" aria-live="polite"></p>
   <div class="chart-container">
-    <h2>Failures vs. time</h2>
+    <h2>Failures per hour vs. time</h2>
     <canvas id="chart-time"></canvas>
   </div>
   <div class="chart-container">
@@ -63,7 +63,7 @@
   <h2 style="font-size: 1rem; color: #9ece6a;">Recent failures</h2>
   <table>
     <thead>
-      <tr><th>Time (UTC)</th><th>Target</th><th>Reason</th></tr>
+      <tr><th>Time (EST)</th><th>Target</th><th>Reason</th></tr>
     </thead>
     <tbody id="table-body"></tbody>
   </table>
@@ -91,6 +91,20 @@
       }
       const days = Object.keys(byDay).sort();
       return { labels: days, values: days.map(d => byDay[d]) };
+    }
+
+    function groupByHour(failures) {
+      const byHour = {};
+      for (const f of failures) {
+        if (!f.checked_at) continue;
+        const d = new Date(f.checked_at);
+        if (Number.isNaN(d.getTime())) continue;
+        d.setMinutes(0, 0, 0);
+        const key = d.toISOString();
+        byHour[key] = (byHour[key] || 0) + 1;
+      }
+      const hours = Object.keys(byHour).sort();
+      return { times: hours, values: hours.map(h => byHour[h]) };
     }
 
     function groupByReason(failures) {
@@ -124,31 +138,30 @@
 
     const barColor = '#7aa2f7';
     const barHover = '#89b4fa';
+    const EST_TIMEZONE = 'America/New_York';
 
     let timeChart = null;
     let dailyChart = null;
     let reasonChart = null;
 
     function renderTimeChart(failures) {
-      const { times } = failuresVsTime(failures);
-      const data = times.map(t => ({ x: t, y: 1 }));
+      const { times, values } = groupByHour(failures);
       if (timeChart) {
-        timeChart.data.datasets[0].data = data;
+        timeChart.data.labels = times;
+        timeChart.data.datasets[0].data = values;
         timeChart.update();
         return;
       }
       const ctx = document.getElementById('chart-time').getContext('2d');
       timeChart = new Chart(ctx, {
-        type: 'scatter',
+        type: 'bar',
         data: {
+          labels: times,
           datasets: [{
-            label: 'Failure',
-            data,
-            borderColor: barColor,
+            label: 'Failures per hour',
+            data: values,
             backgroundColor: barColor,
-            pointRadius: 5,
-            pointHoverRadius: 8,
-            showLine: false
+            hoverBackgroundColor: barHover
           }]
         },
         options: {
@@ -156,15 +169,29 @@
           scales: {
             x: {
               type: 'time',
-              time: { unit: 'day', displayFormats: { minute: 'HH:mm', hour: 'HH:mm', day: 'MMM d', week: 'MMM d', month: 'MMM yyyy' } },
+              time: {
+                unit: 'hour',
+                displayFormats: {
+                  hour: 'MMM d HH:mm',
+                  day: 'MMM d',
+                  month: 'MMM yyyy'
+                }
+              },
               grid: { color: 'rgba(255,255,255,0.06)' },
-              ticks: { color: '#a9b1d6', maxTicksLimit: 10 }
-            },
-            y: {
-              min: 0.5,
-              max: 1.5,
-              grid: { color: 'rgba(255,255,255,0.06)' },
-              ticks: { color: '#a9b1d6', callback: () => '' }
+              ticks: {
+                color: '#a9b1d6',
+                maxTicksLimit: 10,
+                callback: (value) => {
+                  const d = new Date(value);
+                  return new Intl.DateTimeFormat('en-US', {
+                    timeZone: EST_TIMEZONE,
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                  }).format(d);
+                }
+              }
             }
           }
         }
@@ -227,6 +254,21 @@
       });
     }
 
+    function formatEstDateTime(isoString) {
+      if (!isoString) return '';
+      const d = new Date(isoString);
+      if (Number.isNaN(d.getTime())) return isoString;
+      return new Intl.DateTimeFormat('en-US', {
+        timeZone: EST_TIMEZONE,
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      }).format(d);
+    }
+
     function renderTable(failures) {
       const tbody = document.getElementById('table-body');
       const recent = failures.slice(-50).reverse();
@@ -235,7 +277,7 @@
         return;
       }
       tbody.innerHTML = recent.map(f =>
-        `<tr><td>${f.checked_at || ''}</td><td>${escapeHtml(f.target || '')}</td><td>${escapeHtml(f.reason || '')}</td></tr>`
+        `<tr><td>${formatEstDateTime(f.checked_at)}</td><td>${escapeHtml(f.target || '')}</td><td>${escapeHtml(f.reason || '')}</td></tr>`
       ).join('');
     }
 
@@ -247,7 +289,18 @@
 
     function updateLastRefreshed() {
       const el = document.getElementById('last-refreshed');
-      if (el) el.textContent = 'Last refreshed: ' + new Date().toLocaleString();
+      if (!el) return;
+      const now = new Date();
+      const formatted = new Intl.DateTimeFormat('en-US', {
+        timeZone: EST_TIMEZONE,
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      }).format(now);
+      el.textContent = 'Last refreshed (EST): ' + formatted;
     }
 
     async function refresh() {
