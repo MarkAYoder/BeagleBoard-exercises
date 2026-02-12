@@ -1,0 +1,16 @@
+pip install paho-mqtt
+
+sudo apt install mosquitto
+
+# Defaults to only listening on localhost
+# To listen on all interfaces, edit /etc/mosquitto/mosquitto.conf/home-assistant.conf
+listen 0.0.0.0
+allow_anonymous true
+# Then restart mosquitto: sudo systemctl restart mosquitto
+
+# To add a user:
+# sudo mosquitto_passwd -c /etc/mosquitto/passwd myuser
+# Then edit /etc/mosquitto/mosquitto.conf to add the user:
+# allow_anonymous false
+# password_file /etc/mosquitto/passwd
+# Then restart mosquitto: sudo systemctl restart mosquitto
