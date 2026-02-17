@@ -25,7 +25,7 @@ def show_data():
             pass  # If parsing fails, use as is
         formatted_rows.append((ts, row[1], row[2]))
     if formatted_rows:
-        print(tabulate(formatted_rows, headers=["Timestamp", "Temp1 (F)", "Temp2 (F)"], tablefmt="github"))
+        print(tabulate(formatted_rows, headers=["Timestamp", "Temp1 (F)", "Temp2 (F)"], tablefmt="fancy_grid"))
     else:
         print("No data found.")
 
