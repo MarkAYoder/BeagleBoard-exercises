@@ -54,6 +54,7 @@ def publish_temps_mqtt(timestamp, temp1_f, temp2_f):
             json.dumps(payload),
             hostname=MQTT_HOST,
             port=MQTT_PORT,
+            retain=True,    # Keep the last message in the topic
         )
     except Exception as e:
         print(f"Error publishing MQTT message: {e}")
