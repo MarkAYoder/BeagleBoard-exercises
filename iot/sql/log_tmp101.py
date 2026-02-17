@@ -6,6 +6,7 @@
 import os
 import sqlite3
 import json
+import argparse
 from datetime import datetime
 
 import paho.mqtt.publish as mqtt_publish
@@ -59,7 +60,7 @@ def publish_temps_mqtt(timestamp, temp1_f, temp2_f):
     except Exception as e:
         print(f"Error publishing MQTT message: {e}")
 
-def log_data():
+def log_data(publish_mqtt=False):
     try:
         conn = sqlite3.connect(db_path)
         c = conn.cursor()
@@ -75,8 +76,9 @@ def log_data():
             ts = datetime.now().isoformat()
             c.execute("INSERT INTO readings VALUES (?, ?, ?)", (ts, temp1_f, temp2_f))
             conn.commit()
-            # Also publish the reading via MQTT
-            publish_temps_mqtt(ts, temp1_f, temp2_f)
+            # Also publish the reading via MQTT if requested
+            if publish_mqtt:
+                publish_temps_mqtt(ts, temp1_f, temp2_f)
         else:
             print("Error: Could not read one or both temperature sensors. Data not logged.")
         conn.close()
@@ -84,4 +86,12 @@ def log_data():
         print(f"Error: Could not open or write to database '{db_path}': {e}")
 
 if __name__ == "__main__":
-    log_data() 
+    parser = argparse.ArgumentParser(description="Read TMP101 sensors and log to SQLite.")
+    parser.add_argument(
+        "--mqtt",
+        action="store_true",
+        help="Also publish the latest reading via MQTT.",
+    )
+    args = parser.parse_args()
+
+    log_data(publish_mqtt=args.mqtt)
