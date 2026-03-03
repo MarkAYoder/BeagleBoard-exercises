@@ -16,6 +16,28 @@
       background: #1a1b26;
       color: #c0caf5;
     }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: #a9b1d6;
+    }
+    .controls input[type="number"] {
+      width: 4rem;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      border: 1px solid #414868;
+      background: #1f2335;
+      color: #c0caf5;
+    }
     h1 { color: #7aa2f7; margin-top: 0; }
     .chart-container {
       position: relative;
@@ -46,7 +68,13 @@
   </style>
 </head>
 <body>
-  <h1>Ping failures</h1>
+  <div class="header">
+    <h1>Ping failures</h1>
+    <div class="controls">
+      <label for="days-to-display">Days to display:</label>
+      <input type="number" id="days-to-display" min="1" value="7">
+    </div>
+  </div>
   <p class="last-refreshed" id="last-refreshed" aria-live="polite"></p>
   <div class="chart-container">
     <h2>Failures per hour vs. time</h2>
@@ -317,16 +345,42 @@
       el.textContent = 'Last refreshed (EST): ' + formatted;
     }
 
+    function filterByDays(failures, days) {
+      if (!days || days <= 0) return failures;
+      const now = new Date();
+      const cutoff = new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+      return failures.filter(f => {
+        if (!f.checked_at) return false;
+        const d = new Date(f.checked_at);
+        if (Number.isNaN(d.getTime())) return false;
+        return d >= cutoff;
+      });
+    }
+
     async function refresh() {
       const failures = await loadFailures();
-      renderTimeChart(failures);
-      renderDailyChart(failures);
-      renderReasonChart(failures);
-      renderTable(failures);
+      const daysInput = document.getElementById('days-to-display');
+      const days = daysInput ? parseInt(daysInput.value, 10) : NaN;
+      const filtered = Number.isFinite(days) && days > 0 ? filterByDays(failures, days) : failures;
+      renderTimeChart(filtered);
+      renderDailyChart(filtered);
+      renderReasonChart(filtered);
+      renderTable(filtered);
       updateLastRefreshed();
     }
 
     async function init() {
+      const daysInput = document.getElementById('days-to-display');
+      if (daysInput) {
+        daysInput.addEventListener('change', refresh);
+        daysInput.addEventListener('input', () => {
+          // Avoid spamming refresh with non-numeric input; debounce could be added if needed
+          const v = parseInt(daysInput.value, 10);
+          if (Number.isFinite(v) && v > 0) {
+            refresh();
+          }
+        });
+      }
       await refresh();
     }
 
